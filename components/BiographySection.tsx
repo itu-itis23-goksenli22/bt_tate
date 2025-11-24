@@ -6,27 +6,27 @@ export default function BiographySection() {
     {
       period: "Balıkesir'den Başlayan Yolculuk",
       image: "bio/1.jpeg",
-      content: "Balıkesir'de asker bir baba ve öğretmen bir annenin çocuğu olarak doğdum. Ailem sürekli tayin olduğu için çocukluğum ve gençliğim Türkiye'nin neredeyse her şehrinde geçti. Ağrı'dan Şırnak'a, İzmir'den Bursa'ya kadar sürekli taşınarak büyümek hem karakterimi şekillendirdi hem de keşfetme duygumu çok güçlendirdi.\n\nLise dönemim yaramazlıkla, sistemin dışına çıkma isteğiyle ve devamsızlıklarla geçti. Buna rağmen üniversite sınavına girip %100 bursla Doğu Akdeniz Üniversitesi Makine Mühendisliği kazandım."
+      content: "Balıkesir'de asker bir baba ve öğretmen bir annenin çocuğu olarak doğdum. Türkiye'nin neredeyse her şehrinde büyüdüm. Sürekli taşınmak karakterimi şekillendirdi. Lise dönemi yaramazlıklarla geçti ama %100 bursla Doğu Akdeniz Üniversitesi Makine Mühendisliği kazandım."
     },
     {
-      period: "Amerika'da Mühendislik ve Staj",
+      period: "Amerika'da Mühendislik",
       image: "bio/2.jpeg",
-      content: "Central Connecticut State University döneminde lazer güdümlü roket sistemleri üzerine proje yaptım ve bu projeyle United Technologies Corporation'da staja kabul edildim. Orada hem mühendislik açısından hem network açısından önüm açıldı.\n\nTürkiye'ye döndükten sonra kariyerim çok hızlı ilerledi. Carrier ve Otis gibi dev şirketlerde Avrupa bölgesinde proje yönetimi, mekanik sistemler, büyük ölçekli inşaat projeleri, satış ve operasyon tarafında önemli görevler aldım."
+      content: "Central Connecticut State University'de lazer güdümlü roket sistemleri projesiyle United Technologies Corporation'da staj yaptım. Türkiye'ye döndükten sonra Carrier ve Otis gibi dev şirketlerde Avrupa bölgesinde proje yönetimi, satış ve operasyon görevleri aldım."
     },
     {
       period: "Global Kariyerde Yükseliş",
       image: "bio/3.jpeg",
-      content: "İstanbul Yeni Havalimanı gibi mega projelerde aktif rol aldım. Almanya, İngiltere, İsviçre, Fransa ve birçok farklı ülkede çalıştım; sektörün en üst noktalarındaki insanlarla aynı masalarda oturdum.\n\nBu yoğun iş temposuna paralel olarak %100 burslu MBA yaptım. Tezimi, çalıştığım holdingin global operasyon süreçlerinin dijital dönüşümü üzerine yazdım. Hazırladığım proje daha sonra şirket içinde hayata geçirildi ve operasyonel verimliliğe 55 milyon dolar seviyesinde katkı sağladı.\n\nBu başarılar beni şirketin global CEO yetiştirme programına kadar taşıdı."
+      content: "İstanbul Yeni Havalimanı gibi mega projelerde rol aldım. Almanya, İngiltere, İsviçre, Fransa'da çalıştım. %100 burslu MBA yaptım. Tezim holdingin dijital dönüşümü üzerineydi ve 55 milyon dolar katkı sağladı. Bu başarılar beni global CEO yetiştirme programına taşıdı."
     },
     {
       period: "Yeni Başlangıç: AiScale",
       image: "bio/4.jpg",
-      content: "Fakat bir seyahat sırasında laptop ile çalışan ve dünyayı dolaşan mühendislerle tanışmam hayatımı değiştirdi. E-ticaret, global satış ve dijital iş modellerine yöneldim. 66 ülkeye kadar uzanan bir yolculuğa çıktım.\n\nEn son Los Angeles'tan Miami'ye taşındım, dijital işlerimi büyütüyor ve farklı alanlara yatırımlar yapıyorum.\n\nBugün AiScale üzerinden yapay zeka, global ticaret, online gelir, eğitim ve yazılım projelerine odaklanıyorum. Amacımız net: Öğrendiklerimi paylaşmak, ürettiğim dijital işleri ölçeklemek ve yeni neslin global alanda daha güçlü bir şekilde yer almasına katkı sağlamak."
+      content: "Laptop ile dünyayı dolaşan mühendislerle tanışınca hayatım değişti. E-ticaret ve dijital iş modellerine yöneldim. 66 ülke gezdim. Los Angeles'tan Miami'ye taşındım. Bugün AiScale ile yapay zeka, global ticaret ve eğitim projelerine odaklanıyorum. Amacım: Öğrendiklerimi paylaşmak ve yeni neslin global alanda güçlenmesine katkı sağlamak."
     }
   ];
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-primary to-primary-light relative overflow-hidden">
+    <section className="py-12 px-4 bg-gradient-to-b from-primary to-primary-light relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 left-0 w-96 h-96 bg-accent rounded-full blur-3xl"></div>
@@ -35,14 +35,14 @@ export default function BiographySection() {
 
       <div className="relative z-10 max-w-5xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-20">
-          <p className="text-accent text-sm uppercase tracking-widest mb-4">
+        <div className="text-center mb-10">
+          <p className="text-accent text-sm uppercase tracking-widest mb-2">
             YOLCULUK
           </p>
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-3">
             Baturalp <span className="text-accent">Kimdir?</span>
           </h2>
-          <p className="text-white/60 text-lg max-w-3xl mx-auto">
+          <p className="text-white/60 text-base max-w-3xl mx-auto">
             Balıkesir'den başlayıp dünyaya uzanan bir başarı hikayesi
           </p>
         </div>
@@ -55,13 +55,13 @@ export default function BiographySection() {
           {timeline.map((item, index) => (
             <div
               key={index}
-              className={`relative mb-8 ${
+              className={`relative mb-5 ${
                 index % 2 === 0 ? "md:pr-[50%]" : "md:pl-[50%]"
               }`}
             >
               {/* Timeline dot */}
               <div
-                className={`absolute top-8 ${
+                className={`absolute top-6 ${
                   index % 2 === 0
                     ? "left-8 md:left-auto md:right-[-1.125rem]"
                     : "left-8 md:left-[-1.125rem]"
@@ -78,7 +78,7 @@ export default function BiographySection() {
               >
                 <div className="card-trw group hover:border-accent/50 transition-all">
                   {/* Image */}
-                  <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-6 border border-white/10">
+                  <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-4 border border-white/10">
                     <Image
                       src={getStorageImageUrl(item.image)}
                       alt={item.period}
@@ -91,12 +91,12 @@ export default function BiographySection() {
                   </div>
 
                   {/* Period label */}
-                  <div className="inline-block px-4 py-2 bg-accent/10 border border-accent/30 rounded-full mb-4">
+                  <div className="inline-block px-3 py-1.5 bg-accent/10 border border-accent/30 rounded-full mb-3">
                     <span className="text-accent font-semibold text-sm">{item.period}</span>
                   </div>
 
                   {/* Content */}
-                  <div className="text-white/70 text-sm md:text-base leading-relaxed whitespace-pre-line">
+                  <div className="text-white/70 text-sm leading-relaxed">
                     {item.content}
                   </div>
                 </div>
@@ -106,11 +106,11 @@ export default function BiographySection() {
         </div>
 
         {/* End badge */}
-        <div className="flex justify-center mt-12">
+        <div className="flex justify-center mt-6">
           <div className="relative">
             <div className="absolute inset-0 bg-accent/20 blur-xl rounded-full"></div>
-            <div className="relative px-8 py-4 bg-gradient-to-r from-accent to-accent-dark rounded-full shadow-lg shadow-accent/30">
-              <span className="text-white font-bold text-lg">🚀 Macera Devam Ediyor</span>
+            <div className="relative px-6 py-3 bg-gradient-to-r from-accent to-accent-dark rounded-full shadow-lg shadow-accent/30">
+              <span className="text-white font-bold text-base">🚀 Macera Devam Ediyor</span>
             </div>
           </div>
         </div>
