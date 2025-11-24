@@ -95,10 +95,11 @@ export default function WhatIsSection() {
                       {/* Video thumbnail - if URL exists, show video with preload */}
                       {video.url ? (
                         <video
-                          src={video.url}
+                          src={`${video.url}#t=0.1`}
                           className="absolute inset-0 w-full h-full object-cover"
                           preload="metadata"
                           muted
+                          playsInline
                         />
                       ) : (
                         <div className="absolute inset-0 bg-gradient-to-br from-primary-light to-primary"></div>
