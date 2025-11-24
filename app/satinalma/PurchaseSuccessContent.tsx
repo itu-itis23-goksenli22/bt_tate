@@ -2,14 +2,19 @@
 
 import { useSearchParams } from "next/navigation";
 import { CheckCircle, Gift, Rocket, Clock } from "lucide-react";
+import PurchasePixel from "@/components/PurchasePixel";
 
 export default function PurchaseSuccessContent() {
   const searchParams = useSearchParams();
   const name = searchParams.get("name") || "Değerli Üyemiz";
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-primary via-primary-light to-primary flex items-center justify-center px-4 py-12">
-      <div className="max-w-2xl w-full">
+    <>
+      {/* Track Purchase Event */}
+      <PurchasePixel />
+
+      <main className="min-h-screen bg-gradient-to-b from-primary via-primary-light to-primary flex items-center justify-center px-4 py-12">
+        <div className="max-w-2xl w-full">
         {/* Success Card */}
         <div className="bg-gradient-to-br from-primary-light to-primary-dark rounded-3xl p-8 md:p-12 shadow-2xl border-2 border-accent/30 relative overflow-hidden">
           {/* Decorative elements */}
@@ -138,5 +143,6 @@ export default function PurchaseSuccessContent() {
         </div>
       </div>
     </main>
+    </>
   );
 }
