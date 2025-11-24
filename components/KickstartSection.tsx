@@ -77,7 +77,7 @@ export default function KickstartSection() {
                 </button>
               </a>
               <p className="text-white/30 text-sm mt-3">
-                30 gün para iade garantisi • İstediğiniz zaman iptal edin
+                İstediğiniz zaman iptal edin
               </p>
             </div>
           </div>

@@ -3,7 +3,7 @@ export default function TrustBadges() {
     { name: "SSL Güvenli", icon: "🔒" },
     { name: "256-bit Şifreleme", icon: "🛡️" },
     { name: "Güvenli Ödeme", icon: "💳" },
-    { name: "14 Gün İade", icon: "✓" },
+    { name: "7/24 Destek", icon: "✓" },
   ];
 
   return (
