@@ -35,7 +35,7 @@ export default function PricingSection() {
         </div>
 
         {/* Single Pricing Card */}
-        <div className="max-w-2xl mx-auto">
+        <div id="pricing-card" className="max-w-2xl mx-auto">
           <div className="relative rounded-2xl p-8 md:p-10 transition-all duration-300 bg-gradient-to-b from-accent/10 to-primary-light border-2 border-accent shadow-2xl shadow-glow">
             {/* Popular badge */}
             <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">

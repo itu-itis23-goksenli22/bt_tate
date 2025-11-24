@@ -78,40 +78,12 @@ export default function Navbar() {
             <a
               href="#paketler"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-white text-lg font-medium py-4 border-b border-white/5 hover:text-accent transition-colors flex items-center justify-between group"
+              className="text-white text-lg font-medium py-4 hover:text-accent transition-colors flex items-center justify-between group"
             >
               <span>Paketler</span>
               <svg className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-            </a>
-            <a
-              href="#"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-white text-lg font-medium py-4 border-b border-white/5 hover:text-accent transition-colors"
-            >
-              Bülten
-            </a>
-            <a
-              href="#"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-white text-lg font-medium py-4 border-b border-white/5 hover:text-accent transition-colors"
-            >
-              İndirmeler
-            </a>
-            <a
-              href="#"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-white text-lg font-medium py-4 border-b border-white/5 hover:text-accent transition-colors"
-            >
-              Videolar
-            </a>
-            <a
-              href="#"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-white text-lg font-medium py-4 hover:text-accent transition-colors"
-            >
-              Blog
             </a>
           </div>
         </div>

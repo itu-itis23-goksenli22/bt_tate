@@ -46,7 +46,7 @@ export default function ExitPlanSection() {
             </div>
 
             {/* CTA Button */}
-            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+            <a href="#pricing-card">
               <button className="btn-primary text-lg px-10 py-4 shadow-glow-strong hover:shadow-glow-hover">
                 Gerçek Dünyaya Katıl →
               </button>

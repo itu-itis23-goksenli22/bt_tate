@@ -59,7 +59,7 @@ export default function HeroSection() {
 
         {/* CTA Button */}
         <div className="mb-16">
-          <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+          <a href="#pricing-card">
             <button className="btn-primary text-lg px-12 py-4 shadow-glow-strong hover:shadow-glow-hover">
               Gerçek Dünyaya Katıl →
             </button>

@@ -104,7 +104,7 @@ export default function Chatbot() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-accent to-accent-light p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group"
+          className="fixed bottom-6 right-20 z-50 bg-gradient-to-r from-accent to-accent-light p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group"
           aria-label="Sohbet robotunu aç"
         >
           <MessageCircle className="w-6 h-6 text-white group-hover:rotate-12 transition-transform duration-300" />
@@ -116,7 +116,7 @@ export default function Chatbot() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-[380px] h-[600px] bg-primary-dark border-2 border-accent/30 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fadeIn">
+        <div className="fixed bottom-6 right-20 z-50 w-[380px] h-[600px] bg-primary-dark border-2 border-accent/30 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fadeIn">
           {/* Header */}
           <div className="bg-gradient-to-r from-accent to-accent-light p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
