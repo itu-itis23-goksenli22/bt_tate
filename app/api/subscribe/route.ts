@@ -120,7 +120,7 @@ async function sendWebinarEmail(email: string, name?: string): Promise<boolean> 
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'AI Scale <noreply@aiscale.app>',
+        from: 'AI Scale <info@aiscale.app>',
         to: [email],
         subject: '🎉 AI Scale Ücretsiz Webinar - Kaydınız Alındı!',
         html: htmlContent,
