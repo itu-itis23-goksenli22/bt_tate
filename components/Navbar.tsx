@@ -31,7 +31,7 @@ export default function Navbar() {
                 <span className="block w-6 h-0.5 bg-white group-hover:bg-accent transition-colors"></span>
                 <span className="block w-6 h-0.5 bg-white group-hover:bg-accent transition-colors"></span>
               </div>
-              <span className="text-sm font-medium uppercase tracking-wider">MENU</span>
+              <span className="text-sm font-medium uppercase tracking-wider">MENÜ</span>
             </button>
 
             {/* Center: Logo */}
@@ -73,14 +73,14 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
               className="text-white text-lg font-medium py-4 border-b border-white/5 hover:text-accent transition-colors flex items-center justify-between group"
             >
-              <span>The Real World</span>
+              <span>Gerçek Dünya</span>
             </a>
             <a
-              href="#moduller"
+              href="#paketler"
               onClick={() => setMobileMenuOpen(false)}
               className="text-white text-lg font-medium py-4 border-b border-white/5 hover:text-accent transition-colors flex items-center justify-between group"
             >
-              <span>Courses</span>
+              <span>Paketler</span>
               <svg className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
@@ -90,21 +90,21 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
               className="text-white text-lg font-medium py-4 border-b border-white/5 hover:text-accent transition-colors"
             >
-              Newsletter
+              Bülten
             </a>
             <a
               href="#"
               onClick={() => setMobileMenuOpen(false)}
               className="text-white text-lg font-medium py-4 border-b border-white/5 hover:text-accent transition-colors"
             >
-              Downloads
+              İndirmeler
             </a>
             <a
               href="#"
               onClick={() => setMobileMenuOpen(false)}
               className="text-white text-lg font-medium py-4 border-b border-white/5 hover:text-accent transition-colors"
             >
-              Videos
+              Videolar
             </a>
             <a
               href="#"
