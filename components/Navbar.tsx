@@ -38,16 +38,12 @@ export default function Navbar() {
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
               <div className="flex flex-col items-center">
                 <Logo className="w-12 h-12" />
-                <span className="text-white/60 text-xs font-medium tracking-wider mt-1">THE REAL WORLD</span>
+                <span className="text-white/60 text-xs font-medium tracking-wider mt-1">AI SCALE</span>
               </div>
             </div>
 
-            {/* Right: LOG IN Button */}
-            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
-              <button className="border border-white/20 hover:border-white/40 text-white px-6 py-2 rounded-full text-sm font-medium uppercase tracking-wider transition-all hover:bg-white/5">
-                LOG IN
-              </button>
-            </a>
+            {/* Right: Empty space for balance */}
+            <div className="w-24"></div>
           </div>
         </div>
       </nav>

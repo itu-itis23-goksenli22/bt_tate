@@ -1,4 +1,3 @@
-import AnnouncementBanner from "@/components/AnnouncementBanner";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import SoldOutPlansSection from "@/components/SoldOutPlansSection";
@@ -17,7 +16,6 @@ import BackToTop from "@/components/BackToTop";
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <AnnouncementBanner />
       <Navbar />
       <HeroSection />
       <SoldOutPlansSection />
