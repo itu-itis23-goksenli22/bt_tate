@@ -26,8 +26,8 @@ export default function Home() {
       <HeroSection />
       <WhatIsSection />
       <BiographySection />
-      <LockInYearSection />
       <KendineSorSection />
+      <LockInYearSection />
       <PreparedToWorkSection />
       <ExitPlanSection />
       <TrustBadges />
