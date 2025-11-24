@@ -36,10 +36,7 @@ export default function Navbar() {
 
             {/* Center: Logo */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-              <div className="flex flex-col items-center">
-                <Logo className="w-12 h-12" />
-                <span className="text-white/60 text-xs font-medium tracking-wider mt-1">AI SCALE</span>
-              </div>
+              <Logo className="w-16 h-16" />
             </div>
 
             {/* Right: Empty space for balance */}
