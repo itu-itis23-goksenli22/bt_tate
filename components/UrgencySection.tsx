@@ -8,7 +8,7 @@ export default function UrgencySection() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <p className="text-accent text-sm uppercase tracking-wider mb-3">ZAMAN KAYBEDEMEZS İNİZ</p>
+          <p className="text-accent text-sm uppercase tracking-wider mb-3">ZAMAN KAYBEDEMEZSİNİZ</p>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Bu Sizin <span className="text-accent">Son Şansınız</span>
           </h2>
