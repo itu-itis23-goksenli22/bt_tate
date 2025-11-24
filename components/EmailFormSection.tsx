@@ -1,42 +1,22 @@
 "use client";
 
-import { useState } from "react";
-import { CHECKOUT_URL } from "@/lib/constants";
+import { useEffect } from "react";
 
 export default function EmailFormSection() {
-  const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  useEffect(() => {
+    // Load GoHighLevel form embed script
+    const script = document.createElement('script');
+    script.src = 'https://link.msgsndr.com/js/form_embed.js';
+    script.async = true;
+    document.body.appendChild(script);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage("");
-
-    try {
-      const response = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage(data.message || 'Başarıyla kaydoldunuz! Email adresinizi kontrol edin.');
-        setEmail(''); // Clear form
-      } else {
-        setMessage(data.error || 'Bir hata oluştu. Lütfen tekrar deneyin.');
+    return () => {
+      // Cleanup script on unmount
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
       }
-    } catch (error) {
-      console.error('Subscribe error:', error);
-      setMessage('Bağlantı hatası. Lütfen tekrar deneyin.');
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+  }, []);
 
   return (
     <section className="py-16 md:py-20 bg-gradient-to-b from-primary-light to-primary relative overflow-hidden">
@@ -56,42 +36,38 @@ export default function EmailFormSection() {
               AI ile para kazanmanın sırlarını öğren. İlk adımı at.
             </p>
             <p className="text-sm md:text-base text-white/60">
-              Email adresini bırak, ücretsiz seminere katıl.
+              Formu doldur, ücretsiz seminere hemen katıl.
             </p>
           </div>
 
-          {/* Form */}
-          <div className="card-glass !p-8 md:!p-10 max-w-2xl mx-auto">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Email adresinizi girin"
-                  required
-                  className="w-full px-6 py-4 bg-primary border-2 border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-accent/50 transition-all duration-300 text-base"
+          {/* GoHighLevel Embedded Form */}
+          <div className="max-w-2xl mx-auto">
+            <div className="card-glass !p-0 overflow-hidden">
+              <div className="relative w-full" style={{ minHeight: '550px' }}>
+                <iframe
+                  src="https://api.leadconnectorhq.com/widget/form/84Is6fx7guuS4EeNPxf2"
+                  style={{
+                    width: '100%',
+                    height: '550px',
+                    border: 'none',
+                    borderRadius: '10px',
+                  }}
+                  id="inline-84Is6fx7guuS4EeNPxf2"
+                  data-layout="{'id':'INLINE'}"
+                  data-trigger-type="alwaysShow"
+                  data-trigger-value=""
+                  data-activation-type="alwaysActivated"
+                  data-activation-value=""
+                  data-deactivation-type="neverDeactivate"
+                  data-deactivation-value=""
+                  data-form-name="WEBINAR - Copy"
+                  data-height="508"
+                  data-layout-iframe-id="inline-84Is6fx7guuS4EeNPxf2"
+                  data-form-id="84Is6fx7guuS4EeNPxf2"
+                  title="Ücretsiz Webinar Kayıt Formu"
                 />
               </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="btn-accent w-full !py-4 !text-base disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? "Kaydediliyor..." : "Ücretsiz Erişim Kazan"}
-              </button>
-
-              {message && (
-                <div className="text-center text-accent-light text-sm font-medium animate-fadeIn">
-                  {message}
-                </div>
-              )}
-
-              <p className="text-center text-white/40 text-xs">
-                Kaydolarak, şartlar ve koşulları kabul etmiş olursunuz.
-              </p>
-            </form>
+            </div>
           </div>
 
           {/* Trust elements */}
