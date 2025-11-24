@@ -25,18 +25,33 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if email already exists
-    const { data: existingSubscriber } = await supabase
-      .from('email_subscribers')
-      .select('*')
-      .eq('email', email)
-      .single();
+    console.log('📧 Processing subscription request for:', email);
 
-    if (existingSubscriber) {
-      // If already subscribed and link not sent, resend
-      if (!existingSubscriber.webinar_link_sent) {
-        await sendWebinarEmail(email, name);
+    // Send email first (priority!)
+    const emailSent = await sendWebinarEmail(email, name);
 
+    if (!emailSent) {
+      console.error('❌ Failed to send email, but continuing...');
+      return NextResponse.json({
+        message: 'Email gönderilemedi. Lütfen tekrar deneyin veya destek ile iletişime geçin.',
+        success: false,
+        emailFailed: true,
+      }, { status: 500 });
+    }
+
+    console.log('✅ Email sent successfully, now attempting Supabase insert...');
+
+    // Try to save to Supabase (optional, non-blocking)
+    try {
+      // Check if email already exists
+      const { data: existingSubscriber } = await supabase
+        .from('email_subscribers')
+        .select('*')
+        .eq('email', email)
+        .single();
+
+      if (existingSubscriber) {
+        console.log('ℹ️ Email already exists in database, updating...');
         await supabase
           .from('email_subscribers')
           .update({
@@ -44,60 +59,30 @@ export async function POST(request: NextRequest) {
             webinar_link_sent_at: new Date().toISOString(),
           })
           .eq('email', email);
+      } else {
+        console.log('ℹ️ Inserting new subscriber to database...');
+        await supabase
+          .from('email_subscribers')
+          .insert({
+            email,
+            name: name || null,
+            source: 'landing_page',
+            webinar_link_sent: true,
+            webinar_link_sent_at: new Date().toISOString(),
+          });
       }
-
-      return NextResponse.json({
-        message: 'Bu email adresi zaten kayıtlı. Webinar linki tekrar gönderildi.',
-        alreadySubscribed: true,
-      });
+      console.log('✅ Supabase operation completed');
+    } catch (dbError) {
+      // Database error is non-critical since email was already sent
+      console.warn('⚠️ Supabase operation failed (non-critical):', dbError);
     }
 
-    // Insert new subscriber
-    const { data: newSubscriber, error: insertError } = await supabase
-      .from('email_subscribers')
-      .insert({
-        email,
-        name: name || null,
-        source: 'landing_page',
-        webinar_link_sent: false,
-      })
-      .select()
-      .single();
-
-    if (insertError) {
-      console.error('Supabase insert error:', insertError);
-      return NextResponse.json(
-        { error: 'Kayıt sırasında bir hata oluştu' },
-        { status: 500 }
-      );
-    }
-
-    // Send webinar email
-    const emailSent = await sendWebinarEmail(email, name);
-
-    if (emailSent) {
-      // Update subscriber to mark email as sent
-      await supabase
-        .from('email_subscribers')
-        .update({
-          webinar_link_sent: true,
-          webinar_link_sent_at: new Date().toISOString(),
-        })
-        .eq('id', newSubscriber.id);
-
-      return NextResponse.json({
-        message: 'Başarıyla kaydoldunuz! Email adresinizi kontrol edin.',
-        success: true,
-      });
-    } else {
-      return NextResponse.json({
-        message: 'Kaydoldunuz ama email gönderilemedi. Lütfen destek ile iletişime geçin.',
-        success: true,
-        emailFailed: true,
-      });
-    }
+    return NextResponse.json({
+      message: 'Başarıyla kaydoldunuz! Email adresinizi kontrol edin.',
+      success: true,
+    });
   } catch (error) {
-    console.error('Subscribe API error:', error);
+    console.error('❌ Subscribe API error:', error);
     return NextResponse.json(
       { error: 'Bir hata oluştu. Lütfen tekrar deneyin.' },
       { status: 500 }
