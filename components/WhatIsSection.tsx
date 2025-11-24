@@ -80,6 +80,18 @@ export default function WhatIsSection() {
                     onClick={() => setSelectedVideo(video)}
                   >
                     <div className="relative aspect-[9/16] bg-gradient-to-br from-primary-light to-primary rounded-2xl overflow-hidden border border-accent/30 shadow-[0_0_40px_rgba(0,0,0,0.8)] transform transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_60px_rgba(59,130,246,0.4)] hover:border-accent/60 cursor-pointer">
+                      {/* Video thumbnail - if URL exists, show video with preload */}
+                      {video.url ? (
+                        <video
+                          src={video.url}
+                          className="absolute inset-0 w-full h-full object-cover"
+                          preload="metadata"
+                          muted
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary-light to-primary"></div>
+                      )}
+
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30"></div>
                       <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                       <div className="absolute inset-0 flex items-center justify-center">
@@ -89,7 +101,7 @@ export default function WhatIsSection() {
                           </svg>
                         </div>
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
                         <div className="text-white font-bold text-sm mb-1">{video.title}</div>
                         <div className="text-white/60 text-xs">{video.duration}</div>
                       </div>
