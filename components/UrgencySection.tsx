@@ -1,11 +1,19 @@
 "use client";
 
 import { CHECKOUT_URL } from "@/lib/constants";
+import Image from "next/image";
+import { getStorageImageUrl } from "@/lib/images";
 
 export default function UrgencySection() {
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-primary-light to-primary">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-20 px-4 bg-gradient-to-b from-primary-light to-primary relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-accent/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-dark/20 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
           <p className="text-accent text-sm uppercase tracking-wider mb-3">ZAMAN KAYBEDEMEZSİNİZ</p>
@@ -14,87 +22,99 @@ export default function UrgencySection() {
           </h2>
         </div>
 
-        {/* 3 Cards Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {/* Card 1: Running Out Of Time */}
-          <div className="card-trw text-center">
-            <div className="w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10" strokeWidth="2" />
-                <path strokeWidth="2" d="M12 6v6l4 2" />
-              </svg>
+        {/* Two Column Layout: Phone + List */}
+        <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
+          {/* Left - Phone Mockup */}
+          <div className="relative flex justify-center">
+            <div className="relative aspect-[9/19.5] max-w-sm w-full bg-gradient-to-br from-primary-light to-primary-dark rounded-[3rem] border-8 border-primary-light shadow-2xl overflow-hidden">
+              {/* Phone notch */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-7 bg-primary-dark rounded-b-3xl z-10"></div>
+
+              {/* Screen content - Dashboard Image */}
+              <div className="absolute inset-0 overflow-hidden">
+                <Image
+                  src={getStorageImageUrl("WhatsApp Image 2025-11-24 at 15.55.25.jpeg")}
+                  alt="AI SCALE Dashboard"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+
+              {/* Glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-t from-accent/10 via-transparent to-transparent pointer-events-none"></div>
             </div>
-            <div className="w-12 h-12 bg-primary-light rounded-lg flex items-center justify-center mx-auto mb-4 border border-white/10">
-              <span className="text-2xl font-bold text-white">1</span>
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-4">
-              Zamanınız<br />Tükeniyor
-            </h3>
-            <p className="text-white/60 text-sm leading-relaxed mb-4">
-              Dünya 2025'te sonsuza kadar değişecek. Sizi{" "}
-              <span className="text-white">tuzağa düşürmek</span> için yeni yollar geliştiriyorlar.
-            </p>
-            <p className="text-white/40 text-sm">
-              Hazırlanmak için ne yaptınız?
-            </p>
-            <p className="text-white/60 text-sm mt-2">
-              Anlamalısınız, şimdi ya da asla.
-            </p>
+
+            {/* Decorative elements */}
+            <div className="absolute -top-4 -left-4 w-24 h-24 bg-accent/10 rounded-full blur-xl"></div>
+            <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-accent-dark/10 rounded-full blur-xl"></div>
           </div>
 
-          {/* Card 2: AI Takeover */}
-          <div className="card-trw text-center">
-            <div className="w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
+          {/* Right - Numbered List */}
+          <div className="space-y-8">
+            {/* Item 1 */}
+            <div className="relative pl-20">
+              <div className="absolute left-0 top-0 w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center border-2 border-accent/30">
+                <span className="text-3xl font-bold text-accent">1</span>
+              </div>
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                Zamanınız<br />Tükeniyor
+              </h3>
+              <p className="text-white/70 leading-relaxed mb-3">
+                Dünya 2025'te sonsuza kadar değişecek. Sizi <span className="text-white font-semibold">tuzağa düşürmek</span> için yeni yollar geliştiriyorlar.
+              </p>
+              <p className="text-white/60 text-sm mb-2">
+                Hazırlanmak için ne yaptınız?
+              </p>
+              <p className="text-white font-semibold">
+                Anlamalısınız, şimdi ya da asla.
+              </p>
             </div>
-            <div className="w-12 h-12 bg-primary-light rounded-lg flex items-center justify-center mx-auto mb-4 border border-white/10">
-              <span className="text-2xl font-bold text-white">2</span>
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-4">
-              Yaklaşan AI<br />Devrimi
-            </h3>
-            <p className="text-white/60 text-sm leading-relaxed mb-4">
-              İşinize uygulayabileceğiniz bir iksir olduğunu hayal edin.
-            </p>
-            <p className="text-white/40 text-sm">
-              Ve bu <span className="text-white">BİR GECEDE çıktınızı 10 kat artırıyor.</span>
-            </p>
-            <p className="text-white/60 text-sm mt-2">
-              Siz UYURKEN bir robot sizin için para kazanabilir... Ama siz harekete geçmemeyi seçtiniz.
-            </p>
-          </div>
 
-          {/* Card 3: Learn A Skill */}
-          <div className="card-trw text-center">
-            <div className="w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
-              </svg>
+            {/* Item 2 */}
+            <div className="relative pl-20">
+              <div className="absolute left-0 top-0 w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center border-2 border-accent/30">
+                <span className="text-3xl font-bold text-accent">2</span>
+              </div>
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                Yaklaşan AI<br />Devrimi
+              </h3>
+              <p className="text-white/70 leading-relaxed mb-3">
+                İşinize uygulayabileceğiniz bir iksir olduğunu hayal edin.
+              </p>
+              <p className="text-white/60 text-sm mb-2">
+                Ve bu <span className="text-white font-semibold">BİR GECEDE çıktınızı 10 kat artırıyor.</span>
+              </p>
+              <p className="text-white/70 leading-relaxed">
+                Siz UYURKEN bir robot sizin için para kazanabilir... Ama siz harekete geçmemeyi seçtiniz.
+              </p>
             </div>
-            <div className="w-12 h-12 bg-primary-light rounded-lg flex items-center justify-center mx-auto mb-4 border border-white/10">
-              <span className="text-2xl font-bold text-white">3</span>
+
+            {/* Item 3 */}
+            <div className="relative pl-20">
+              <div className="absolute left-0 top-0 w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center border-2 border-accent/30">
+                <span className="text-3xl font-bold text-accent">3</span>
+              </div>
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                Bir Beceri<br />Öğrenmelisiniz
+              </h3>
+              <p className="text-white/70 leading-relaxed mb-3">
+                Sadece hayal edin...
+              </p>
+              <p className="text-white/60 text-sm mb-2">
+                Kendinize yatırım yaptığınızda açılan kapılar—daha yüksek gelir, daha fazla özgürlük ve istediğiniz hayatı yaratma yeteneği.
+              </p>
+              <p className="text-white font-semibold">
+                Başarının sizi bulmasını beklemeyin. <span className="text-accent">Kontrolü elinize alın.</span>
+              </p>
             </div>
-            <h3 className="text-2xl font-bold text-white mb-4">
-              Bir Beceri<br />Öğrenmelisiniz
-            </h3>
-            <p className="text-white/60 text-sm leading-relaxed mb-4">
-              Sadece hayal edin...
-            </p>
-            <p className="text-white/40 text-sm">
-              Kendinize yatırım yaptığınızda açılan kapılar—daha yüksek gelir, daha fazla özgürlük ve istediğiniz hayatı yaratma yeteneği.
-            </p>
-            <p className="text-white/60 text-sm mt-2">
-              <span className="text-white">Başarının sizi bulmasını beklemeyin.</span> Kontrolü elinize alın.
-            </p>
           </div>
         </div>
 
         {/* Bottom CTA */}
         <div className="text-center">
           <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
-            <button className="btn-primary text-lg px-12 py-4 shadow-glow-strong">
+            <button className="btn-primary text-lg px-12 py-4 shadow-glow-strong hover:shadow-glow-hover">
               Gerçek Dünyaya Katıl →
             </button>
           </a>
