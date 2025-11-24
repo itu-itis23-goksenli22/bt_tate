@@ -10,7 +10,6 @@ import ExitPlanSection from "@/components/ExitPlanSection";
 import TrustBadges from "@/components/TrustBadges";
 import WhatIsSection from "@/components/WhatIsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import BiographySection from "@/components/BiographySection";
 import ToolsSection from "@/components/ToolsSection";
 import EmailFormSection from "@/components/EmailFormSection";
 import FAQSection from "@/components/FAQSection";
@@ -25,7 +24,6 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <WhatIsSection />
-      <BiographySection />
       <KendineSorSection />
       <LockInYearSection />
       <PreparedToWorkSection />
