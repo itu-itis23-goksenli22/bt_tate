@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { generateWebinarEmailHTML } from '@/lib/email-template';
 import { NextRequest, NextResponse } from 'next/server';
+import { Resend } from 'resend';
 
 // Initialize Supabase client with service role
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -8,8 +9,8 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-// Resend API (or you can use SendGrid, AWS SES, etc.)
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
+// Initialize Resend
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
@@ -105,7 +106,7 @@ export async function POST(request: NextRequest) {
 }
 
 async function sendWebinarEmail(email: string, name?: string): Promise<boolean> {
-  if (!RESEND_API_KEY) {
+  if (!process.env.RESEND_API_KEY) {
     console.error('❌ RESEND_API_KEY not configured');
     return false;
   }
@@ -113,46 +114,26 @@ async function sendWebinarEmail(email: string, name?: string): Promise<boolean> 
   try {
     const htmlContent = generateWebinarEmailHTML(name);
 
-    const emailPayload = {
+    console.log('📧 Sending email via Resend SDK:', {
+      from: 'AI Scale <info@aiscale.app>',
+      to: email,
+      subject: '🎉 AI Scale Ücretsiz Webinar - Kaydınız Alındı!',
+      htmlLength: htmlContent.length,
+    });
+
+    const { data, error } = await resend.emails.send({
       from: 'AI Scale <info@aiscale.app>',
       to: [email],
       subject: '🎉 AI Scale Ücretsiz Webinar - Kaydınız Alındı!',
       html: htmlContent,
-    };
-
-    console.log('📧 Sending email with payload:', {
-      from: emailPayload.from,
-      to: emailPayload.to,
-      subject: emailPayload.subject,
-      htmlLength: htmlContent.length,
     });
 
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(emailPayload),
-    });
-
-    const responseText = await response.text();
-    console.log('📬 Resend API response status:', response.status);
-    console.log('📬 Resend API response body:', responseText);
-
-    if (!response.ok) {
-      let errorData;
-      try {
-        errorData = JSON.parse(responseText);
-      } catch {
-        errorData = { message: responseText };
-      }
-      console.error('❌ Resend API error:', JSON.stringify(errorData, null, 2));
+    if (error) {
+      console.error('❌ Resend SDK error:', JSON.stringify(error, null, 2));
       return false;
     }
 
-    const data = JSON.parse(responseText);
-    console.log('✅ Email sent successfully:', data);
+    console.log('✅ Email sent successfully via Resend SDK:', data);
     return true;
   } catch (error) {
     console.error('❌ Error sending email:', error);
