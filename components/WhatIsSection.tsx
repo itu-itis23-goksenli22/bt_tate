@@ -17,9 +17,21 @@ export default function WhatIsSection() {
       duration: "1 dakika",
       url: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2017.03.59.mp4"
     },
-    { title: "Crypto Trading", duration: "1 dakika", url: undefined },
-    { title: "Freelancing Başarısı", duration: "1 dakika", url: undefined },
-    { title: "Amazon FBA", duration: "1 dakika", url: undefined },
+    {
+      title: "AI Otomasyon",
+      duration: "1 dakika",
+      url: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2017.45.09%20(3).mp4"
+    },
+    {
+      title: "Dijital Pazarlama",
+      duration: "1 dakika",
+      url: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2017.45.09%20(4).mp4"
+    },
+    {
+      title: "Gelir Akışları",
+      duration: "1 dakika",
+      url: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2017.45.09%20(5).mp4"
+    },
   ];
 
   return (
