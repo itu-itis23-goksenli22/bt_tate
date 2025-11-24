@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function ToolsSection() {
   const tools = [
     {
@@ -8,6 +10,7 @@ export default function ToolsSection() {
       ),
       title: "Gerçek Zamanlı Gösterge Paneli",
       description: "İlerlemenizi takip edin, kazançlarınızı izleyin ve hedeflerinize ulaşın. Tüm başarı metrikleriniz tek bir yerde.",
+      imageUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/images/seminer/WhatsApp%20Image%202025-11-24%20at%2018.19.32%20(1).jpeg"
     },
     {
       icon: (
@@ -17,6 +20,7 @@ export default function ToolsSection() {
       ),
       title: "Küresel Topluluk Erişimi",
       description: "Dünya çapında binlerce başarılı girişimciyle bağlantı kurun. Ağınızı genişletin ve işbirliği fırsatları yakalayın.",
+      imageUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/images/seminer/WhatsApp%20Image%202025-11-24%20at%2019.42.20.jpeg"
     },
     {
       icon: (
@@ -26,6 +30,7 @@ export default function ToolsSection() {
       ),
       title: "7/24 Mentor Desteği",
       description: "Uzman mentorlarımız her zaman yanınızda. Sorularınıza hızlı yanıtlar alın ve engelleri aşın.",
+      imageUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/images/seminer/WhatsApp%20Image%202025-11-24%20at%2019.40.35.jpeg"
     },
   ];
 
@@ -52,13 +57,16 @@ export default function ToolsSection() {
         <div className="grid md:grid-cols-3 gap-8">
           {tools.map((tool, index) => (
             <div key={index} className="card-glass group hover:scale-105">
-              {/* Image placeholder */}
+              {/* Real Image */}
               <div className="relative aspect-video bg-primary rounded-lg overflow-hidden mb-6 border border-white/5">
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary to-primary-light">
-                  <div className="text-accent-light opacity-20 group-hover:opacity-30 transition-opacity">
-                    {tool.icon}
-                  </div>
-                </div>
+                <Image
+                  src={tool.imageUrl}
+                  alt={tool.title}
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent"></div>
               </div>
 
               {/* Icon */}
