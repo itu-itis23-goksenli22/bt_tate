@@ -55,7 +55,7 @@ export default function BiographySection() {
           {timeline.map((item, index) => (
             <div
               key={index}
-              className={`relative mb-16 ${
+              className={`relative mb-8 ${
                 index % 2 === 0 ? "md:pr-[50%]" : "md:pl-[50%]"
               }`}
             >
