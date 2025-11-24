@@ -106,12 +106,26 @@ export async function POST(request: NextRequest) {
 
 async function sendWebinarEmail(email: string, name?: string): Promise<boolean> {
   if (!RESEND_API_KEY) {
-    console.error('RESEND_API_KEY not configured');
+    console.error('❌ RESEND_API_KEY not configured');
     return false;
   }
 
   try {
     const htmlContent = generateWebinarEmailHTML(name);
+
+    const emailPayload = {
+      from: 'AI Scale <noreply@therealworldportal.com>',
+      to: [email],
+      subject: '🎉 AI Scale Ücretsiz Webinar - Kaydınız Alındı!',
+      html: htmlContent,
+    };
+
+    console.log('📧 Sending email with payload:', {
+      from: emailPayload.from,
+      to: emailPayload.to,
+      subject: emailPayload.subject,
+      htmlLength: htmlContent.length,
+    });
 
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -119,25 +133,29 @@ async function sendWebinarEmail(email: string, name?: string): Promise<boolean> 
         'Authorization': `Bearer ${RESEND_API_KEY}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        from: 'AI Scale <info@aiscale.app>',
-        to: [email],
-        subject: '🎉 AI Scale Ücretsiz Webinar - Kaydınız Alındı!',
-        html: htmlContent,
-      }),
+      body: JSON.stringify(emailPayload),
     });
 
+    const responseText = await response.text();
+    console.log('📬 Resend API response status:', response.status);
+    console.log('📬 Resend API response body:', responseText);
+
     if (!response.ok) {
-      const errorData = await response.json();
-      console.error('Resend API error:', errorData);
+      let errorData;
+      try {
+        errorData = JSON.parse(responseText);
+      } catch {
+        errorData = { message: responseText };
+      }
+      console.error('❌ Resend API error:', JSON.stringify(errorData, null, 2));
       return false;
     }
 
-    const data = await response.json();
-    console.log('Email sent successfully:', data);
+    const data = JSON.parse(responseText);
+    console.log('✅ Email sent successfully:', data);
     return true;
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('❌ Error sending email:', error);
     return false;
   }
 }
