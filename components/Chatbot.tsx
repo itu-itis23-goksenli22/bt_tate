@@ -60,6 +60,12 @@ export default function Chatbot() {
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
 
+    // Wait for session ID to be generated
+    if (!sessionId) {
+      console.warn('Session ID not yet generated, waiting...');
+      return;
+    }
+
     const userMessage: Message = {
       role: "user",
       content: inputMessage,
@@ -287,7 +293,7 @@ export default function Chatbot() {
               </div>
               <button
                 onClick={handleSendMessage}
-                disabled={!inputMessage.trim() || isLoading}
+                disabled={!inputMessage.trim() || isLoading || !sessionId}
                 className="bg-gradient-to-r from-accent to-accent-light p-3 rounded-xl hover:shadow-lg hover:shadow-accent/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group flex items-center justify-center min-w-[48px]"
                 aria-label="Gönder"
               >
