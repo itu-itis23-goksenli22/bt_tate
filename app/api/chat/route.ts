@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const N8N_WEBHOOK_URL = "https://tunaligokalp.app.n8n.cloud/webhook-test/1dc6516f-2b39-4c04-912c-eb199c1d048e";
+const N8N_WEBHOOK_URL = "https://tunaligokalp.app.n8n.cloud/webhook/1dc6516f-2b39-4c04-912c-eb199c1d048e";
 
 export async function POST(request: NextRequest) {
   try {
