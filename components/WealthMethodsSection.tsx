@@ -73,23 +73,33 @@ export default function WealthMethodsSection() {
               className="card-trw group cursor-pointer"
               onClick={() => method.videoUrl && setSelectedVideo(method.videoUrl)}
             >
-              {/* Video Placeholder with Play Button */}
+              {/* Video Thumbnail with Play Button */}
               <div className={`relative aspect-video bg-gradient-to-br ${method.color} rounded-xl mb-4 overflow-hidden`}>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-6xl">{method.icon}</div>
-                </div>
-                {/* Play Button Overlay */}
-                {method.videoUrl && (
-                  <div className="absolute inset-0 bg-primary/40 group-hover:bg-primary/20 transition-all flex items-center justify-center">
-                    <div className="w-16 h-16 bg-accent/90 group-hover:bg-accent rounded-full flex items-center justify-center transition-all group-hover:scale-110">
-                      <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
+                {/* Video Element for Thumbnail */}
+                {method.videoUrl ? (
+                  <>
+                    <video
+                      src={method.videoUrl}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      preload="metadata"
+                      muted
+                    />
+                    {/* Play Button Overlay */}
+                    <div className="absolute inset-0 bg-primary/40 group-hover:bg-primary/20 transition-all flex items-center justify-center">
+                      <div className="w-16 h-16 bg-accent/90 group-hover:bg-accent rounded-full flex items-center justify-center transition-all group-hover:scale-110 shadow-lg">
+                        <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
                     </div>
+                  </>
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-6xl">{method.icon}</div>
                   </div>
                 )}
                 {/* Campus Label */}
-                <div className="absolute bottom-3 left-3 right-3">
+                <div className="absolute bottom-3 left-3 right-3 z-10">
                   <div className="bg-primary/80 backdrop-blur-sm rounded-lg px-3 py-2">
                     <p className="text-accent text-xs uppercase tracking-wider font-semibold">
                       {method.title.toUpperCase()}
