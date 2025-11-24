@@ -1,15 +1,8 @@
 import { CHECKOUT_URL } from "@/lib/constants";
+import Image from "next/image";
+import { getStorageImageUrl } from "@/lib/images";
 
 export default function ExitPlanSection() {
-  const courses = [
-    { icon: "📊", name: "İş Analizi" },
-    { icon: "📈", name: "Büyüme Stratejileri" },
-    { icon: "👥", name: "Topluluk Yönetimi" },
-    { icon: "🌐", name: "Global Pazarlama" },
-    { icon: "🏛️", name: "Finans Yönetimi" },
-    { icon: "💝", name: "Marka Oluşturma" }
-  ];
-
   return (
     <section className="py-20 px-4 bg-primary relative overflow-hidden">
       {/* Background grid pattern */}
@@ -60,55 +53,46 @@ export default function ExitPlanSection() {
             </a>
           </div>
 
-          {/* Right - Courses Grid */}
-          <div>
-            <div className="text-center mb-8">
-              <p className="text-accent text-sm uppercase tracking-widest mb-3">
-                KURSLARIMIZ
-              </p>
-              <h3 className="text-2xl font-bold text-white">
-                Öğrenmeye Başla
-              </h3>
-            </div>
+          {/* Right - MacBook Mockup */}
+          <div className="relative">
+            {/* MacBook mockup */}
+            <div className="relative">
+              {/* Screen */}
+              <div className="relative bg-gradient-to-br from-primary-light to-primary-dark rounded-t-2xl border-4 border-primary-light shadow-2xl overflow-hidden">
+                {/* Screen bezel */}
+                <div className="relative aspect-[16/10] bg-black rounded-lg overflow-hidden border-8 border-black">
+                  {/* Dashboard Image */}
+                  <Image
+                    src={getStorageImageUrl("WhatsApp Image 2025-11-24 at 15.52.58.jpeg")}
+                    alt="AI SCALE Dashboard"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
 
-            {/* Hexagon-style grid */}
-            <div className="relative max-w-md mx-auto">
-              <div className="grid grid-cols-3 gap-6">
-                {courses.map((course, index) => (
-                  <div
-                    key={index}
-                    className="group cursor-pointer"
-                    style={{
-                      marginTop: index % 3 === 1 ? '2rem' : '0'
-                    }}
-                  >
-                    <div className="relative aspect-square">
-                      {/* Hexagon shape using clip-path */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary-light to-primary-dark border-2 border-accent/30 rounded-2xl group-hover:border-accent/60 transition-all duration-300 group-hover:scale-110">
-                        <div className="absolute inset-0 bg-accent/5 group-hover:bg-accent/10 transition-colors duration-300 rounded-2xl"></div>
-
-                        {/* Icon */}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="text-center">
-                            <div className="text-4xl mb-2 transform group-hover:scale-110 transition-transform duration-300">
-                              {course.icon}
-                            </div>
-                            <p className="text-white/70 text-xs font-medium px-2 leading-tight">
-                              {course.name}
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Glow effect on hover */}
-                        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg shadow-accent/20"></div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                {/* Camera notch */}
+                <div className="absolute top-2 left-1/2 -translate-x-1/2 w-2 h-2 bg-primary-dark rounded-full"></div>
               </div>
 
-              {/* Center decoration */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-accent/5 rounded-full blur-2xl -z-10"></div>
+              {/* Base/Bottom */}
+              <div className="relative h-6 bg-gradient-to-b from-primary-light to-primary-dark rounded-b-lg shadow-lg">
+                {/* Hinge */}
+                <div className="absolute inset-x-0 top-0 h-1 bg-primary-dark/50"></div>
+              </div>
+
+              {/* Keyboard deck */}
+              <div className="relative mx-auto w-[95%] h-3 bg-gradient-to-b from-primary-dark to-primary-light rounded-b-xl shadow-2xl -mt-1">
+                {/* Trackpad hint */}
+                <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-24 h-1 bg-primary-light/30 rounded-sm"></div>
+              </div>
+
+              {/* Shadow underneath */}
+              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-accent/10 rounded-full blur-2xl"></div>
+
+              {/* Glow effects */}
+              <div className="absolute -top-12 -right-12 w-48 h-48 bg-accent/10 rounded-full blur-3xl"></div>
+              <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-accent-dark/10 rounded-full blur-3xl"></div>
             </div>
           </div>
         </div>
