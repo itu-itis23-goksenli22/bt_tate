@@ -2,7 +2,6 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import SoldOutPlansSection from "@/components/SoldOutPlansSection";
 import PriceIncreaseSection from "@/components/PriceIncreaseSection";
-import ChoiceComparisonSection from "@/components/ChoiceComparisonSection";
 import KendineSorSection from "@/components/KendineSorSection";
 import WealthMethodsSection from "@/components/WealthMethodsSection";
 import LockInYearSection from "@/components/LockInYearSection";
@@ -39,7 +38,6 @@ export default function Home() {
       <SoldOutPlansSection />
       <PriceIncreaseSection />
       <PricingSection />
-      <ChoiceComparisonSection />
       <Footer />
       <BackToTop />
     </main>

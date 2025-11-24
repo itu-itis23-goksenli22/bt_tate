@@ -10,8 +10,32 @@ export default function EmailFormSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Redirect directly to checkout
-    window.open(CHECKOUT_URL, '_blank');
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage(data.message || 'Başarıyla kaydoldunuz! Email adresinizi kontrol edin.');
+        setEmail(''); // Clear form
+      } else {
+        setMessage(data.error || 'Bir hata oluştu. Lütfen tekrar deneyin.');
+      }
+    } catch (error) {
+      console.error('Subscribe error:', error);
+      setMessage('Bağlantı hatası. Lütfen tekrar deneyin.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

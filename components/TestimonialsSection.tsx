@@ -68,7 +68,7 @@ export default function TestimonialsSection() {
                     src={testimonial.imageUrl}
                     alt={testimonial.name}
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     priority
                   />
                 </div>
