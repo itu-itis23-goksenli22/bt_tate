@@ -51,29 +51,34 @@ export default function Chatbot() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(
-        "https://tunaligokalp.app.n8n.cloud/webhook-test/1dc6516f-2b39-4c04-912c-eb199c1d048e",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            message: inputMessage,
-            timestamp: new Date().toISOString(),
-          }),
-        }
-      );
+      console.log('Sending message to API:', inputMessage);
+
+      const response = await fetch('/api/chat', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: inputMessage,
+          timestamp: new Date().toISOString(),
+        }),
+      });
+
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers);
 
       if (!response.ok) {
-        throw new Error("Failed to send message");
+        const errorText = await response.text();
+        console.error('Response error:', errorText);
+        throw new Error(`Failed to send message: ${response.status}`);
       }
 
       const data = await response.json();
+      console.log('Response data:', data);
 
       const assistantMessage: Message = {
         role: "assistant",
-        content: data.response || data.message || "Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.",
+        content: data.response || data.message || data.output || "Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.",
         timestamp: new Date(),
       };
 
@@ -82,7 +87,7 @@ export default function Chatbot() {
       console.error("Chatbot error:", error);
       const errorMessage: Message = {
         role: "assistant",
-        content: "Üzgünüm, şu anda bir bağlantı sorunu yaşıyoruz. Lütfen daha sonra tekrar deneyin.",
+        content: `Üzgünüm, şu anda bir bağlantı sorunu yaşıyoruz. Hata detayı: ${error instanceof Error ? error.message : 'Bilinmeyen hata'}`,
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);
