@@ -11,6 +11,7 @@ interface Message {
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
+  const [sessionId, setSessionId] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
@@ -22,6 +23,25 @@ export default function Chatbot() {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Generate or retrieve session ID
+  useEffect(() => {
+    const generateSessionId = () => {
+      return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    };
+
+    // Check if session ID exists in localStorage
+    let existingSessionId = localStorage.getItem('chatbot_session_id');
+
+    if (!existingSessionId) {
+      // Create new session ID
+      existingSessionId = generateSessionId();
+      localStorage.setItem('chatbot_session_id', existingSessionId);
+    }
+
+    setSessionId(existingSessionId);
+    console.log('Chat Session ID:', existingSessionId);
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -51,7 +71,7 @@ export default function Chatbot() {
     setIsLoading(true);
 
     try {
-      console.log('Sending message to API:', inputMessage);
+      console.log('Sending message to API:', inputMessage, 'Session:', sessionId);
 
       const response = await fetch('/api/chat', {
         method: "POST",
@@ -60,6 +80,7 @@ export default function Chatbot() {
         },
         body: JSON.stringify({
           message: inputMessage,
+          sessionId: sessionId,
           timestamp: new Date().toISOString(),
         }),
       });
@@ -103,6 +124,24 @@ export default function Chatbot() {
     }
   };
 
+  const handleNewChat = () => {
+    // Generate new session ID
+    const newSessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    localStorage.setItem('chatbot_session_id', newSessionId);
+    setSessionId(newSessionId);
+
+    // Reset messages
+    setMessages([
+      {
+        role: "assistant",
+        content: "👋 Merhaba! AI Scale hakkında sorularınızı yanıtlamak için buradayım.\n\n💡 Sorabilirsiniz:\n• Eğitim programları\n• Fiyatlar ve paketler\n• Nasıl başlarım?\n• Başarı hikayeleri\n\nSize nasıl yardımcı olabilirim?",
+        timestamp: new Date(),
+      },
+    ]);
+
+    console.log('New chat started with Session ID:', newSessionId);
+  };
+
   return (
     <>
       {/* Chat Button */}
@@ -141,13 +180,29 @@ export default function Chatbot() {
                 </div>
               </div>
             </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="text-white/80 hover:text-white transition-colors relative z-10 hover:rotate-90 transition-transform duration-300"
-              aria-label="Kapat"
-            >
-              <X className="w-6 h-6" />
-            </button>
+
+            <div className="flex items-center gap-2 relative z-10">
+              {/* New Chat Button */}
+              <button
+                onClick={handleNewChat}
+                className="text-white/80 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg"
+                aria-label="Yeni Sohbet"
+                title="Yeni Sohbet Başlat"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+              </button>
+
+              {/* Close Button */}
+              <button
+                onClick={() => setIsOpen(false)}
+                className="text-white/80 hover:text-white transition-colors hover:rotate-90 transition-transform duration-300"
+                aria-label="Kapat"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
           </div>
 
           {/* Messages */}

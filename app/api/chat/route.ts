@@ -5,11 +5,15 @@ const N8N_WEBHOOK_URL = "https://tunaligokalp.app.n8n.cloud/webhook-test/1dc6516
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { message, timestamp } = body;
+    const { message, sessionId, timestamp } = body;
 
-    console.log('Proxying message to n8n:', message);
+    console.log('Proxying message to n8n:', {
+      message,
+      sessionId,
+      timestamp
+    });
 
-    // Forward request to n8n webhook
+    // Forward request to n8n webhook with session ID
     const response = await fetch(N8N_WEBHOOK_URL, {
       method: "POST",
       headers: {
@@ -17,6 +21,7 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify({
         message,
+        sessionId,
         timestamp,
       }),
     });
