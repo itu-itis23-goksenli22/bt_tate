@@ -36,10 +36,6 @@ export default function FAQSection() {
       answer: "Canlı grup eğitimleri hafta içi her gün farklı saatlerde düzenlenir. Tüm eğitimler kaydedilir, bu yüzden canlı katılamasanız bile daha sonra izleyebilirsiniz. Ayrıca 24/7 topluluk desteği sayesinde sorularınızı istediğiniz zaman sorabilirsiniz."
     },
     {
-      question: "Para iade garantisi var mı?",
-      answer: "İlk 14 gün içinde memnun kalmazsanız tam para iadesi yapıyoruz. Hiçbir soru sormadan, hiçbir şart koşmadan. Amacımız sizi başarılı kılmak, memnun olmadığınız bir hizmeti sürdürmek değil."
-    },
-    {
       question: "Mentorlara nasıl ulaşabilirim?",
       answer: "Platform içinde mentorlarla direkt iletişim kurabilirsiniz. Canlı grup eğitimlerinde soru sorabilir ve topluluk forumlarında uzmanlardan geri bildirim alabilirsiniz."
     }
