@@ -32,8 +32,6 @@ export default function ChoiceComparisonSection() {
               <p className="text-white/40 text-sm mb-8">Netflix İzle</p>
 
               <div className="text-left mb-8">
-                <p className="text-xl font-bold text-white mb-6">Günde 8 Saat Kaybet</p>
-
                 <ul className="space-y-3">
                   <li className="flex items-start text-white/60 text-sm">
                     <svg className="w-5 h-5 text-white/40 mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -52,12 +50,6 @@ export default function ChoiceComparisonSection() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                     <span>9-5 çalış</span>
-                  </li>
-                  <li className="flex items-start text-white/60 text-sm">
-                    <svg className="w-5 h-5 text-white/40 mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                    <span>Üniversite için $35,000 öde</span>
                   </li>
                   <li className="flex items-start text-white/60 text-sm">
                     <svg className="w-5 h-5 text-white/40 mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -126,18 +118,6 @@ export default function ChoiceComparisonSection() {
                     <svg className="w-5 h-5 text-accent mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span>Milyoner mentorlara erişim</span>
-                  </li>
-                  <li className="flex items-start text-white/70 text-sm">
-                    <svg className="w-5 h-5 text-accent mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>155,000+ kişi ile bağlantı kur</span>
-                  </li>
-                  <li className="flex items-start text-white/70 text-sm">
-                    <svg className="w-5 h-5 text-accent mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
                     <span>Deneyim gerekmez</span>
                   </li>
                   <li className="flex items-start text-white/70 text-sm">
@@ -148,20 +128,6 @@ export default function ChoiceComparisonSection() {
                   </li>
                 </ul>
               </div>
-
-              {/* Risk-free badge */}
-              <div className="flex items-center justify-center gap-2 text-accent text-sm mb-4">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-                <span>İstediğiniz zaman iptal edin, risksiz</span>
-              </div>
-
-              <div className="text-center text-white/60 text-sm mb-6">
-                <span className="text-accent font-semibold">$49.99</span>/ay sonsuza kadar
-              </div>
-
-              <p className="text-white/40 text-xs mb-6">Artmadan önce fiyatı kilitle</p>
 
               <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
                 <button className="w-full py-4 bg-accent hover:bg-accent-light rounded-full font-bold text-white text-lg transition-all shadow-lg shadow-accent/30">
