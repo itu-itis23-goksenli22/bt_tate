@@ -7,8 +7,16 @@ export default function WhatIsSection() {
   const [selectedVideo, setSelectedVideo] = useState<{title: string, url?: string} | null>(null);
 
   const videos = [
-    { title: "Başarı Hikayesi #1", duration: "1 dakika", url: undefined },
-    { title: "E-Commerce Kazancı", duration: "1 dakika", url: undefined },
+    {
+      title: "Başarı Hikayesi #1",
+      duration: "1 dakika",
+      url: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2017.03.31.mp4"
+    },
+    {
+      title: "E-Commerce Kazancı",
+      duration: "1 dakika",
+      url: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2017.03.59.mp4"
+    },
     { title: "Crypto Trading", duration: "1 dakika", url: undefined },
     { title: "Freelancing Başarısı", duration: "1 dakika", url: undefined },
     { title: "Amazon FBA", duration: "1 dakika", url: undefined },

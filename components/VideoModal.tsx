@@ -25,13 +25,13 @@ export default function VideoModal({ isOpen, onClose, videoTitle, videoUrl }: Vi
       {/* Modal content */}
       <div className="relative w-full max-w-5xl aspect-video bg-primary-light rounded-2xl overflow-hidden border-2 border-accent/30 shadow-2xl shadow-accent/20 animate-scaleIn">
         {videoUrl ? (
-          <iframe
-            className="absolute inset-0 w-full h-full"
+          <video
+            className="absolute inset-0 w-full h-full object-contain"
             src={videoUrl}
             title={videoTitle}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
+            controls
+            autoPlay
+            playsInline
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary to-primary-dark">

@@ -6,6 +6,9 @@ import ChoiceComparisonSection from "@/components/ChoiceComparisonSection";
 import UrgencySection from "@/components/UrgencySection";
 import WealthMethodsSection from "@/components/WealthMethodsSection";
 import StudentsWinningSection from "@/components/StudentsWinningSection";
+import LockInYearSection from "@/components/LockInYearSection";
+import PreparedToWorkSection from "@/components/PreparedToWorkSection";
+import ExitPlanSection from "@/components/ExitPlanSection";
 import TrustBadges from "@/components/TrustBadges";
 import WhatIsSection from "@/components/WhatIsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
@@ -27,6 +30,9 @@ export default function Home() {
       <UrgencySection />
       <WealthMethodsSection />
       <StudentsWinningSection />
+      <LockInYearSection />
+      <PreparedToWorkSection />
+      <ExitPlanSection />
       <TrustBadges />
       <WhatIsSection />
       <TestimonialsSection />
