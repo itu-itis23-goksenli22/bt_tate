@@ -37,8 +37,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const data = await response.json();
-    console.log('n8n response data:', data);
+    // Try to parse as JSON first, fallback to text
+    const contentType = response.headers.get('content-type');
+    let data;
+
+    if (contentType && contentType.includes('application/json')) {
+      data = await response.json();
+      console.log('n8n response data (JSON):', data);
+    } else {
+      // Response is plain text
+      const textResponse = await response.text();
+      console.log('n8n response data (TEXT):', textResponse);
+      data = {
+        response: textResponse,
+        message: textResponse,
+        output: textResponse
+      };
+    }
 
     return NextResponse.json(data);
   } catch (error) {
