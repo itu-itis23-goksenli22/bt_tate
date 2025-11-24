@@ -114,7 +114,7 @@ async function sendWebinarEmail(email: string, name?: string): Promise<boolean> 
     const htmlContent = generateWebinarEmailHTML(name);
 
     const emailPayload = {
-      from: 'AI Scale <noreply@therealworldportal.com>',
+      from: 'AI Scale <info@aiscale.app>',
       to: [email],
       subject: '🎉 AI Scale Ücretsiz Webinar - Kaydınız Alındı!',
       html: htmlContent,
