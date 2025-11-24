@@ -1,3 +1,5 @@
+import { CHECKOUT_URL } from "@/lib/constants";
+
 export default function PricingSection() {
   const packageInfo = {
     name: "AI SCALE Üyeliği",
@@ -79,9 +81,11 @@ export default function PricingSection() {
             </ul>
 
             {/* CTA Button */}
-            <button className="w-full py-4 rounded-lg font-bold uppercase text-sm tracking-wider transition-all duration-300 transform hover:scale-105 bg-gold hover:bg-gold-light text-black shadow-lg shadow-gold/30">
-              Şimdi Başla
-            </button>
+            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="block">
+              <button className="w-full py-4 rounded-lg font-bold uppercase text-sm tracking-wider transition-all duration-300 transform hover:scale-105 bg-gold hover:bg-gold-light text-black shadow-lg shadow-gold/30">
+                Şimdi Başla
+              </button>
+            </a>
 
             {/* Money back guarantee */}
             <div className="mt-6 text-center">

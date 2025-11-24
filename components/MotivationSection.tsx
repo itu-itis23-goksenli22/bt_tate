@@ -1,3 +1,5 @@
+import { CHECKOUT_URL } from "@/lib/constants";
+
 export default function MotivationSection() {
   return (
     <section className="py-12 px-4 bg-primary relative overflow-hidden">
@@ -67,9 +69,11 @@ export default function MotivationSection() {
               <p className="text-gold mt-2 font-bold">- Andrew Tate</p>
             </div>
 
-            <button className="btn-gold text-lg px-10 py-4">
-              Evet, Hazırım!
-            </button>
+            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+              <button className="btn-gold text-lg px-10 py-4">
+                Evet, Hazırım!
+              </button>
+            </a>
           </div>
         </div>
       </div>

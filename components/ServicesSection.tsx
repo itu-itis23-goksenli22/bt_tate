@@ -1,3 +1,5 @@
+import { CHECKOUT_URL } from "@/lib/constants";
+
 export default function ServicesSection() {
   return (
     <section className="py-12 px-4 bg-gradient-to-b from-primary to-primary-light">
@@ -50,9 +52,11 @@ export default function ServicesSection() {
                 <span className="text-white/70">Değerlendirme ve geri bildirim sistemi</span>
               </li>
             </ul>
-            <button className="btn-gold mt-6">
-              Hizmet Oluştur
-            </button>
+            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+              <button className="btn-gold mt-6">
+                Hizmet Oluştur
+              </button>
+            </a>
           </div>
 
           {/* Image placeholder */}

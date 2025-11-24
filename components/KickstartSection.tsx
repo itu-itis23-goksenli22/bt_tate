@@ -1,3 +1,5 @@
+import { CHECKOUT_URL } from "@/lib/constants";
+
 export default function KickstartSection() {
   return (
     <section className="py-12 px-4 bg-primary relative overflow-hidden">
@@ -69,9 +71,11 @@ export default function KickstartSection() {
             </div>
 
             <div className="pt-6">
-              <button className="btn-gold text-lg px-10 py-4">
-                Yolculuğumu Başlat
-              </button>
+              <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+                <button className="btn-gold text-lg px-10 py-4">
+                  Yolculuğumu Başlat
+                </button>
+              </a>
               <p className="text-white/30 text-sm mt-3">
                 30 gün para iade garantisi • İstediğiniz zaman iptal edin
               </p>

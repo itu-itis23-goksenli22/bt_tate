@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Logo from "./Logo";
+import { CHECKOUT_URL } from "@/lib/constants";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -51,9 +52,11 @@ export default function Navbar() {
             >
               Paketler
             </a>
-            <button className="btn-gold !text-xs !py-2 !px-5">
-              Hemen Başla
-            </button>
+            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+              <button className="btn-gold !text-xs !py-2 !px-5">
+                Hemen Başla
+              </button>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -100,9 +103,11 @@ export default function Navbar() {
           >
             Paketler
           </a>
-          <button className="btn-gold w-full !text-sm !py-3">
-            Hemen Başla
-          </button>
+          <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="block">
+            <button className="btn-gold w-full !text-sm !py-3">
+              Hemen Başla
+            </button>
+          </a>
         </div>
       </div>
     </nav>

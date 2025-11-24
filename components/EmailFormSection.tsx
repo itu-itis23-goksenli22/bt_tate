@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CHECKOUT_URL } from "@/lib/constants";
 
 export default function EmailFormSection() {
   const [email, setEmail] = useState("");
@@ -9,15 +10,8 @@ export default function EmailFormSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setMessage("");
-
-    // Simulate API call - will be replaced with Supabase later
-    setTimeout(() => {
-      setLoading(false);
-      setMessage("✓ Başarıyla kaydoldunuz! Size en kısa sürede ulaşacağız.");
-      setEmail("");
-    }, 1000);
+    // Redirect directly to checkout
+    window.open(CHECKOUT_URL, '_blank');
   };
 
   return (

@@ -1,3 +1,5 @@
+import { CHECKOUT_URL } from "@/lib/constants";
+
 export default function TwoPathsSection() {
   return (
     <section className="py-12 px-4 bg-primary relative overflow-hidden">
@@ -137,9 +139,11 @@ export default function TwoPathsSection() {
             </ul>
 
             <div className="mt-8">
-              <button className="btn-gold w-full">
-                Bu Yolu Seçin
-              </button>
+              <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="block">
+                <button className="btn-gold w-full">
+                  Bu Yolu Seçin
+                </button>
+              </a>
             </div>
           </div>
         </div>

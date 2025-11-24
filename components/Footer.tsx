@@ -1,4 +1,5 @@
 import Logo from "./Logo";
+import { CHECKOUT_URL } from "@/lib/constants";
 
 export default function Footer() {
   return (
@@ -51,9 +52,11 @@ export default function Footer() {
 
         {/* CTA Section */}
         <div className="border-t border-white/5 pt-8 pb-8 text-center">
-          <button className="btn-gold mb-6">
-            Hemen Katıl
-          </button>
+          <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+            <button className="btn-gold mb-6">
+              Hemen Katıl
+            </button>
+          </a>
         </div>
 
         {/* Bottom */}
