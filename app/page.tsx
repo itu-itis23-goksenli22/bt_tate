@@ -17,6 +17,7 @@ import FAQSection from "@/components/FAQSection";
 import PricingSection from "@/components/PricingSection";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
+import Chatbot from "@/components/Chatbot";
 
 export default function Home() {
   return (
@@ -40,6 +41,7 @@ export default function Home() {
       <PricingSection />
       <Footer />
       <BackToTop />
+      <Chatbot />
     </main>
   );
 }
