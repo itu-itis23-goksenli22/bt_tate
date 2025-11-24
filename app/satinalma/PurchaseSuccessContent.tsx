@@ -53,15 +53,18 @@ export default function PurchaseSuccessContent() {
                 <h2 className="text-2xl font-bold text-white mb-2">
                   🎁 Özel Hediyeniz Hazır!
                 </h2>
-                <p className="text-white/80 text-base">
-                  Size özel olarak hazırladığımız <span className="text-accent font-semibold">Yapay Zeka Başlangıç Paketi</span>'ni hemen indirin ve AI dünyasına adım atın!
+                <p className="text-white/80 text-base mb-2">
+                  Size özel olarak hazırladığımız <span className="text-accent font-semibold">500$ Değerinde Yapay Zeka Hızlı Başlangıç Paketi</span>'ni hemen indirin ve AI dünyasına adım atın!
+                </p>
+                <p className="text-accent font-bold text-sm">
+                  💎 Değer: $500 - Sizin İçin BEDAVA!
                 </p>
               </div>
             </div>
 
             {/* CTA Button */}
             <a
-              href="https://notion.so"
+              href="https://www.notion.so/Yapay-Zeka-H-zl-Ba-lang-Paketi-2aea3d46179c81f28341ea38e05b15f8?source=copy_link"
               target="_blank"
               rel="noopener noreferrer"
               className="block"
