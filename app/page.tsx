@@ -25,16 +25,16 @@ export default function Home() {
     <main className="min-h-screen">
       <Navbar />
       <HeroSection />
-      <KendineSorSection />
-      <WealthMethodsSection />
-      <StudentsWinningSection />
+      <WhatIsSection />
+      <BiographySection />
       <LockInYearSection />
+      <KendineSorSection />
       <PreparedToWorkSection />
       <ExitPlanSection />
       <TrustBadges />
-      <WhatIsSection />
       <TestimonialsSection />
-      <BiographySection />
+      <WealthMethodsSection />
+      <StudentsWinningSection />
       <ToolsSection />
       <EmailFormSection />
       <FAQSection />
