@@ -10,16 +10,16 @@ export default function SoldOutPlansSection() {
         <div className="text-center mb-16">
           <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
             <button className="btn-primary text-lg px-12 py-4 shadow-glow-strong">
-              Join The Real World →
+              Gerçek Dünyaya Katıl →
             </button>
           </a>
         </div>
 
         {/* Plans Heading */}
         <div className="text-center mb-12">
-          <p className="text-white/40 text-sm uppercase tracking-wider mb-3">OUR PLANS</p>
+          <p className="text-white/40 text-sm uppercase tracking-wider mb-3">PAKETLERİMİZ</p>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            98% <span className="text-danger">Sold Out</span>
+            %98 <span className="text-danger">Tükendi</span>
           </h2>
         </div>
 
@@ -29,7 +29,7 @@ export default function SoldOutPlansSection() {
           <div className="relative card-trw opacity-60">
             <div className="absolute top-4 right-4">
               <span className="bg-danger px-4 py-1 rounded-full text-white text-xs font-bold uppercase">
-                SOLD OUT
+                TÜKENDİ
               </span>
             </div>
             <div className="text-center py-8">
@@ -42,7 +42,7 @@ export default function SoldOutPlansSection() {
           <div className="relative card-trw opacity-60">
             <div className="absolute top-4 right-4">
               <span className="bg-danger px-4 py-1 rounded-full text-white text-xs font-bold uppercase">
-                SOLD OUT
+                TÜKENDİ
               </span>
             </div>
             <div className="text-center py-8">
@@ -55,7 +55,7 @@ export default function SoldOutPlansSection() {
           <div className="relative card-trw border-accent/50 hover:border-accent transition-all">
             <div className="absolute top-4 right-4">
               <span className="bg-accent px-4 py-1 rounded-full text-white text-xs font-bold uppercase animate-pulse">
-                AVAILABLE
+                MÜSAİT
               </span>
             </div>
             <div className="absolute -top-3 left-1/2 -translate-x-1/2">
@@ -64,8 +64,8 @@ export default function SoldOutPlansSection() {
               </div>
             </div>
             <div className="text-center py-8 pt-12">
-              <h3 className="text-2xl font-bold text-accent mb-2">CONQUER PLAN</h3>
-              <p className="text-white/60 text-sm mb-4 uppercase tracking-wider">Elite Access</p>
+              <h3 className="text-2xl font-bold text-accent mb-2">FETİH PLANI</h3>
+              <p className="text-white/60 text-sm mb-4 uppercase tracking-wider">Elit Erişim</p>
               <div className="flex items-center justify-center gap-3 mb-4">
                 <span className="text-2xl font-bold text-white/40 line-through">$159</span>
                 <span className="text-5xl font-bold text-accent">$39</span>

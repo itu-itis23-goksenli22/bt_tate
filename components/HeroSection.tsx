@@ -25,7 +25,8 @@ export default function HeroSection() {
 
         {/* Main heading - The Real World style */}
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-          <span className="text-white block">Aiscaleapp 2.0</span>
+          <span className="text-white block">Yapay Zeka ile Zenginlik Yaratmayı Öğrenin</span>
+          <span className="text-accent block mt-2">Aiscaleapp 2.0</span>
         </h1>
 
         {/* Clock subtitle */}
@@ -34,7 +35,7 @@ export default function HeroSection() {
             <circle cx="12" cy="12" r="10" strokeWidth="2" />
             <path strokeWidth="2" d="M12 6v6l4 2" />
           </svg>
-          <p>The clock is ticking, the world is spinning, and the only constant is relentless change.</p>
+          <p>Saat işliyor, dünya dönüyor ve tek sabit olan durdurulamaz değişim.</p>
         </div>
 
         {/* YouTube Video - The Real World style */}
@@ -51,7 +52,7 @@ export default function HeroSection() {
 
             {/* Video caption overlay */}
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/90 to-transparent p-6">
-              <p className="text-white/80 text-sm uppercase tracking-wider">OF LIKE MINDED INDIVIDUALS</p>
+              <p className="text-white/80 text-sm uppercase tracking-wider">AYNI DÜŞÜNCEDEKİ BİREYLERLE</p>
             </div>
           </div>
         </div>
@@ -60,7 +61,7 @@ export default function HeroSection() {
         <div className="mb-16">
           <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
             <button className="btn-primary text-lg px-12 py-4 shadow-glow-strong hover:shadow-glow-hover">
-              Join The Real World →
+              Gerçek Dünyaya Katıl →
             </button>
           </a>
         </div>
@@ -75,8 +76,8 @@ export default function HeroSection() {
               </svg>
             </div>
             <div className="text-left">
-              <p className="text-xs text-white/40 uppercase tracking-wider">World Class</p>
-              <p className="text-white font-semibold">Learning</p>
+              <p className="text-xs text-white/40 uppercase tracking-wider">Dünya Klasında</p>
+              <p className="text-white font-semibold">Öğrenme</p>
             </div>
           </div>
 
@@ -92,8 +93,8 @@ export default function HeroSection() {
               </svg>
             </div>
             <div className="text-left">
-              <p className="text-xs text-white/40 uppercase tracking-wider">Scale Goal Zero</p>
-              <p className="text-white font-semibold">To 10k/Mo</p>
+              <p className="text-xs text-white/40 uppercase tracking-wider">Sıfırdan Başla</p>
+              <p className="text-white font-semibold">Ayda 10k'ya</p>
             </div>
           </div>
 
@@ -109,8 +110,8 @@ export default function HeroSection() {
               </svg>
             </div>
             <div className="text-left">
-              <p className="text-xs text-white/40 uppercase tracking-wider">World Advice</p>
-              <p className="text-white font-semibold">From Experts</p>
+              <p className="text-xs text-white/40 uppercase tracking-wider">Uzman Tavsiyesi</p>
+              <p className="text-white font-semibold">Mentorlardan</p>
             </div>
           </div>
         </div>
