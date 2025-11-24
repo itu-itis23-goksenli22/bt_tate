@@ -19,38 +19,35 @@ export default function EmailFormSection() {
   }, []);
 
   return (
-    <section className="py-16 md:py-20 bg-gradient-to-b from-primary-light to-primary relative overflow-hidden">
+    <section className="py-12 md:py-16 bg-gradient-to-b from-primary-light to-primary relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent rounded-full blur-[120px]" />
       </div>
 
-      <div className="relative z-10 container-custom">
-        <div className="max-w-3xl mx-auto">
+      <div className="relative z-10 container-custom px-4">
+        <div className="max-w-2xl mx-auto">
           {/* Content */}
-          <div className="text-center mb-10">
-            <h2 className="section-title mb-6">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               <span className="text-accent-light">ÜCRETSİZ</span> SEMİNERE KATIL
             </h2>
-            <p className="text-lg md:text-xl text-white/80 mb-4">
+            <p className="text-base md:text-lg text-white/70">
               AI ile para kazanmanın sırlarını öğren. İlk adımı at.
-            </p>
-            <p className="text-sm md:text-base text-white/60">
-              Formu doldur, ücretsiz seminere hemen katıl.
             </p>
           </div>
 
-          {/* GoHighLevel Embedded Form */}
-          <div className="max-w-2xl mx-auto">
-            <div className="card-glass !p-0 overflow-hidden">
-              <div className="relative w-full" style={{ minHeight: '550px' }}>
+          {/* GoHighLevel Embedded Form - Compact */}
+          <div className="max-w-xl mx-auto">
+            <div className="bg-primary-light/50 backdrop-blur-sm rounded-2xl p-4 md:p-6 border border-accent/20 shadow-lg">
+              <div className="relative w-full overflow-hidden rounded-xl">
                 <iframe
                   src="https://api.leadconnectorhq.com/widget/form/84Is6fx7guuS4EeNPxf2"
                   style={{
                     width: '100%',
-                    height: '550px',
+                    height: '420px',
                     border: 'none',
-                    borderRadius: '10px',
+                    borderRadius: '12px',
                   }}
                   id="inline-84Is6fx7guuS4EeNPxf2"
                   data-layout="{'id':'INLINE'}"
@@ -61,28 +58,29 @@ export default function EmailFormSection() {
                   data-deactivation-type="neverDeactivate"
                   data-deactivation-value=""
                   data-form-name="WEBINAR - Copy"
-                  data-height="508"
+                  data-height="420"
                   data-layout-iframe-id="inline-84Is6fx7guuS4EeNPxf2"
                   data-form-id="84Is6fx7guuS4EeNPxf2"
                   title="Ücretsiz Webinar Kayıt Formu"
+                  loading="lazy"
                 />
               </div>
             </div>
           </div>
 
           {/* Trust elements */}
-          <div className="mt-12 grid grid-cols-3 gap-6 max-w-xl mx-auto">
+          <div className="mt-8 grid grid-cols-3 gap-4 max-w-md mx-auto">
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-accent-light mb-1">10K+</div>
-              <div className="text-xs md:text-sm text-white/60">Öğrenci</div>
+              <div className="text-xl md:text-2xl font-bold text-accent-light mb-1">10K+</div>
+              <div className="text-xs text-white/60">Öğrenci</div>
             </div>
             <div className="text-center border-x border-white/10">
-              <div className="text-2xl md:text-3xl font-bold text-accent-light mb-1">6+</div>
-              <div className="text-xs md:text-sm text-white/60">Modül</div>
+              <div className="text-xl md:text-2xl font-bold text-accent-light mb-1">6+</div>
+              <div className="text-xs text-white/60">Modül</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-accent-light mb-1">24/7</div>
-              <div className="text-xs md:text-sm text-white/60">Destek</div>
+              <div className="text-xl md:text-2xl font-bold text-accent-light mb-1">24/7</div>
+              <div className="text-xs text-white/60">Destek</div>
             </div>
           </div>
         </div>
