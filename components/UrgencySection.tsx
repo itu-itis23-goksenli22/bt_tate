@@ -111,6 +111,21 @@ export default function UrgencySection() {
           </div>
         </div>
 
+        {/* Large Horizontal Image */}
+        <div className="mb-16">
+          <div className="relative w-full aspect-[21/9] rounded-2xl overflow-hidden border-2 border-accent/30 shadow-2xl shadow-accent/20">
+            <Image
+              src={getStorageImageUrl("kendinesor.jpg")}
+              alt="Kendine Sor"
+              fill
+              className="object-cover"
+              priority
+            />
+            {/* Overlay gradient for better visibility */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20"></div>
+          </div>
+        </div>
+
         {/* Bottom CTA */}
         <div className="text-center">
           <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">

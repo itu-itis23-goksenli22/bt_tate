@@ -89,9 +89,6 @@ export default function StudentsWinningSection() {
           <p className="text-white/60 text-lg max-w-3xl mx-auto">
             Teknoloji yeni bir endüstriyi devrimleştirdiğinde, Gerçek Dünya bundan nasıl faydalanacağınızı öğretecek ilk ve tek yer olacak.
           </p>
-          <p className="text-white/50 text-base mt-4 max-w-2xl mx-auto">
-            Öğrencilerimiz her gün saat 8'de en son bilgileri alır.
-          </p>
         </div>
 
         {/* Testimonials Grid */}
