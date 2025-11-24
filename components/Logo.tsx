@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { getStorageImageUrl } from '@/lib/images';
 
 export default function Logo({ className = "w-9 h-9" }: { className?: string }) {
-  const logoUrl = getStorageImageUrl('logo.png');
+  const logoUrl = getStorageImageUrl('ai-scale-logo.png');
 
   return (
     <div className={className}>
