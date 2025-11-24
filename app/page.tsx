@@ -25,8 +25,6 @@ export default function Home() {
     <main className="min-h-screen">
       <Navbar />
       <HeroSection />
-      <SoldOutPlansSection />
-      <PriceIncreaseSection />
       <KendineSorSection />
       <WealthMethodsSection />
       <StudentsWinningSection />
@@ -40,6 +38,8 @@ export default function Home() {
       <ToolsSection />
       <EmailFormSection />
       <FAQSection />
+      <SoldOutPlansSection />
+      <PriceIncreaseSection />
       <PricingSection />
       <ChoiceComparisonSection />
       <Footer />
