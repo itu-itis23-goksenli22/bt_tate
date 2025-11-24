@@ -27,7 +27,6 @@ export default function Home() {
       <HeroSection />
       <SoldOutPlansSection />
       <PriceIncreaseSection />
-      <ChoiceComparisonSection />
       <KendineSorSection />
       <WealthMethodsSection />
       <StudentsWinningSection />
@@ -42,6 +41,7 @@ export default function Home() {
       <EmailFormSection />
       <FAQSection />
       <PricingSection />
+      <ChoiceComparisonSection />
       <Footer />
       <BackToTop />
     </main>
