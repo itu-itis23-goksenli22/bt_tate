@@ -3,7 +3,7 @@ import HeroSection from "@/components/HeroSection";
 import SoldOutPlansSection from "@/components/SoldOutPlansSection";
 import PriceIncreaseSection from "@/components/PriceIncreaseSection";
 import ChoiceComparisonSection from "@/components/ChoiceComparisonSection";
-import UrgencySection from "@/components/UrgencySection";
+import KendineSorSection from "@/components/KendineSorSection";
 import WealthMethodsSection from "@/components/WealthMethodsSection";
 import StudentsWinningSection from "@/components/StudentsWinningSection";
 import LockInYearSection from "@/components/LockInYearSection";
@@ -28,7 +28,7 @@ export default function Home() {
       <SoldOutPlansSection />
       <PriceIncreaseSection />
       <ChoiceComparisonSection />
-      <UrgencySection />
+      <KendineSorSection />
       <WealthMethodsSection />
       <StudentsWinningSection />
       <LockInYearSection />
