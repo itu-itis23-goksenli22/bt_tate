@@ -47,7 +47,7 @@ export default function WealthMethodsSection() {
       description: "Gerçek Dünya İş ustalığı ve diplomasi eğitimi liderlik, operasyonları ölçeklendirme, daha fazla para kazanma sanatı hakkında.",
       icon: "👔",
       color: "from-blue-500/20 to-cyan-500/20",
-      videoUrl: null // No video for this one
+      videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2019.36.02.mp4"
     }
   ];
 
