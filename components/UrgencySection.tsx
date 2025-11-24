@@ -8,9 +8,9 @@ export default function UrgencySection() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <p className="text-accent text-sm uppercase tracking-wider mb-3">NO TIME TO WASTE</p>
+          <p className="text-accent text-sm uppercase tracking-wider mb-3">ZAMAN KAYBEDEMEZS İNİZ</p>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            This Is Your <span className="text-accent">Last Chance</span>
+            Bu Sizin <span className="text-accent">Son Şansınız</span>
           </h2>
         </div>
 
@@ -28,17 +28,17 @@ export default function UrgencySection() {
               <span className="text-2xl font-bold text-white">1</span>
             </div>
             <h3 className="text-2xl font-bold text-white mb-4">
-              You're Running<br />Out Of Time
+              Zamanınız<br />Tükeniyor
             </h3>
             <p className="text-white/60 text-sm leading-relaxed mb-4">
-              The world will change forever in 2025. They are developing new ways to{" "}
-              <span className="text-white">trap you.</span>
+              Dünya 2025'te sonsuza kadar değişecek. Sizi{" "}
+              <span className="text-white">tuzağa düşürmek</span> için yeni yollar geliştiriyorlar.
             </p>
             <p className="text-white/40 text-sm">
-              What have you been doing to prepare?
+              Hazırlanmak için ne yaptınız?
             </p>
             <p className="text-white/60 text-sm mt-2">
-              You must understand, it's now or never.
+              Anlamalısınız, şimdi ya da asla.
             </p>
           </div>
 
@@ -53,16 +53,16 @@ export default function UrgencySection() {
               <span className="text-2xl font-bold text-white">2</span>
             </div>
             <h3 className="text-2xl font-bold text-white mb-4">
-              Imminent AI<br />Takeover
+              Yaklaşan AI<br />Devrimi
             </h3>
             <p className="text-white/60 text-sm leading-relaxed mb-4">
-              Imagine there was a potion that you could apply to your business.
+              İşinize uygulayabileceğiniz bir iksir olduğunu hayal edin.
             </p>
             <p className="text-white/40 text-sm">
-              And it helped you <span className="text-white">10x output OVERNIGHT.</span>
+              Ve bu <span className="text-white">BİR GECEDE çıktınızı 10 kat artırıyor.</span>
             </p>
             <p className="text-white/60 text-sm mt-2">
-              You can have a robot make money for you while you SLEEP... Yet you have chosen not to take action.
+              Siz UYURKEN bir robot sizin için para kazanabilir... Ama siz harekete geçmemeyi seçtiniz.
             </p>
           </div>
 
@@ -77,16 +77,16 @@ export default function UrgencySection() {
               <span className="text-2xl font-bold text-white">3</span>
             </div>
             <h3 className="text-2xl font-bold text-white mb-4">
-              You Need To<br />Learn A Skill
+              Bir Beceri<br />Öğrenmelisiniz
             </h3>
             <p className="text-white/60 text-sm leading-relaxed mb-4">
-              Just imagine...
+              Sadece hayal edin...
             </p>
             <p className="text-white/40 text-sm">
-              The doors that open when you invest in yourself—higher income, greater freedom, and the ability to create the life you want.
+              Kendinize yatırım yaptığınızda açılan kapılar—daha yüksek gelir, daha fazla özgürlük ve istediğiniz hayatı yaratma yeteneği.
             </p>
             <p className="text-white/60 text-sm mt-2">
-              <span className="text-white">Don't wait for success to find you.</span> Take control.
+              <span className="text-white">Başarının sizi bulmasını beklemeyin.</span> Kontrolü elinize alın.
             </p>
           </div>
         </div>
@@ -95,7 +95,7 @@ export default function UrgencySection() {
         <div className="text-center">
           <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
             <button className="btn-primary text-lg px-12 py-4 shadow-glow-strong">
-              Join The Real World →
+              Gerçek Dünyaya Katıl →
             </button>
           </a>
         </div>

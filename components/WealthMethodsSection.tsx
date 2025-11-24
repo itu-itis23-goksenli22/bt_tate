@@ -5,40 +5,40 @@ import { CHECKOUT_URL } from "@/lib/constants";
 export default function WealthMethodsSection() {
   const methods = [
     {
-      title: "AI Automated Agency",
-      description: "We teach anybody, even with limited technical knowledge, to build AI systems. Sell the system to people with online companies or start an online company run by your own AI.",
+      title: "AI Otomasyonlu Ajans",
+      description: "Sınırlı teknik bilgiyle bile AI sistemleri kurmayı öğretiyoruz. Sistemi online şirketlere satın veya kendi AI'nız tarafından yönetilen bir online şirket kurun.",
       icon: "🤖",
       color: "from-blue-500/20 to-cyan-500/20"
     },
     {
-      title: "Crypto Investing",
-      description: "Within the Cryptocurrency campus you have real time information to not only see the professor but also 112,000+ other students. This allows you to identify trends and what influences the price of coins.",
+      title: "Kripto Yatırım",
+      description: "Kripto para kampüsünde gerçek zamanlı bilgiye, profesörlere ve 112,000+ öğrenciye erişim. Trendleri belirleyin ve coin fiyatlarını etkileyen faktörleri öğrenin.",
       icon: "₿",
-      color: "from-orange-500/20 to-yellow-500/20"
+      color: "from-blue-500/20 to-cyan-500/20"
     },
     {
-      title: "Content Creation",
-      description: "In the age of technology, the value of videos and landing pages surpass the worth of real estate. It's crucial to leverage digital assets and we will teach you how.",
+      title: "İçerik Üretimi",
+      description: "Teknoloji çağında videoların ve landing page'lerin değeri gayrimenkulü aştı. Dijital varlıkları nasıl kullanacağınızı size öğreteceğiz.",
       icon: "🎬",
       color: "from-purple-500/20 to-pink-500/20"
     },
     {
       title: "Copywriting",
-      description: "Words are your warriors, and every letter you write is a strategy. Master the craft of copywriting with us, and you'll learn turn ideas into profit.",
+      description: "Kelimeler sizin savaşçılarınız ve yazdığınız her harf bir strateji. Copywriting sanatında ustalaşın ve fikirleri kâra çevirin.",
       icon: "✍️",
       color: "from-green-500/20 to-emerald-500/20"
     },
     {
       title: "Fitness",
-      description: "A strong body is a strong mind. The Real World Fitness campus includes personal trainers and meal plans. Health is wealth - a fit mind that never tires.",
+      description: "Güçlü bir beden, güçlü bir zihin demektir. Gerçek Dünya Fitness kampüsü kişisel antrenörler ve yemek planları içerir. Sağlık zenginliktir.",
       icon: "💪",
       color: "from-red-500/20 to-rose-500/20"
     },
     {
-      title: "Business Mastery",
-      description: "The Real World Business mastery and diplomacy training is about becoming a leader, scaling operations to make more money, the art of leadership and scaling.",
+      title: "İş Ustalığı",
+      description: "Gerçek Dünya İş ustalığı ve diplomasi eğitimi liderlik, operasyonları ölçeklendirme, daha fazla para kazanma sanatı hakkında.",
       icon: "👔",
-      color: "from-indigo-500/20 to-blue-500/20"
+      color: "from-blue-500/20 to-cyan-500/20"
     }
   ];
 
@@ -47,13 +47,12 @@ export default function WealthMethodsSection() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <p className="text-accent text-sm uppercase tracking-wider mb-3">THE REAL WORLD CAMPUSES</p>
+          <p className="text-accent text-sm uppercase tracking-wider mb-3">GERÇEK DÜNYA KAMPÜSLERI</p>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            10+ Wealth Creation Methods
+            10+ Zenginlik Yaratma Yöntemi
           </h2>
           <p className="text-white/60 text-lg max-w-3xl mx-auto">
-            Choose your path to financial freedom. Each campus is led by multimillionaire professors
-            who will guide you step-by-step.
+            Finansal özgürlüğe giden yolunuzu seçin. Her kampüs milyoner profesörler tarafından adım adım rehberlik edilir.
           </p>
         </div>
 
@@ -94,11 +93,11 @@ export default function WealthMethodsSection() {
         {/* Bottom CTA */}
         <div className="text-center">
           <p className="text-white/60 text-lg mb-6">
-            <span className="text-accent font-semibold">Access 12+</span> wealth creation methods
+            <span className="text-accent font-semibold">12+</span> zenginlik yaratma yöntemine erişim
           </p>
           <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
             <button className="btn-primary text-lg px-12 py-4 shadow-glow-strong">
-              Join The Real World →
+              Gerçek Dünyaya Katıl →
             </button>
           </a>
         </div>
