@@ -14,7 +14,7 @@ export default function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Merhaba! AI Scale hakkında sorularınızı yanıtlamak için buradayım. Size nasıl yardımcı olabilirim?",
+      content: "👋 Merhaba! AI Scale hakkında sorularınızı yanıtlamak için buradayım.\n\n💡 Sorabilirsiniz:\n• Eğitim programları\n• Fiyatlar ve paketler\n• Nasıl başlarım?\n• Başarı hikayeleri\n\nSize nasıl yardımcı olabilirim?",
       timestamp: new Date(),
     },
   ]);
@@ -52,7 +52,7 @@ export default function Chatbot() {
 
     try {
       const response = await fetch(
-        "https://tunaligokalp.app.n8n.cloud/webhook-test/0f2b5130-7618-4146-a3bd-46b6265bd2db",
+        "https://tunaligokalp.app.n8n.cloud/webhook-test/1dc6516f-2b39-4c04-912c-eb199c1d048e",
         {
           method: "POST",
           headers: {
@@ -118,19 +118,27 @@ export default function Chatbot() {
       {isOpen && (
         <div className="fixed bottom-6 right-20 z-50 w-[380px] h-[600px] bg-primary-dark border-2 border-accent/30 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fadeIn">
           {/* Header */}
-          <div className="bg-gradient-to-r from-accent to-accent-light p-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+          <div className="bg-gradient-to-r from-accent to-accent-light p-4 flex items-center justify-between relative overflow-hidden">
+            {/* Animated background */}
+            <div className="absolute inset-0 bg-gradient-to-r from-accent/20 to-transparent animate-pulse"></div>
+
+            <div className="flex items-center gap-3 relative z-10">
+              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center relative">
                 <MessageCircle className="w-6 h-6 text-white" />
+                {/* Pulse effect */}
+                <span className="absolute inset-0 rounded-full bg-white/30 animate-ping"></span>
               </div>
               <div>
                 <h3 className="text-white font-bold text-lg">AI Scale Asistan</h3>
-                <p className="text-white/80 text-xs">Online • Hızlı yanıt</p>
+                <div className="flex items-center gap-1">
+                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                  <p className="text-white/90 text-xs font-medium">Online • Hızlı yanıt</p>
+                </div>
               </div>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-white/80 hover:text-white transition-colors"
+              className="text-white/80 hover:text-white transition-colors relative z-10 hover:rotate-90 transition-transform duration-300"
               aria-label="Kapat"
             >
               <X className="w-6 h-6" />
@@ -144,25 +152,28 @@ export default function Chatbot() {
                 key={index}
                 className={`flex ${
                   message.role === "user" ? "justify-end" : "justify-start"
-                }`}
+                } animate-fadeIn`}
               >
                 <div
-                  className={`max-w-[80%] px-4 py-3 rounded-2xl ${
+                  className={`max-w-[85%] px-4 py-3 rounded-2xl shadow-lg ${
                     message.role === "user"
                       ? "bg-gradient-to-r from-accent to-accent-light text-white rounded-br-sm"
-                      : "bg-primary-light text-white/90 rounded-bl-sm border border-white/10"
+                      : "bg-gradient-to-br from-primary-light to-primary-dark text-white/90 rounded-bl-sm border border-white/10"
                   }`}
                 >
                   <p className="text-sm leading-relaxed whitespace-pre-wrap">
                     {message.content}
                   </p>
                   <p
-                    className={`text-xs mt-1 ${
+                    className={`text-xs mt-2 flex items-center gap-1 ${
                       message.role === "user"
-                        ? "text-white/70"
+                        ? "text-white/70 justify-end"
                         : "text-white/40"
                     }`}
                   >
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                     {message.timestamp.toLocaleTimeString("tr-TR", {
                       hour: "2-digit",
                       minute: "2-digit",
@@ -195,29 +206,40 @@ export default function Chatbot() {
 
           {/* Input */}
           <div className="p-4 bg-primary-dark border-t border-white/10">
-            <div className="flex gap-2">
-              <input
-                ref={inputRef}
-                type="text"
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Mesajınızı yazın..."
-                disabled={isLoading}
-                className="flex-1 bg-primary border-2 border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-accent/50 transition-all duration-300 text-sm disabled:opacity-50"
-              />
+            <div className="flex gap-2 mb-2">
+              <div className="flex-1 relative">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={inputMessage}
+                  onChange={(e) => setInputMessage(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Mesajınızı yazın..."
+                  disabled={isLoading}
+                  className="w-full bg-primary border-2 border-white/10 rounded-xl px-4 py-3 pr-10 text-white placeholder-white/40 focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/20 transition-all duration-300 text-sm disabled:opacity-50"
+                />
+                {/* Character count or emoji button */}
+                <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                  <span className="text-white/30 text-xs">
+                    {inputMessage.length > 0 && `${inputMessage.length}`}
+                  </span>
+                </div>
+              </div>
               <button
                 onClick={handleSendMessage}
                 disabled={!inputMessage.trim() || isLoading}
-                className="bg-gradient-to-r from-accent to-accent-light p-3 rounded-xl hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group"
+                className="bg-gradient-to-r from-accent to-accent-light p-3 rounded-xl hover:shadow-lg hover:shadow-accent/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group flex items-center justify-center min-w-[48px]"
                 aria-label="Gönder"
               >
-                <Send className="w-5 h-5 text-white group-hover:translate-x-0.5 transition-transform" />
+                <Send className="w-5 h-5 text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </button>
             </div>
-            <p className="text-white/40 text-xs mt-2 text-center">
-              AI destekli asistan • Anlık yanıt
-            </p>
+            <div className="flex items-center justify-center gap-2 text-white/40 text-xs">
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+              </svg>
+              <p>AI destekli asistan • Anlık yanıt • Enter ile gönder</p>
+            </div>
           </div>
         </div>
       )}
