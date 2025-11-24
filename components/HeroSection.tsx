@@ -16,10 +16,16 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary to-primary-light" />
 
       <div className="relative z-10 max-w-6xl mx-auto text-center">
+        {/* Program name */}
+        <div className="mb-4">
+          <p className="text-accent text-sm md:text-base uppercase tracking-widest font-semibold">
+            Para Yaratma Programı Master Edition
+          </p>
+        </div>
+
         {/* Main heading - The Real World style */}
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-          <span className="text-white block">Master Wealth Creation Inside</span>
-          <span className="text-accent block mt-2">The Real World 2.0</span>
+          <span className="text-white block">Aiscaleapp 2.0</span>
         </h1>
 
         {/* Clock subtitle */}
