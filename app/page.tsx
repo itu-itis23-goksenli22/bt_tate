@@ -5,6 +5,7 @@ import PriceIncreaseSection from "@/components/PriceIncreaseSection";
 import ChoiceComparisonSection from "@/components/ChoiceComparisonSection";
 import UrgencySection from "@/components/UrgencySection";
 import WealthMethodsSection from "@/components/WealthMethodsSection";
+import StudentsWinningSection from "@/components/StudentsWinningSection";
 import TrustBadges from "@/components/TrustBadges";
 import WhatIsSection from "@/components/WhatIsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
@@ -25,6 +26,7 @@ export default function Home() {
       <ChoiceComparisonSection />
       <UrgencySection />
       <WealthMethodsSection />
+      <StudentsWinningSection />
       <TrustBadges />
       <WhatIsSection />
       <TestimonialsSection />
