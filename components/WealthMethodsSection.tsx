@@ -1,44 +1,53 @@
 "use client";
 
 import { CHECKOUT_URL } from "@/lib/constants";
+import { useState } from "react";
 
 export default function WealthMethodsSection() {
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+
   const methods = [
     {
       title: "AI Otomasyonlu Ajans",
       description: "Sınırlı teknik bilgiyle bile AI sistemleri kurmayı öğretiyoruz. Sistemi online şirketlere satın veya kendi AI'nız tarafından yönetilen bir online şirket kurun.",
       icon: "🤖",
-      color: "from-blue-500/20 to-cyan-500/20"
+      color: "from-blue-500/20 to-cyan-500/20",
+      videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.09.51.mp4"
     },
     {
       title: "Kripto Yatırım",
       description: "Kripto para kampüsünde gerçek zamanlı bilgiye, profesörlere ve 112,000+ öğrenciye erişim. Trendleri belirleyin ve coin fiyatlarını etkileyen faktörleri öğrenin.",
       icon: "₿",
-      color: "from-blue-500/20 to-cyan-500/20"
+      color: "from-blue-500/20 to-cyan-500/20",
+      videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.13.43.mp4"
     },
     {
       title: "İçerik Üretimi",
       description: "Teknoloji çağında videoların ve landing page'lerin değeri gayrimenkulü aştı. Dijital varlıkları nasıl kullanacağınızı size öğreteceğiz.",
       icon: "🎬",
-      color: "from-purple-500/20 to-pink-500/20"
+      color: "from-purple-500/20 to-pink-500/20",
+      videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.15.53.mp4"
     },
     {
       title: "Copywriting",
       description: "Kelimeler sizin savaşçılarınız ve yazdığınız her harf bir strateji. Copywriting sanatında ustalaşın ve fikirleri kâra çevirin.",
       icon: "✍️",
-      color: "from-green-500/20 to-emerald-500/20"
+      color: "from-green-500/20 to-emerald-500/20",
+      videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.16.48.mp4"
     },
     {
       title: "Fitness",
       description: "Güçlü bir beden, güçlü bir zihin demektir. Gerçek Dünya Fitness kampüsü kişisel antrenörler ve yemek planları içerir. Sağlık zenginliktir.",
       icon: "💪",
-      color: "from-red-500/20 to-rose-500/20"
+      color: "from-red-500/20 to-rose-500/20",
+      videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.20.01.mp4"
     },
     {
       title: "İş Ustalığı",
       description: "Gerçek Dünya İş ustalığı ve diplomasi eğitimi liderlik, operasyonları ölçeklendirme, daha fazla para kazanma sanatı hakkında.",
       icon: "👔",
-      color: "from-blue-500/20 to-cyan-500/20"
+      color: "from-blue-500/20 to-cyan-500/20",
+      videoUrl: null // No video for this one
     }
   ];
 
@@ -59,20 +68,26 @@ export default function WealthMethodsSection() {
         {/* Methods Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {methods.map((method, index) => (
-            <div key={index} className="card-trw group cursor-pointer">
+            <div
+              key={index}
+              className="card-trw group cursor-pointer"
+              onClick={() => method.videoUrl && setSelectedVideo(method.videoUrl)}
+            >
               {/* Video Placeholder with Play Button */}
               <div className={`relative aspect-video bg-gradient-to-br ${method.color} rounded-xl mb-4 overflow-hidden`}>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-6xl">{method.icon}</div>
                 </div>
                 {/* Play Button Overlay */}
-                <div className="absolute inset-0 bg-primary/40 group-hover:bg-primary/20 transition-all flex items-center justify-center">
-                  <div className="w-16 h-16 bg-accent/90 group-hover:bg-accent rounded-full flex items-center justify-center transition-all group-hover:scale-110">
-                    <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
+                {method.videoUrl && (
+                  <div className="absolute inset-0 bg-primary/40 group-hover:bg-primary/20 transition-all flex items-center justify-center">
+                    <div className="w-16 h-16 bg-accent/90 group-hover:bg-accent rounded-full flex items-center justify-center transition-all group-hover:scale-110">
+                      <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
                   </div>
-                </div>
+                )}
                 {/* Campus Label */}
                 <div className="absolute bottom-3 left-3 right-3">
                   <div className="bg-primary/80 backdrop-blur-sm rounded-lg px-3 py-2">
@@ -102,6 +117,46 @@ export default function WealthMethodsSection() {
           </a>
         </div>
       </div>
+
+      {/* Video Modal */}
+      {selectedVideo && (
+        <div
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 animate-fadeIn"
+          onClick={() => setSelectedVideo(null)}
+        >
+          <div
+            className="relative w-full max-w-4xl aspect-video bg-primary rounded-2xl overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedVideo(null)}
+              className="absolute top-4 right-4 z-10 w-10 h-10 bg-primary/80 hover:bg-accent backdrop-blur-sm rounded-full flex items-center justify-center transition-all group"
+              aria-label="Kapat"
+            >
+              <svg
+                className="w-6 h-6 text-white group-hover:rotate-90 transition-transform duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Video Player */}
+            <video
+              src={selectedVideo}
+              controls
+              autoPlay
+              className="w-full h-full"
+              controlsList="nodownload"
+            >
+              Tarayıcınız video etiketini desteklemiyor.
+            </video>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
