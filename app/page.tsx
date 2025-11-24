@@ -2,6 +2,7 @@ import AnnouncementBanner from "@/components/AnnouncementBanner";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import SoldOutPlansSection from "@/components/SoldOutPlansSection";
+import UrgencySection from "@/components/UrgencySection";
 import TrustBadges from "@/components/TrustBadges";
 import WhatIsSection from "@/components/WhatIsSection";
 import ModulesSection from "@/components/ModulesSection";
@@ -20,6 +21,7 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <SoldOutPlansSection />
+      <UrgencySection />
       <TrustBadges />
       <WhatIsSection />
       <ModulesSection />
