@@ -83,7 +83,9 @@ export default function BiographySection() {
                       src={getStorageImageUrl(item.image)}
                       alt={item.period}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      className={`object-cover group-hover:scale-105 transition-transform duration-500 ${
+                        index === 3 ? "object-top" : ""
+                      }`}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                   </div>
