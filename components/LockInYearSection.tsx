@@ -1,4 +1,6 @@
 import { CHECKOUT_URL } from "@/lib/constants";
+import Image from "next/image";
+import { getStorageImageUrl } from "@/lib/images";
 
 export default function LockInYearSection() {
   return (
@@ -48,14 +50,25 @@ export default function LockInYearSection() {
             </a>
           </div>
 
-          {/* Right - Phone mockup placeholder */}
+          {/* Right - Phone mockup with real image */}
           <div className="relative">
             <div className="relative aspect-[9/19.5] max-w-sm mx-auto bg-gradient-to-br from-primary-light to-primary-dark rounded-[3rem] border-8 border-primary-light shadow-2xl overflow-hidden">
               {/* Phone notch */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-7 bg-primary-dark rounded-b-3xl z-10"></div>
 
-              {/* Screen content placeholder */}
-              <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-primary p-8 flex flex-col items-center justify-center">
+              {/* Screen content - Real Dashboard Image */}
+              <div className="absolute inset-0 overflow-hidden">
+                <Image
+                  src={getStorageImageUrl("WhatsApp Image 2025-11-24 at 15.55.25.jpeg")}
+                  alt="AI SCALE Dashboard"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+
+              {/* Screen content placeholder OLD */}
+              <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-primary p-8 flex flex-col items-center justify-center hidden">
                 {/* Placeholder for Supabase image */}
                 <div className="w-full space-y-4">
                   <div className="bg-white/5 rounded-2xl p-6 backdrop-blur-sm border border-white/10">
