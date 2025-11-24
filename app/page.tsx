@@ -2,7 +2,6 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import SoldOutPlansSection from "@/components/SoldOutPlansSection";
 import UrgencySection from "@/components/UrgencySection";
-import CertificateSection from "@/components/CertificateSection";
 import WealthMethodsSection from "@/components/WealthMethodsSection";
 import TrustBadges from "@/components/TrustBadges";
 import WhatIsSection from "@/components/WhatIsSection";
@@ -22,7 +21,6 @@ export default function Home() {
       <HeroSection />
       <SoldOutPlansSection />
       <UrgencySection />
-      <CertificateSection />
       <WealthMethodsSection />
       <TrustBadges />
       <WhatIsSection />

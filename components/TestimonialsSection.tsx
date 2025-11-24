@@ -38,7 +38,7 @@ export default function TestimonialsSection() {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="card-glass group hover:border-gold/30"
+              className="card-glass group hover:border-accent/30"
             >
               {/* Stars */}
               <div className="flex mb-4">
@@ -61,7 +61,7 @@ export default function TestimonialsSection() {
 
               {/* Author */}
               <div className="flex items-center border-t border-white/5 pt-4">
-                <div className="w-10 h-10 bg-gold/20 rounded-full flex items-center justify-center mr-3">
+                <div className="w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center mr-3">
                   <span className="text-accent-light font-bold">
                     {testimonial.name.charAt(0)}
                   </span>

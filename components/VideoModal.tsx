@@ -23,7 +23,7 @@ export default function VideoModal({ isOpen, onClose, videoTitle, videoUrl }: Vi
       </button>
 
       {/* Modal content */}
-      <div className="relative w-full max-w-5xl aspect-video bg-primary-light rounded-2xl overflow-hidden border-2 border-accent/30 shadow-2xl shadow-gold/20 animate-scaleIn">
+      <div className="relative w-full max-w-5xl aspect-video bg-primary-light rounded-2xl overflow-hidden border-2 border-accent/30 shadow-2xl shadow-accent/20 animate-scaleIn">
         {videoUrl ? (
           <iframe
             className="absolute inset-0 w-full h-full"
@@ -36,8 +36,8 @@ export default function VideoModal({ isOpen, onClose, videoTitle, videoUrl }: Vi
         ) : (
           <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary to-primary-dark">
             <div className="text-center">
-              <div className="w-24 h-24 mx-auto mb-4 bg-gold/20 rounded-full flex items-center justify-center border-2 border-accent/50">
-                <svg className="w-12 h-12 text-gold" fill="currentColor" viewBox="0 0 24 24">
+              <div className="w-24 h-24 mx-auto mb-4 bg-accent/20 rounded-full flex items-center justify-center border-2 border-accent/50">
+                <svg className="w-12 h-12 text-accent" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M8 5v14l11-7z" />
                 </svg>
               </div>

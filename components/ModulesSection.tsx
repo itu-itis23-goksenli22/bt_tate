@@ -43,7 +43,7 @@ export default function ModulesSection() {
       <div ref={ref} className="max-w-7xl mx-auto">
         {/* Section title */}
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-2 bg-gold/20 border border-accent/50 rounded-full mb-6">
+          <div className="inline-block px-4 py-2 bg-accent/20 border border-accent/50 rounded-full mb-6">
             <span className="text-accent-light text-sm font-semibold uppercase tracking-wider">
               Para Kazanma Yolları
             </span>
@@ -61,14 +61,14 @@ export default function ModulesSection() {
           {modules.map((module, index) => (
             <div
               key={index}
-              className={`card-glass group hover:scale-105 hover:shadow-xl hover:shadow-gold/10 cursor-pointer scroll-animate ${
+              className={`card-glass group hover:scale-105 hover:shadow-xl hover:shadow-accent/10 cursor-pointer scroll-animate ${
                 isVisible ? "visible animate-fade-in-up" : ""
               }`}
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Image placeholder */}
               <div className="relative aspect-video bg-primary rounded-lg overflow-hidden mb-4 border border-white/5">
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary to-primary-dark group-hover:from-gold/20 group-hover:to-primary transition-all">
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary to-primary-dark group-hover:from-accent/20 group-hover:to-primary transition-all">
                   <div className="text-5xl opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all">
                     {module.icon}
                   </div>

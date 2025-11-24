@@ -42,9 +42,9 @@ export default function WhatIsSection() {
                   container.scrollBy({ left: -220, behavior: 'smooth' });
                 }
               }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gold/90 hover:bg-gold rounded-full flex items-center justify-center shadow-lg shadow-gold/30 transition-all duration-300 hover:scale-110"
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-accent/90 hover:bg-accent rounded-full flex items-center justify-center shadow-lg shadow-accent/30 transition-all duration-300 hover:scale-110"
             >
-              <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
@@ -57,7 +57,7 @@ export default function WhatIsSection() {
                   container.scrollBy({ left: 220, behavior: 'smooth' });
                 }
               }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gold/90 hover:bg-gold rounded-full flex items-center justify-center shadow-lg shadow-gold/30 transition-all duration-300 hover:scale-110"
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-accent/90 hover:bg-accent rounded-full flex items-center justify-center shadow-lg shadow-accent/30 transition-all duration-300 hover:scale-110"
             >
               <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
@@ -73,9 +73,9 @@ export default function WhatIsSection() {
                   >
                     <div className="relative aspect-[9/16] bg-gradient-to-br from-primary-light to-primary rounded-2xl overflow-hidden border border-accent/30 shadow-[0_0_40px_rgba(0,0,0,0.8)] transform transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_60px_rgba(255,207,35,0.4)] hover:border-accent/60 cursor-pointer">
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30"></div>
-                      <div className="absolute inset-0 bg-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-20 h-20 bg-gold/10 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-accent/60 group-hover:bg-gold/20 group-hover:scale-110 transition-all duration-300">
+                        <div className="w-20 h-20 bg-accent/10 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-accent/60 group-hover:bg-accent/20 group-hover:scale-110 transition-all duration-300">
                           <svg className="w-10 h-10 text-accent-light ml-1" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M8 5v14l11-7z" />
                           </svg>
@@ -93,7 +93,7 @@ export default function WhatIsSection() {
 
             {/* Scroll indicator dots */}
             <div className="flex justify-center gap-2 mt-6">
-              <div className="w-2 h-2 rounded-full bg-gold transition-all duration-300"></div>
+              <div className="w-2 h-2 rounded-full bg-accent transition-all duration-300"></div>
               <div className="w-2 h-2 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-300 cursor-pointer"></div>
               <div className="w-2 h-2 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-300 cursor-pointer"></div>
               <div className="w-2 h-2 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-300 cursor-pointer"></div>

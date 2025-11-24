@@ -53,7 +53,7 @@ export default function Footer() {
         {/* CTA Section */}
         <div className="border-t border-white/5 pt-8 pb-8 text-center">
           <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
-            <button className="btn-gold mb-6">
+            <button className="btn-accent mb-6">
               Hemen Katıl
             </button>
           </a>

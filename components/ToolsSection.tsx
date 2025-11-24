@@ -33,8 +33,8 @@ export default function ToolsSection() {
     <section id="ozellikler" className="py-12 md:py-12 bg-primary relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gold rounded-full blur-[60px]" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gold rounded-full blur-[60px]" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-accent rounded-full blur-[60px]" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent rounded-full blur-[60px]" />
       </div>
 
       <div className="relative z-10 container-custom">
@@ -62,7 +62,7 @@ export default function ToolsSection() {
               </div>
 
               {/* Icon */}
-              <div className="w-12 h-12 bg-gold/10 rounded-lg flex items-center justify-center mb-4 border border-gold/30 group-hover:border-gold transition-colors">
+              <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4 border border-accent/30 group-hover:border-accent transition-colors">
                 <div className="text-accent-light">
                   {tool.icon}
                 </div>

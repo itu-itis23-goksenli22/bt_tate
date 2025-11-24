@@ -82,7 +82,7 @@ export default function PricingSection() {
 
             {/* CTA Button */}
             <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="block">
-              <button className="w-full py-4 rounded-lg font-bold uppercase text-sm tracking-wider transition-all duration-300 transform hover:scale-105 bg-gold hover:bg-gold-light text-black shadow-lg shadow-gold/30">
+              <button className="w-full py-4 rounded-lg font-bold uppercase text-sm tracking-wider transition-all duration-300 transform hover:scale-105 bg-accent hover:bg-accent-light text-black shadow-lg shadow-accent/30">
                 Şimdi Başla
               </button>
             </a>

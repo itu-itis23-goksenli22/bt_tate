@@ -28,7 +28,7 @@ export default function AccessSection() {
         {/* Section title */}
         <div className="text-center mb-16">
           <h2 className="section-title">
-            ERİŞECEĞİNİZ <span className="text-gold">HİZMETLER</span>
+            ERİŞECEĞİNİZ <span className="text-accent">HİZMETLER</span>
           </h2>
           <p className="text-base md:text-lg text-white/70 max-w-3xl mx-auto">
             Platformumuza katıldığınızda size sunulacak tüm kaynaklar ve destekler
@@ -43,8 +43,8 @@ export default function AccessSection() {
               <div className="relative aspect-video bg-primary rounded-lg overflow-hidden mb-6 border border-white/5">
                 <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary to-primary-dark">
                   <div className="text-center">
-                    <div className="w-16 h-16 mx-auto mb-3 bg-gold/20 rounded-lg flex items-center justify-center border border-gold/50">
-                      <svg className="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="w-16 h-16 mx-auto mb-3 bg-accent/20 rounded-lg flex items-center justify-center border border-accent/50">
+                      <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
@@ -53,13 +53,13 @@ export default function AccessSection() {
                 </div>
               </div>
 
-              <h3 className="text-2xl font-bold text-gold mb-6 uppercase tracking-wide">
+              <h3 className="text-2xl font-bold text-accent mb-6 uppercase tracking-wide">
                 {feature.title}
               </h3>
               <ul className="space-y-4">
                 {feature.items.map((item, itemIndex) => (
                   <li key={itemIndex} className="flex items-start">
-                    <svg className="w-6 h-6 text-gold mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-6 h-6 text-accent mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <span className="text-white/70">{item}</span>
@@ -78,9 +78,9 @@ export default function AccessSection() {
             { title: "Özel Topluluk", desc: "200K+ aktif üye" },
             { title: "Sertifikalar", desc: "Tamamlama sertifikaları" },
           ].map((item, index) => (
-            <div key={index} className="bg-primary-light/30 border border-white/5 rounded-lg p-6 text-center hover:border-gold/30 transition-all">
-              <div className="w-12 h-12 bg-gold/10 rounded-full mx-auto mb-4 flex items-center justify-center border border-gold/30">
-                <svg className="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div key={index} className="bg-primary-light/30 border border-white/5 rounded-lg p-6 text-center hover:border-accent/30 transition-all">
+              <div className="w-12 h-12 bg-accent/10 rounded-full mx-auto mb-4 flex items-center justify-center border border-accent/30">
+                <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
@@ -93,7 +93,7 @@ export default function AccessSection() {
         {/* CTA */}
         <div className="text-center mt-12">
           <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
-            <button className="btn-gold">
+            <button className="btn-accent">
               Hemen Erişim Sağla
             </button>
           </a>
