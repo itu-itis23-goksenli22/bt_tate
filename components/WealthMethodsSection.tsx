@@ -79,10 +79,11 @@ export default function WealthMethodsSection() {
                 {method.videoUrl ? (
                   <>
                     <video
-                      src={method.videoUrl}
+                      src={`${method.videoUrl}#t=0.1`}
                       className="absolute inset-0 w-full h-full object-cover"
                       preload="metadata"
                       muted
+                      playsInline
                     />
                     {/* Play Button Overlay */}
                     <div className="absolute inset-0 bg-primary/40 group-hover:bg-primary/20 transition-all flex items-center justify-center">
