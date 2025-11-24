@@ -5,7 +5,6 @@ import PriceIncreaseSection from "@/components/PriceIncreaseSection";
 import ChoiceComparisonSection from "@/components/ChoiceComparisonSection";
 import KendineSorSection from "@/components/KendineSorSection";
 import WealthMethodsSection from "@/components/WealthMethodsSection";
-import StudentsWinningSection from "@/components/StudentsWinningSection";
 import LockInYearSection from "@/components/LockInYearSection";
 import PreparedToWorkSection from "@/components/PreparedToWorkSection";
 import ExitPlanSection from "@/components/ExitPlanSection";
@@ -34,7 +33,6 @@ export default function Home() {
       <TrustBadges />
       <TestimonialsSection />
       <WealthMethodsSection />
-      <StudentsWinningSection />
       <ToolsSection />
       <EmailFormSection />
       <FAQSection />
