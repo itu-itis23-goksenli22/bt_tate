@@ -5,7 +5,6 @@ import UrgencySection from "@/components/UrgencySection";
 import WealthMethodsSection from "@/components/WealthMethodsSection";
 import TrustBadges from "@/components/TrustBadges";
 import WhatIsSection from "@/components/WhatIsSection";
-import ModulesSection from "@/components/ModulesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import ToolsSection from "@/components/ToolsSection";
 import EmailFormSection from "@/components/EmailFormSection";
@@ -24,7 +23,6 @@ export default function Home() {
       <WealthMethodsSection />
       <TrustBadges />
       <WhatIsSection />
-      <ModulesSection />
       <TestimonialsSection />
       <ToolsSection />
       <EmailFormSection />
