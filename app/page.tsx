@@ -1,6 +1,8 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import SoldOutPlansSection from "@/components/SoldOutPlansSection";
+import PriceIncreaseSection from "@/components/PriceIncreaseSection";
+import ChoiceComparisonSection from "@/components/ChoiceComparisonSection";
 import UrgencySection from "@/components/UrgencySection";
 import WealthMethodsSection from "@/components/WealthMethodsSection";
 import TrustBadges from "@/components/TrustBadges";
@@ -19,6 +21,8 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <SoldOutPlansSection />
+      <PriceIncreaseSection />
+      <ChoiceComparisonSection />
       <UrgencySection />
       <WealthMethodsSection />
       <TrustBadges />
