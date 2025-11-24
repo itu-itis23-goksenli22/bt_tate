@@ -50,35 +50,36 @@ export default function TestimonialsSection() {
         </div>
 
         {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 gap-8">
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
               className="card-glass group hover:border-accent/30 relative overflow-hidden"
             >
               {/* Earnings badge */}
-              <div className="absolute top-4 right-4 bg-accent/90 backdrop-blur-sm px-3 py-1.5 rounded-full z-10">
-                <span className="text-white font-bold text-sm">{testimonial.earnings}</span>
+              <div className="absolute top-6 right-6 bg-accent/90 backdrop-blur-sm px-4 py-2 rounded-full z-10">
+                <span className="text-white font-bold text-lg">{testimonial.earnings}</span>
               </div>
 
               {/* Profile Image from testimonial screenshot */}
-              <div className="mb-4">
-                <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden bg-primary-dark">
+              <div className="mb-6">
+                <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden bg-primary-dark">
                   <Image
                     src={testimonial.imageUrl}
                     alt={testimonial.name}
                     fill
                     className="object-cover"
+                    priority
                   />
                 </div>
               </div>
 
               {/* Stars */}
-              <div className="flex mb-3">
+              <div className="flex mb-4">
                 {[...Array(testimonial.rating)].map((_, i) => (
                   <svg
                     key={i}
-                    className="w-4 h-4 text-accent-light"
+                    className="w-5 h-5 text-accent-light"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -88,16 +89,16 @@ export default function TestimonialsSection() {
               </div>
 
               {/* Content */}
-              <p className="text-white/70 text-sm mb-6 leading-relaxed line-clamp-4">
+              <p className="text-white/70 text-base mb-6 leading-relaxed">
                 "{testimonial.content}"
               </p>
 
               {/* Author */}
               <div className="border-t border-white/5 pt-4">
-                <div className="text-white font-bold text-sm mb-1">
+                <div className="text-white font-bold text-base mb-1">
                   {testimonial.name}
                 </div>
-                <div className="text-white/40 text-xs">
+                <div className="text-white/40 text-sm">
                   {testimonial.role}
                 </div>
               </div>
