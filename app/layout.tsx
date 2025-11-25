@@ -12,6 +12,12 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Gerçek Dünya - Çevrimiçi Yolculuğunuza Başlayın",
   description: "12+ Para Kazandıran Beceri ile başarıya ulaşın",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
 };
 
 export default function RootLayout({
