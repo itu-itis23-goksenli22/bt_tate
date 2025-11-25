@@ -29,13 +29,24 @@ const action = "aylık aboneliğe katıldı";
 export default function LiveNotifications() {
   const [notification, setNotification] = useState<Notification | null>(null);
   const notificationIdRef = useRef(0);
-  const scheduledTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const removeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const activeTimeoutsRef = useRef<Set<NodeJS.Timeout>>(new Set());
   const usedNamesRef = useRef<Set<string>>(new Set());
   const isMountedRef = useRef(true);
 
   useEffect(() => {
     isMountedRef.current = true;
+
+    // Helper to safely add timeout
+    const addTimeout = (timeout: NodeJS.Timeout) => {
+      activeTimeoutsRef.current.add(timeout);
+      return timeout;
+    };
+
+    // Helper to safely remove timeout
+    const removeTimeout = (timeout: NodeJS.Timeout) => {
+      clearTimeout(timeout);
+      activeTimeoutsRef.current.delete(timeout);
+    };
 
     const getRandomUniqueName = (): string => {
       // Reset used names if all names have been used
@@ -69,11 +80,12 @@ export default function LiveNotifications() {
       setNotification(newNotification);
 
       // Remove notification after 6 seconds
-      removeTimeoutRef.current = setTimeout(() => {
+      const removeTimeout = addTimeout(setTimeout(() => {
         if (isMountedRef.current) {
           setNotification(null);
         }
-      }, 6000);
+        activeTimeoutsRef.current.delete(removeTimeout);
+      }, 6000));
     };
 
     const scheduleNextNotification = () => {
@@ -96,35 +108,33 @@ export default function LiveNotifications() {
 
       const randomDelay = delays[Math.floor(Math.random() * delays.length)];
 
-      scheduledTimeoutRef.current = setTimeout(() => {
+      const scheduleTimeout = addTimeout(setTimeout(() => {
         if (isMountedRef.current) {
           showNotification();
           scheduleNextNotification();
         }
-      }, randomDelay);
+        activeTimeoutsRef.current.delete(scheduleTimeout);
+      }, randomDelay));
     };
 
     // Start after initial delay (60-90 seconds)
     const initialDelay = Math.floor(Math.random() * 30000) + 60000; // 60-90 seconds
-    scheduledTimeoutRef.current = setTimeout(() => {
+    const initialTimeout = addTimeout(setTimeout(() => {
       if (isMountedRef.current) {
         scheduleNextNotification();
       }
-    }, initialDelay);
+      activeTimeoutsRef.current.delete(initialTimeout);
+    }, initialDelay));
 
     return () => {
       // Mark as unmounted
       isMountedRef.current = false;
 
-      // Clear all timeouts
-      if (scheduledTimeoutRef.current) {
-        clearTimeout(scheduledTimeoutRef.current);
-        scheduledTimeoutRef.current = null;
-      }
-      if (removeTimeoutRef.current) {
-        clearTimeout(removeTimeoutRef.current);
-        removeTimeoutRef.current = null;
-      }
+      // Clear ALL active timeouts
+      activeTimeoutsRef.current.forEach(timeout => {
+        clearTimeout(timeout);
+      });
+      activeTimeoutsRef.current.clear();
 
       // Clear notification
       setNotification(null);
