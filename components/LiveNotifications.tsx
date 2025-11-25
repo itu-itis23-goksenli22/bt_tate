@@ -86,33 +86,33 @@ export default function LiveNotifications() {
   }, [notificationId]);
 
   return (
-    <div className="fixed bottom-6 left-6 z-50 flex flex-col gap-3 pointer-events-none">
+    <div className="fixed bottom-4 left-2 md:bottom-6 md:left-6 z-50 flex flex-col gap-2 md:gap-3 pointer-events-none">
       {notifications.map((notification) => (
         <div
           key={notification.id}
-          className="bg-gradient-to-r from-primary to-primary-light border border-accent/30 rounded-xl px-6 py-4 shadow-2xl shadow-accent/20 backdrop-blur-sm animate-slideInLeft pointer-events-auto max-w-sm"
+          className="bg-gradient-to-r from-primary to-primary-light border border-accent/30 rounded-xl px-3 py-2.5 md:px-6 md:py-4 shadow-2xl shadow-accent/20 backdrop-blur-sm animate-slideInLeft pointer-events-auto max-w-[90vw] md:max-w-sm"
         >
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             {/* Avatar */}
-            <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center border-2 border-accent/40 flex-shrink-0">
-              <svg className="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 24 24">
+            <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-accent/20 flex items-center justify-center border-2 border-accent/40 flex-shrink-0">
+              <svg className="w-4 h-4 md:w-6 md:h-6 text-accent" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
               </svg>
             </div>
 
             {/* Content */}
             <div className="flex-1 min-w-0">
-              <p className="text-white font-semibold text-sm truncate">
+              <p className="text-white font-semibold text-xs md:text-sm truncate">
                 {notification.name}
               </p>
-              <p className="text-accent text-xs">
+              <p className="text-accent text-[10px] md:text-xs">
                 {notification.action}
               </p>
             </div>
 
             {/* Check icon */}
             <div className="flex-shrink-0">
-              <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-4 h-4 md:w-5 md:h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
             </div>
