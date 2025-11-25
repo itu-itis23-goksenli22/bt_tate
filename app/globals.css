@@ -229,4 +229,13 @@
   .scroll-animate.visible {
     opacity: 1;
   }
+
+  /* Safe area for mobile devices (notch support) */
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
 }
