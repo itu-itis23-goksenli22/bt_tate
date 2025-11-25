@@ -64,8 +64,22 @@ export default function LiveNotifications() {
     };
 
     const scheduleNextNotification = () => {
-      // Random delays: 5, 10, 25, or 45 seconds
-      const delays = [5000, 10000, 25000, 45000];
+      // More realistic delays: 20-60 seconds (max 3 per minute)
+      // Weighted towards longer delays for realism
+      const delays = [
+        20000,  // 20 seconds (common)
+        25000,  // 25 seconds (common)
+        30000,  // 30 seconds (common)
+        35000,  // 35 seconds (common)
+        40000,  // 40 seconds (less common)
+        45000,  // 45 seconds (less common)
+        50000,  // 50 seconds (rare)
+        55000,  // 55 seconds (rare)
+        60000,  // 60 seconds (rare)
+        70000,  // 70 seconds (very rare)
+        80000,  // 80 seconds (very rare)
+        90000,  // 90 seconds (very rare)
+      ];
       const randomDelay = delays[Math.floor(Math.random() * delays.length)];
 
       setTimeout(() => {
@@ -74,8 +88,11 @@ export default function LiveNotifications() {
       }, randomDelay);
     };
 
-    // Start the chain
-    scheduleNextNotification();
+    // Start the chain after initial delay (30-60 seconds)
+    const initialDelay = Math.floor(Math.random() * 30000) + 30000; // 30-60 seconds
+    setTimeout(() => {
+      scheduleNextNotification();
+    }, initialDelay);
 
     return () => {
       // Cleanup will happen automatically when component unmounts
