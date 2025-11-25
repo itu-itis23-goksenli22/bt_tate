@@ -15,7 +15,21 @@ const turkishNames = [
   "Cemile Koç", "Hasan Erdoğan", "Ayşegül Güneş", "İsmail Tekin", "Derya Bulut",
   "Ömer Çetin", "Selin Kurt", "Abdullah Özkan", "Büşra Aslan", "Murat Uzun",
   "Gamze Turan", "Emre Kılıç", "Esra Demirtaş", "Serkan Yavuz", "Pınar Çalışkan",
-  "Burak Şimşek", "Deniz Özer", "Can Acar", "Merve Ateş", "Onur Koçak"
+  "Burak Şimşek", "Deniz Özer", "Can Acar", "Merve Ateş", "Onur Koçak",
+  "Berat Yurt", "Seda Şen", "Ramazan Avcı", "Gül Taş", "Kemal Öz",
+  "Nurgül Keskin", "Recep Kaplan", "Sevgi Yıldırım", "Erkan Yalçın", "Sibel Tok",
+  "Yasin Balcı", "Dilek Karaca", "Tuncay Akyüz", "Leyla Özmen", "Volkan Sahin",
+  "Gülay Yücel", "İlhan Şener", "Meltem Durmuş", "Selim Bozkurt", "Aylin Akın",
+  "Barış Yaman", "Fadime Yavuz", "Kadir Özkan", "Nurhan Güler", "Orhan Çakır",
+  "Şule Öztürk", "Ufuk Aydın", "Yasemin Kurt", "Zafer Koç", "Nihal Arslan",
+  "Fikret Polat", "Gülten Çelik", "Halil Doğan", "İlknur Tekin", "Kenan Şahin",
+  "Müge Yılmaz", "Necati Demir", "Özlem Kaya", "Rıza Özdemir", "Şenay Aksoy",
+  "Tahir Erdoğan", "Ümit Güneş", "Vildan Çetin", "Yıldız Aslan", "Aziz Uzun",
+  "Belma Turan", "Cengiz Kılıç", "Dilara Demirtaş", "Erdal Yavuz", "Filiz Çalışkan",
+  "Gökhan Şimşek", "Hülya Özer", "İlyas Acar", "Jale Ateş", "Koray Koçak",
+  "Leman Yurt", "Mete Şen", "Nermin Avcı", "Okan Taş", "Pelin Öz",
+  "Rabia Keskin", "Samet Kaplan", "Tuba Yıldırım", "Uğur Yalçın", "Vesile Tok",
+  "Yavuz Balcı", "Zeki Karaca", "Adem Akyüz", "Beyza Özmen", "Celal Sahin"
 ];
 
 const actions = [
@@ -49,17 +63,22 @@ export default function LiveNotifications() {
       }, 5000);
     };
 
-    // Show first notification after 5 seconds
-    const initialTimeout = setTimeout(showNotification, 5000);
+    const scheduleNextNotification = () => {
+      // Random delays: 5, 10, 25, or 45 seconds
+      const delays = [5000, 10000, 25000, 45000];
+      const randomDelay = delays[Math.floor(Math.random() * delays.length)];
 
-    // Then show notifications every 8-15 seconds randomly
-    const interval = setInterval(() => {
-      showNotification();
-    }, Math.random() * 7000 + 8000); // Random between 8-15 seconds
+      setTimeout(() => {
+        showNotification();
+        scheduleNextNotification(); // Schedule next one
+      }, randomDelay);
+    };
+
+    // Start the chain
+    scheduleNextNotification();
 
     return () => {
-      clearTimeout(initialTimeout);
-      clearInterval(interval);
+      // Cleanup will happen automatically when component unmounts
     };
   }, [notificationId]);
 
