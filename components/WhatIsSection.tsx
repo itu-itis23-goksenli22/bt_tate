@@ -4,33 +4,33 @@ import { useState } from "react";
 import VideoModal from "./VideoModal";
 
 export default function WhatIsSection() {
-  const [selectedVideo, setSelectedVideo] = useState<{title: string, url?: string} | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<{title: string, url?: string, youtubeId?: string} | null>(null);
 
   const videos = [
     {
       title: "Başarı Hikayesi #1",
       duration: "1 dakika",
-      url: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2017.03.31.mp4"
+      youtubeId: "0Qrau45bXno"
     },
     {
       title: "Kendinin En İyi Versiyonu",
       duration: "1 dakika",
-      url: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2017.03.59.mp4"
+      youtubeId: "7ZXn75kAJAg"
     },
     {
       title: "Başlama Motivasyonu",
       duration: "1 dakika",
-      url: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2017.45.09%20(3).mp4"
+      youtubeId: "p7n5OX8RKEI"
     },
     {
       title: "Yapay Zeka Geçmiş ve Gelecek",
       duration: "1 dakika",
-      url: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2017.45.09%20(4).mp4"
+      youtubeId: "KYvYuVwaQXs"
     },
     {
       title: "AI Scale App Platformumuz",
       duration: "1 dakika",
-      url: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2017.45.09%20(5).mp4"
+      youtubeId: "frrHZt47UnQ"
     },
   ];
 
@@ -92,18 +92,13 @@ export default function WhatIsSection() {
                     onClick={() => setSelectedVideo(video)}
                   >
                     <div className="relative aspect-[9/16] bg-gradient-to-br from-primary-light to-primary rounded-2xl overflow-hidden border border-accent/30 shadow-[0_0_40px_rgba(0,0,0,0.8)] transform transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_60px_rgba(59,130,246,0.4)] hover:border-accent/60 cursor-pointer">
-                      {/* Video thumbnail - if URL exists, show video with preload */}
-                      {video.url ? (
-                        <video
-                          src={`${video.url}#t=0.1`}
-                          className="absolute inset-0 w-full h-full object-cover"
-                          preload="none"
-                          muted
-                          playsInline
-                        />
-                      ) : (
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary-light to-primary"></div>
-                      )}
+                      {/* YouTube Thumbnail */}
+                      <img
+                        src={`https://img.youtube.com/vi/${video.youtubeId}/maxresdefault.jpg`}
+                        alt={video.title}
+                        className="absolute inset-0 w-full h-full object-cover"
+                        loading="lazy"
+                      />
 
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30"></div>
                       <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -182,6 +177,7 @@ export default function WhatIsSection() {
         onClose={() => setSelectedVideo(null)}
         videoTitle={selectedVideo?.title || ""}
         videoUrl={selectedVideo?.url}
+        youtubeId={selectedVideo?.youtubeId}
       />
     </section>
   );

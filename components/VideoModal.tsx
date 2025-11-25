@@ -5,9 +5,10 @@ interface VideoModalProps {
   onClose: () => void;
   videoTitle: string;
   videoUrl?: string;
+  youtubeId?: string;
 }
 
-export default function VideoModal({ isOpen, onClose, videoTitle, videoUrl }: VideoModalProps) {
+export default function VideoModal({ isOpen, onClose, videoTitle, videoUrl, youtubeId }: VideoModalProps) {
   if (!isOpen) return null;
 
   return (
@@ -23,8 +24,17 @@ export default function VideoModal({ isOpen, onClose, videoTitle, videoUrl }: Vi
       </button>
 
       {/* Modal content */}
-      <div className="relative w-full max-w-5xl aspect-video bg-primary-light rounded-2xl overflow-hidden border-2 border-accent/30 shadow-2xl shadow-accent/20 animate-scaleIn">
-        {videoUrl ? (
+      <div className="relative w-full max-w-md aspect-[9/16] bg-primary-light rounded-2xl overflow-hidden border-2 border-accent/30 shadow-2xl shadow-accent/20 animate-scaleIn">
+        {youtubeId ? (
+          <iframe
+            className="absolute inset-0 w-full h-full"
+            src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1`}
+            title={videoTitle}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        ) : videoUrl ? (
           <video
             className="absolute inset-0 w-full h-full object-contain"
             src={videoUrl}
