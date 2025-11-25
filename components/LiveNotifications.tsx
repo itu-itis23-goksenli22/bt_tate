@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 interface Notification {
   id: number;
@@ -28,30 +28,34 @@ const action = "aylık aboneliğe katıldı";
 
 export default function LiveNotifications() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [notificationId, setNotificationId] = useState(0);
+  const notificationIdRef = useRef(0);
+  const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
 
   useEffect(() => {
     const showNotification = () => {
       const randomName = names[Math.floor(Math.random() * names.length)];
+      const currentId = notificationIdRef.current;
+      notificationIdRef.current += 1;
 
       const newNotification: Notification = {
-        id: notificationId,
+        id: currentId,
         name: randomName,
         action: action
       };
 
       setNotifications(prev => [...prev, newNotification]);
-      setNotificationId(prev => prev + 1);
 
       // Remove notification after 5 seconds
-      setTimeout(() => {
-        setNotifications(prev => prev.filter(n => n.id !== newNotification.id));
+      const removeTimeout = setTimeout(() => {
+        setNotifications(prev => prev.filter(n => n.id !== currentId));
       }, 5000);
+
+      timeoutsRef.current.push(removeTimeout);
     };
 
     const scheduleNextNotification = () => {
       // Max 3 per minute: 20 seconds minimum delay
-      // Realistic delays between 20-120 seconds
+      // Realistic delays between 25-120 seconds
       const delays = [
         25000,  // 25 seconds
         30000,  // 30 seconds
@@ -68,22 +72,28 @@ export default function LiveNotifications() {
       ];
       const randomDelay = delays[Math.floor(Math.random() * delays.length)];
 
-      setTimeout(() => {
+      const scheduleTimeout = setTimeout(() => {
         showNotification();
         scheduleNextNotification(); // Schedule next one
       }, randomDelay);
+
+      timeoutsRef.current.push(scheduleTimeout);
     };
 
     // Start the chain after initial delay (30-60 seconds)
     const initialDelay = Math.floor(Math.random() * 30000) + 30000; // 30-60 seconds
-    setTimeout(() => {
+    const initialTimeout = setTimeout(() => {
       scheduleNextNotification();
     }, initialDelay);
 
+    timeoutsRef.current.push(initialTimeout);
+
     return () => {
-      // Cleanup will happen automatically when component unmounts
+      // Cleanup all timeouts when component unmounts
+      timeoutsRef.current.forEach(timeout => clearTimeout(timeout));
+      timeoutsRef.current = [];
     };
-  }, [notificationId]);
+  }, []);
 
   return (
     <div className="fixed bottom-4 left-2 md:bottom-6 md:left-6 z-50 flex flex-col gap-2 md:gap-3 pointer-events-none">
