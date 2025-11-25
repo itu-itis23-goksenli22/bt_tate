@@ -50,21 +50,21 @@ export default function LiveNotifications() {
     };
 
     const scheduleNextNotification = () => {
-      // More realistic delays: 20-60 seconds (max 3 per minute)
-      // Weighted towards longer delays for realism
+      // Max 3 per minute: 20 seconds minimum delay
+      // Realistic delays between 20-120 seconds
       const delays = [
-        20000,  // 20 seconds (common)
-        25000,  // 25 seconds (common)
-        30000,  // 30 seconds (common)
-        35000,  // 35 seconds (common)
-        40000,  // 40 seconds (less common)
-        45000,  // 45 seconds (less common)
-        50000,  // 50 seconds (rare)
-        55000,  // 55 seconds (rare)
-        60000,  // 60 seconds (rare)
-        70000,  // 70 seconds (very rare)
-        80000,  // 80 seconds (very rare)
-        90000,  // 90 seconds (very rare)
+        25000,  // 25 seconds
+        30000,  // 30 seconds
+        35000,  // 35 seconds
+        40000,  // 40 seconds
+        45000,  // 45 seconds
+        50000,  // 50 seconds
+        60000,  // 1 minute
+        70000,  // 70 seconds
+        80000,  // 80 seconds
+        90000,  // 90 seconds
+        100000, // 100 seconds
+        120000, // 2 minutes
       ];
       const randomDelay = delays[Math.floor(Math.random() * delays.length)];
 
