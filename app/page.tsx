@@ -20,6 +20,7 @@ const PricingSection = dynamic(() => import("@/components/PricingSection"));
 const Footer = dynamic(() => import("@/components/Footer"));
 const BackToTop = dynamic(() => import("@/components/BackToTop"));
 const Chatbot = dynamic(() => import("@/components/Chatbot"));
+const LiveNotifications = dynamic(() => import("@/components/LiveNotifications"));
 
 export default function Home() {
   return (
@@ -43,6 +44,7 @@ export default function Home() {
       <Footer />
       <BackToTop />
       <Chatbot />
+      <LiveNotifications />
     </main>
   );
 }
