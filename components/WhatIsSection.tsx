@@ -92,12 +92,16 @@ export default function WhatIsSection() {
                     onClick={() => setSelectedVideo(video)}
                   >
                     <div className="relative aspect-[9/16] bg-gradient-to-br from-primary-light to-primary rounded-2xl overflow-hidden border border-accent/30 shadow-[0_0_40px_rgba(0,0,0,0.8)] transform transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_60px_rgba(59,130,246,0.4)] hover:border-accent/60 cursor-pointer">
-                      {/* YouTube Thumbnail */}
+                      {/* YouTube Shorts Thumbnail with fallback */}
                       <img
-                        src={`https://img.youtube.com/vi/${video.youtubeId}/maxresdefault.jpg`}
+                        src={`https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`}
                         alt={video.title}
                         className="absolute inset-0 w-full h-full object-cover"
                         loading="lazy"
+                        onError={(e) => {
+                          // Fallback to standard default if hq fails
+                          e.currentTarget.src = `https://img.youtube.com/vi/${video.youtubeId}/sddefault.jpg`;
+                        }}
                       />
 
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30"></div>
