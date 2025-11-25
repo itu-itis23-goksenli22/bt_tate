@@ -81,10 +81,9 @@ export default function WealthMethodsSection() {
                     <video
                       src={`${method.videoUrl}#t=0.1`}
                       className="absolute inset-0 w-full h-full object-cover"
-                      preload="none"
+                      preload="metadata"
                       muted
                       playsInline
-                      poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
                     />
                     {/* Play Button Overlay */}
                     <div className="absolute inset-0 bg-primary/40 group-hover:bg-primary/20 transition-all flex items-center justify-center">
