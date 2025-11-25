@@ -48,11 +48,6 @@ export default function WhatIsSection() {
       youtubeId: "7bAybQyWlcs"
     },
     {
-      title: "Dijital Pazarlama",
-      duration: "1 dakika",
-      youtubeId: "kIY-KvRe25c"
-    },
-    {
       title: "AI Scale App Platformumuz",
       duration: "1 dakika",
       youtubeId: "frrHZt47UnQ"
