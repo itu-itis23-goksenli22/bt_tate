@@ -12,7 +12,6 @@ const TrustBadges = dynamic(() => import("@/components/TrustBadges"));
 const TestimonialsSection = dynamic(() => import("@/components/TestimonialsSection"));
 const WealthMethodsSection = dynamic(() => import("@/components/WealthMethodsSection"));
 const ToolsSection = dynamic(() => import("@/components/ToolsSection"));
-const EmailFormSection = dynamic(() => import("@/components/EmailFormSection"));
 const FAQSection = dynamic(() => import("@/components/FAQSection"));
 const SoldOutPlansSection = dynamic(() => import("@/components/SoldOutPlansSection"));
 const PriceIncreaseSection = dynamic(() => import("@/components/PriceIncreaseSection"));
@@ -36,7 +35,6 @@ export default function Home() {
       <TestimonialsSection />
       <WealthMethodsSection />
       <ToolsSection />
-      <EmailFormSection />
       <FAQSection />
       <SoldOutPlansSection />
       <PriceIncreaseSection />
