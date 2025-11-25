@@ -1,22 +1,25 @@
+import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import SoldOutPlansSection from "@/components/SoldOutPlansSection";
-import PriceIncreaseSection from "@/components/PriceIncreaseSection";
-import KendineSorSection from "@/components/KendineSorSection";
-import WealthMethodsSection from "@/components/WealthMethodsSection";
-import LockInYearSection from "@/components/LockInYearSection";
-import PreparedToWorkSection from "@/components/PreparedToWorkSection";
-import ExitPlanSection from "@/components/ExitPlanSection";
-import TrustBadges from "@/components/TrustBadges";
 import WhatIsSection from "@/components/WhatIsSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
-import ToolsSection from "@/components/ToolsSection";
-import EmailFormSection from "@/components/EmailFormSection";
-import FAQSection from "@/components/FAQSection";
-import PricingSection from "@/components/PricingSection";
-import Footer from "@/components/Footer";
-import BackToTop from "@/components/BackToTop";
-import Chatbot from "@/components/Chatbot";
+
+// Lazy load below-the-fold components
+const KendineSorSection = dynamic(() => import("@/components/KendineSorSection"));
+const LockInYearSection = dynamic(() => import("@/components/LockInYearSection"));
+const PreparedToWorkSection = dynamic(() => import("@/components/PreparedToWorkSection"));
+const ExitPlanSection = dynamic(() => import("@/components/ExitPlanSection"));
+const TrustBadges = dynamic(() => import("@/components/TrustBadges"));
+const TestimonialsSection = dynamic(() => import("@/components/TestimonialsSection"));
+const WealthMethodsSection = dynamic(() => import("@/components/WealthMethodsSection"));
+const ToolsSection = dynamic(() => import("@/components/ToolsSection"));
+const EmailFormSection = dynamic(() => import("@/components/EmailFormSection"));
+const FAQSection = dynamic(() => import("@/components/FAQSection"));
+const SoldOutPlansSection = dynamic(() => import("@/components/SoldOutPlansSection"));
+const PriceIncreaseSection = dynamic(() => import("@/components/PriceIncreaseSection"));
+const PricingSection = dynamic(() => import("@/components/PricingSection"));
+const Footer = dynamic(() => import("@/components/Footer"));
+const BackToTop = dynamic(() => import("@/components/BackToTop"));
+const Chatbot = dynamic(() => import("@/components/Chatbot"));
 
 export default function Home() {
   return (

@@ -97,9 +97,10 @@ export default function WhatIsSection() {
                         <video
                           src={`${video.url}#t=0.1`}
                           className="absolute inset-0 w-full h-full object-cover"
-                          preload="metadata"
+                          preload="none"
                           muted
                           playsInline
+                          poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E"
                         />
                       ) : (
                         <div className="absolute inset-0 bg-gradient-to-br from-primary-light to-primary"></div>
