@@ -57,6 +57,21 @@ export default function WhatIsSection() {
       duration: "1 dakika",
       youtubeId: "frrHZt47UnQ"
     },
+    {
+      title: "Para Kazanma Yöntemleri",
+      duration: "1 dakika",
+      youtubeId: "QkyutcvmN0c"
+    },
+    {
+      title: "Online İş Fırsatları",
+      duration: "1 dakika",
+      youtubeId: "nWvImM9U2NQ"
+    },
+    {
+      title: "Finansal Başarı",
+      duration: "1 dakika",
+      youtubeId: "t59uopUc7iM"
+    },
   ];
 
   return (
