@@ -8,36 +8,23 @@ interface Notification {
   action: string;
 }
 
-const turkishNames = [
-  "Ahmet Yılmaz", "Mehmet Demir", "Ayşe Kaya", "Fatma Çelik", "Ali Şahin",
-  "Zeynep Aydın", "Hüseyin Özdemir", "Emine Arslan", "Mustafa Yıldız", "Hatice Doğan",
-  "İbrahim Kara", "Elif Öztürk", "Yusuf Polat", "Meryem Aksoy", "Osman İnci",
-  "Cemile Koç", "Hasan Erdoğan", "Ayşegül Güneş", "İsmail Tekin", "Derya Bulut",
-  "Ömer Çetin", "Selin Kurt", "Abdullah Özkan", "Büşra Aslan", "Murat Uzun",
-  "Gamze Turan", "Emre Kılıç", "Esra Demirtaş", "Serkan Yavuz", "Pınar Çalışkan",
-  "Burak Şimşek", "Deniz Özer", "Can Acar", "Merve Ateş", "Onur Koçak",
-  "Berat Yurt", "Seda Şen", "Ramazan Avcı", "Gül Taş", "Kemal Öz",
-  "Nurgül Keskin", "Recep Kaplan", "Sevgi Yıldırım", "Erkan Yalçın", "Sibel Tok",
-  "Yasin Balcı", "Dilek Karaca", "Tuncay Akyüz", "Leyla Özmen", "Volkan Sahin",
-  "Gülay Yücel", "İlhan Şener", "Meltem Durmuş", "Selim Bozkurt", "Aylin Akın",
-  "Barış Yaman", "Fadime Yavuz", "Kadir Özkan", "Nurhan Güler", "Orhan Çakır",
-  "Şule Öztürk", "Ufuk Aydın", "Yasemin Kurt", "Zafer Koç", "Nihal Arslan",
-  "Fikret Polat", "Gülten Çelik", "Halil Doğan", "İlknur Tekin", "Kenan Şahin",
-  "Müge Yılmaz", "Necati Demir", "Özlem Kaya", "Rıza Özdemir", "Şenay Aksoy",
-  "Tahir Erdoğan", "Ümit Güneş", "Vildan Çetin", "Yıldız Aslan", "Aziz Uzun",
-  "Belma Turan", "Cengiz Kılıç", "Dilara Demirtaş", "Erdal Yavuz", "Filiz Çalışkan",
-  "Gökhan Şimşek", "Hülya Özer", "İlyas Acar", "Jale Ateş", "Koray Koçak",
-  "Leman Yurt", "Mete Şen", "Nermin Avcı", "Okan Taş", "Pelin Öz",
-  "Rabia Keskin", "Samet Kaplan", "Tuba Yıldırım", "Uğur Yalçın", "Vesile Tok",
-  "Yavuz Balcı", "Zeki Karaca", "Adem Akyüz", "Beyza Özmen", "Celal Sahin"
+const names = [
+  "Ahmet", "Mehmet", "Ayşe", "Fatma", "Ali", "Zeynep", "Hüseyin", "Emine",
+  "Mustafa", "Hatice", "İbrahim", "Elif", "Yusuf", "Meryem", "Osman",
+  "Cemile", "Hasan", "Ayşegül", "İsmail", "Derya", "Ömer", "Selin",
+  "Abdullah", "Büşra", "Murat", "Gamze", "Emre", "Esra", "Serkan", "Pınar",
+  "Burak", "Deniz", "Can", "Merve", "Onur", "Berat", "Seda", "Ramazan",
+  "Gül", "Kemal", "Nurgül", "Recep", "Sevgi", "Erkan", "Sibel", "Yasin",
+  "Dilek", "Tuncay", "Leyla", "Volkan", "Gülay", "İlhan", "Meltem", "Selim",
+  "Aylin", "Barış", "Fadime", "Kadir", "Nurhan", "Orhan", "Şule", "Ufuk",
+  "Yasemin", "Zafer", "Nihal", "Fikret", "Gülten", "Halil", "İlknur", "Kenan",
+  "Müge", "Necati", "Özlem", "Rıza", "Şenay", "Tahir", "Ümit", "Vildan",
+  "Yıldız", "Aziz", "Belma", "Cengiz", "Dilara", "Erdal", "Filiz", "Gökhan",
+  "Hülya", "İlyas", "Jale", "Koray", "Leman", "Mete", "Nermin", "Okan",
+  "Pelin", "Rabia", "Samet", "Tuba", "Uğur", "Vesile"
 ];
 
-const actions = [
-  "AI Scale App'e katıldı",
-  "Fetih Planı'nı satın aldı",
-  "yeni üye oldu",
-  "programa kaydoldu"
-];
+const action = "aylık aboneliğe katıldı";
 
 export default function LiveNotifications() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -45,13 +32,12 @@ export default function LiveNotifications() {
 
   useEffect(() => {
     const showNotification = () => {
-      const randomName = turkishNames[Math.floor(Math.random() * turkishNames.length)];
-      const randomAction = actions[Math.floor(Math.random() * actions.length)];
+      const randomName = names[Math.floor(Math.random() * names.length)];
 
       const newNotification: Notification = {
         id: notificationId,
         name: randomName,
-        action: randomAction
+        action: action
       };
 
       setNotifications(prev => [...prev, newNotification]);
@@ -124,10 +110,11 @@ export default function LiveNotifications() {
               </p>
             </div>
 
-            {/* Live indicator */}
-            <div className="flex items-center gap-1 flex-shrink-0">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-white/60 text-xs uppercase tracking-wider">Canlı</span>
+            {/* Check icon */}
+            <div className="flex-shrink-0">
+              <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
             </div>
           </div>
         </div>
