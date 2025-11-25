@@ -2,10 +2,11 @@ import { CHECKOUT_URL } from "@/lib/constants";
 
 export default function PricingSection() {
   const packageInfo = {
-    name: "AI SCALE Üyeliği",
-    subtitle: "AI ile finansal özgürlüğe giden yolunuz",
+    name: "FETIH PLANI",
+    subtitle: "Elit Eğitim",
     price: "$39",
     period: "/ay",
+    originalPrice: "$159",
     features: [
       "6 Para Kazandıran Beceri Modülü",
       "Sınırsız video kütüphanesi erişimi",
@@ -17,7 +18,6 @@ export default function PricingSection() {
       "Networking etkinlikleri",
       "İlerleme takip sistemi",
       "Sertifika programları",
-      "Ömür boyu güncellemeler",
     ],
   };
 
@@ -38,25 +38,31 @@ export default function PricingSection() {
         <div id="pricing-card" className="max-w-2xl mx-auto">
           <div className="relative rounded-2xl p-8 md:p-10 transition-all duration-300 bg-gradient-to-b from-accent/10 to-primary-light border-2 border-accent shadow-2xl shadow-glow">
             {/* Popular badge */}
-            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-              <div className="bg-gradient-to-r from-accent to-accent-dark px-6 py-2 rounded-full shadow-lg shadow-glow">
-                <span className="text-white font-bold text-sm uppercase">En Popüler</span>
+            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+              <div className="bg-danger px-4 py-1 rounded-full shadow-lg">
+                <span className="text-white font-bold text-xs uppercase">%75 İndirim</span>
+              </div>
+              <div className="bg-accent px-4 py-1 rounded-full shadow-lg">
+                <span className="text-black font-bold text-xs uppercase">En Popüler</span>
               </div>
             </div>
 
             {/* Package header */}
             <div className="text-center mb-8">
-              <h3 className="text-2xl md:text-3xl font-bold mb-2 text-accent-light">
+              <h3 className="text-2xl md:text-3xl font-bold mb-2 text-white">
                 {packageInfo.name}
               </h3>
-              <p className="text-white/40 text-sm mb-6">{packageInfo.subtitle}</p>
-              <div className="flex items-end justify-center mb-2">
+              <p className="text-white/60 text-sm mb-6">{packageInfo.subtitle}</p>
+              <div className="flex items-center justify-center gap-3 mb-2">
+                <span className="text-2xl text-white/40 line-through">
+                  {packageInfo.originalPrice}
+                </span>
                 <span className="text-4xl md:text-5xl font-bold text-accent-light">
                   {packageInfo.price}
                 </span>
-                <span className="text-white/40 text-xl mb-1 ml-1">{packageInfo.period}</span>
+                <span className="text-white/40 text-xl">{packageInfo.period}</span>
               </div>
-              <p className="text-white/30 text-sm">İstediğiniz zaman iptal edin</p>
+              <p className="text-white/40 text-sm mb-2">Tam finansal özgürlük sistemi</p>
             </div>
 
             {/* Features list */}
@@ -82,7 +88,7 @@ export default function PricingSection() {
             {/* CTA Button */}
             <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="block">
               <button className="w-full py-4 rounded-lg font-bold uppercase text-sm tracking-wider transition-all duration-300 transform hover:scale-105 bg-accent hover:bg-accent-light text-black shadow-lg shadow-accent/30">
-                Şimdi Başla
+                Hemen Başla →
               </button>
             </a>
           </div>

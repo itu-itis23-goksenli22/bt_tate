@@ -29,7 +29,7 @@ export default function PriceIncreaseSection() {
         </p>
 
         <p className="text-white/60 text-base md:text-lg mb-8 max-w-3xl mx-auto leading-relaxed">
-          Yüzbinlerce öğrenci zaten Gerçek Dünya'ya katıldı ve finansal özgürlük yolunda ilerliyor.
+          Binlerce öğrenci zaten AI Scale App'e katıldı ve finansal özgürlük yolunda ilerliyor.
         </p>
 
         {/* Lock in text */}
@@ -40,7 +40,7 @@ export default function PriceIncreaseSection() {
         {/* CTA Button */}
         <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
           <button className="btn-primary text-lg px-12 py-5 shadow-glow-strong hover:shadow-glow-hover">
-            Gerçek Dünyaya Katıl →
+            AI Scale App'e Katıl →
           </button>
         </a>
       </div>

@@ -10,7 +10,7 @@ export default function SoldOutPlansSection() {
         <div className="text-center mb-16">
           <a href="#pricing-card">
             <button className="btn-primary text-lg px-12 py-4 shadow-glow-strong">
-              Gerçek Dünyaya Katıl →
+              AI Scale App'e Katıl →
             </button>
           </a>
         </div>

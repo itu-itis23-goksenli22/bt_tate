@@ -15,8 +15,8 @@ export default function WealthMethodsSection() {
       videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.09.51.mp4"
     },
     {
-      title: "Kripto Yatırım",
-      description: "Kripto para kampüsünde gerçek zamanlı bilgiye, profesörlere ve 112,000+ öğrenciye erişim. Trendleri belirleyin ve coin fiyatlarını etkileyen faktörleri öğrenin.",
+      title: "Kripto Yatırımları",
+      description: "Kripto para kampüsünde gerçek zamanlı bilgiye, profesörlere ve 2,000+ öğrenciye bağlanın. Trendleri belirleyin ve coin fiyatlarını etkileyen faktörleri öğrenin.",
       icon: "₿",
       color: "from-blue-500/20 to-cyan-500/20",
       videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.13.43.mp4"
@@ -56,7 +56,6 @@ export default function WealthMethodsSection() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <p className="text-accent text-sm uppercase tracking-wider mb-3">GERÇEK DÜNYA KAMPÜSLERI</p>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             10+ Zenginlik Yaratma Yöntemi
           </h2>
@@ -119,11 +118,11 @@ export default function WealthMethodsSection() {
         {/* Bottom CTA */}
         <div className="text-center">
           <p className="text-white/60 text-lg mb-6">
-            <span className="text-accent font-semibold">12+</span> zenginlik yaratma yöntemine erişim
+            <span className="text-accent font-semibold">10+</span> zenginlik yaratma yöntemine erişim
           </p>
           <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
             <button className="btn-primary text-lg px-12 py-4 shadow-glow-strong">
-              Gerçek Dünyaya Katıl →
+              AI Scale App'e Katıl →
             </button>
           </a>
         </div>
