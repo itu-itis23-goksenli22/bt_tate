@@ -9,7 +9,7 @@ export default function WealthMethodsSection() {
   const methods = [
     {
       title: "AI Otomasyonlu Ajans",
-      description: "Sınırlı teknik bilgiyle bile AI sistemleri kurmayı öğretiyoruz. Sistemi online şirketlere satın veya kendi AI'nız tarafından yönetilen bir online şirket kurun.",
+      description: "Sınırlı teknik bilgiyle bile AI sistemleri kurmayı öğrenin. Sistemi online şirketlere satın veya kendi AI'nız tarafından yönetilen bir online şirket kurun.",
       icon: "🤖",
       color: "from-blue-500/20 to-cyan-500/20",
       videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.09.51.mp4"
@@ -22,13 +22,6 @@ export default function WealthMethodsSection() {
       videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.13.43.mp4"
     },
     {
-      title: "İçerik Üretimi",
-      description: "Teknoloji çağında videoların ve landing page'lerin değeri gayrimenkulü aştı. Dijital varlıkları nasıl kullanacağınızı size öğreteceğiz.",
-      icon: "🎬",
-      color: "from-purple-500/20 to-pink-500/20",
-      videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.15.53.mp4"
-    },
-    {
       title: "Copywriting",
       description: "Kelimeler sizin savaşçılarınız ve yazdığınız her harf bir strateji. Copywriting sanatında ustalaşın ve fikirleri kâra çevirin.",
       icon: "✍️",
@@ -36,15 +29,22 @@ export default function WealthMethodsSection() {
       videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.16.48.mp4"
     },
     {
-      title: "Fitness",
-      description: "Güçlü bir beden, güçlü bir zihin demektir. Gerçek Dünya Fitness kampüsü kişisel antrenörler ve yemek planları içerir. Sağlık zenginliktir.",
-      icon: "💪",
+      title: "E-Ticaret",
+      description: "Online satış dünyasının sırlarını keşfedin. E-ticaret işinizi kurma ve ölçeklendirme stratejilerini öğrenin.",
+      icon: "🛒",
+      color: "from-purple-500/20 to-pink-500/20",
+      videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.15.53.mp4"
+    },
+    {
+      title: "Freelancing",
+      description: "Kendi patronunuz olun. Freelancing ile global pazarda yeteneklerinizi paraya çevirmeyi öğrenin.",
+      icon: "💼",
       color: "from-red-500/20 to-rose-500/20",
       videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.20.01.mp4"
     },
     {
       title: "İş Ustalığı",
-      description: "Gerçek Dünya İş ustalığı ve diplomasi eğitimi liderlik, operasyonları ölçeklendirme, daha fazla para kazanma sanatı hakkında.",
+      description: "İş dünyasında liderlik, operasyonları ölçeklendirme ve daha fazla para kazanma sanatını öğrenin.",
       icon: "👔",
       color: "from-blue-500/20 to-cyan-500/20",
       videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2019.36.02.mp4"
