@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import MetaPixel from "@/components/MetaPixel";
@@ -12,12 +12,13 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Gerçek Dünya - Çevrimiçi Yolculuğunuza Başlayın",
   description: "12+ Para Kazandıran Beceri ile başarıya ulaşın",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
 };
 
 export default function RootLayout({
