@@ -13,14 +13,34 @@ export default function WhatIsSection() {
       youtubeId: "0Qrau45bXno"
     },
     {
-      title: "Kendinin En İyi Versiyonu",
+      title: "AI Otomasyonlu Ajans",
       duration: "1 dakika",
-      youtubeId: "7ZXn75kAJAg"
+      youtubeId: "mrQjpPNMdYA"
     },
     {
-      title: "Başlama Motivasyonu",
+      title: "Kripto Yatırımları",
       duration: "1 dakika",
-      youtubeId: "p7n5OX8RKEI"
+      youtubeId: "L3HL4_SFlJs"
+    },
+    {
+      title: "Copywriting",
+      duration: "1 dakika",
+      youtubeId: "t5TlAiAOmyk"
+    },
+    {
+      title: "E-Ticaret",
+      duration: "1 dakika",
+      youtubeId: "uV7dr76cvKw"
+    },
+    {
+      title: "Freelancing",
+      duration: "1 dakika",
+      youtubeId: "-2mDw_4pHYw"
+    },
+    {
+      title: "İş Ustalığı",
+      duration: "1 dakika",
+      youtubeId: "RNluEv5O1Ak"
     },
     {
       title: "Yapay Zeka Geçmiş ve Gelecek",
@@ -28,9 +48,24 @@ export default function WhatIsSection() {
       youtubeId: "KYvYuVwaQXs"
     },
     {
+      title: "Başarı Stratejileri",
+      duration: "1 dakika",
+      youtubeId: "7bAybQyWlcs"
+    },
+    {
+      title: "Dijital Pazarlama",
+      duration: "1 dakika",
+      youtubeId: "kIY-KvRe25c"
+    },
+    {
       title: "AI Scale App Platformumuz",
       duration: "1 dakika",
       youtubeId: "frrHZt47UnQ"
+    },
+    {
+      title: "Para Kazanma Sistemi",
+      duration: "1 dakika",
+      youtubeId: "d-OWRM4kkqA"
     },
   ];
 
@@ -123,13 +158,17 @@ export default function WhatIsSection() {
               ))}
             </div>
 
-            {/* Scroll indicator dots */}
-            <div className="flex justify-center gap-2 mt-6">
-              <div className="w-2 h-2 rounded-full bg-accent transition-all duration-300"></div>
-              <div className="w-2 h-2 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-300 cursor-pointer"></div>
-              <div className="w-2 h-2 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-300 cursor-pointer"></div>
-              <div className="w-2 h-2 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-300 cursor-pointer"></div>
-              <div className="w-2 h-2 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-300 cursor-pointer"></div>
+            {/* Scroll hint text */}
+            <div className="text-center mt-6">
+              <p className="text-white/40 text-sm">
+                <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                </svg>
+                Kaydır
+                <svg className="w-4 h-4 inline ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </p>
             </div>
           </div>
         </div>
