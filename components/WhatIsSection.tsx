@@ -97,7 +97,7 @@ export default function WhatIsSection() {
                         <video
                           src={`${video.url}#t=0.1`}
                           className="absolute inset-0 w-full h-full object-cover"
-                          preload="metadata"
+                          preload="none"
                           muted
                           playsInline
                         />

@@ -80,7 +80,7 @@ export default function WealthMethodsSection() {
                     <video
                       src={`${method.videoUrl}#t=0.1`}
                       className="absolute inset-0 w-full h-full object-cover"
-                      preload="metadata"
+                      preload="none"
                       muted
                       playsInline
                     />
