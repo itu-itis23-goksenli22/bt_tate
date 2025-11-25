@@ -1,6 +1,5 @@
 "use client";
 
-import { CHECKOUT_URL } from "@/lib/constants";
 import { useState } from "react";
 
 export default function WealthMethodsSection() {
@@ -120,11 +119,14 @@ export default function WealthMethodsSection() {
           <p className="text-white/60 text-lg mb-6">
             <span className="text-accent font-semibold">10+</span> zenginlik yaratma yöntemine erişim
           </p>
-          <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
-            <button className="btn-primary text-lg px-12 py-4 shadow-glow-strong">
-              AI Scale App'e Katıl →
-            </button>
-          </a>
+          <button
+            onClick={() => {
+              document.getElementById('pricing-card')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }}
+            className="btn-primary text-lg px-12 py-4 shadow-glow-strong"
+          >
+            AI Scale App'e Katıl →
+          </button>
         </div>
       </div>
 

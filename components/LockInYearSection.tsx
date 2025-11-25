@@ -1,4 +1,5 @@
-import { CHECKOUT_URL } from "@/lib/constants";
+"use client";
+
 import Image from "next/image";
 import { getStorageImageUrl } from "@/lib/images";
 
@@ -43,11 +44,14 @@ export default function LockInYearSection() {
             </div>
 
             {/* CTA Button */}
-            <a href="#pricing-card">
-              <button className="btn-primary text-lg px-10 py-4 shadow-glow-strong hover:shadow-glow-hover">
-                AI Scale App'e Katıl!
-              </button>
-            </a>
+            <button
+              onClick={() => {
+                document.getElementById('pricing-card')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }}
+              className="btn-primary text-lg px-10 py-4 shadow-glow-strong hover:shadow-glow-hover"
+            >
+              AI Scale App'e Katıl!
+            </button>
           </div>
 
           {/* Right - Phone mockup with real image */}

@@ -59,11 +59,14 @@ export default function HeroSection() {
 
         {/* CTA Button */}
         <div className="mb-16">
-          <a href="#pricing-card">
-            <button className="btn-primary text-lg px-12 py-4 shadow-glow-strong hover:shadow-glow-hover">
-              AI Scale App'e Katıl →
-            </button>
-          </a>
+          <button
+            onClick={() => {
+              document.getElementById('pricing-card')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }}
+            className="btn-primary text-lg px-12 py-4 shadow-glow-strong hover:shadow-glow-hover"
+          >
+            AI Scale App'e Katıl →
+          </button>
         </div>
 
         {/* Stats - Simple 3 column flow */}

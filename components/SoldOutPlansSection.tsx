@@ -1,18 +1,19 @@
 "use client";
 
-import { CHECKOUT_URL } from "@/lib/constants";
-
 export default function SoldOutPlansSection() {
   return (
     <section className="py-20 px-4 bg-gradient-to-b from-primary via-primary-light to-primary">
       <div className="max-w-6xl mx-auto">
         {/* Join The Real World CTA */}
         <div className="text-center mb-16">
-          <a href="#pricing-card">
-            <button className="btn-primary text-lg px-12 py-4 shadow-glow-strong">
-              AI Scale App'e Katıl →
-            </button>
-          </a>
+          <button
+            onClick={() => {
+              document.getElementById('pricing-card')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }}
+            className="btn-primary text-lg px-12 py-4 shadow-glow-strong"
+          >
+            AI Scale App'e Katıl →
+          </button>
         </div>
 
         {/* Plans Heading */}
@@ -46,11 +47,16 @@ export default function SoldOutPlansSection() {
               </div>
               <p className="text-white/60 text-sm mb-6">/ay</p>
               <p className="text-white/80 text-sm mb-6 px-4">Tam finansal özgürlük sistemi</p>
-              <a href="#pricing-card" className="block px-4">
-                <button className="w-full py-4 bg-accent hover:bg-accent-light rounded-full font-bold text-white text-lg transition-all shadow-lg shadow-accent/30">
+              <div className="px-4">
+                <button
+                  onClick={() => {
+                    document.getElementById('pricing-card')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  }}
+                  className="w-full py-4 bg-accent hover:bg-accent-light rounded-full font-bold text-white text-lg transition-all shadow-lg shadow-accent/30"
+                >
                   Hemen Başla →
                 </button>
-              </a>
+              </div>
             </div>
           </div>
         </div>
