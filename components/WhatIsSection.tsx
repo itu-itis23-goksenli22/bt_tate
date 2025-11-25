@@ -23,11 +23,6 @@ export default function WhatIsSection() {
       youtubeId: "L3HL4_SFlJs"
     },
     {
-      title: "Copywriting",
-      duration: "1 dakika",
-      youtubeId: "t5TlAiAOmyk"
-    },
-    {
       title: "E-Ticaret",
       duration: "1 dakika",
       youtubeId: "uV7dr76cvKw"
@@ -61,11 +56,6 @@ export default function WhatIsSection() {
       title: "AI Scale App Platformumuz",
       duration: "1 dakika",
       youtubeId: "frrHZt47UnQ"
-    },
-    {
-      title: "Para Kazanma Sistemi",
-      duration: "1 dakika",
-      youtubeId: "d-OWRM4kkqA"
     },
   ];
 
