@@ -34,18 +34,18 @@ export default function LockInYearSection() {
               </p>
 
               <p>
-                <span className="text-white font-semibold">Ama ancak</span> doğru iş modellerinde doğru bilgileri kullanarak odaklanırsanız.
+                Ancak doğru iş modellerinde doğru bilgileri kullanarak odaklanırsanız.
               </p>
 
               <p>
-                Gerçek Dünya'da, multi-milyoner profesörler size adım adım yolu gösterecek ve hedeflerinize mümkün olduğunca hızlı ulaşmanızı sağlayacak.
+                AI Scale App'de mentörleriniz size adım adım yolu gösterecek ve hedeflerinize mümkün olduğunca hızlı ulaşmanızı sağlayacak.
               </p>
             </div>
 
             {/* CTA Button */}
             <a href="#pricing-card">
               <button className="btn-primary text-lg px-10 py-4 shadow-glow-strong hover:shadow-glow-hover">
-                Gerçek Dünyaya Katıl →
+                AI Scale App'e Katıl!
               </button>
             </a>
           </div>

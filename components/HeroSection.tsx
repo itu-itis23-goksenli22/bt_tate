@@ -19,14 +19,14 @@ export default function HeroSection() {
         {/* Program name */}
         <div className="mb-4">
           <p className="text-accent text-sm md:text-base uppercase tracking-widest font-semibold">
-            Para Yaratma Programı Master Edition
+            2025'te Başarılı Bir Online İş Kurmak İsteyen Herkes İçin
           </p>
         </div>
 
         {/* Main heading - The Real World style */}
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
           <span className="text-white block">Yapay Zeka ile Zenginlik Yaratmayı Öğrenin</span>
-          <span className="text-accent block mt-2">Aiscaleapp 2.0</span>
+          <span className="text-accent block mt-2">AI SCALE APP</span>
         </h1>
 
         {/* Clock subtitle */}
@@ -61,7 +61,7 @@ export default function HeroSection() {
         <div className="mb-16">
           <a href="#pricing-card">
             <button className="btn-primary text-lg px-12 py-4 shadow-glow-strong hover:shadow-glow-hover">
-              Gerçek Dünyaya Katıl →
+              AI Scale App'e Katıl →
             </button>
           </a>
         </div>

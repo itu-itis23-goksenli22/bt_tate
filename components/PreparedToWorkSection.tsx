@@ -30,19 +30,19 @@ export default function PreparedToWorkSection() {
             {/* Description */}
             <div className="space-y-6 text-white/70 text-base md:text-lg leading-relaxed">
               <p>
-                <span className="text-white font-semibold">Para kazanmak bir beceridir.</span> Diğer her beceri gibi öğrenilebilir ve öğrenilme hızı, onu öğrettiğiniz ortama ve çaba düzeyinize bağlıdır.
+                <span className="text-white font-semibold">Para kazanmak bir beceridir.</span> Diğer her beceri gibi öğrenilebilir ve öğrenilme hızı, onu öğrendiğiniz ortama ve çaba düzeyinize bağlıdır.
               </p>
 
               <p>
-                Gerçek Dünya'da multi-milyoner profesörler size öğrettikleri iş modellerini kullanacaksınız.
+                AI Scale App'de mentörlerinizin size öğrettikleri iş modellerini kullanacaksınız.
               </p>
 
               <div className="bg-accent/10 border-l-4 border-accent p-6 rounded-r-lg">
                 <p className="text-white font-semibold mb-2">
-                  Koçlarımız öğrettikleri iş modellerini kullanır
+                  Koçlarımız öğrettikleri iş modellerini profesyonel bir şekilde aktarır.
                 </p>
                 <p className="text-white/60 text-sm">
-                  onların size öğretecekleri hakkında her şeyi bildiklerini nasıl anlamaz.
+                  Tüm eğitimleri özenle hazırlanır.
                 </p>
               </div>
             </div>

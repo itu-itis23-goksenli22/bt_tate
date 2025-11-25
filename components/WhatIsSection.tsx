@@ -13,22 +13,22 @@ export default function WhatIsSection() {
       url: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2017.03.31.mp4"
     },
     {
-      title: "E-Commerce Kazancı",
+      title: "Kendinin En İyi Versiyonu",
       duration: "1 dakika",
       url: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2017.03.59.mp4"
     },
     {
-      title: "AI Otomasyon",
+      title: "Başlama Motivasyonu",
       duration: "1 dakika",
       url: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2017.45.09%20(3).mp4"
     },
     {
-      title: "Dijital Pazarlama",
+      title: "Yapay Zeka Geçmiş ve Gelecek",
       duration: "1 dakika",
       url: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2017.45.09%20(4).mp4"
     },
     {
-      title: "Gelir Akışları",
+      title: "AI Scale App Platformumuz",
       duration: "1 dakika",
       url: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2017.45.09%20(5).mp4"
     },
@@ -40,7 +40,7 @@ export default function WhatIsSection() {
         {/* Section title */}
         <div className="text-center mb-16">
           <h2 className="section-title">
-            AI SCALE <span className="text-accent-light">NEDİR?</span>
+            AI SCALE APP <span className="text-accent-light">NEDİR?</span>
           </h2>
           <p className="text-lg md:text-base md:text-lg text-white/70 max-w-3xl mx-auto">
             Yapay zeka ile para kazanmanın yeni yolu. Gelecek burada başlıyor.
@@ -140,14 +140,13 @@ export default function WhatIsSection() {
           <div className="grid md:grid-cols-2 gap-8 mb-12">
             <div className="space-y-4">
               <h3 className="text-2xl font-bold text-white">
-                10,000+ Öğrenci Zaten Kazanıyor
+                1,000+ Öğrenci Zaten Kazanıyor
               </h3>
               <p className="text-white/70 leading-relaxed">
-                6 yüksek gelirli beceri. Uzman mentorlar. Gerçek sonuçlar.
+                Uzman mentorlar. Gerçek sonuçlar.
               </p>
               <p className="text-white/70 leading-relaxed">
-                AI ve dijital beceriler ile para kazanmanın sistemini öğren.
-                Başka bir şey gerekmiyor.
+                Yapay zeka ve dijital beceriler ile para kazanmanın sistemini öğren. Başka bir şey gerekmiyor.
               </p>
             </div>
 
@@ -157,7 +156,7 @@ export default function WhatIsSection() {
                   <svg className="w-6 h-6 text-accent-light mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-white/70">Her gün canlı eğitimler</span>
+                  <span className="text-white/70">Her hafta canlı eğitimler</span>
                 </li>
                 <li className="flex items-start">
                   <svg className="w-6 h-6 text-accent-light mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
@@ -169,7 +168,7 @@ export default function WhatIsSection() {
                   <svg className="w-6 h-6 text-accent-light mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-white/70">Global ağ - dünyadaki en iyi girişimciler</span>
+                  <span className="text-white/70">Dünyadaki en iyi girişimcilerden haberler</span>
                 </li>
               </ul>
             </div>

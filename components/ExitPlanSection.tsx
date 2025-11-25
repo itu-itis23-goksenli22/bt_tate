@@ -27,15 +27,15 @@ export default function ExitPlanSection() {
             {/* Description */}
             <div className="space-y-6 text-white/70 text-base md:text-lg leading-relaxed mb-10">
               <p>
-                <span className="text-white font-semibold">Gerçek şu ki, sistem asla senin başarın için kurulmadı.</span> Seni bağımlı, maaş çeklerinde, asla gerçekleşmeyen vaatlerde tutmak için kuruldu.
+                <span className="text-white font-semibold">Gerçek şu ki, sistem asla senin başarın için kurulmadı.</span> Seni bağımlı, maaşlı, asla gerçekleşmeyen vaatlerde tutmak için kuruldu.
               </p>
 
               <p className="text-white/60">
-                Gerçek Dünya sadece başka bir platform değil.
+                AI Scale App sadece bir platform değil.
               </p>
 
               <p>
-                Hayat için yeni bir işletim sistemi. İçeride, <span className="text-white font-semibold">gerçek para kazandıran gerçek becerileri</span> öğreneceksiniz. Kanıtlanmış girişimciler tarafından mentorluk edileceksiniz.
+                Hayat için yeni bir işletim sistemi. İçeride, <span className="text-white font-semibold">gerçek para kazandıran gerçek becerileri</span> öğreneceksiniz. Kanıtlanmış girişimciler tarafından mentörlük edileceksiniz.
               </p>
 
               <div className="bg-accent/10 border-l-4 border-accent p-6 rounded-r-lg">
@@ -48,7 +48,7 @@ export default function ExitPlanSection() {
             {/* CTA Button */}
             <a href="#pricing-card">
               <button className="btn-primary text-lg px-10 py-4 shadow-glow-strong hover:shadow-glow-hover">
-                Gerçek Dünyaya Katıl →
+                AI Scale App'e Katıl →
               </button>
             </a>
           </div>
