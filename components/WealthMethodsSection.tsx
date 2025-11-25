@@ -4,7 +4,7 @@ import { CHECKOUT_URL } from "@/lib/constants";
 import { useState } from "react";
 
 export default function WealthMethodsSection() {
-  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<{youtubeId?: string, videoUrl?: string} | null>(null);
 
   const methods = [
     {
@@ -12,42 +12,42 @@ export default function WealthMethodsSection() {
       description: "Sınırlı teknik bilgiyle bile AI sistemleri kurmayı öğrenin. Sistemi online şirketlere satın veya kendi AI'nız tarafından yönetilen bir online şirket kurun.",
       icon: "🤖",
       color: "from-blue-500/20 to-cyan-500/20",
-      videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.09.51.mp4"
+      youtubeId: "mrQjpPNMdYA"
     },
     {
       title: "Kripto Yatırımları",
       description: "Kripto para kampüsünde gerçek zamanlı bilgiye, profesörlere ve 2,000+ öğrenciye bağlanın. Trendleri belirleyin ve coin fiyatlarını etkileyen faktörleri öğrenin.",
       icon: "₿",
       color: "from-blue-500/20 to-cyan-500/20",
-      videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.13.43.mp4"
+      youtubeId: "L3HL4_SFlJs"
     },
     {
       title: "Copywriting",
       description: "Kelimeler sizin savaşçılarınız ve yazdığınız her harf bir strateji. Copywriting sanatında ustalaşın ve fikirleri kâra çevirin.",
       icon: "✍️",
       color: "from-green-500/20 to-emerald-500/20",
-      videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.16.48.mp4"
+      youtubeId: "t5TlAiAOmyk"
     },
     {
       title: "E-Ticaret",
       description: "Online satış dünyasının sırlarını keşfedin. E-ticaret işinizi kurma ve ölçeklendirme stratejilerini öğrenin.",
       icon: "🛒",
       color: "from-purple-500/20 to-pink-500/20",
-      videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.15.53.mp4"
+      youtubeId: "uV7dr76cvKw"
     },
     {
       title: "Freelancing",
       description: "Kendi patronunuz olun. Freelancing ile global pazarda yeteneklerinizi paraya çevirmeyi öğrenin.",
       icon: "💼",
       color: "from-red-500/20 to-rose-500/20",
-      videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.20.01.mp4"
+      youtubeId: "-2mDw_4pHYw"
     },
     {
       title: "İş Ustalığı",
       description: "İş dünyasında liderlik, operasyonları ölçeklendirme ve daha fazla para kazanma sanatını öğrenin.",
       icon: "👔",
       color: "from-blue-500/20 to-cyan-500/20",
-      videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2019.36.02.mp4"
+      youtubeId: "RNluEv5O1Ak"
     }
   ];
 
@@ -70,19 +70,21 @@ export default function WealthMethodsSection() {
             <div
               key={index}
               className="card-trw group cursor-pointer"
-              onClick={() => method.videoUrl && setSelectedVideo(method.videoUrl)}
+              onClick={() => method.youtubeId && setSelectedVideo({youtubeId: method.youtubeId})}
             >
               {/* Video Thumbnail with Play Button */}
               <div className={`relative aspect-video bg-gradient-to-br ${method.color} rounded-xl mb-4 overflow-hidden`}>
-                {/* Video Element for Thumbnail */}
-                {method.videoUrl ? (
+                {/* YouTube Thumbnail */}
+                {method.youtubeId ? (
                   <>
-                    <video
-                      src={`${method.videoUrl}#t=0.1`}
+                    <img
+                      src={`https://img.youtube.com/vi/${method.youtubeId}/hqdefault.jpg`}
+                      alt={method.title}
                       className="absolute inset-0 w-full h-full object-cover"
-                      preload="none"
-                      muted
-                      playsInline
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.src = `https://img.youtube.com/vi/${method.youtubeId}/sddefault.jpg`;
+                      }}
                     />
                     {/* Play Button Overlay */}
                     <div className="absolute inset-0 bg-primary/40 group-hover:bg-primary/20 transition-all flex items-center justify-center">
@@ -154,16 +156,27 @@ export default function WealthMethodsSection() {
               </svg>
             </button>
 
-            {/* Video Player */}
-            <video
-              src={selectedVideo}
-              controls
-              autoPlay
-              className="w-full h-full"
-              controlsList="nodownload"
-            >
-              Tarayıcınız video etiketini desteklemiyor.
-            </video>
+            {/* YouTube Video Player */}
+            {selectedVideo.youtubeId ? (
+              <iframe
+                className="w-full h-full"
+                src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1`}
+                title="Video Player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : selectedVideo.videoUrl ? (
+              <video
+                src={selectedVideo.videoUrl}
+                controls
+                autoPlay
+                className="w-full h-full"
+                controlsList="nodownload"
+              >
+                Tarayıcınız video etiketini desteklemiyor.
+              </video>
+            ) : null}
           </div>
         </div>
       )}
