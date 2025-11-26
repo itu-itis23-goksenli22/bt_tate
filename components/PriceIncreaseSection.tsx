@@ -1,4 +1,4 @@
-import { CHECKOUT_URL } from "@/lib/constants";
+"use client";
 
 export default function PriceIncreaseSection() {
   return (
@@ -38,11 +38,14 @@ export default function PriceIncreaseSection() {
         </p>
 
         {/* CTA Button */}
-        <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
-          <button className="btn-primary text-lg px-12 py-5 shadow-glow-strong hover:shadow-glow-hover">
-            AI Scale App'e Katıl →
-          </button>
-        </a>
+        <button
+          onClick={() => {
+            document.getElementById('pricing-card')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }}
+          className="btn-primary text-lg px-12 py-5 shadow-glow-strong hover:shadow-glow-hover"
+        >
+          AI Scale App'e Katıl →
+        </button>
       </div>
     </section>
   );
