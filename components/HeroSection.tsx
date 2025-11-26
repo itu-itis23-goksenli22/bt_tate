@@ -11,7 +11,7 @@ export default function HeroSection() {
   const modules = useCountUp({ end: 6, duration: 1500, enabled: statsVisible });
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-4">
+    <section className="relative min-h-screen flex items-center justify-center pt-48 pb-20 px-4">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary to-primary-light" />
 

@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import BlackFridayBanner from "@/components/BlackFridayBanner";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import WhatIsSection from "@/components/WhatIsSection";
@@ -26,6 +27,7 @@ const LiveNotifications = dynamic(() => import("@/components/LiveNotifications")
 export default function Home() {
   return (
     <main className="min-h-screen">
+      <BlackFridayBanner />
       <Navbar />
       <HeroSection />
       <WhatIsSection />

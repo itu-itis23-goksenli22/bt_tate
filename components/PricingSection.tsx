@@ -3,10 +3,10 @@ import { CHECKOUT_URL } from "@/lib/constants";
 export default function PricingSection() {
   const packageInfo = {
     name: "FETIH PLANI",
-    subtitle: "Elit Eğitim",
-    price: "$39",
+    subtitle: "Elit Eğitim - Black Friday Özel",
+    price: "₺9,000",
     period: "/ay",
-    originalPrice: "$159",
+    originalPrice: "₺15,000",
     features: [
       "6 Para Kazandıran Beceri Modülü",
       "Sınırsız video kütüphanesi erişimi",
@@ -98,10 +98,17 @@ export default function PricingSection() {
               </div>
             </div>
 
-            {/* CTA Button */}
+            {/* Black Friday CTA Button */}
             <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="block">
-              <button className="w-full py-4 rounded-lg font-bold uppercase text-sm tracking-wider transition-all duration-300 transform hover:scale-105 bg-accent hover:bg-accent-light text-black shadow-lg shadow-accent/30">
-                Hemen Başla →
+              <button className="relative w-full py-5 rounded-lg font-bold uppercase text-base tracking-wider transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 hover:from-yellow-500 hover:via-orange-600 hover:to-red-600 text-black shadow-2xl shadow-orange-500/50 animate-pulse">
+                <span className="flex items-center justify-center gap-2">
+                  <span className="text-2xl">🔥</span>
+                  BLACK FRIDAY FIRSATINI YAKALA
+                  <span className="text-2xl">🔥</span>
+                </span>
+                <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full animate-bounce">
+                  SADECE 3 GÜN!
+                </span>
               </button>
             </a>
           </div>
