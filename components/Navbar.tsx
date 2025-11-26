@@ -17,12 +17,9 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-40 bg-primary/95 backdrop-blur-lg border-b border-white/5">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-center justify-between h-20">
-          {/* Left: Empty spacer for balance */}
-          <div className="hidden lg:block w-32"></div>
-
+        <div className="flex items-center justify-center h-20">
           {/* Center: Logo with navigation links on sides */}
-          <div className="hidden lg:flex items-center gap-2">
+          <div className="hidden lg:flex items-center gap-4">
             {/* Left side links */}
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
@@ -47,7 +44,7 @@ export default function Navbar() {
             </button>
 
             {/* Logo */}
-            <div className="mx-3">
+            <div className="mx-6">
               <Logo className="w-14 h-14 md:w-16 md:h-16" />
             </div>
 
@@ -77,8 +74,8 @@ export default function Navbar() {
             <Logo className="w-14 h-14 md:w-16 md:h-16" />
           </div>
 
-          {/* Right: CTA Button */}
-          <div className="hidden lg:flex items-center">
+          {/* Right: CTA Button - Absolute positioned */}
+          <div className="hidden lg:block absolute right-6">
             <button
               onClick={() => scrollToSection('pricing-card')}
               className="bg-accent hover:bg-accent-light text-white px-4 py-2 rounded-full font-bold text-xs uppercase tracking-wider transition-all shadow-lg shadow-accent/30 hover:shadow-accent/50 hover:scale-105 whitespace-nowrap"
