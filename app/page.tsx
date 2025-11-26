@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import WhatIsSection from "@/components/WhatIsSection";
-import EmailCapturePopup from "@/components/EmailCapturePopup";
 
 // Lazy load below-the-fold components
 const DualVideoSection = dynamic(() => import("@/components/DualVideoSection"));
@@ -48,7 +47,6 @@ export default function Home() {
       <BackToTop />
       <Chatbot />
       <LiveNotifications />
-      <EmailCapturePopup />
     </main>
   );
 }
