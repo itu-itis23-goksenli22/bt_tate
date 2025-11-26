@@ -91,7 +91,7 @@ export default function PricingSection() {
                     </svg>
                     <div className="flex-1 min-w-0">
                       <p className="text-gold font-bold text-xs uppercase tracking-wide">Özel Hediye</p>
-                      <p className="text-white text-sm font-semibold">50,000$ Değerinde AI Başlangıç Paketi</p>
+                      <p className="text-white text-sm font-semibold">5,000$ Değerinde AI Başlangıç Paketi</p>
                     </div>
                   </div>
                 </div>
