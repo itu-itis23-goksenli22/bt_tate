@@ -4,6 +4,7 @@ import HeroSection from "@/components/HeroSection";
 import WhatIsSection from "@/components/WhatIsSection";
 
 // Lazy load below-the-fold components
+const DualVideoSection = dynamic(() => import("@/components/DualVideoSection"));
 const KendineSorSection = dynamic(() => import("@/components/KendineSorSection"));
 const LockInYearSection = dynamic(() => import("@/components/LockInYearSection"));
 const PreparedToWorkSection = dynamic(() => import("@/components/PreparedToWorkSection"));
@@ -27,6 +28,7 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <WhatIsSection />
+      <DualVideoSection />
       <KendineSorSection />
       <LockInYearSection />
       <PreparedToWorkSection />
