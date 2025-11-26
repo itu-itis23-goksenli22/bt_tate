@@ -58,7 +58,7 @@ export default function SoldOutPlansSection() {
                       </svg>
                       <div className="flex-1 min-w-0">
                         <p className="text-gold font-bold text-xs uppercase tracking-wide">Hediye</p>
-                        <p className="text-white text-xs font-semibold">500$ AI Başlangıç Paketi</p>
+                        <p className="text-white text-xs font-semibold">50,000$ AI Başlangıç Paketi</p>
                       </div>
                     </div>
                   </div>
