@@ -7,44 +7,44 @@ export default function WealthMethodsSection() {
 
   const methods = [
     {
-      title: "AI Otomasyonlu Ajans",
-      description: "Sınırlı teknik bilgiyle bile AI sistemleri kurmayı öğrenin. Sistemi online şirketlere satın veya kendi AI'nız tarafından yönetilen bir online şirket kurun.",
+      title: "AiScale Yapay Zeka Otomasyon Ajansı",
+      description: "Sınırlı teknik bilgiyle bile AI sistemleri kurmayı öğretiyoruz. Sistemi online bir şekilde şirketlere satın veya kendi AI'nız tarafından yönetilen bir online iş kurun.",
       icon: "🤖",
       color: "from-blue-500/20 to-cyan-500/20",
       youtubeId: "9GkjN-Jk6lw"
     },
     {
       title: "Kripto Yatırımları",
-      description: "Kripto para kampüsünde gerçek zamanlı bilgiye, profesörlere ve 2,000+ öğrenciye bağlanın. Trendleri belirleyin ve coin fiyatlarını etkileyen faktörleri öğrenin.",
+      description: "Kripto para kampüsünde gerçek zamanlı bilgiye, profesörlere ve 2,000+ öğrenciyle bağlantı. Trendleri belirleyin ve coin fiyatlarını etkileyen faktörleri öğrenin.",
       icon: "₿",
       color: "from-blue-500/20 to-cyan-500/20",
       videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.13.43.mp4"
     },
     {
-      title: "Copywriting",
-      description: "Kelimeler sizin savaşçılarınız ve yazdığınız her harf bir strateji. Copywriting sanatında ustalaşın ve fikirleri kâra çevirin.",
-      icon: "✍️",
+      title: "İçerik Üretimi",
+      description: "Teknoloji çağında videoların ve landing page'lerin değeri gayrimenkulü aştı. Dijital varlıkları nasıl kullanacağınızı size öğreteceğiz.",
+      icon: "🎬",
       color: "from-green-500/20 to-emerald-500/20",
       videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.16.48.mp4"
     },
     {
-      title: "E-Ticaret",
-      description: "Online satış dünyasının sırlarını keşfedin. E-ticaret işinizi kurma ve ölçeklendirme stratejilerini öğrenin.",
-      icon: "🛒",
+      title: "Amazon FBA ve Global E-Ticaret",
+      description: "Amazon FBA üzerinde ürün seçimi, lansman stratejileri, ranking mantığı ve reklam optimizasyonu. Türkiye'den global pazara satış yapmanın teknikleri.",
+      icon: "📦",
       color: "from-purple-500/20 to-pink-500/20",
       videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.15.53.mp4"
     },
     {
-      title: "Freelancing",
-      description: "Kendi patronunuz olun. Freelancing ile global pazarda yeteneklerinizi paraya çevirmeyi öğrenin.",
-      icon: "💼",
+      title: "B2B SaaS Geliştirme",
+      description: "Kendi B2B SaaS ürününüzü sıfırdan kurmayı öğrenin. Veri akışı, kullanıcı yönetimi, API entegrasyonları, ödeme sistemleri ve müşteri onboarding süreçlerini adım adım gösteriyoruz. Kurumsal şirketlere aylık abonelikle satabileceğiniz ölçeklenebilir bir yazılım oluşturun.",
+      icon: "💻",
       color: "from-red-500/20 to-rose-500/20",
       videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.20.01.mp4"
     },
     {
-      title: "İş Ustalığı",
-      description: "İş dünyasında liderlik, operasyonları ölçeklendirme ve daha fazla para kazanma sanatını öğrenin.",
-      icon: "👔",
+      title: "N8n Workflowları",
+      description: "Tam otomatik iş sistemleri kurma. Müşteri takibi, içerik üretimi, fatura otomasyonu, CRM bağlantıları, Scraper + GPT + API entegrasyonları.",
+      icon: "⚙️",
       color: "from-blue-500/20 to-cyan-500/20",
       videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2019.36.02.mp4"
     }
