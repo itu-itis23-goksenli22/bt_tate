@@ -66,7 +66,7 @@ export default function BlackFridayBanner() {
 
           {/* Discount Text */}
           <div className="hidden md:block bg-black text-yellow-400 px-4 py-1 rounded-full font-bold text-sm uppercase animate-pulse">
-            %40 İNDİRİM
+            %70 İNDİRİM
           </div>
         </div>
       </div>

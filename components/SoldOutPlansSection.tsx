@@ -34,16 +34,16 @@ export default function SoldOutPlansSection() {
               </span>
             </div>
             <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-              <div className="bg-danger px-4 py-1 rounded-full shadow-lg">
-                <span className="text-white text-xs font-bold uppercase">%75 İNDİRİM</span>
+              <div className="bg-gradient-to-r from-yellow-500 to-orange-500 px-4 py-1 rounded-full shadow-lg animate-pulse">
+                <span className="text-black text-xs font-bold uppercase">🔥 BLACK FRIDAY %70 🔥</span>
               </div>
             </div>
             <div className="text-center py-8 pt-12">
               <h3 className="text-2xl font-bold text-accent mb-2">FETİH PLANI</h3>
-              <p className="text-white/60 text-sm mb-4 uppercase tracking-wider">Elit Erişim</p>
+              <p className="text-white/60 text-sm mb-4 uppercase tracking-wider">Elit Erişim - Black Friday Özel</p>
               <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="text-2xl font-bold text-white/40 line-through">$159</span>
-                <span className="text-5xl font-bold text-accent">$39</span>
+                <span className="text-2xl font-bold text-white/40 line-through">₺30,000</span>
+                <span className="text-5xl font-bold text-accent">₺9,000</span>
               </div>
               <p className="text-white/60 text-sm mb-6">/ay</p>
               <p className="text-white/80 text-sm mb-6 px-4">Tam finansal özgürlük sistemi</p>

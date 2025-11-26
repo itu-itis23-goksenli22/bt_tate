@@ -6,7 +6,7 @@ export default function PricingSection() {
     subtitle: "Elit Eğitim - Black Friday Özel",
     price: "₺9,000",
     period: "/ay",
-    originalPrice: "₺15,000",
+    originalPrice: "₺30,000",
     features: [
       "6 Para Kazandıran Beceri Modülü",
       "Sınırsız video kütüphanesi erişimi",
