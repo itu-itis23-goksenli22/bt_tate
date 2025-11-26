@@ -67,6 +67,11 @@ export default function WhatIsSection() {
       duration: "1 dakika",
       youtubeId: "t59uopUc7iM"
     },
+    {
+      title: "Dijital Dönüşüm",
+      duration: "2 dakika",
+      youtubeId: "kVHJfmtY_00"
+    },
   ];
 
   return (
