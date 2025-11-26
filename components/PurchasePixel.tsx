@@ -9,10 +9,16 @@ export default function PurchasePixel() {
   useEffect(() => {
     if (typeof window === "undefined" || !window.fbq) return;
 
+    // Debug: Log all URL parameters
+    console.log("=== Purchase Pixel Debug ===");
+    console.log("All URL params:", Object.fromEntries(searchParams.entries()));
+
     // Get or generate unique event ID from URL params or localStorage
     let eventId = searchParams.get("order_id") ||
                   searchParams.get("session_id") ||
-                  searchParams.get("transaction_id");
+                  searchParams.get("transaction_id") ||
+                  searchParams.get("payment_id") ||
+                  searchParams.get("invoice_id");
 
     // If no ID from URL, check if we already tracked this session
     const storageKey = "aiscale_purchase_tracked";
