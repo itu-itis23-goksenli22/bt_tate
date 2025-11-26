@@ -7,14 +7,14 @@ export default function DualVideoSection() {
 
   const videos = [
     {
-      title: "Video 1 Başlık",
-      description: "Video 1 açıklama metni buraya gelecek",
-      youtubeId: "", // YouTube ID buraya eklenecek
+      title: "AI Otomasyon Ajansı",
+      description: "Sınırlı teknik bilgiyle bile AI sistemleri kurmayı öğrenin. Online bir şekilde şirketlere satın veya kendi AI'nız tarafından yönetilen bir iş kurun.",
+      youtubeId: "9GkjN-Jk6lw",
     },
     {
-      title: "Video 2 Başlık",
-      description: "Video 2 açıklama metni buraya gelecek",
-      youtubeId: "", // YouTube ID buraya eklenecek
+      title: "Dijital Dönüşüm",
+      description: "Yapay zeka ile dijital dönüşümü gerçekleştirin. İşletmenizi geleceğe taşıyın ve rekabette öne çıkın.",
+      youtubeId: "kVHJfmtY_00",
     },
   ];
 
@@ -24,10 +24,10 @@ export default function DualVideoSection() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            İKİLİ VİDEO <span className="text-accent-light">BAŞLIK</span>
+            YAPAY ZEKA İLE <span className="text-accent-light">DÖNÜŞÜM</span>
           </h2>
           <p className="text-white/70 text-lg max-w-3xl mx-auto">
-            Alt başlık açıklama metni buraya gelecek
+            AI otomasyon ve dijital dönüşüm ile işinizi bir üst seviyeye taşıyın
           </p>
         </div>
 
