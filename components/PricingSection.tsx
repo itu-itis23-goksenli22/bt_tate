@@ -17,7 +17,6 @@ export default function PricingSection() {
       "Özel eğitim materyalleri",
       "Networking etkinlikleri",
       "İlerleme takip sistemi",
-      "Sertifika programları",
     ],
   };
 
