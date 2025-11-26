@@ -30,7 +30,7 @@ export default function CurriculumSection() {
 
   const campuses: Campus[] = [
     {
-      name: "N8N Otomasyon Ajansı",
+      name: "N8N ile Yapay Zeka",
       icon: "🤖",
       color: "from-blue-500/20 to-cyan-500/20",
       modules: [
@@ -391,12 +391,12 @@ export default function CurriculumSection() {
       ]
     },
     {
-      name: "ETSY & Shopify Dropshipping",
+      name: "ETSY",
       icon: "🛍️",
       color: "from-green-500/20 to-emerald-500/20",
       modules: [
         {
-          title: "1. GİRİŞ (ETSY)",
+          title: "1. GİRİŞ",
           lessons: [
             "GİRİŞ",
             "Başlangıç",
@@ -470,9 +470,16 @@ export default function CurriculumSection() {
             "Excel Çalışması",
             "TOPTANCI LİSTESİ"
           ]
-        },
+        }
+      ]
+    },
+    {
+      name: "Shopify Dropshipping",
+      icon: "🏪",
+      color: "from-indigo-500/20 to-purple-500/20",
+      modules: [
         {
-          title: "GİRİŞ MINDSET (SHOPIFY)",
+          title: "GİRİŞ VE MINDSET",
           lessons: [
             "HOŞGELDİNİZ",
             "MINDSET VE RECESSION",
@@ -552,7 +559,7 @@ export default function CurriculumSection() {
             EĞİTİM <span className="text-accent-light">MÜFREDATI</span>
           </h2>
           <p className="text-white/70 text-lg max-w-3xl mx-auto">
-            6 farklı kampüste 200+ ders ile kapsamlı eğitim içeriği
+            5 farklı kampüste 200+ ders ile kapsamlı eğitim içeriği
           </p>
         </div>
 
