@@ -36,13 +36,10 @@ export default function PricingSection() {
         {/* Single Pricing Card */}
         <div id="pricing-card" className="max-w-2xl mx-auto">
           <div className="relative rounded-2xl p-8 md:p-10 transition-all duration-300 bg-gradient-to-b from-accent/10 to-primary-light border-2 border-accent shadow-2xl shadow-glow">
-            {/* Popular badge */}
+            {/* Black Friday badge */}
             <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-              <div className="bg-danger px-4 py-1 rounded-full shadow-lg">
-                <span className="text-white font-bold text-xs uppercase">%75 İndirim</span>
-              </div>
-              <div className="bg-accent px-4 py-1 rounded-full shadow-lg">
-                <span className="text-black font-bold text-xs uppercase">En Popüler</span>
+              <div className="bg-gradient-to-r from-yellow-500 to-orange-500 px-6 py-2 rounded-full shadow-lg animate-pulse">
+                <span className="text-black font-bold text-sm uppercase tracking-wider">🔥 BLACK FRIDAY İNDİRİMİ 🔥</span>
               </div>
             </div>
 

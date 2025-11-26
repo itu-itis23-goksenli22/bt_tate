@@ -1,2 +1,2 @@
-// Checkout URL for all CTA buttons
-export const CHECKOUT_URL = 'https://ai-scale.circle.so/checkout/aiscaleapp-aylik'
+// Checkout URL for all CTA buttons - BLACK FRIDAY SPECIAL
+export const CHECKOUT_URL = 'https://buy.stripe.com/7sY28s5qg2vb8IVclO'
