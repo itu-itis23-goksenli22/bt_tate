@@ -7,10 +7,10 @@ export function middleware(request: NextRequest) {
   const cspHeader = `
     default-src 'self';
     script-src 'self' 'unsafe-eval' 'unsafe-inline' https://link.msgsndr.com https://api.leadconnectorhq.com https://www.googletagmanager.com https://connect.facebook.net;
-    style-src 'self' 'unsafe-inline' https://api.fontshare.com;
-    style-src-elem 'self' 'unsafe-inline' https://api.fontshare.com;
+    style-src 'self' 'unsafe-inline' https://api.fontshare.com https://cdn.fontshare.com;
+    style-src-elem 'self' 'unsafe-inline' https://api.fontshare.com https://cdn.fontshare.com;
     img-src 'self' blob: data: https: http:;
-    font-src 'self' data: https://api.fontshare.com;
+    font-src 'self' data: https://api.fontshare.com https://cdn.fontshare.com;
     media-src 'self' https://sutwdchlbrukrnygspbg.supabase.co blob: data:;
     object-src 'none';
     base-uri 'self';
