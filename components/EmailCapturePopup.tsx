@@ -23,15 +23,15 @@ export default function EmailCapturePopup() {
       return;
     }
 
-    console.log('Email popup - setting timer for 15 seconds');
+    console.log('Email popup - setting timer for 3 seconds (TEST MODE)');
 
-    // Show popup after 15 seconds
+    // Show popup after 3 seconds (TEST - change to 15000 for production)
     const timer = setTimeout(() => {
       console.log('Email popup - timer fired, showing popup');
       setIsVisible(true);
       setHasShown(true);
       sessionStorage.setItem("email_popup_shown", "true");
-    }, 15000); // 15 seconds
+    }, 3000); // 3 seconds TEST
 
     return () => {
       console.log('Email popup - cleanup timer');
