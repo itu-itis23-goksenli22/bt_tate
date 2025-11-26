@@ -35,7 +35,7 @@ export default function ToolsSection() {
   ];
 
   return (
-    <section id="ozellikler" className="py-12 md:py-12 bg-primary relative overflow-hidden">
+    <section id="tools-section" className="py-12 md:py-12 bg-primary relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 right-0 w-96 h-96 bg-accent rounded-full blur-[60px]" />

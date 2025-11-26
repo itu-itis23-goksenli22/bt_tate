@@ -4,18 +4,26 @@ import Logo from "./Logo";
 
 export default function Navbar() {
   const scrollToSection = (sectionId: string) => {
+    console.log('Scrolling to section:', sectionId);
     const element = document.getElementById(sectionId);
+    console.log('Element found:', element);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      console.error('Section not found:', sectionId);
     }
   };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-40 bg-primary/95 backdrop-blur-lg border-b border-white/5">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-3 items-center h-20 gap-4">
-          {/* Left: Navigation Links */}
-          <div className="hidden lg:flex items-center gap-4 justify-start">
+        <div className="flex items-center justify-between h-20">
+          {/* Left: Empty spacer for balance */}
+          <div className="hidden lg:block w-32"></div>
+
+          {/* Center: Logo with navigation links on sides */}
+          <div className="hidden lg:flex items-center gap-2">
+            {/* Left side links */}
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="text-white/70 hover:text-accent transition-colors text-xs font-medium uppercase tracking-wider whitespace-nowrap"
@@ -37,33 +45,40 @@ export default function Navbar() {
             >
               Müfredat
             </button>
-          </div>
 
-          {/* Center: Logo */}
-          <div className="flex justify-center">
-            <Logo className="w-14 h-14 md:w-16 md:h-16" />
-          </div>
+            {/* Logo */}
+            <div className="mx-3">
+              <Logo className="w-14 h-14 md:w-16 md:h-16" />
+            </div>
 
-          {/* Right: CTA Button */}
-          <div className="hidden lg:flex items-center gap-4 justify-end">
+            {/* Right side links */}
             <button
-              onClick={() => {
-                const toolsSection = document.querySelector('[class*="ToolsSection"]');
-                if (toolsSection) toolsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('tools-section');
               }}
               className="text-white/70 hover:text-accent transition-colors text-xs font-medium uppercase tracking-wider whitespace-nowrap"
             >
               Araçlar
             </button>
             <button
-              onClick={() => {
-                const testimonialsSection = document.querySelector('[class*="TestimonialsSection"]');
-                if (testimonialsSection) testimonialsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('testimonials-section');
               }}
               className="text-white/70 hover:text-accent transition-colors text-xs font-medium uppercase tracking-wider whitespace-nowrap"
             >
               Başarılar
             </button>
+          </div>
+
+          {/* Mobile: Logo only */}
+          <div className="flex lg:hidden justify-center flex-1">
+            <Logo className="w-14 h-14 md:w-16 md:h-16" />
+          </div>
+
+          {/* Right: CTA Button */}
+          <div className="hidden lg:flex items-center">
             <button
               onClick={() => scrollToSection('pricing-card')}
               className="bg-accent hover:bg-accent-light text-white px-4 py-2 rounded-full font-bold text-xs uppercase tracking-wider transition-all shadow-lg shadow-accent/30 hover:shadow-accent/50 hover:scale-105 whitespace-nowrap"

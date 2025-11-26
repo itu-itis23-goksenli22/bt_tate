@@ -37,7 +37,7 @@ export default function TestimonialsSection() {
   ];
 
   return (
-    <section className="py-12 px-4 bg-primary">
+    <section id="testimonials-section" className="py-12 px-4 bg-primary">
       <div className="max-w-7xl mx-auto">
         {/* Section title */}
         <div className="text-center mb-12">
