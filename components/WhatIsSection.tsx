@@ -18,12 +18,12 @@ export default function WhatIsSection() {
       youtubeId: "mrQjpPNMdYA"
     },
     {
-      title: "Kripto Yatırımları",
+      title: "Yapay Zeka Fırsatı",
       duration: "1 dakika",
       youtubeId: "L3HL4_SFlJs"
     },
     {
-      title: "E-Ticaret",
+      title: "AI Ajans Modeli",
       duration: "1 dakika",
       youtubeId: "uV7dr76cvKw"
     },
