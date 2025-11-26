@@ -53,12 +53,12 @@ export default function WhatIsSection() {
       youtubeId: "frrHZt47UnQ"
     },
     {
-      title: "Para Kazanma Yöntemleri",
+      title: "Sistemleri Yönet",
       duration: "1 dakika",
       youtubeId: "QkyutcvmN0c"
     },
     {
-      title: "Online İş Fırsatları",
+      title: "AI Scale App Platformu",
       duration: "1 dakika",
       youtubeId: "nWvImM9U2NQ"
     },
