@@ -2,7 +2,7 @@ const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
 
-const inputFile = path.join(__dirname, '..', 'Untitled design.png');
+const inputFile = path.join(__dirname, '..', 'ai-scale-logo-transparent.png');
 const appDir = path.join(__dirname, '..', 'app');
 const publicDir = path.join(__dirname, '..', 'public');
 
