@@ -11,6 +11,7 @@ export default function EmailCapturePopup() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     // Check if popup was already shown in this session
@@ -23,19 +24,23 @@ export default function EmailCapturePopup() {
       return;
     }
 
-    console.log('Email popup - setting timer for 3 seconds (TEST MODE)');
+    console.log('Email popup - setting timer for 15 seconds');
 
-    // Show popup after 3 seconds (TEST - change to 15000 for production)
-    const timer = setTimeout(() => {
+    // Show popup after 15 seconds
+    const showPopup = () => {
       console.log('Email popup - timer fired, showing popup');
       setIsVisible(true);
       setHasShown(true);
       sessionStorage.setItem("email_popup_shown", "true");
-    }, 3000); // 3 seconds TEST
+    };
+
+    timerRef.current = setTimeout(showPopup, 15000); // 15 seconds
 
     return () => {
       console.log('Email popup - cleanup timer');
-      clearTimeout(timer);
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
     };
   }, []);
 
