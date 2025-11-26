@@ -14,9 +14,9 @@ export default function WealthMethodsSection() {
       youtubeId: "9GkjN-Jk6lw"
     },
     {
-      title: "Kripto Yatırımları",
-      description: "Kripto para kampüsünde gerçek zamanlı bilgiye, profesörlere ve 2,000+ öğrenciyle bağlantı. Trendleri belirleyin ve coin fiyatlarını etkileyen faktörleri öğrenin.",
-      icon: "₿",
+      title: "N8N Masterclass",
+      description: "İleri seviye otomasyon ve yapay zeka ile enterprise level ürünler üretin. Profesyonel workflow sistemleri kurarak işinizi otomatikleştirin.",
+      icon: "⚙️",
       color: "from-blue-500/20 to-cyan-500/20",
       videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.13.43.mp4"
     },
