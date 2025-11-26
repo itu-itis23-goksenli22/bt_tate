@@ -1,13 +1,17 @@
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send/?phone=12084509523&text=Pro+üyelik+hakkında+bilgi+almak+istiyorum&type=phone_number&app_absent=0";
 
-export default function WhatsAppSupportButton() {
+type WhatsAppSupportButtonProps = {
+  className?: string;
+};
+
+export default function WhatsAppSupportButton({ className = "" }: WhatsAppSupportButtonProps) {
   return (
     <a
       href={WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed top-24 right-6 z-50 flex items-center justify-center w-14 h-14 bg-[#25D366] rounded-full shadow-lg shadow-green-500/30 border border-white/20 hover:scale-105 transition-transform"
+      className={`flex items-center justify-center w-14 h-14 bg-[#25D366] rounded-full shadow-lg shadow-green-500/30 border border-white/20 hover:scale-105 transition-transform ${className}`}
       aria-label="WhatsApp destek hattı"
     >
       <WhatsAppIcon className="w-7 h-7 text-white" />
