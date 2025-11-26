@@ -45,7 +45,6 @@ export default function SoldOutPlansSection() {
                 <span className="text-2xl font-bold text-white/40 line-through">₺30,000</span>
                 <span className="text-5xl font-bold text-accent">₺9,000</span>
               </div>
-              <p className="text-white/60 text-sm mb-6">/ay</p>
               <p className="text-white/80 text-sm mb-6 px-4">Tam finansal özgürlük sistemi</p>
 
               {/* Gift Notification Badge */}

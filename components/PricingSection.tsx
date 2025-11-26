@@ -5,7 +5,6 @@ export default function PricingSection() {
     name: "FETIH PLANI",
     subtitle: "Elit Eğitim - Black Friday Özel",
     price: "₺9,000",
-    period: "/ay",
     originalPrice: "₺30,000",
     features: [
       "6 Para Kazandıran Beceri Modülü",
@@ -56,7 +55,6 @@ export default function PricingSection() {
                 <span className="text-4xl md:text-5xl font-bold text-accent-light">
                   {packageInfo.price}
                 </span>
-                <span className="text-white/40 text-xl">{packageInfo.period}</span>
               </div>
               <p className="text-white/40 text-sm mb-2">Tam finansal özgürlük sistemi</p>
             </div>
