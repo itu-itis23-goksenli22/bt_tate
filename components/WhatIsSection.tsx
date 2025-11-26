@@ -28,12 +28,12 @@ export default function WhatIsSection() {
       youtubeId: "uV7dr76cvKw"
     },
     {
-      title: "Freelancing",
+      title: "Yapay Zeka Araçları",
       duration: "1 dakika",
       youtubeId: "-2mDw_4pHYw"
     },
     {
-      title: "İş Ustalığı",
+      title: "Hayatınızı Değiştirin",
       duration: "1 dakika",
       youtubeId: "RNluEv5O1Ak"
     },
