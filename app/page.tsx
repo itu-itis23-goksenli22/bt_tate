@@ -3,6 +3,7 @@ import BlackFridayBanner from "@/components/BlackFridayBanner";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import WhatIsSection from "@/components/WhatIsSection";
+import WhatsAppSupportButton from "@/components/WhatsAppSupportButton";
 
 // Lazy load below-the-fold components
 const DualVideoSection = dynamic(() => import("@/components/DualVideoSection"));
@@ -49,6 +50,7 @@ export default function Home() {
       <BackToTop />
       <Chatbot />
       <LiveNotifications />
+      <WhatsAppSupportButton />
     </main>
   );
 }
