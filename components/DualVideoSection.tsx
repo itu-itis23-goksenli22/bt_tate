@@ -21,14 +21,16 @@ export default function DualVideoSection() {
   return (
     <section className="py-20 px-4 bg-gradient-to-b from-primary-light to-primary">
       <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
+        {/* Section Header with CTA */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            YAPAY ZEKA İLE <span className="text-accent-light">DÖNÜŞÜM</span>
-          </h2>
-          <p className="text-white/70 text-lg max-w-3xl mx-auto">
-            AI otomasyon ve dijital dönüşüm ile işinizi bir üst seviyeye taşıyın
-          </p>
+          <button
+            onClick={() => {
+              document.getElementById('pricing-card')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }}
+            className="btn-primary text-lg px-12 py-4 shadow-glow-strong hover:shadow-glow-hover"
+          >
+            AI Scale App'e Katıl →
+          </button>
         </div>
 
         {/* Two Video Cards */}
