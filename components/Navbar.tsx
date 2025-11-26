@@ -23,10 +23,31 @@ export default function Navbar() {
               Ana Sayfa
             </button>
             <button
-              onClick={() => scrollToSection('pricing-card')}
+              onClick={() => {
+                const section = document.querySelector('section');
+                if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
               className="text-white/70 hover:text-accent transition-colors text-sm font-medium uppercase tracking-wider"
             >
-              Paketler
+              AI Scale App Nedir
+            </button>
+            <button
+              onClick={() => {
+                const toolsSection = document.querySelector('[class*="ToolsSection"]');
+                if (toolsSection) toolsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }}
+              className="text-white/70 hover:text-accent transition-colors text-sm font-medium uppercase tracking-wider"
+            >
+              Araçlar
+            </button>
+            <button
+              onClick={() => {
+                const testimonialsSection = document.querySelector('[class*="TestimonialsSection"]');
+                if (testimonialsSection) testimonialsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }}
+              className="text-white/70 hover:text-accent transition-colors text-sm font-medium uppercase tracking-wider"
+            >
+              Öğrenci Başarıları
             </button>
             <button
               onClick={() => scrollToSection('curriculum-section')}

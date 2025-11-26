@@ -154,10 +154,10 @@ export default function Chatbot() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-4 right-4 md:bottom-6 md:right-20 z-50 bg-gradient-to-r from-accent to-accent-light p-3 md:p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group"
+          className="fixed bottom-4 right-4 md:bottom-6 md:right-20 z-50 bg-gradient-to-r from-accent to-accent-light p-4 md:p-5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group"
           aria-label="Sohbet robotunu aç"
         >
-          <MessageCircle className="w-5 h-5 md:w-6 md:h-6 text-white group-hover:rotate-12 transition-transform duration-300" />
+          <MessageCircle className="w-7 h-7 md:w-8 md:h-8 text-white group-hover:rotate-12 transition-transform duration-300" />
 
           {/* Notification dot */}
           <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full animate-pulse"></span>
