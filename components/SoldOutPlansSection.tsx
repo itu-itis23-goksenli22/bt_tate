@@ -47,6 +47,24 @@ export default function SoldOutPlansSection() {
               </div>
               <p className="text-white/60 text-sm mb-6">/ay</p>
               <p className="text-white/80 text-sm mb-6 px-4">Tam finansal özgürlük sistemi</p>
+
+              {/* Gift Notification Badge */}
+              <div className="mb-4 px-4">
+                <div className="bg-gradient-to-r from-gold via-gold-light to-gold p-0.5 rounded-lg animate-pulse">
+                  <div className="bg-primary-dark rounded-lg px-3 py-2">
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4 text-gold flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 7h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v3H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zM10 4h4v3h-4V4zm10 15H4v-2h16v2zm0-5H4V9h5c0 1.1.9 2 2 2h2c1.1 0 2-.9 2-2h5v5z"/>
+                      </svg>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-gold font-bold text-xs uppercase tracking-wide">Hediye</p>
+                        <p className="text-white text-xs font-semibold">500$ AI Başlangıç Paketi</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className="px-4">
                 <button
                   onClick={() => {
