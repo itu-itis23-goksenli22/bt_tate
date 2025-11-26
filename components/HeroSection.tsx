@@ -19,7 +19,7 @@ export default function HeroSection() {
         {/* Program name */}
         <div className="mb-4">
           <p className="text-accent text-sm md:text-base uppercase tracking-widest font-semibold">
-            2025'te Başarılı Bir Online İş Kurmak İsteyen Herkes İçin
+            2026'da Başarılı Bir Online İş Kurmak İsteyen Herkes İçin
           </p>
         </div>
 

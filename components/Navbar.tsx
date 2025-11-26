@@ -67,21 +67,19 @@ export default function Navbar() {
             >
               Başarılar
             </button>
+
+            {/* CTA Button - Right next to Başarılar */}
+            <button
+              onClick={() => scrollToSection('pricing-card')}
+              className="bg-accent hover:bg-accent-light text-white px-4 py-2 rounded-full font-bold text-xs uppercase tracking-wider transition-all shadow-lg shadow-accent/30 hover:shadow-accent/50 hover:scale-105 whitespace-nowrap"
+            >
+              AI App Scale Katıl →
+            </button>
           </div>
 
           {/* Mobile: Logo only */}
           <div className="flex lg:hidden justify-center flex-1">
             <Logo className="w-14 h-14 md:w-16 md:h-16" />
-          </div>
-
-          {/* Right: CTA Button - Absolute positioned */}
-          <div className="hidden lg:block absolute right-6">
-            <button
-              onClick={() => scrollToSection('pricing-card')}
-              className="bg-accent hover:bg-accent-light text-white px-4 py-2 rounded-full font-bold text-xs uppercase tracking-wider transition-all shadow-lg shadow-accent/30 hover:shadow-accent/50 hover:scale-105 whitespace-nowrap"
-            >
-              Katıl →
-            </button>
           </div>
         </div>
       </div>

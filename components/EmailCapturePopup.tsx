@@ -15,19 +15,28 @@ export default function EmailCapturePopup() {
   useEffect(() => {
     // Check if popup was already shown in this session
     const popupShown = sessionStorage.getItem("email_popup_shown");
+    console.log('Email popup - checking session storage:', popupShown);
+
     if (popupShown) {
+      console.log('Email popup - already shown, skipping');
       setHasShown(true);
       return;
     }
 
+    console.log('Email popup - setting timer for 15 seconds');
+
     // Show popup after 15 seconds
     const timer = setTimeout(() => {
+      console.log('Email popup - timer fired, showing popup');
       setIsVisible(true);
       setHasShown(true);
       sessionStorage.setItem("email_popup_shown", "true");
     }, 15000); // 15 seconds
 
-    return () => clearTimeout(timer);
+    return () => {
+      console.log('Email popup - cleanup timer');
+      clearTimeout(timer);
+    };
   }, []);
 
   useEffect(() => {
