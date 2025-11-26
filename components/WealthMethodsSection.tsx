@@ -11,7 +11,7 @@ export default function WealthMethodsSection() {
       description: "Sınırlı teknik bilgiyle bile AI sistemleri kurmayı öğrenin. Sistemi online şirketlere satın veya kendi AI'nız tarafından yönetilen bir online şirket kurun.",
       icon: "🤖",
       color: "from-blue-500/20 to-cyan-500/20",
-      videoUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/videos/WhatsApp%20Video%202025-11-24%20at%2018.09.51.mp4"
+      youtubeId: "9GkjN-Jk6lw"
     },
     {
       title: "Kripto Yatırımları",
@@ -69,7 +69,13 @@ export default function WealthMethodsSection() {
             <div
               key={index}
               className="card-trw group cursor-pointer"
-              onClick={() => method.videoUrl && setSelectedVideo({videoUrl: method.videoUrl})}
+              onClick={() => {
+                if (method.videoUrl) {
+                  setSelectedVideo({videoUrl: method.videoUrl});
+                } else if (method.youtubeId) {
+                  setSelectedVideo({youtubeId: method.youtubeId});
+                }
+              }}
             >
               {/* Video Thumbnail with Play Button */}
               <div className={`relative aspect-video bg-gradient-to-br ${method.color} rounded-xl mb-4 overflow-hidden`}>
@@ -82,6 +88,26 @@ export default function WealthMethodsSection() {
                       preload="metadata"
                       muted
                       playsInline
+                    />
+                    {/* Play Button Overlay */}
+                    <div className="absolute inset-0 bg-primary/40 group-hover:bg-primary/20 transition-all flex items-center justify-center">
+                      <div className="w-16 h-16 bg-accent/90 group-hover:bg-accent rounded-full flex items-center justify-center transition-all group-hover:scale-110 shadow-lg">
+                        <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    </div>
+                  </>
+                ) : method.youtubeId ? (
+                  <>
+                    <img
+                      src={`https://img.youtube.com/vi/${method.youtubeId}/maxresdefault.jpg`}
+                      alt={method.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.src = `https://img.youtube.com/vi/${method.youtubeId}/hqdefault.jpg`;
+                      }}
                     />
                     {/* Play Button Overlay */}
                     <div className="absolute inset-0 bg-primary/40 group-hover:bg-primary/20 transition-all flex items-center justify-center">
@@ -157,7 +183,15 @@ export default function WealthMethodsSection() {
             </button>
 
             {/* Video Player */}
-            {selectedVideo.videoUrl && (
+            {selectedVideo.youtubeId ? (
+              <iframe
+                src={`https://www.youtube.com/embed/${selectedVideo.youtubeId}?autoplay=1`}
+                className="w-full h-full"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : selectedVideo.videoUrl ? (
               <video
                 src={selectedVideo.videoUrl}
                 controls
@@ -167,7 +201,7 @@ export default function WealthMethodsSection() {
               >
                 Tarayıcınız video etiketini desteklemiyor.
               </video>
-            )}
+            ) : null}
           </div>
         </div>
       )}
