@@ -8,6 +8,7 @@ const DualVideoSection = dynamic(() => import("@/components/DualVideoSection"));
 const KendineSorSection = dynamic(() => import("@/components/KendineSorSection"));
 const LockInYearSection = dynamic(() => import("@/components/LockInYearSection"));
 const PreparedToWorkSection = dynamic(() => import("@/components/PreparedToWorkSection"));
+const CurriculumSection = dynamic(() => import("@/components/CurriculumSection"));
 const ExitPlanSection = dynamic(() => import("@/components/ExitPlanSection"));
 const TrustBadges = dynamic(() => import("@/components/TrustBadges"));
 const TestimonialsSection = dynamic(() => import("@/components/TestimonialsSection"));
@@ -32,6 +33,7 @@ export default function Home() {
       <KendineSorSection />
       <LockInYearSection />
       <PreparedToWorkSection />
+      <CurriculumSection />
       <ExitPlanSection />
       <TrustBadges />
       <TestimonialsSection />
