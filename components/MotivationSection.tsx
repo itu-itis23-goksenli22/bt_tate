@@ -1,3 +1,5 @@
+"use client";
+
 import { CHECKOUT_URL, trackCheckout } from "@/lib/constants";
 
 export default function MotivationSection() {

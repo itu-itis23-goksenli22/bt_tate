@@ -1,3 +1,5 @@
+"use client";
+
 import Logo from "./Logo";
 import { CHECKOUT_URL, trackCheckout } from "@/lib/constants";
 
