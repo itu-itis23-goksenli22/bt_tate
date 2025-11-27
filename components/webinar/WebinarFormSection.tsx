@@ -116,6 +116,7 @@ export default function WebinarFormSection() {
             </div>
           </div>
         </div>
+        </div>
 
         {/* Social Proof - BIGGER */}
         <div className="mt-16 text-center bg-gradient-to-r from-accent/10 via-accent/20 to-accent/10 border-2 border-accent/40 rounded-3xl py-12 px-6">
