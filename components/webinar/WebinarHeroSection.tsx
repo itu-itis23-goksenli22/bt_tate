@@ -10,56 +10,57 @@ export default function WebinarHeroSection() {
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary to-primary-light" />
 
-      <div className="relative z-10 max-w-6xl mx-auto text-center">
+      <div className="relative z-10 max-w-7xl mx-auto text-center">
         {/* Badge */}
-        <div className="mb-6">
-          <span className="inline-block bg-accent/20 border border-accent text-accent px-6 py-2 rounded-full text-sm md:text-base font-bold uppercase tracking-wider animate-pulse">
-            🎓 100% ÜCRETSİZ WEBİNAR
+        <div className="mb-8">
+          <span className="inline-block bg-gradient-to-r from-red-600 to-orange-600 text-white px-8 py-3 rounded-full text-base md:text-xl font-black uppercase tracking-wider animate-pulse shadow-2xl">
+            🔥 SADECE 47 KİŞİLİK KONTENJAN KALDI! 🔥
           </span>
         </div>
 
         {/* Main heading */}
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-          <span className="text-white block">Yapay Zeka ile</span>
-          <span className="text-accent block mt-2">Para Kazanmayı Öğrenin</span>
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight">
+          <span className="text-white block">YAPAY ZEKA İLE</span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-yellow-400 to-accent block mt-3 animate-pulse">
+            İLK 10,000$'INIZI KAZANIN!
+          </span>
         </h1>
 
         {/* Subtitle */}
-        <p className="text-lg md:text-2xl text-white/80 mb-8 max-w-3xl mx-auto">
-          AI otomasyonu, freelancing ve e-ticaret ile sıfırdan gelir elde etmenin sırlarını öğrenin
+        <p className="text-2xl md:text-4xl text-white font-bold mb-4 max-w-4xl mx-auto">
+          2025'te Ev Konforundan 6 Haneli Gelire Ulaşmanın
+        </p>
+        <p className="text-xl md:text-3xl text-accent font-bold mb-10 max-w-4xl mx-auto">
+          GIZLI FORMÜLÜ! 🚀
         </p>
 
         {/* Value props */}
-        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-12">
-          <div className="flex items-center gap-2 text-white/80">
-            <svg className="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-            <span className="text-sm md:text-base font-semibold">Canlı Eğitim</span>
+        <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 mb-14">
+          <div className="flex items-center gap-3 bg-accent/20 border-2 border-accent px-6 py-4 rounded-full">
+            <span className="text-3xl">⚡</span>
+            <span className="text-base md:text-xl font-bold text-white">CANLI EĞİTİM</span>
           </div>
-          <div className="flex items-center gap-2 text-white/80">
-            <svg className="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-            <span className="text-sm md:text-base font-semibold">Pratik Stratejiler</span>
+          <div className="flex items-center gap-3 bg-accent/20 border-2 border-accent px-6 py-4 rounded-full">
+            <span className="text-3xl">💰</span>
+            <span className="text-base md:text-xl font-bold text-white">KANIT SONUÇLAR</span>
           </div>
-          <div className="flex items-center gap-2 text-white/80">
-            <svg className="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-            <span className="text-sm md:text-base font-semibold">Soru-Cevap</span>
+          <div className="flex items-center gap-3 bg-accent/20 border-2 border-accent px-6 py-4 rounded-full">
+            <span className="text-3xl">🎁</span>
+            <span className="text-base md:text-xl font-bold text-white">500$ BONUS</span>
           </div>
         </div>
 
         {/* CTA Button */}
-        <div className="mb-12">
+        <div className="mb-16">
           <button
             onClick={scrollToForm}
-            className="btn-accent text-lg px-12 py-5 shadow-glow-strong hover:shadow-glow-hover text-xl font-bold uppercase"
+            className="bg-gradient-to-r from-red-600 via-orange-600 to-red-600 hover:from-red-700 hover:via-orange-700 hover:to-red-700 text-white text-2xl md:text-3xl font-black uppercase px-16 py-8 rounded-2xl shadow-2xl hover:shadow-accent/50 transition-all duration-300 transform hover:scale-105 animate-pulse"
           >
-            ÜCRETSİZ YERİMİ AYIRT
+            🎯 HEMEN YERİMİ KAPTIR! 🎯
           </button>
-          <p className="text-white/60 text-sm mt-4">💳 Kredi kartı gerektirmez</p>
+          <p className="text-white/80 text-lg md:text-xl font-bold mt-6">
+            ⚠️ SON 2 SAATTE 23 KİŞİ KAYIT OLDU!
+          </p>
         </div>
 
         {/* YouTube Video */}
@@ -77,20 +78,21 @@ export default function WebinarHeroSection() {
         </div>
 
         {/* Stats */}
-        <div className="mt-16 flex items-center justify-center gap-8 md:gap-12 flex-wrap">
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-accent mb-1">5,000+</div>
-            <div className="text-sm text-white/60 uppercase tracking-wider">Katılımcı</div>
+        <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="bg-gradient-to-br from-accent/20 to-accent/5 border-2 border-accent rounded-2xl p-8 text-center transform hover:scale-105 transition-all">
+            <div className="text-5xl md:text-6xl font-black text-accent mb-3">15,000+</div>
+            <div className="text-lg md:text-xl text-white font-bold uppercase">BAŞARILI ÖĞRENCK</div>
+            <div className="text-sm text-white/60 mt-2">💰 Ortalama $5K/ay kazanıyor</div>
           </div>
-          <div className="hidden md:block w-px h-12 bg-white/20"></div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-accent mb-1">90 Dakika</div>
-            <div className="text-sm text-white/60 uppercase tracking-wider">Canlı Eğitim</div>
+          <div className="bg-gradient-to-br from-accent/20 to-accent/5 border-2 border-accent rounded-2xl p-8 text-center transform hover:scale-105 transition-all">
+            <div className="text-5xl md:text-6xl font-black text-accent mb-3">120 DK</div>
+            <div className="text-lg md:text-xl text-white font-bold uppercase">CANLI EĞİTİM</div>
+            <div className="text-sm text-white/60 mt-2">🎓 Soru-cevap + bonus içerik</div>
           </div>
-          <div className="hidden md:block w-px h-12 bg-white/20"></div>
-          <div className="text-center">
-            <div className="text-3xl md:text-4xl font-bold text-accent mb-1">100%</div>
-            <div className="text-sm text-white/60 uppercase tracking-wider">Ücretsiz</div>
+          <div className="bg-gradient-to-br from-accent/20 to-accent/5 border-2 border-accent rounded-2xl p-8 text-center transform hover:scale-105 transition-all">
+            <div className="text-5xl md:text-6xl font-black text-accent mb-3">$0</div>
+            <div className="text-lg md:text-xl text-white font-bold uppercase">100% ÜCRETSİZ</div>
+            <div className="text-sm text-white/60 mt-2">💳 Kredi kartı gerektirmez</div>
           </div>
         </div>
       </div>

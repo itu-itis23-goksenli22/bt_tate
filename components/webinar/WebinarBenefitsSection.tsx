@@ -42,30 +42,35 @@ export default function WebinarBenefitsSection() {
     <section className="py-20 px-4 bg-primary-light">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <p className="text-accent text-sm uppercase tracking-wider mb-3 font-bold">WEBİNARDA ÖĞRENECEKLERİNİZ</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            90 Dakikada <span className="text-accent">Kariyerinizi Değiştirin</span>
+        <div className="text-center mb-20">
+          <div className="inline-block bg-gradient-to-r from-red-600 to-orange-600 text-white px-8 py-3 rounded-full text-base md:text-xl font-black uppercase mb-8 animate-pulse">
+            ⚡ BU SEMİNERDE SADECE BUNLARI ÖĞRENMEYECEKSİNİZ! ⚡
+          </div>
+          <h2 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
+            120 DAKİKADA <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-yellow-400 to-accent">
+              HAYATINIZ DEĞİŞECEK!
+            </span>
           </h2>
-          <p className="text-lg text-white/70 max-w-3xl mx-auto">
-            Binlerce kişinin hayatını değiştiren stratejileri ücretsiz öğrenin
+          <p className="text-2xl md:text-3xl text-white/90 font-bold max-w-4xl mx-auto">
+            🚀 2025'in EN ETKİLİ Para Kazanma Stratejileri 🚀
           </p>
         </div>
 
         {/* Benefits Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {benefits.map((benefit, index) => (
             <div
               key={index}
-              className="card-glass p-6 hover:border-accent/40 transition-all duration-300 group"
+              className="bg-gradient-to-br from-accent/10 to-primary border-2 border-accent/30 hover:border-accent rounded-2xl p-8 hover:shadow-2xl hover:shadow-accent/20 transition-all duration-300 group transform hover:scale-105"
             >
-              <div className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">
+              <div className="text-6xl md:text-7xl mb-6 group-hover:scale-110 transition-transform duration-300">
                 {benefit.icon}
               </div>
-              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-accent transition-colors">
+              <h3 className="text-2xl md:text-3xl font-black text-white mb-4 group-hover:text-accent transition-colors">
                 {benefit.title}
               </h3>
-              <p className="text-white/70 leading-relaxed">
+              <p className="text-white/80 leading-relaxed text-lg">
                 {benefit.description}
               </p>
             </div>
@@ -73,13 +78,17 @@ export default function WebinarBenefitsSection() {
         </div>
 
         {/* CTA */}
-        <div className="text-center">
+        <div className="text-center bg-gradient-to-r from-primary via-accent/10 to-primary border-2 border-accent rounded-3xl p-12">
+          <p className="text-2xl md:text-3xl text-white font-bold mb-6">
+            ⚠️ KONTENJAN HIZLA DOLMAKTA! ⚠️
+          </p>
           <button
             onClick={scrollToForm}
-            className="btn-accent text-lg px-12 py-5 shadow-glow-strong hover:shadow-glow-hover"
+            className="bg-gradient-to-r from-red-600 via-orange-600 to-red-600 hover:from-red-700 hover:via-orange-700 hover:to-red-700 text-white text-2xl md:text-3xl font-black uppercase px-16 py-8 rounded-2xl shadow-2xl hover:shadow-accent/50 transition-all duration-300 transform hover:scale-105 mb-4"
           >
-            ÜCRETSİZ SEMINERE KATIL
+            🔥 SON FRSATI KAÇIRMA! 🔥
           </button>
+          <p className="text-white/70 text-lg">💯 100% Ücretsiz • 💳 Kredi Kartı Gerektirmez</p>
         </div>
       </div>
     </section>

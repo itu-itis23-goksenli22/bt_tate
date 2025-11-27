@@ -45,13 +45,15 @@ export default function WebinarFAQSection() {
     <section className="py-20 px-4 bg-primary-light">
       <div className="max-w-4xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-14">
-          <p className="text-accent text-sm uppercase tracking-wider mb-3 font-bold">SIKÇA SORULAN SORULAR</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Merak Ettikleriniz
+        <div className="text-center mb-20">
+          <div className="inline-block bg-accent/20 border-2 border-accent text-accent px-8 py-3 rounded-full text-lg md:text-xl font-black uppercase mb-8">
+            ❓ SON SORULAR
+          </div>
+          <h2 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
+            Hala <span className="text-accent">Emin Değil Misin?</span>
           </h2>
-          <p className="text-lg text-white/70">
-            Webinar hakkında en çok sorulan sorular
+          <p className="text-2xl md:text-3xl text-white/80 font-bold">
+            💡 İşte Tüm Cevaplar!
           </p>
         </div>
 
