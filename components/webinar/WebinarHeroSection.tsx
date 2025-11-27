@@ -14,24 +14,15 @@ export default function WebinarHeroSection() {
         {/* Program name */}
         <div className="mb-4">
           <p className="text-accent text-sm md:text-base uppercase tracking-widest font-semibold">
-            Yapay Zeka ile Para Kazanmayı Öğrenmek İsteyen Herkes İçin
+            ÜCRETSIZ WEBINAR - TRENİ KAÇIRMAYIN
           </p>
         </div>
 
         {/* Main heading */}
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-          <span className="text-white block">Ücretsiz Canlı AI Webinarı</span>
-          <span className="text-accent block mt-2">İLK 10,000$'INIZI KAZANIN</span>
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-12 leading-tight">
+          <span className="text-white block">İLK 10,000$'INIZI</span>
+          <span className="text-accent block mt-2">KAZANIN</span>
         </h1>
-
-        {/* Clock subtitle */}
-        <div className="flex items-center justify-center space-x-2 text-white/60 text-sm md:text-base mb-12">
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10" strokeWidth="2" />
-            <path strokeWidth="2" d="M12 6v6l4 2" />
-          </svg>
-          <p>2025'te Ev Konforundan 6 Haneli Gelire Ulaşmanın Gizli Formülü</p>
-        </div>
 
         {/* YouTube Video */}
         <div className="max-w-5xl mx-auto mb-8">

@@ -32,8 +32,8 @@ export default function WebinarFAQSection() {
       answer: "Kesinlikle! Webinarımız özellikle başlangıç seviyesindeki kişiler için tasarlanmıştır. Sıfırdan başlayıp ilk gelirinizi elde etmeniz için gerekli her şeyi öğretiyoruz."
     },
     {
-      question: "500$ değerindeki hediye paketi nedir?",
-      answer: "Kaydolduktan hemen sonra ChatGPT prompts kitaplığı, Midjourney şablonları, freelance başlangıç kiti ve daha fazlasını içeren dijital kaynaklara anında erişim kazanacaksınız."
+      question: "Hediye paketi nedir?",
+      answer: "Kaydolduktan hemen sonra yapay zeka başlangıç paketine ücretsiz erişim kazanacaksınız."
     },
     {
       question: "Webinarda neler öğreneceğim?",

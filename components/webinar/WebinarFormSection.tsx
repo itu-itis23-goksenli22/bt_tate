@@ -10,19 +10,61 @@ export default function WebinarFormSection() {
     script.async = true;
     document.body.appendChild(script);
 
-    // Listen for form submission success
+    // Listen for form submission success - trying multiple event types
     const handleMessage = (event: MessageEvent) => {
-      if (event.data && event.data.type === 'hsFormCallback' && event.data.eventName === 'onFormSubmitted') {
-        // Redirect to success page
-        window.location.href = '/webinarkayit';
+      // Log all messages for debugging
+      console.log('Message received:', event.data);
+
+      // Try multiple event patterns that GoHighLevel might use
+      if (event.data) {
+        const data = event.data;
+
+        // Pattern 1: hsFormCallback
+        if (data.type === 'hsFormCallback' && data.eventName === 'onFormSubmitted') {
+          console.log('Form submitted - redirecting...');
+          window.location.href = '/webinarkayit';
+        }
+
+        // Pattern 2: form-submitted
+        if (data.type === 'form-submitted' || data.event === 'form-submitted') {
+          console.log('Form submitted (pattern 2) - redirecting...');
+          window.location.href = '/webinarkayit';
+        }
+
+        // Pattern 3: Check for success in message
+        if (data.success === true || data.status === 'success') {
+          console.log('Form success detected - redirecting...');
+          window.location.href = '/webinarkayit';
+        }
       }
     };
 
     window.addEventListener('message', handleMessage);
 
+    // Also try to intercept form submission directly
+    const checkForFormSuccess = setInterval(() => {
+      const iframe = document.getElementById('inline-84Is6fx7guuS4EeNPxf2') as HTMLIFrameElement;
+      if (iframe) {
+        try {
+          // Check if thank you message appears in the page
+          const successIndicators = document.querySelectorAll('[class*="success"], [class*="thank"], [id*="success"], [id*="thank"]');
+          if (successIndicators.length > 0) {
+            console.log('Success indicator found - redirecting...');
+            clearInterval(checkForFormSuccess);
+            window.location.href = '/webinarkayit';
+          }
+        } catch (e) {
+          // Cross-origin restriction - expected
+        }
+      }
+    }, 1000);
+
     return () => {
-      document.body.removeChild(script);
+      if (script.parentNode) {
+        document.body.removeChild(script);
+      }
       window.removeEventListener('message', handleMessage);
+      clearInterval(checkForFormSuccess);
     };
   }, []);
 
@@ -47,29 +89,17 @@ export default function WebinarFormSection() {
             <p>Kayıt olduktan hemen sonra bonus paketinize erişin</p>
           </div>
 
-          {/* Bonus Items */}
-          <div className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-8">
-            <div className="bg-accent/10 border border-accent/20 rounded-xl p-4">
-              <div className="text-3xl mb-2">📚</div>
-              <div className="text-white font-semibold text-sm">ChatGPT Prompts</div>
-              <div className="text-accent text-xs">$150 Değer</div>
-            </div>
-            <div className="bg-accent/10 border border-accent/20 rounded-xl p-4">
-              <div className="text-3xl mb-2">🎨</div>
-              <div className="text-white font-semibold text-sm">Midjourney Şablonları</div>
-              <div className="text-accent text-xs">$200 Değer</div>
-            </div>
-            <div className="bg-accent/10 border border-accent/20 rounded-xl p-4">
-              <div className="text-3xl mb-2">💼</div>
-              <div className="text-white font-semibold text-sm">Freelance Başlangıç Kiti</div>
-              <div className="text-accent text-xs">$150 Değer</div>
-            </div>
+          {/* Bonus Info */}
+          <div className="bg-accent/10 border border-accent/20 rounded-xl p-6 max-w-3xl mx-auto mb-8">
+            <div className="text-4xl mb-3">🎁</div>
+            <div className="text-white font-bold text-lg mb-2">YAPAY ZEKA BAŞLANGIÇ PAKETİNE</div>
+            <div className="text-accent font-bold text-xl">KAYIT OLDUKTAN SONRA ÜCRETSİZ ERİŞ</div>
           </div>
         </div>
 
         {/* Form Container */}
-        <div className="card-glass p-6 md:p-8">
-          <div className="bg-white rounded-2xl overflow-hidden">
+        <div className="card-glass p-2 md:p-4">
+          <div className="bg-white rounded-xl overflow-hidden">
             <iframe
               src="https://api.leadconnectorhq.com/widget/form/84Is6fx7guuS4EeNPxf2"
               style={{
