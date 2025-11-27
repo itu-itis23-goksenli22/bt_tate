@@ -10,8 +10,19 @@ export default function WebinarFormSection() {
     script.async = true;
     document.body.appendChild(script);
 
+    // Listen for form submission success
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data && event.data.type === 'hsFormCallback' && event.data.eventName === 'onFormSubmitted') {
+        // Redirect to success page
+        window.location.href = '/webinarkayit';
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+
     return () => {
       document.body.removeChild(script);
+      window.removeEventListener('message', handleMessage);
     };
   }, []);
 
