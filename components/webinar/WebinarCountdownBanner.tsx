@@ -9,6 +9,7 @@ export default function WebinarCountdownBanner() {
     minutes: 0,
     seconds: 0,
   });
+  const [nextWebinarDate, setNextWebinarDate] = useState<Date | null>(null);
 
   const getNextWebinarDate = () => {
     const now = new Date();
@@ -55,6 +56,7 @@ export default function WebinarCountdownBanner() {
   useEffect(() => {
     const timer = setInterval(() => {
       const nextWebinar = getNextWebinarDate();
+      setNextWebinarDate(nextWebinar);
       const now = new Date();
       const distance = nextWebinar.getTime() - now.getTime();
 
@@ -73,6 +75,14 @@ export default function WebinarCountdownBanner() {
 
     return () => clearInterval(timer);
   }, []);
+
+  const formatDate = (date: Date | null) => {
+    if (!date) return "";
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+  };
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-accent via-accent-light to-accent py-3 px-4 shadow-2xl">
@@ -103,9 +113,9 @@ export default function WebinarCountdownBanner() {
             </div>
           </div>
 
-          {/* Next session info */}
+          {/* Next session info - Date and Time */}
           <div className="hidden md:block bg-black text-white px-4 py-1 rounded-full font-bold text-sm uppercase">
-            SALI & PAZAR 20:00
+            {formatDate(nextWebinarDate)} - AKŞAM 20:00
           </div>
         </div>
       </div>
