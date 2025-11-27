@@ -15,8 +15,14 @@ const getSupabase = () => {
   return createClient(supabaseUrl, supabaseServiceKey);
 };
 
-// Initialize Resend
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend (lazy initialization)
+const getResend = () => {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    return null;
+  }
+  return new Resend(apiKey);
+};
 
 export async function POST(request: NextRequest) {
   try {
@@ -102,7 +108,9 @@ export async function POST(request: NextRequest) {
 }
 
 async function sendWebinarEmail(email: string, name?: string): Promise<boolean> {
-  if (!process.env.RESEND_API_KEY) {
+  const resend = getResend();
+
+  if (!resend) {
     console.error('❌ RESEND_API_KEY not configured');
     return false;
   }
