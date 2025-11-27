@@ -11,9 +11,8 @@ export default function BlackFridayBanner() {
   });
 
   useEffect(() => {
-    // Set end date to 3 days from now
-    const endDate = new Date();
-    endDate.setDate(endDate.getDate() + 3);
+    // Set end date to November 29, 2025 at 23:59:59 (Turkey time)
+    const endDate = new Date('2025-11-29T23:59:59+03:00');
 
     const timer = setInterval(() => {
       const now = new Date().getTime();

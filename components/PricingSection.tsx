@@ -111,7 +111,7 @@ export default function PricingSection() {
                   <span className="text-2xl">🔥</span>
                 </span>
                 <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full animate-bounce">
-                  SADECE 3 GÜN!
+                  SON 2 GÜN!
                 </span>
               </button>
             </a>

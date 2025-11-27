@@ -3,11 +3,17 @@ import { generateWebinarEmailHTML } from '@/lib/email-template';
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-// Initialize Supabase client with service role
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+// Initialize Supabase client with service role (lazy initialization)
+const getSupabase = () => {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  if (!supabaseUrl || !supabaseServiceKey) {
+    return null;
+  }
+
+  return createClient(supabaseUrl, supabaseServiceKey);
+};
 
 // Initialize Resend
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -42,39 +48,44 @@ export async function POST(request: NextRequest) {
     console.log('✅ Email sent successfully, now attempting Supabase insert...');
 
     // Try to save to Supabase (optional, non-blocking)
-    try {
-      // Check if email already exists
-      const { data: existingSubscriber } = await supabase
-        .from('email_subscribers')
-        .select('*')
-        .eq('email', email)
-        .single();
+    const supabase = getSupabase();
+    if (supabase) {
+      try {
+        // Check if email already exists
+        const { data: existingSubscriber } = await supabase
+          .from('email_subscribers')
+          .select('*')
+          .eq('email', email)
+          .single();
 
-      if (existingSubscriber) {
-        console.log('ℹ️ Email already exists in database, updating...');
-        await supabase
-          .from('email_subscribers')
-          .update({
-            webinar_link_sent: true,
-            webinar_link_sent_at: new Date().toISOString(),
-          })
-          .eq('email', email);
-      } else {
-        console.log('ℹ️ Inserting new subscriber to database...');
-        await supabase
-          .from('email_subscribers')
-          .insert({
-            email,
-            name: name || null,
-            source: 'landing_page',
-            webinar_link_sent: true,
-            webinar_link_sent_at: new Date().toISOString(),
-          });
+        if (existingSubscriber) {
+          console.log('ℹ️ Email already exists in database, updating...');
+          await supabase
+            .from('email_subscribers')
+            .update({
+              webinar_link_sent: true,
+              webinar_link_sent_at: new Date().toISOString(),
+            })
+            .eq('email', email);
+        } else {
+          console.log('ℹ️ Inserting new subscriber to database...');
+          await supabase
+            .from('email_subscribers')
+            .insert({
+              email,
+              name: name || null,
+              source: 'landing_page',
+              webinar_link_sent: true,
+              webinar_link_sent_at: new Date().toISOString(),
+            });
+        }
+        console.log('✅ Supabase operation completed');
+      } catch (dbError) {
+        // Database error is non-critical since email was already sent
+        console.warn('⚠️ Supabase operation failed (non-critical):', dbError);
       }
-      console.log('✅ Supabase operation completed');
-    } catch (dbError) {
-      // Database error is non-critical since email was already sent
-      console.warn('⚠️ Supabase operation failed (non-critical):', dbError);
+    } else {
+      console.warn('⚠️ Supabase not configured, skipping database operation');
     }
 
     return NextResponse.json({
