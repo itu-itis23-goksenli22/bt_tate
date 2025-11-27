@@ -2,10 +2,59 @@
 
 import { useSearchParams } from "next/navigation";
 import { CheckCircle, Gift, Rocket } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export default function WebinarSuccessContent() {
   const searchParams = useSearchParams();
   const name = searchParams.get("name") || "Değerli Katılımcı";
+  const [webinarDate, setWebinarDate] = useState<string>("");
+  const [webinarDay, setWebinarDay] = useState<string>("");
+
+  useEffect(() => {
+    // Calculate next webinar date
+    const getNextWebinarDate = () => {
+      const now = new Date();
+      const turkey = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
+      const currentDay = turkey.getDay();
+      const currentHour = turkey.getHours();
+      const currentMinute = turkey.getMinutes();
+
+      let daysUntilNext = 0;
+
+      if (currentDay === 2) { // Tuesday
+        if (currentHour < 20 || (currentHour === 20 && currentMinute === 0)) {
+          daysUntilNext = 0;
+        } else {
+          daysUntilNext = 5;
+        }
+      } else if (currentDay === 0) { // Sunday
+        if (currentHour < 20 || (currentHour === 20 && currentMinute === 0)) {
+          daysUntilNext = 0;
+        } else {
+          daysUntilNext = 2;
+        }
+      } else {
+        const daysUntilTuesday = (2 - currentDay + 7) % 7 || 7;
+        const daysUntilSunday = (7 - currentDay) % 7 || 7;
+        daysUntilNext = Math.min(daysUntilTuesday, daysUntilSunday);
+      }
+
+      const nextWebinar = new Date(turkey);
+      nextWebinar.setDate(turkey.getDate() + daysUntilNext);
+      nextWebinar.setHours(20, 0, 0, 0);
+
+      return nextWebinar;
+    };
+
+    const nextDate = getNextWebinarDate();
+    const day = String(nextDate.getDate()).padStart(2, '0');
+    const month = String(nextDate.getMonth() + 1).padStart(2, '0');
+    const year = nextDate.getFullYear();
+    const dayName = nextDate.getDay() === 2 ? "Salı" : "Pazar";
+
+    setWebinarDate(`${day}.${month}.${year}`);
+    setWebinarDay(dayName);
+  }, []);
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-primary via-primary-light to-primary px-4 py-12">
@@ -51,13 +100,13 @@ export default function WebinarSuccessContent() {
               </div>
               <div>
                 <h2 className="text-2xl md:text-3xl font-black text-white mb-2">
-                  🎁 5000$ Değerinde Notion Paketiniz Hazır!
+                  🎁 500$ Değerinde Notion Paketiniz Hazır!
                 </h2>
                 <p className="text-white/80 text-base mb-2">
-                  Size özel olarak hazırladığımız <span className="text-accent font-bold">5000$ Değerinde AI & Freelance Kapsamlı Paketi</span> hemen indirin ve başarıya giden yolculuğunuza başlayın!
+                  Size özel olarak hazırladığımız <span className="text-accent font-bold">500$ Değerinde AI & Freelance Kapsamlı Paketi</span> hemen indirin ve başarıya giden yolculuğunuza başlayın!
                 </p>
                 <p className="text-accent font-black text-lg">
-                  💎 Değer: $5,000 - Sizin İçin TAMAMEN BEDAVA!
+                  💎 Değer: $500 - Sizin İçin TAMAMEN BEDAVA!
                 </p>
               </div>
             </div>
@@ -71,7 +120,7 @@ export default function WebinarSuccessContent() {
             >
               <button className="w-full bg-gradient-to-r from-accent to-accent-light text-white font-black text-lg py-5 px-8 rounded-xl hover:shadow-glow-strong transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 group">
                 <Rocket className="w-6 h-6 group-hover:rotate-12 transition-transform" />
-                5000$ DEĞERİNDEKİ PAKETİ HEMEN İNDİR! →
+                500$ DEĞERİNDEKİ PAKETİ HEMEN İNDİR! →
               </button>
             </a>
           </div>
@@ -103,9 +152,6 @@ export default function WebinarSuccessContent() {
 
           {/* Video Section */}
           <div className="mb-8">
-            <h3 className="text-2xl md:text-3xl font-black text-white mb-4 text-center">
-              📺 Önemli: Bu Videoyu İzleyin!
-            </h3>
             <div className="aspect-video bg-primary-light/50 rounded-2xl overflow-hidden border border-accent/30 shadow-glow-strong">
               <iframe
                 className="w-full h-full"
@@ -122,13 +168,13 @@ export default function WebinarSuccessContent() {
           <div className="bg-primary/50 rounded-xl p-6 border border-white/10 mb-6">
             <h3 className="text-white font-bold text-xl mb-3 text-center">📅 Webinar Detayları</h3>
             <div className="space-y-2 text-white/70">
-              <p className="text-center">
-                <span className="text-accent font-semibold">Tarih:</span> Her Salı ve Pazar
+              <p className="text-center text-lg">
+                <span className="text-accent font-semibold">Tarih:</span> {webinarDate} {webinarDay && `(${webinarDay})`}
               </p>
-              <p className="text-center">
+              <p className="text-center text-lg">
                 <span className="text-accent font-semibold">Saat:</span> 20:00 (Türkiye Saati)
               </p>
-              <p className="text-center text-sm">
+              <p className="text-center text-sm mt-3">
                 Katılım linki email adresinize gönderilecektir
               </p>
             </div>

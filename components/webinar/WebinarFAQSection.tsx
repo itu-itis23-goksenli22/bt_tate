@@ -45,16 +45,20 @@ export default function WebinarFAQSection() {
     <section className="py-20 px-4 bg-primary-light">
       <div className="max-w-4xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-20">
-          <div className="inline-block bg-accent/20 border-2 border-accent text-accent px-8 py-3 rounded-full text-lg md:text-xl font-black uppercase mb-8">
-            ❓ SON SORULAR
-          </div>
-          <h2 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
-            Hala <span className="text-accent">Emin Değil Misin?</span>
-          </h2>
-          <p className="text-2xl md:text-3xl text-white/80 font-bold">
-            💡 İşte Tüm Cevaplar!
+        <div className="text-center mb-12">
+          <p className="text-accent text-sm md:text-base uppercase tracking-widest font-semibold mb-4">
+            SIKÇA SORULAN SORULAR
           </p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+            Merak Ettikleriniz
+          </h2>
+          <div className="flex items-center justify-center space-x-2 text-white/60 text-sm md:text-base">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" strokeWidth="2" />
+              <path strokeWidth="2" d="M12 6v6l4 2" />
+            </svg>
+            <p>Tüm sorularınızın cevapları burada</p>
+          </div>
         </div>
 
         {/* FAQ Items */}
@@ -93,7 +97,7 @@ export default function WebinarFAQSection() {
                   openIndex === index ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
                 }`}
               >
-                <div className="px-6 pb-6 text-white/70 leading-relaxed text-sm md:text-base">
+                <div className="px-6 pb-6 text-white/70 leading-relaxed">
                   {faq.answer}
                 </div>
               </div>
@@ -102,18 +106,12 @@ export default function WebinarFAQSection() {
         </div>
 
         {/* Final CTA */}
-        <div className="text-center card-glass p-8">
-          <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-            Hala Soru mu Var?
-          </h3>
-          <p className="text-white/70 mb-6">
-            Webinara katılın ve tüm sorularınızı canlı soru-cevap bölümünde sorun
-          </p>
+        <div className="text-center">
           <button
             onClick={scrollToForm}
-            className="btn-accent text-lg px-12 py-5 shadow-glow-strong hover:shadow-glow-hover"
+            className="btn-primary text-lg px-12 py-4 shadow-glow-strong hover:shadow-glow-hover"
           >
-            ÜCRETSİZ SEMINERE KATIL
+            Ücretsiz Seminere Katıl →
           </button>
         </div>
       </div>
