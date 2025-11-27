@@ -62,10 +62,10 @@ export default function WebinarSuccessContent() {
         <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary to-primary-light" />
 
         <div className="relative z-10 max-w-6xl mx-auto text-center">
-          {/* Success Badge */}
-          <div className="mb-6">
-            <div className="inline-block bg-accent/20 border-2 border-accent rounded-full p-6 mb-6 animate-pulse">
-              <svg className="w-16 h-16 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          {/* Success Badge - Smaller */}
+          <div className="mb-4">
+            <div className="inline-block bg-accent/20 border-2 border-accent rounded-full p-3 mb-4">
+              <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
@@ -83,6 +83,20 @@ export default function WebinarSuccessContent() {
               <path strokeWidth="2" d="M12 6v6l4 2" />
             </svg>
             <p>Canlı seminere hoş geldiniz</p>
+          </div>
+
+          {/* Video Section - Moved here, right after title */}
+          <div className="max-w-5xl mx-auto mb-12">
+            <div className="relative aspect-video bg-primary-light/50 rounded-3xl overflow-hidden border border-accent/30 shadow-glow-strong">
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src="https://www.youtube.com/embed/cIbDH0lWMc0"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
           </div>
 
           {/* Webinar Details Card */}
@@ -153,20 +167,6 @@ export default function WebinarSuccessContent() {
                   Bonus Paketi İndir →
                 </button>
               </a>
-            </div>
-          </div>
-
-          {/* Video Section */}
-          <div className="max-w-5xl mx-auto mb-12">
-            <div className="relative aspect-video bg-primary-light/50 rounded-3xl overflow-hidden border border-accent/30 shadow-glow-strong">
-              <iframe
-                className="absolute inset-0 w-full h-full"
-                src="https://www.youtube.com/embed/cIbDH0lWMc0"
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
             </div>
           </div>
 
