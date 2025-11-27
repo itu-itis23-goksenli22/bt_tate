@@ -1,5 +1,5 @@
 import Logo from "./Logo";
-import { CHECKOUT_URL } from "@/lib/constants";
+import { CHECKOUT_URL, trackCheckout } from "@/lib/constants";
 
 export default function Footer() {
   return (
@@ -47,7 +47,7 @@ export default function Footer() {
 
         {/* CTA Section */}
         <div className="border-t border-white/5 pt-8 pb-8 text-center">
-          <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+          <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" onClick={trackCheckout}>
             <button className="btn-accent mb-6">
               Hemen Katıl
             </button>

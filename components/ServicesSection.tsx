@@ -1,4 +1,4 @@
-import { CHECKOUT_URL } from "@/lib/constants";
+import { CHECKOUT_URL, trackCheckout } from "@/lib/constants";
 
 export default function ServicesSection() {
   return (
@@ -52,7 +52,7 @@ export default function ServicesSection() {
                 <span className="text-white/70">Değerlendirme ve geri bildirim sistemi</span>
               </li>
             </ul>
-            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+            <a href={CHECKOUT_URL} onClick={trackCheckout} target="_blank" rel="noopener noreferrer">
               <button className="btn-accent mt-6">
                 Hizmet Oluştur
               </button>

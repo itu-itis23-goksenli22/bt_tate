@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CHECKOUT_URL } from "@/lib/constants";
+import { CHECKOUT_URL, trackCheckout } from "@/lib/constants";
 import { getStorageImageUrl } from "@/lib/images";
 
 export default function StudentsWinningSection() {
@@ -169,7 +169,7 @@ export default function StudentsWinningSection() {
           <p className="text-white/60 text-lg mb-6">
             <span className="text-accent font-semibold">155,000+</span> benzer düşünen öğrenci
           </p>
-          <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+          <a href={CHECKOUT_URL} onClick={trackCheckout} target="_blank" rel="noopener noreferrer">
             <button className="btn-primary text-lg px-12 py-4 shadow-glow-strong">
               Gerçek Dünyaya Katıl →
             </button>

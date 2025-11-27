@@ -1,4 +1,4 @@
-import { CHECKOUT_URL } from "@/lib/constants";
+import { CHECKOUT_URL, trackCheckout } from "@/lib/constants";
 
 export default function ChoiceComparisonSection() {
   return (
@@ -129,7 +129,7 @@ export default function ChoiceComparisonSection() {
                 </ul>
               </div>
 
-              <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+              <a href={CHECKOUT_URL} onClick={trackCheckout} target="_blank" rel="noopener noreferrer">
                 <button className="w-full py-4 bg-accent hover:bg-accent-light rounded-full font-bold text-white text-lg transition-all shadow-lg shadow-accent/30">
                   Gerçek Dünyaya Katıl →
                 </button>

@@ -1,4 +1,4 @@
-import { CHECKOUT_URL } from "@/lib/constants";
+import { CHECKOUT_URL, trackCheckout } from "@/lib/constants";
 
 export default function PricingSection() {
   const packageInfo = {
@@ -60,7 +60,7 @@ export default function PricingSection() {
             </div>
 
             {/* Features list */}
-            <ul className="space-y-3 mb-8 grid md:grid-cols-2 gap-x-4">
+            <ul className="mb-8 grid md:grid-cols-2 gap-4">
               {packageInfo.features.map((feature, featureIndex) => (
                 <li key={featureIndex} className="flex items-start">
                   <svg
@@ -97,7 +97,13 @@ export default function PricingSection() {
             </div>
 
             {/* Black Friday CTA Button */}
-            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="block">
+            <a
+              href={CHECKOUT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block"
+              onClick={trackCheckout}
+            >
               <button className="relative w-full py-5 rounded-lg font-bold uppercase text-base tracking-wider transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 hover:from-yellow-500 hover:via-orange-600 hover:to-red-600 text-black shadow-2xl shadow-orange-500/50 animate-pulse">
                 <span className="flex items-center justify-center gap-2">
                   <span className="text-2xl">🔥</span>

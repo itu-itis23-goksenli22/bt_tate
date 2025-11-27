@@ -1,4 +1,4 @@
-import { CHECKOUT_URL } from "@/lib/constants";
+import { CHECKOUT_URL, trackCheckout } from "@/lib/constants";
 
 export default function MotivationSection() {
   return (
@@ -69,7 +69,7 @@ export default function MotivationSection() {
               <p className="text-accent mt-2 font-bold">- Andrew Tate</p>
             </div>
 
-            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+            <a href={CHECKOUT_URL} onClick={trackCheckout} target="_blank" rel="noopener noreferrer">
               <button className="btn-accent text-lg px-10 py-4">
                 Evet, Hazırım!
               </button>

@@ -1,4 +1,4 @@
-import { CHECKOUT_URL } from "@/lib/constants";
+import { CHECKOUT_URL, trackCheckout } from "@/lib/constants";
 
 export default function TwoPathsSection() {
   return (
@@ -139,7 +139,7 @@ export default function TwoPathsSection() {
             </ul>
 
             <div className="mt-8">
-              <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="block">
+              <a href={CHECKOUT_URL} onClick={trackCheckout} target="_blank" rel="noopener noreferrer" className="block">
                 <button className="btn-accent w-full">
                   Bu Yolu Seçin
                 </button>

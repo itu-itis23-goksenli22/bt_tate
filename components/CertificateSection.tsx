@@ -1,6 +1,6 @@
 "use client";
 
-import { CHECKOUT_URL } from "@/lib/constants";
+import { CHECKOUT_URL, trackCheckout } from "@/lib/constants";
 
 export default function CertificateSection() {
   return (
@@ -105,7 +105,7 @@ export default function CertificateSection() {
 
         {/* CTA */}
         <div className="text-center">
-          <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+          <a href={CHECKOUT_URL} onClick={trackCheckout} target="_blank" rel="noopener noreferrer">
             <button className="btn-primary text-lg px-12 py-4 shadow-glow-strong">
               Join The Real World →
             </button>

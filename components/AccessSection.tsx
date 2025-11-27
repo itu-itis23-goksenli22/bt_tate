@@ -1,4 +1,4 @@
-import { CHECKOUT_URL } from "@/lib/constants";
+import { CHECKOUT_URL, trackCheckout } from "@/lib/constants";
 
 export default function AccessSection() {
   const features = [
@@ -92,7 +92,7 @@ export default function AccessSection() {
 
         {/* CTA */}
         <div className="text-center mt-12">
-          <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+          <a href={CHECKOUT_URL} onClick={trackCheckout} target="_blank" rel="noopener noreferrer">
             <button className="btn-accent">
               Hemen Erişim Sağla
             </button>

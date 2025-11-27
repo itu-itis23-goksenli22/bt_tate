@@ -1,4 +1,4 @@
-import { CHECKOUT_URL } from "@/lib/constants";
+import { CHECKOUT_URL, trackCheckout } from "@/lib/constants";
 
 export default function KickstartSection() {
   return (
@@ -71,7 +71,7 @@ export default function KickstartSection() {
             </div>
 
             <div className="pt-6">
-              <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+              <a href={CHECKOUT_URL} onClick={trackCheckout} target="_blank" rel="noopener noreferrer">
                 <button className="btn-accent text-lg px-10 py-4">
                   Yolculuğumu Başlat
                 </button>
