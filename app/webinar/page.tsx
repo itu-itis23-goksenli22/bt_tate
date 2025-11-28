@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import WebinarHeroSection from "@/components/webinar/WebinarHeroSection";
 import WebinarCountdownBanner from "@/components/webinar/WebinarCountdownBanner";
 import WebinarBenefitsSection from "@/components/webinar/WebinarBenefitsSection";
@@ -15,7 +14,6 @@ export default function WebinarPage() {
   return (
     <main className="min-h-screen">
       <WebinarCountdownBanner />
-      <Navbar />
       <WebinarHeroSection />
       <WebinarBenefitsSection />
       <WebinarFormSection />
