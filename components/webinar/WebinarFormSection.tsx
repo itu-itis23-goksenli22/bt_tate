@@ -102,8 +102,9 @@ export default function WebinarFormSection() {
           {/* Bonus Info */}
           <div className="bg-accent/10 border border-accent/20 rounded-xl p-6 max-w-3xl mx-auto mb-8">
             <div className="text-4xl mb-3">🎁</div>
-            <div className="text-white font-bold text-lg mb-2">YAPAY ZEKA BAŞLANGIÇ PAKETİNE</div>
-            <div className="text-accent font-bold text-xl">KAYIT OLDUKTAN SONRA ÜCRETSİZ ERİŞ</div>
+            <div className="text-white font-bold text-2xl mb-2">500$ Değerinde Bonus Paket</div>
+            <div className="text-accent font-bold text-xl mb-3">YAPAY ZEKA BAŞLANGIÇ PAKETİ</div>
+            <div className="text-white/90 font-semibold text-lg">Kayıt Olana Hediye</div>
           </div>
         </div>
 
