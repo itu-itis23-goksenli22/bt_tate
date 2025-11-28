@@ -10,60 +10,70 @@ export default function WebinarFormSection() {
     script.async = true;
     document.body.appendChild(script);
 
-    // Listen for form submission success - trying multiple event types
-    const handleMessage = (event: MessageEvent) => {
-      // Log all messages for debugging
-      console.log('Message received:', event.data);
+    let redirected = false;
 
-      // Try multiple event patterns that GoHighLevel might use
+    const doRedirect = () => {
+      if (!redirected) {
+        redirected = true;
+        console.log('Redirecting to webinarkayit...');
+        window.location.href = '/webinarkayit';
+      }
+    };
+
+    // Listen for ALL postMessage events
+    const handleMessage = (event: MessageEvent) => {
+      console.log('PostMessage received:', event);
+      console.log('Event data:', event.data);
+      console.log('Event origin:', event.origin);
+
       if (event.data) {
         const data = event.data;
+        const dataStr = JSON.stringify(data).toLowerCase();
 
-        // Pattern 1: hsFormCallback
-        if (data.type === 'hsFormCallback' && data.eventName === 'onFormSubmitted') {
-          console.log('Form submitted - redirecting...');
-          window.location.href = '/webinarkayit';
-        }
-
-        // Pattern 2: form-submitted
-        if (data.type === 'form-submitted' || data.event === 'form-submitted') {
-          console.log('Form submitted (pattern 2) - redirecting...');
-          window.location.href = '/webinarkayit';
-        }
-
-        // Pattern 3: Check for success in message
-        if (data.success === true || data.status === 'success') {
-          console.log('Form success detected - redirecting...');
-          window.location.href = '/webinarkayit';
+        // Check if message contains success-related keywords
+        if (
+          dataStr.includes('success') ||
+          dataStr.includes('submit') ||
+          dataStr.includes('thank') ||
+          dataStr.includes('complete') ||
+          data.type === 'hsFormCallback' ||
+          data.type === 'form-submitted' ||
+          data.event === 'form-submitted' ||
+          data.success === true ||
+          data.status === 'success'
+        ) {
+          console.log('Form submission detected!');
+          doRedirect();
         }
       }
     };
 
-    window.addEventListener('message', handleMessage);
+    window.addEventListener('message', handleMessage, true);
 
-    // Also try to intercept form submission directly
+    // Aggressive DOM polling to detect success
     const checkForFormSuccess = setInterval(() => {
-      const iframe = document.getElementById('inline-84Is6fx7guuS4EeNPxf2') as HTMLIFrameElement;
-      if (iframe) {
-        try {
-          // Check if thank you message appears in the page
-          const successIndicators = document.querySelectorAll('[class*="success"], [class*="thank"], [id*="success"], [id*="thank"]');
-          if (successIndicators.length > 0) {
-            console.log('Success indicator found - redirecting...');
-            clearInterval(checkForFormSuccess);
-            window.location.href = '/webinarkayit';
-          }
-        } catch (e) {
-          // Cross-origin restriction - expected
+      // Check for any success/thank you indicators anywhere on the page
+      const body = document.body.innerHTML.toLowerCase();
+
+      if (
+        body.includes('thank') ||
+        body.includes('success') ||
+        body.includes('submitted') ||
+        body.includes('received')
+      ) {
+        const successElements = document.querySelectorAll('[class*="success"], [class*="thank"], [id*="success"], [id*="thank"], [class*="submit"]');
+        if (successElements.length > 0) {
+          console.log('Success element found in DOM!', successElements);
+          doRedirect();
         }
       }
-    }, 1000);
+    }, 500);
 
     return () => {
       if (script.parentNode) {
         document.body.removeChild(script);
       }
-      window.removeEventListener('message', handleMessage);
+      window.removeEventListener('message', handleMessage, true);
       clearInterval(checkForFormSuccess);
     };
   }, []);
