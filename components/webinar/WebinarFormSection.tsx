@@ -1,82 +1,47 @@
 "use client";
 
-import { useEffect } from "react";
+import { useState, FormEvent } from "react";
 
 export default function WebinarFormSection() {
-  useEffect(() => {
-    // Load the GoHighLevel form embed script
-    const script = document.createElement('script');
-    script.src = 'https://link.msgsndr.com/js/form_embed.js';
-    script.async = true;
-    document.body.appendChild(script);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-    let redirected = false;
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
 
-    const doRedirect = () => {
-      if (!redirected) {
-        redirected = true;
-        console.log('Redirecting to webinarkayit...');
-        window.location.href = '/webinarkayit';
-      }
-    };
+    try {
+      // Submit to GoHighLevel in background
+      const ghlFormData = new FormData();
+      ghlFormData.append('firstName', formData.firstName);
+      ghlFormData.append('lastName', formData.lastName);
+      ghlFormData.append('email', formData.email);
+      ghlFormData.append('phone', formData.phone);
 
-    // Listen for ALL postMessage events
-    const handleMessage = (event: MessageEvent) => {
-      console.log('PostMessage received:', event);
-      console.log('Event data:', event.data);
-      console.log('Event origin:', event.origin);
+      // Submit to GoHighLevel (fire and forget)
+      fetch('https://api.leadconnectorhq.com/widget/form/84Is6fx7guuS4EeNPxf2', {
+        method: 'POST',
+        body: ghlFormData,
+        mode: 'no-cors'
+      }).catch(err => console.log('GHL submission error (expected):', err));
 
-      if (event.data) {
-        const data = event.data;
-        const dataStr = JSON.stringify(data).toLowerCase();
-
-        // Check if message contains success-related keywords
-        if (
-          dataStr.includes('success') ||
-          dataStr.includes('submit') ||
-          dataStr.includes('thank') ||
-          dataStr.includes('complete') ||
-          data.type === 'hsFormCallback' ||
-          data.type === 'form-submitted' ||
-          data.event === 'form-submitted' ||
-          data.success === true ||
-          data.status === 'success'
-        ) {
-          console.log('Form submission detected!');
-          doRedirect();
-        }
-      }
-    };
-
-    window.addEventListener('message', handleMessage, true);
-
-    // Aggressive DOM polling to detect success
-    const checkForFormSuccess = setInterval(() => {
-      // Check for any success/thank you indicators anywhere on the page
-      const body = document.body.innerHTML.toLowerCase();
-
-      if (
-        body.includes('thank') ||
-        body.includes('success') ||
-        body.includes('submitted') ||
-        body.includes('received')
-      ) {
-        const successElements = document.querySelectorAll('[class*="success"], [class*="thank"], [id*="success"], [id*="thank"], [class*="submit"]');
-        if (successElements.length > 0) {
-          console.log('Success element found in DOM!', successElements);
-          doRedirect();
-        }
-      }
-    }, 500);
-
-    return () => {
-      if (script.parentNode) {
-        document.body.removeChild(script);
-      }
-      window.removeEventListener('message', handleMessage, true);
-      clearInterval(checkForFormSuccess);
-    };
-  }, []);
+      // Redirect immediately with user data
+      const params = new URLSearchParams({
+        name: formData.firstName,
+        email: formData.email
+      });
+      window.location.href = `/webinarkayit?${params.toString()}`;
+    } catch (error) {
+      console.error('Form submission error:', error);
+      // Still redirect even if there's an error
+      window.location.href = `/webinarkayit?name=${formData.firstName}`;
+    }
+  };
 
   return (
     <section id="webinar-form" className="py-20 px-4 bg-primary">
@@ -109,30 +74,76 @@ export default function WebinarFormSection() {
         </div>
 
         {/* Form Container */}
-        <div className="card-glass p-2 md:p-4">
-          <div className="bg-white rounded-xl overflow-hidden">
-            <iframe
-              src="https://api.leadconnectorhq.com/widget/form/84Is6fx7guuS4EeNPxf2"
-              style={{
-                width: '100%',
-                height: '650px',
-                border: 'none',
-              }}
-              id="inline-84Is6fx7guuS4EeNPxf2"
-              data-layout="{'id':'INLINE'}"
-              data-trigger-type="alwaysShow"
-              data-trigger-value=""
-              data-activation-type="alwaysActivated"
-              data-activation-value=""
-              data-deactivation-type="neverDeactivate"
-              data-deactivation-value=""
-              data-form-name="WEBINAR - Copy"
-              data-height="491"
-              data-layout-iframe-id="inline-84Is6fx7guuS4EeNPxf2"
-              data-form-id="84Is6fx7guuS4EeNPxf2"
-              title="WEBINAR - Copy"
-            />
-          </div>
+        <div className="card-glass p-8 md:p-12">
+          <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-6">
+            <div>
+              <label htmlFor="firstName" className="block text-white font-semibold mb-2">
+                İsim *
+              </label>
+              <input
+                type="text"
+                id="firstName"
+                required
+                value={formData.firstName}
+                onChange={(e) => setFormData({...formData, firstName: e.target.value})}
+                className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-accent transition-colors"
+                placeholder="İsminiz"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="lastName" className="block text-white font-semibold mb-2">
+                Soyisim *
+              </label>
+              <input
+                type="text"
+                id="lastName"
+                required
+                value={formData.lastName}
+                onChange={(e) => setFormData({...formData, lastName: e.target.value})}
+                className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-accent transition-colors"
+                placeholder="Soyisminiz"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email" className="block text-white font-semibold mb-2">
+                E-posta *
+              </label>
+              <input
+                type="email"
+                id="email"
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({...formData, email: e.target.value})}
+                className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-accent transition-colors"
+                placeholder="ornek@email.com"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="phone" className="block text-white font-semibold mb-2">
+                Telefon *
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                required
+                value={formData.phone}
+                onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-accent transition-colors"
+                placeholder="+90 5XX XXX XX XX"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn-primary w-full text-lg py-4 shadow-glow-strong hover:shadow-glow-hover disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? 'Kaydediliyor...' : 'Ücretsiz Kayıt Ol →'}
+            </button>
+          </form>
 
           {/* Trust Badges */}
           <div className="mt-8 flex items-center justify-center gap-6 flex-wrap text-white/60 text-sm">
