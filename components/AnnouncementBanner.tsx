@@ -4,15 +4,16 @@ import { useState, useEffect } from "react";
 
 export default function AnnouncementBanner() {
   const [timeLeft, setTimeLeft] = useState({
-    hours: 24,
+    days: 2,
+    hours: 0,
     minutes: 0,
     seconds: 0
   });
 
   useEffect(() => {
-    // Set Black Friday end time to 24 hours from now
+    // Set Black Friday end time to 48 hours (2 days) from now
     const endTime = new Date();
-    endTime.setHours(endTime.getHours() + 24);
+    endTime.setHours(endTime.getHours() + 48);
 
     const timer = setInterval(() => {
       const now = new Date().getTime();
@@ -20,15 +21,16 @@ export default function AnnouncementBanner() {
 
       if (distance < 0) {
         clearInterval(timer);
-        setTimeLeft({ hours: 0, minutes: 0, seconds: 0 });
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
         return;
       }
 
-      const hours = Math.floor(distance / (1000 * 60 * 60));
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      setTimeLeft({ hours, minutes, seconds });
+      setTimeLeft({ days, hours, minutes, seconds });
     }, 1000);
 
     return () => clearInterval(timer);
@@ -41,7 +43,7 @@ export default function AnnouncementBanner() {
           <span className="text-accent font-extrabold">🔥 BLACK FRIDAY</span>
           <span className="text-white/90">Bitmesine:</span>
           <span className="bg-accent/20 px-2 md:px-3 py-1 rounded-full font-mono text-xs md:text-sm">
-            {String(timeLeft.hours).padStart(2, '0')}:{String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
+            {timeLeft.days}g {String(timeLeft.hours).padStart(2, '0')}:{String(timeLeft.minutes).padStart(2, '0')}:{String(timeLeft.seconds).padStart(2, '0')}
           </span>
         </p>
       </div>
