@@ -63,7 +63,7 @@ export default function WebinarHeroSection() {
               </svg>
             </div>
             <div className="text-left">
-              <p className="text-xs text-white/40 uppercase tracking-wider">120 Dakika</p>
+              <p className="text-xs text-white/40 uppercase tracking-wider">60 Dakika</p>
               <p className="text-white font-semibold">Canlı Eğitim</p>
             </div>
           </div>

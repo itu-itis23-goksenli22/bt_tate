@@ -71,7 +71,7 @@ export default function WebinarBenefitsSection() {
             WEBINARDA NELER ÖĞRENECEKSİNİZ?
           </p>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-            120 Dakikada Hayat Değiştirecek
+            60 Dakikada Hayat Değiştirecek
             <br/>
             <span className="text-accent">Stratejiler</span>
           </h2>
