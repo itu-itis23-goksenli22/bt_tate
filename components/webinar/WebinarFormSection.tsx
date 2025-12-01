@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect, useRef } from "react";
 
 export default function WebinarFormSection() {
   const [formData, setFormData] = useState({
@@ -10,36 +10,109 @@ export default function WebinarFormSection() {
     phone: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+
+  useEffect(() => {
+    // Load the GoHighLevel form embed script
+    const script = document.createElement('script');
+    script.src = 'https://link.msgsndr.com/js/form_embed.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    // Listen for form submission success from iframe
+    const handleMessage = (event: MessageEvent) => {
+      console.log('PostMessage received:', event.data);
+
+      if (event.data) {
+        const data = event.data;
+        const dataStr = JSON.stringify(data).toLowerCase();
+
+        // Check if message contains success-related keywords
+        if (
+          dataStr.includes('success') ||
+          dataStr.includes('submit') ||
+          dataStr.includes('thank') ||
+          dataStr.includes('complete') ||
+          data.type === 'hsFormCallback' ||
+          data.type === 'form-submitted' ||
+          data.success === true
+        ) {
+          console.log('Form submission detected! Redirecting...');
+          const params = new URLSearchParams({
+            name: formData.firstName,
+            email: formData.email
+          });
+          window.location.href = `/webinarkayit?${params.toString()}`;
+        }
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+
+    return () => {
+      if (script.parentNode) {
+        document.body.removeChild(script);
+      }
+      window.removeEventListener('message', handleMessage);
+    };
+  }, [formData]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      // Submit to GoHighLevel in background
-      const ghlFormData = new FormData();
-      ghlFormData.append('firstName', formData.firstName);
-      ghlFormData.append('lastName', formData.lastName);
-      ghlFormData.append('email', formData.email);
-      ghlFormData.append('phone', formData.phone);
+      // Fill the iframe form programmatically
+      const iframe = iframeRef.current;
+      if (iframe && iframe.contentWindow) {
+        // Try to access iframe and fill form fields
+        try {
+          const iframeDoc = iframe.contentWindow.document;
 
-      // Submit to GoHighLevel (fire and forget)
-      fetch('https://api.leadconnectorhq.com/widget/form/84Is6fx7guuS4EeNPxf2', {
-        method: 'POST',
-        body: ghlFormData,
-        mode: 'no-cors'
-      }).catch(err => console.log('GHL submission error (expected):', err));
+          // Find and fill form inputs in iframe
+          const firstNameInput = iframeDoc.querySelector('input[name="firstName"], input[name="first_name"], input[placeholder*="First"], input[placeholder*="İsim"]') as HTMLInputElement;
+          const lastNameInput = iframeDoc.querySelector('input[name="lastName"], input[name="last_name"], input[placeholder*="Last"], input[placeholder*="Soyisim"]') as HTMLInputElement;
+          const emailInput = iframeDoc.querySelector('input[type="email"], input[name="email"]') as HTMLInputElement;
+          const phoneInput = iframeDoc.querySelector('input[type="tel"], input[name="phone"]') as HTMLInputElement;
 
-      // Redirect immediately with user data
+          if (firstNameInput) firstNameInput.value = formData.firstName;
+          if (lastNameInput) lastNameInput.value = formData.lastName;
+          if (emailInput) emailInput.value = formData.email;
+          if (phoneInput) phoneInput.value = formData.phone;
+
+          // Find and click submit button
+          const submitBtn = iframeDoc.querySelector('button[type="submit"], input[type="submit"], button[class*="submit"]') as HTMLButtonElement;
+          if (submitBtn) {
+            console.log('Clicking iframe submit button...');
+            submitBtn.click();
+          }
+        } catch (crossOriginError) {
+          // Cross-origin, use postMessage instead
+          console.log('Cross-origin restriction, using postMessage...');
+          iframe.contentWindow.postMessage({
+            type: 'ghl-form-submit',
+            data: formData
+          }, '*');
+
+          // Wait a bit then redirect
+          setTimeout(() => {
+            const params = new URLSearchParams({
+              name: formData.firstName,
+              email: formData.email
+            });
+            window.location.href = `/webinarkayit?${params.toString()}`;
+          }, 1500);
+        }
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      // Fallback: still redirect
       const params = new URLSearchParams({
         name: formData.firstName,
         email: formData.email
       });
       window.location.href = `/webinarkayit?${params.toString()}`;
-    } catch (error) {
-      console.error('Form submission error:', error);
-      // Still redirect even if there's an error
-      window.location.href = `/webinarkayit?name=${formData.firstName}`;
     }
   };
 
@@ -73,7 +146,30 @@ export default function WebinarFormSection() {
           </div>
         </div>
 
-        {/* Form Container */}
+        {/* Hidden GoHighLevel iframe - for actual submission */}
+        <div style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', overflow: 'hidden' }}>
+          <iframe
+            ref={iframeRef}
+            src="https://api.leadconnectorhq.com/widget/form/84Is6fx7guuS4EeNPxf2"
+            style={{ width: '100%', height: '100%', border: 'none', borderRadius: '10px' }}
+            id="inline-84Is6fx7guuS4EeNPxf2"
+            data-layout="{'id':'INLINE'}"
+            data-trigger-type="alwaysShow"
+            data-trigger-value=""
+            data-activation-type="alwaysActivated"
+            data-activation-value=""
+            data-deactivation-type="neverDeactivate"
+            data-deactivation-value=""
+            data-form-name="Webinar Kayıt AISCALEAPP.COM"
+            data-height="491"
+            data-layout-iframe-id="inline-84Is6fx7guuS4EeNPxf2"
+            data-form-id="84Is6fx7guuS4EeNPxf2"
+            title="Webinar Kayıt AISCALEAPP.COM"
+            onLoad={() => setIframeLoaded(true)}
+          />
+        </div>
+
+        {/* Form Container - Custom UI */}
         <div className="card-glass p-8 md:p-12">
           <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-6">
             <div>
