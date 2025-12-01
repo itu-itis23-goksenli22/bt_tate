@@ -20,22 +20,22 @@ export default function WebinarSuccessContent() {
 
       let daysUntilNext = 0;
 
-      if (currentDay === 2) { // Tuesday
+      if (currentDay === 3) { // Wednesday
         if (currentHour < 20 || (currentHour === 20 && currentMinute === 0)) {
           daysUntilNext = 0;
         } else {
-          daysUntilNext = 5;
+          daysUntilNext = 4;
         }
       } else if (currentDay === 0) { // Sunday
         if (currentHour < 20 || (currentHour === 20 && currentMinute === 0)) {
           daysUntilNext = 0;
         } else {
-          daysUntilNext = 2;
+          daysUntilNext = 3;
         }
       } else {
-        const daysUntilTuesday = (2 - currentDay + 7) % 7 || 7;
+        const daysUntilWednesday = (3 - currentDay + 7) % 7 || 7;
         const daysUntilSunday = (7 - currentDay) % 7 || 7;
-        daysUntilNext = Math.min(daysUntilTuesday, daysUntilSunday);
+        daysUntilNext = Math.min(daysUntilWednesday, daysUntilSunday);
       }
 
       const nextWebinar = new Date(turkey);
@@ -49,7 +49,7 @@ export default function WebinarSuccessContent() {
     const day = String(nextDate.getDate()).padStart(2, '0');
     const month = String(nextDate.getMonth() + 1).padStart(2, '0');
     const year = nextDate.getFullYear();
-    const dayName = nextDate.getDay() === 2 ? "Salı" : "Pazar";
+    const dayName = nextDate.getDay() === 3 ? "Çarşamba" : "Pazar";
 
     setWebinarDate(`${day}.${month}.${year}`);
     setWebinarDay(dayName);
