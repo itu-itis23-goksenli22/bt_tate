@@ -1,72 +1,47 @@
 "use client";
 
-import { useEffect } from "react";
+import { useState, FormEvent } from "react";
 
 export default function WebinarFormSection() {
-  useEffect(() => {
-    // Load the GoHighLevel form embed script
-    const script = document.createElement('script');
-    script.src = 'https://link.msgsndr.com/js/form_embed.js';
-    script.async = true;
-    document.body.appendChild(script);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Listen for form submission success - trying multiple event types
-    const handleMessage = (event: MessageEvent) => {
-      // Log all messages for debugging
-      console.log('Message received:', event.data);
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
 
-      // Try multiple event patterns that GoHighLevel might use
-      if (event.data) {
-        const data = event.data;
+    try {
+      // Submit to GoHighLevel in background
+      const ghlFormData = new FormData();
+      ghlFormData.append('firstName', formData.firstName);
+      ghlFormData.append('lastName', formData.lastName);
+      ghlFormData.append('email', formData.email);
+      ghlFormData.append('phone', formData.phone);
 
-        // Pattern 1: hsFormCallback
-        if (data.type === 'hsFormCallback' && data.eventName === 'onFormSubmitted') {
-          console.log('Form submitted - redirecting...');
-          window.location.href = '/webinarkayit';
-        }
+      // Submit to GoHighLevel (fire and forget)
+      fetch('https://api.leadconnectorhq.com/widget/form/84Is6fx7guuS4EeNPxf2', {
+        method: 'POST',
+        body: ghlFormData,
+        mode: 'no-cors'
+      }).catch(err => console.log('GHL submission error (expected):', err));
 
-        // Pattern 2: form-submitted
-        if (data.type === 'form-submitted' || data.event === 'form-submitted') {
-          console.log('Form submitted (pattern 2) - redirecting...');
-          window.location.href = '/webinarkayit';
-        }
-
-        // Pattern 3: Check for success in message
-        if (data.success === true || data.status === 'success') {
-          console.log('Form success detected - redirecting...');
-          window.location.href = '/webinarkayit';
-        }
-      }
-    };
-
-    window.addEventListener('message', handleMessage);
-
-    // Also try to intercept form submission directly
-    const checkForFormSuccess = setInterval(() => {
-      const iframe = document.getElementById('inline-84Is6fx7guuS4EeNPxf2') as HTMLIFrameElement;
-      if (iframe) {
-        try {
-          // Check if thank you message appears in the page
-          const successIndicators = document.querySelectorAll('[class*="success"], [class*="thank"], [id*="success"], [id*="thank"]');
-          if (successIndicators.length > 0) {
-            console.log('Success indicator found - redirecting...');
-            clearInterval(checkForFormSuccess);
-            window.location.href = '/webinarkayit';
-          }
-        } catch (e) {
-          // Cross-origin restriction - expected
-        }
-      }
-    }, 1000);
-
-    return () => {
-      if (script.parentNode) {
-        document.body.removeChild(script);
-      }
-      window.removeEventListener('message', handleMessage);
-      clearInterval(checkForFormSuccess);
-    };
-  }, []);
+      // Redirect immediately with user data
+      const params = new URLSearchParams({
+        name: formData.firstName,
+        email: formData.email
+      });
+      window.location.href = `/webinarkayit?${params.toString()}`;
+    } catch (error) {
+      console.error('Form submission error:', error);
+      // Still redirect even if there's an error
+      window.location.href = `/webinarkayit?name=${formData.firstName}`;
+    }
+  };
 
   return (
     <section id="webinar-form" className="py-20 px-4 bg-primary">
@@ -92,36 +67,83 @@ export default function WebinarFormSection() {
           {/* Bonus Info */}
           <div className="bg-accent/10 border border-accent/20 rounded-xl p-6 max-w-3xl mx-auto mb-8">
             <div className="text-4xl mb-3">🎁</div>
-            <div className="text-white font-bold text-lg mb-2">YAPAY ZEKA BAŞLANGIÇ PAKETİNE</div>
-            <div className="text-accent font-bold text-xl">KAYIT OLDUKTAN SONRA ÜCRETSİZ ERİŞ</div>
+            <div className="text-white font-bold text-2xl mb-2">500$ Değerinde Bonus Paket</div>
+            <div className="text-accent font-bold text-xl mb-3">YAPAY ZEKA BAŞLANGIÇ PAKETİ</div>
+            <div className="text-white/90 font-semibold text-lg">Kayıt Olana Hediye</div>
           </div>
         </div>
 
         {/* Form Container */}
-        <div className="card-glass p-2 md:p-4">
-          <div className="bg-white rounded-xl overflow-hidden">
-            <iframe
-              src="https://api.leadconnectorhq.com/widget/form/84Is6fx7guuS4EeNPxf2"
-              style={{
-                width: '100%',
-                height: '650px',
-                border: 'none',
-              }}
-              id="inline-84Is6fx7guuS4EeNPxf2"
-              data-layout="{'id':'INLINE'}"
-              data-trigger-type="alwaysShow"
-              data-trigger-value=""
-              data-activation-type="alwaysActivated"
-              data-activation-value=""
-              data-deactivation-type="neverDeactivate"
-              data-deactivation-value=""
-              data-form-name="WEBINAR - Copy"
-              data-height="491"
-              data-layout-iframe-id="inline-84Is6fx7guuS4EeNPxf2"
-              data-form-id="84Is6fx7guuS4EeNPxf2"
-              title="WEBINAR - Copy"
-            />
-          </div>
+        <div className="card-glass p-8 md:p-12">
+          <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-6">
+            <div>
+              <label htmlFor="firstName" className="block text-white font-semibold mb-2">
+                İsim *
+              </label>
+              <input
+                type="text"
+                id="firstName"
+                required
+                value={formData.firstName}
+                onChange={(e) => setFormData({...formData, firstName: e.target.value})}
+                className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-accent transition-colors"
+                placeholder="İsminiz"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="lastName" className="block text-white font-semibold mb-2">
+                Soyisim *
+              </label>
+              <input
+                type="text"
+                id="lastName"
+                required
+                value={formData.lastName}
+                onChange={(e) => setFormData({...formData, lastName: e.target.value})}
+                className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-accent transition-colors"
+                placeholder="Soyisminiz"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email" className="block text-white font-semibold mb-2">
+                E-posta *
+              </label>
+              <input
+                type="email"
+                id="email"
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({...formData, email: e.target.value})}
+                className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-accent transition-colors"
+                placeholder="ornek@email.com"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="phone" className="block text-white font-semibold mb-2">
+                Telefon *
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                required
+                value={formData.phone}
+                onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-accent transition-colors"
+                placeholder="+90 5XX XXX XX XX"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn-primary w-full text-lg py-4 shadow-glow-strong hover:shadow-glow-hover disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? 'Kaydediliyor...' : 'Ücretsiz Kayıt Ol →'}
+            </button>
+          </form>
 
           {/* Trust Badges */}
           <div className="mt-8 flex items-center justify-center gap-6 flex-wrap text-white/60 text-sm">
