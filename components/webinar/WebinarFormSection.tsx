@@ -9,9 +9,26 @@ export default function WebinarFormSection() {
     email: '',
     phone: ''
   });
+  const [displayPhone, setDisplayPhone] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [iframeLoaded, setIframeLoaded] = useState(false);
+
+  // Format phone number for display: 5555555555 -> 555 555 55 55
+  const formatPhoneDisplay = (value: string) => {
+    const digits = value.replace(/\D/g, '');
+    if (digits.length <= 3) return digits;
+    if (digits.length <= 6) return `${digits.slice(0, 3)} ${digits.slice(3)}`;
+    if (digits.length <= 8) return `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6)}`;
+    return `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 8)} ${digits.slice(8, 10)}`;
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const digitsOnly = value.replace(/\D/g, '').slice(0, 10);
+    setFormData({...formData, phone: digitsOnly});
+    setDisplayPhone(formatPhoneDisplay(digitsOnly));
+  };
 
   useEffect(() => {
     // Load the GoHighLevel form embed script
@@ -62,52 +79,110 @@ export default function WebinarFormSection() {
     e.preventDefault();
     setIsSubmitting(true);
 
+    console.log('Form submission started with data:', formData);
+
+    // Wait for iframe to be fully loaded
+    if (!iframeLoaded) {
+      console.log('Waiting for iframe to load...');
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+
     try {
-      // Fill the iframe form programmatically
       const iframe = iframeRef.current;
-      if (iframe && iframe.contentWindow) {
-        // Try to access iframe and fill form fields
-        try {
-          const iframeDoc = iframe.contentWindow.document;
-
-          // Find and fill form inputs in iframe
-          const firstNameInput = iframeDoc.querySelector('input[name="firstName"], input[name="first_name"], input[placeholder*="First"], input[placeholder*="İsim"]') as HTMLInputElement;
-          const lastNameInput = iframeDoc.querySelector('input[name="lastName"], input[name="last_name"], input[placeholder*="Last"], input[placeholder*="Soyisim"]') as HTMLInputElement;
-          const emailInput = iframeDoc.querySelector('input[type="email"], input[name="email"]') as HTMLInputElement;
-          const phoneInput = iframeDoc.querySelector('input[type="tel"], input[name="phone"]') as HTMLInputElement;
-
-          if (firstNameInput) firstNameInput.value = formData.firstName;
-          if (lastNameInput) lastNameInput.value = formData.lastName;
-          if (emailInput) emailInput.value = formData.email;
-          if (phoneInput) phoneInput.value = formData.phone;
-
-          // Find and click submit button
-          const submitBtn = iframeDoc.querySelector('button[type="submit"], input[type="submit"], button[class*="submit"]') as HTMLButtonElement;
-          if (submitBtn) {
-            console.log('Clicking iframe submit button...');
-            submitBtn.click();
-          }
-        } catch (crossOriginError) {
-          // Cross-origin, use postMessage instead
-          console.log('Cross-origin restriction, using postMessage...');
-          iframe.contentWindow.postMessage({
-            type: 'ghl-form-submit',
-            data: formData
-          }, '*');
-
-          // Wait a bit then redirect
-          setTimeout(() => {
-            const params = new URLSearchParams({
-              name: formData.firstName,
-              email: formData.email
-            });
-            window.location.href = `/webinarkayit?${params.toString()}`;
-          }, 1500);
-        }
+      if (!iframe || !iframe.contentWindow) {
+        console.error('Iframe not available');
+        throw new Error('Iframe not available');
       }
+
+      // Try to access iframe and fill form fields
+      try {
+        const iframeDoc = iframe.contentWindow.document;
+        console.log('Successfully accessed iframe document');
+
+        // Find form inputs with multiple selectors
+        const firstNameInput = iframeDoc.querySelector('input[name="firstName"], input[name="first_name"], input[id*="first"], input[placeholder*="First"], input[placeholder*="İsim"], input[placeholder*="isim"]') as HTMLInputElement;
+        const lastNameInput = iframeDoc.querySelector('input[name="lastName"], input[name="last_name"], input[id*="last"], input[placeholder*="Last"], input[placeholder*="Soyisim"], input[placeholder*="soyisim"]') as HTMLInputElement;
+        const emailInput = iframeDoc.querySelector('input[type="email"], input[name="email"], input[id*="email"]') as HTMLInputElement;
+        const phoneInput = iframeDoc.querySelector('input[type="tel"], input[name="phone"], input[name="telefon"], input[id*="phone"], input[id*="tel"]') as HTMLInputElement;
+
+        console.log('Found inputs:', {
+          firstName: !!firstNameInput,
+          lastName: !!lastNameInput,
+          email: !!emailInput,
+          phone: !!phoneInput
+        });
+
+        // Fill and trigger input events for each field
+        if (firstNameInput) {
+          firstNameInput.value = formData.firstName;
+          firstNameInput.dispatchEvent(new Event('input', { bubbles: true }));
+          firstNameInput.dispatchEvent(new Event('change', { bubbles: true }));
+          console.log('Filled firstName:', formData.firstName);
+        }
+
+        if (lastNameInput) {
+          lastNameInput.value = formData.lastName;
+          lastNameInput.dispatchEvent(new Event('input', { bubbles: true }));
+          lastNameInput.dispatchEvent(new Event('change', { bubbles: true }));
+          console.log('Filled lastName:', formData.lastName);
+        }
+
+        if (emailInput) {
+          emailInput.value = formData.email;
+          emailInput.dispatchEvent(new Event('input', { bubbles: true }));
+          emailInput.dispatchEvent(new Event('change', { bubbles: true }));
+          console.log('Filled email:', formData.email);
+        }
+
+        if (phoneInput) {
+          phoneInput.value = formData.phone; // Raw digits only
+          phoneInput.dispatchEvent(new Event('input', { bubbles: true }));
+          phoneInput.dispatchEvent(new Event('change', { bubbles: true }));
+          console.log('Filled phone:', formData.phone);
+        }
+
+        // Wait a moment for the form to process the values
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // Find and click submit button
+        const submitBtn = iframeDoc.querySelector('button[type="submit"], input[type="submit"], button[class*="submit"], button[class*="btn"]') as HTMLButtonElement;
+
+        if (submitBtn) {
+          console.log('Found submit button, clicking...');
+          submitBtn.click();
+          console.log('Submit button clicked successfully');
+        } else {
+          console.error('Submit button not found in iframe');
+          throw new Error('Submit button not found');
+        }
+
+      } catch (crossOriginError) {
+        // Cross-origin restriction - this is expected for GoHighLevel forms
+        console.log('Cross-origin restriction detected:', crossOriginError);
+        console.log('Attempting postMessage communication...');
+
+        // Try postMessage approach
+        iframe.contentWindow.postMessage({
+          type: 'ghl-form-submit',
+          formData: formData
+        }, '*');
+
+        console.log('PostMessage sent to iframe');
+
+        // Wait for potential success message, then redirect
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
+        console.log('Redirecting to success page...');
+        const params = new URLSearchParams({
+          name: formData.firstName,
+          email: formData.email
+        });
+        window.location.href = `/webinarkayit?${params.toString()}`;
+      }
+
     } catch (error) {
       console.error('Form submission error:', error);
-      // Fallback: still redirect
+      // Always redirect to success page as fallback
       const params = new URLSearchParams({
         name: formData.firstName,
         email: formData.email
@@ -212,6 +287,8 @@ export default function WebinarFormSection() {
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
+                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                title="Lütfen geçerli bir e-posta adresi girin (örn: ornek@gmail.com)"
                 className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-accent transition-colors"
                 placeholder="ornek@email.com"
               />
@@ -225,10 +302,12 @@ export default function WebinarFormSection() {
                 type="tel"
                 id="phone"
                 required
-                value={formData.phone}
-                onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                value={displayPhone}
+                onChange={handlePhoneChange}
                 className="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-accent transition-colors"
-                placeholder="+90 5XX XXX XX XX"
+                placeholder="5XX XXX XX XX"
+                pattern="[0-9\s]{13}"
+                title="Lütfen geçerli bir telefon numarası girin (10 rakam)"
               />
             </div>
 
