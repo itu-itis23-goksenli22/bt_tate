@@ -14,15 +14,34 @@ export default function WebinarHeroSection() {
         {/* Program name */}
         <div className="mb-4">
           <p className="text-accent text-sm md:text-base uppercase tracking-widest font-semibold">
-            ÜCRETSIZ WEBINAR - TRENİ KAÇIRMAYIN
+            2025'te Başarılı Bir Online İş Kurmak İsteyen Herkes İçin
           </p>
         </div>
 
         {/* Main heading */}
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-12 leading-tight">
-          <span className="text-white block">İLK 10,000$'INIZI</span>
-          <span className="text-accent block mt-2">KAZANIN</span>
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+          <span className="text-white block">Yapay Zeka ile İlk</span>
+          <span className="text-accent block mt-2">10,000$ Kazanın</span>
         </h1>
+
+        {/* Subheading */}
+        <div className="mb-8">
+          <p className="text-white/80 text-lg md:text-xl max-w-4xl mx-auto leading-relaxed">
+            Bugün Adım Atarsanız, Sadece 30 Gün İçinde Kendi Başarılı Yapay Zeka İşinizi Kurabilirsiniz
+          </p>
+        </div>
+
+        {/* Webinar Badge */}
+        <div className="mb-12">
+          <div className="inline-block bg-accent/20 border-2 border-accent rounded-2xl px-8 py-4">
+            <p className="text-accent text-xl md:text-2xl font-bold uppercase tracking-wider">
+              Yapay Zeka Ajans Modeli
+            </p>
+            <p className="text-white text-sm md:text-base uppercase tracking-widest mt-1">
+              Ücretsiz Semineri
+            </p>
+          </div>
+        </div>
 
         {/* YouTube Video */}
         <div className="max-w-5xl mx-auto mb-8">
