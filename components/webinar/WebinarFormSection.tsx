@@ -23,13 +23,24 @@ export default function WebinarFormSection() {
         {/* Section Header */}
         <div className="text-center mb-12">
           <p className="text-accent text-sm md:text-base uppercase tracking-widest font-semibold mb-4">
-            YERİNİZİ KAPTIN
+            2025'te Başarılı Bir Online İş Kurmak İsteyen Herkes İçin
           </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-            Ücretsiz Seminere
-            <br/>
-            <span className="text-accent">Kayıt Olun</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
+            Bugün Adım Atarsanız, Sadece 30 Gün İçinde Kendi Başarılı Yapay Zeka İşinizi Kurabilirsiniz
           </h2>
+
+          {/* Webinar Badge */}
+          <div className="mb-8">
+            <div className="inline-block bg-accent/20 border-2 border-accent rounded-2xl px-6 py-3">
+              <p className="text-accent text-lg md:text-xl font-bold uppercase tracking-wider">
+                Yapay Zeka Ajans Modeli:
+              </p>
+              <p className="text-white text-base md:text-lg uppercase tracking-widest mt-1">
+                Ücretsiz Semineri
+              </p>
+            </div>
+          </div>
+
           <div className="flex items-center justify-center space-x-2 text-white/60 text-sm md:text-base mb-8">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="10" strokeWidth="2" />
