@@ -1,6 +1,6 @@
 "use client";
 
-import { CHECKOUT_URL, trackCheckout } from "@/lib/constants";
+import { CHECKOUT_URL } from "@/lib/constants";
 
 export default function MidPricingSection() {
   const packageInfo = {
@@ -97,7 +97,6 @@ export default function MidPricingSection() {
               target="_blank"
               rel="noopener noreferrer"
               className="block"
-              onClick={trackCheckout}
             >
               <button className="btn-primary w-full text-lg py-4 shadow-glow-strong hover:shadow-glow-hover">
                 HEMEN BAŞLA →
