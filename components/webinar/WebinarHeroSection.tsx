@@ -36,8 +36,8 @@ export default function WebinarHeroSection() {
               allowFullScreen
             />
 
-            {/* Video caption overlay */}
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/90 to-transparent p-6">
+            {/* Video caption overlay - pointer-events-none to allow video controls */}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/90 to-transparent p-6 pointer-events-none">
               <p className="text-white/80 text-sm uppercase tracking-wider">CANLI EĞİTİM & SORU-CEVAP</p>
             </div>
           </div>
