@@ -11,7 +11,7 @@ export default function WealthMethodsSection() {
       description: "Sınırlı teknik bilgiyle bile AI sistemleri kurmayı öğretiyoruz. Sistemi online bir şekilde şirketlere satın veya kendi AI'nız tarafından yönetilen bir online iş kurun.",
       icon: "🤖",
       color: "from-blue-500/20 to-cyan-500/20",
-      youtubeId: "8PSKCHpl0ug"
+      youtubeId: "VqL0xw6LpBI"
     },
     {
       title: "N8N Masterclass",
