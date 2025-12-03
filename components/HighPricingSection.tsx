@@ -6,11 +6,8 @@ export default function HighPricingSection() {
   const packageInfo = {
     name: "FETIH PLANI",
     subtitle: "Elit Eğitim - Premium",
-    price: "$39",
-    period: "/ay",
-    originalPrice: "$159",
-    oneTimePrice: "₺15,000",
-    oneTimeOriginal: "₺30,000",
+    price: "₺15,000",
+    originalPrice: "₺30,000",
     features: [
       "6 Para Kazandıran Beceri Modülü",
       "Sınırsız video kütüphanesi erişimi",
@@ -54,29 +51,15 @@ export default function HighPricingSection() {
               </h3>
               <p className="text-white/60 text-sm mb-6">{packageInfo.subtitle}</p>
 
-              {/* Monthly Pricing */}
+              {/* One-Time Pricing Only */}
               <div className="mb-6">
-                <p className="text-accent text-xs uppercase tracking-wider mb-2">Aylık Abonelik</p>
+                <p className="text-accent text-xs uppercase tracking-wider mb-2">Tek Seferlik Ödeme</p>
                 <div className="flex items-center justify-center gap-3 mb-2">
-                  <span className="text-xl text-white/40 line-through">
+                  <span className="text-2xl text-white/40 line-through">
                     {packageInfo.originalPrice}
                   </span>
                   <span className="text-4xl md:text-5xl font-bold text-accent-light">
                     {packageInfo.price}
-                    <span className="text-2xl text-white/60">{packageInfo.period}</span>
-                  </span>
-                </div>
-              </div>
-
-              {/* One-Time Pricing */}
-              <div className="bg-accent/10 border border-accent/30 rounded-lg p-4 mb-4">
-                <p className="text-accent text-xs uppercase tracking-wider mb-2">Tek Seferlik Ödeme</p>
-                <div className="flex items-center justify-center gap-3">
-                  <span className="text-lg text-white/40 line-through">
-                    {packageInfo.oneTimeOriginal}
-                  </span>
-                  <span className="text-3xl font-bold text-white">
-                    {packageInfo.oneTimePrice}
                   </span>
                 </div>
               </div>

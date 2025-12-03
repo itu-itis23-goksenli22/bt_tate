@@ -15,7 +15,7 @@ const TestimonialsSection = dynamic(() => import("@/components/TestimonialsSecti
 const WealthMethodsSection = dynamic(() => import("@/components/WealthMethodsSection"));
 const ToolsSection = dynamic(() => import("@/components/ToolsSection"));
 const FAQSection = dynamic(() => import("@/components/FAQSection"));
-const SoldOutPlansSection = dynamic(() => import("@/components/SoldOutPlansSection"));
+const MidSoldOutPlansSection = dynamic(() => import("@/components/MidSoldOutPlansSection"));
 const PriceIncreaseSection = dynamic(() => import("@/components/PriceIncreaseSection"));
 const MidPricingSection = dynamic(() => import("@/components/MidPricingSection"));
 const Footer = dynamic(() => import("@/components/Footer"));
@@ -40,7 +40,7 @@ export default function MidPage() {
       <WealthMethodsSection />
       <ToolsSection />
       <FAQSection />
-      <SoldOutPlansSection />
+      <MidSoldOutPlansSection />
       <PriceIncreaseSection />
       <MidPricingSection />
       <Footer />

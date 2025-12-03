@@ -15,7 +15,7 @@ const TestimonialsSection = dynamic(() => import("@/components/TestimonialsSecti
 const WealthMethodsSection = dynamic(() => import("@/components/WealthMethodsSection"));
 const ToolsSection = dynamic(() => import("@/components/ToolsSection"));
 const FAQSection = dynamic(() => import("@/components/FAQSection"));
-const SoldOutPlansSection = dynamic(() => import("@/components/SoldOutPlansSection"));
+const HighSoldOutPlansSection = dynamic(() => import("@/components/HighSoldOutPlansSection"));
 const PriceIncreaseSection = dynamic(() => import("@/components/PriceIncreaseSection"));
 const HighPricingSection = dynamic(() => import("@/components/HighPricingSection"));
 const Footer = dynamic(() => import("@/components/Footer"));
@@ -40,7 +40,7 @@ export default function HighPage() {
       <WealthMethodsSection />
       <ToolsSection />
       <FAQSection />
-      <SoldOutPlansSection />
+      <HighSoldOutPlansSection />
       <PriceIncreaseSection />
       <HighPricingSection />
       <Footer />
