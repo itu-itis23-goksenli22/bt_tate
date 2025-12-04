@@ -106,7 +106,7 @@ export default function HighPricingSection() {
 
             {/* CTA Button */}
             <a
-              href="https://buy.stripe.com/aFa5kEdWMc5LcZbgC4"
+              href="https://buy.stripe.com/aFa5kEdWMc5LcZbgC43wQ0o"
               target="_blank"
               rel="noopener noreferrer"
               className="block"

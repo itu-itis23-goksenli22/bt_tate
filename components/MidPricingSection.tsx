@@ -99,7 +99,7 @@ export default function MidPricingSection() {
 
             {/* CTA Button */}
             <a
-              href="https://buy.stripe.com/7sY28s5qg2vb8IVclO"
+              href="https://buy.stripe.com/7sY28s5qg2vb8IVclO3wQ0q"
               target="_blank"
               rel="noopener noreferrer"
               className="block"
