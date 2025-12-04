@@ -10,7 +10,7 @@ export default function WebinarSuccessContent() {
   const [webinarDay, setWebinarDay] = useState<string>("");
 
   useEffect(() => {
-    // Calculate next webinar date
+    // Calculate next webinar date (Sunday only)
     const getNextWebinarDate = () => {
       const now = new Date();
       const turkey = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
@@ -20,22 +20,14 @@ export default function WebinarSuccessContent() {
 
       let daysUntilNext = 0;
 
-      if (currentDay === 3) { // Wednesday
+      if (currentDay === 0) { // Sunday
         if (currentHour < 20 || (currentHour === 20 && currentMinute === 0)) {
           daysUntilNext = 0;
         } else {
-          daysUntilNext = 4;
-        }
-      } else if (currentDay === 0) { // Sunday
-        if (currentHour < 20 || (currentHour === 20 && currentMinute === 0)) {
-          daysUntilNext = 0;
-        } else {
-          daysUntilNext = 3;
+          daysUntilNext = 7;
         }
       } else {
-        const daysUntilWednesday = (3 - currentDay + 7) % 7 || 7;
-        const daysUntilSunday = (7 - currentDay) % 7 || 7;
-        daysUntilNext = Math.min(daysUntilWednesday, daysUntilSunday);
+        daysUntilNext = (7 - currentDay) % 7 || 7;
       }
 
       const nextWebinar = new Date(turkey);
@@ -49,10 +41,9 @@ export default function WebinarSuccessContent() {
     const day = String(nextDate.getDate()).padStart(2, '0');
     const month = String(nextDate.getMonth() + 1).padStart(2, '0');
     const year = nextDate.getFullYear();
-    const dayName = nextDate.getDay() === 3 ? "Çarşamba" : "Pazar";
 
     setWebinarDate(`${day}.${month}.${year}`);
-    setWebinarDay(dayName);
+    setWebinarDay("Pazar");
   }, []);
 
   return (

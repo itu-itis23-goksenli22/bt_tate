@@ -22,28 +22,18 @@ export default function WebinarCountdownBanner() {
 
     let daysUntilNext = 0;
 
-    // Check if today is Wednesday (3) or Sunday (0)
-    if (currentDay === 3) { // Wednesday
+    // Check if today is Sunday (0)
+    if (currentDay === 0) { // Sunday
       if (currentHour < 20 || (currentHour === 20 && currentMinute === 0)) {
         // Today's webinar hasn't happened yet
         daysUntilNext = 0;
       } else {
-        // Today's webinar passed, next is Sunday
-        daysUntilNext = 4; // Wednesday to Sunday
-      }
-    } else if (currentDay === 0) { // Sunday
-      if (currentHour < 20 || (currentHour === 20 && currentMinute === 0)) {
-        // Today's webinar hasn't happened yet
-        daysUntilNext = 0;
-      } else {
-        // Today's webinar passed, next is Wednesday
-        daysUntilNext = 3; // Sunday to Wednesday
+        // Today's webinar passed, next is next Sunday
+        daysUntilNext = 7;
       }
     } else {
-      // Calculate days until next Wednesday or Sunday
-      const daysUntilWednesday = (3 - currentDay + 7) % 7 || 7;
-      const daysUntilSunday = (7 - currentDay) % 7 || 7;
-      daysUntilNext = Math.min(daysUntilWednesday, daysUntilSunday);
+      // Calculate days until next Sunday
+      daysUntilNext = (7 - currentDay) % 7 || 7;
     }
 
     const nextWebinar = new Date(turkey);

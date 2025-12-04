@@ -21,7 +21,7 @@ export default function WebinarFAQSection() {
     },
     {
       question: "Webinar ne zaman yapılıyor?",
-      answer: "Canlı webinarlarımız her Çarşamba ve Pazar akşamı saat 20:00'de Türkiye saati ile gerçekleşiyor. Kaydolduktan sonra size katılım linki gönderilecektir."
+      answer: "Canlı webinarlarımız her Pazar akşamı saat 20:00'de Türkiye saati ile gerçekleşiyor. Kaydolduktan sonra size katılım linki gönderilecektir."
     },
     {
       question: "Kaydı izleyebilir miyim?",
