@@ -2,7 +2,11 @@
 
 import Logo from "./Logo";
 
-export default function Navbar() {
+interface NavbarProps {
+  whatsappLink?: string;
+}
+
+export default function Navbar({ whatsappLink = "https://wa.me/12084509523?text=Merhaba%2C%20AiscaleApp%20ayl%C4%B1k%20indirimli%20paketiyle%20hemen%20ba%C5%9Flamak%20istiyorum.%20Kay%C4%B1t%20i%C3%A7in%20yard%C4%B1mc%C4%B1%20olabilir%20misiniz%3F" }: NavbarProps) {
   const scrollToSection = (sectionId: string) => {
     console.log('Scrolling to section:', sectionId);
     const element = document.getElementById(sectionId);
@@ -78,7 +82,7 @@ export default function Navbar() {
 
             {/* WhatsApp Button - Desktop */}
             <a
-              href="https://wa.me/12084509523?text=Merhaba%20Pro%20%C3%BCyelik%20indirimi%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum"
+              href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center w-10 h-10 rounded-full bg-green-500 hover:bg-green-600 transition-all shadow-lg hover:scale-110"
@@ -95,7 +99,7 @@ export default function Navbar() {
             <div className="w-10"></div> {/* Spacer for centering */}
             <Logo className="w-14 h-14 md:w-16 md:h-16" />
             <a
-              href="https://wa.me/12084509523?text=Merhaba%20Pro%20%C3%BCyelik%20indirimi%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum"
+              href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center w-10 h-10 rounded-full bg-green-500 hover:bg-green-600 transition-all shadow-lg active:scale-95"

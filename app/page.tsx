@@ -25,7 +25,7 @@ const LiveNotifications = dynamic(() => import("@/components/LiveNotifications")
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <Navbar />
+      <Navbar whatsappLink="https://wa.me/12084509523?text=Merhaba%2C%20AiscaleApp%20ayl%C4%B1k%20indirimli%20paketiyle%20hemen%20ba%C5%9Flamak%20istiyorum.%20Kay%C4%B1t%20i%C3%A7in%20yard%C4%B1mc%C4%B1%20olabilir%20misiniz%3F" />
       <HeroSection />
       <WhatIsSection />
       <DualVideoSection />

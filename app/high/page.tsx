@@ -25,7 +25,7 @@ const LiveNotifications = dynamic(() => import("@/components/LiveNotifications")
 export default function HighPage() {
   return (
     <main className="min-h-screen">
-      <Navbar />
+      <Navbar whatsappLink="https://wa.me/12084509523?text=Merhaba%2C%20Pro%20paket%20i%C3%A7in%20ge%C3%A7erli%20%25%2050%20indirim%20f%C4%B1rsat%C4%B1n%C4%B1%20de%C4%9Ferlendirmek%20istiyorum.%20Kontenjan%20dolmadan%20yard%C4%B1mc%C4%B1%20olabilir%20misiniz%3F" />
       <HeroSection />
       <WhatIsSection />
       <DualVideoSection />
