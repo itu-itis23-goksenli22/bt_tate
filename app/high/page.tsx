@@ -2,6 +2,30 @@ import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import WhatIsSection from "@/components/WhatIsSection";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "AI Scale App - Premium Paket %50 İndirim | ₺15,000",
+  description: "Yapay zeka ile zenginlik yaratmayı öğrenin. Premium paket ile 6 para kazandıran beceri modülü, canlı eğitimler ve özel mentörlük. %50 indirimle şimdi başlayın!",
+  openGraph: {
+    title: "AI Scale App - Premium Paket %50 İndirim | ₺15,000",
+    description: "Yapay zeka ile zenginlik yaratmayı öğrenin. Premium paket ile 6 para kazandıran beceri modülü, canlı eğitimler ve özel mentörlük.",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "AI Scale App",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AI Scale App - Premium Paket %50 İndirim | ₺15,000",
+    description: "Yapay zeka ile zenginlik yaratmayı öğrenin. Premium paket ile 6 para kazandıran beceri modülü, canlı eğitimler ve özel mentörlük.",
+    images: ["/twitter-image.png"],
+  },
+};
 
 // Lazy load below-the-fold components
 const DualVideoSection = dynamic(() => import("@/components/DualVideoSection"));
