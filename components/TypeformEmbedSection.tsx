@@ -38,7 +38,7 @@ export default function TypeformEmbedSection() {
           <h2 className="section-title">
             HEMEN <span className="text-accent-light">BAŞLA</span>
           </h2>
-          <p className="text-gray-300 mt-4 text-lg">
+          <p className="text-white mt-4 text-xl font-clash font-semibold tracking-wide">
             Aşağıdaki başvuruyu doldurun ve bir görüşme ayarlayın
           </p>
         </div>
