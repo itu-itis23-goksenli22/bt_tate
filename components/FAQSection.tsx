@@ -20,10 +20,6 @@ export default function FAQSection() {
       answer: "E-Commerce, Copywriting, Freelancing, Amazon FBA, Crypto Trading ve Content Creation olmak üzere 6 yüksek gelirli beceri alanında eğitim alacaksınız. Her modülde uzman mentorlar tarafından hazırlanan videolar, canlı grup eğitimleri ve pratik ödevler bulunur."
     },
     {
-      question: "Aylık ücret ne kadar?",
-      answer: "AI SCALE üyeliği aylık sadece $39'dur. Bu fiyata tüm modüllere, canlı grup eğitimlerine, mentor desteğine ve global topluluk erişimine sahip olursunuz. İstediğiniz zaman iptal edebilirsiniz."
-    },
-    {
       question: "Önceden deneyim gerekli mi?",
       answer: "Hayır, hiçbir ön deneyim gerekli değil. Eğitimlerimiz sıfırdan başlayanlara uygun şekilde tasarlanmıştır. İster hiç deneyiminiz olmasın, ister var olan becerilerinizi geliştirmek isteyin, size uygun içerikler bulacaksınız."
     },
