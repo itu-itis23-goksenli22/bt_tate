@@ -38,6 +38,9 @@ export default function TypeformEmbedSection() {
           <h2 className="section-title">
             HEMEN <span className="text-accent-light">BAŞLA</span>
           </h2>
+          <p className="text-gray-300 mt-4 text-lg">
+            Aşağıdaki başvuruyu doldurun ve bir görüşme ayarlayın
+          </p>
         </div>
         <div className="max-w-3xl mx-auto min-h-[600px]" ref={containerRef}>
           {/* Typeform will be loaded here dynamically */}
