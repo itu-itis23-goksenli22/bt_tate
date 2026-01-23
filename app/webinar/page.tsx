@@ -6,7 +6,7 @@ import WebinarFAQSection from "@/components/webinar/WebinarFAQSection";
 import Footer from "@/components/Footer";
 
 export const metadata = {
-  title: "🔥 DOLU DOLU AI SEMİNERİ - SON KAYITLAR!",
+  title: "DOLU DOLU AI SEMİNERİ - SON KAYITLAR!",
   description: "Yapay zeka ile para kazanmayı öğrenin. Ücretsiz webinarımıza katılın ve AI ile gelir elde etmeye başlayın.",
 };
 

@@ -167,7 +167,7 @@ export default function WebinarSuccessContent() {
               WhatsApp Grubuna Katıl
             </h3>
             <a
-              href="https://wa.me/12084509523?text=Merhaba%20Pro%20%C3%BCyelik%20indirimi%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum"
+              href="https://chat.whatsapp.com/IEWk7BlPlgL37ngk8Xpu11"
               target="_blank"
               rel="noopener noreferrer"
             >
