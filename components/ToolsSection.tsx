@@ -10,7 +10,7 @@ export default function ToolsSection() {
       ),
       title: "Gerçek Zamanlı Gösterge Paneli",
       description: "İlerlemenizi takip edin, kazançlarınızı izleyin ve hedeflerinize ulaşın. Tüm başarı metrikleriniz tek bir yerde.",
-      imageUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/images/seminer/WhatsApp%20Image%202025-11-24%20at%2018.19.32%20(1).jpeg"
+      imageUrl: "/images/tools/tool1.jpg"
     },
     {
       icon: (
@@ -20,7 +20,7 @@ export default function ToolsSection() {
       ),
       title: "Küresel Topluluk Erişimi",
       description: "Dünya çapında binlerce başarılı girişimciyle bağlantı kurun. Ağınızı genişletin ve işbirliği fırsatları yakalayın.",
-      imageUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/images/seminer/WhatsApp%20Image%202025-11-24%20at%2019.42.20.jpeg"
+      imageUrl: "/images/tools/tool2.jpg"
     },
     {
       icon: (
@@ -30,7 +30,7 @@ export default function ToolsSection() {
       ),
       title: "7/24 Mentor Desteği",
       description: "Uzman mentorlarımız her zaman yanınızda. Sorularınıza hızlı yanıtlar alın ve engelleri aşın.",
-      imageUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/images/seminer/WhatsApp%20Image%202025-11-24%20at%2019.40.35.jpeg"
+      imageUrl: "/images/tools/tool3.jpg"
     },
   ];
 

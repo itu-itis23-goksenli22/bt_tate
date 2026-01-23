@@ -7,7 +7,7 @@ export default function TestimonialsSection() {
       role: "E-Ticaret Mağaza Sahibi",
       content: "Geçen ay küçük bir e-ticaret mağazasının sahibi olan birine ulaştım. Ürünleri güzeldi, fiyatları rekabetçiydi ama satış artmıyordu. n8n ile tam otomatik 'üründen reklam videosu üreten' akışı gösterdim. Geçen hafta proje 5.750 USD karşılığında kapandı 🔥",
       rating: 5,
-      imageUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/images/test/WhatsApp%20Image%202025-11-24%20at%2015.38.24%20(1).jpeg",
+      imageUrl: "/images/testimonials/derya.jpg",
       earnings: "$5,750"
     },
     {
@@ -15,7 +15,7 @@ export default function TestimonialsSection() {
       role: "AI Otomasyon Uzmanı",
       content: "Haftaya harika haberlerle başlıyorum! 🎉 Yapay Zeka destekli Çağrı Asistanı otomasyonumuzu yerel bir işletmeye başarıyla sattık. Mesai saatleri dışında kaçan çağrıları yakalama değerini anında gördüler. Kurulum + 30 günlük optimizasyon için 5.000$ peşin ödeme aldık.",
       rating: 5,
-      imageUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/images/test/WhatsApp%20Image%202025-11-24%20at%2015.38.24.jpeg",
+      imageUrl: "/images/testimonials/nurettin.jpg",
       earnings: "$5,000"
     },
     {
@@ -23,7 +23,7 @@ export default function TestimonialsSection() {
       role: "n8n Otomasyon Geliştirici",
       content: "Geçen hafta anlaşmayı kapattık: $4,800 USD kurulum + 1 ay destek 🔥. Burak Bey ile yaptığımız n8n otomasyonu işe yaradı! ✨ Destek olan ekibe teşekkürler 🙌 @baturalptunalı. Daha yapılacak çok iş var.",
       rating: 5,
-      imageUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/images/test/WhatsApp%20Image%202025-11-24%20at%2015.39.22.jpeg",
+      imageUrl: "/images/testimonials/mert.jpg",
       earnings: "$4,800"
     },
     {
@@ -31,7 +31,7 @@ export default function TestimonialsSection() {
       role: "AI Call Agent Uzmanı",
       content: "Küçük bir yerel işletmeye, n8n ile geliştirdiğimiz Yapay Zeka Destekli Call Agent otomasyonunu başarıyla sattık. Müşteri, mesai saatleri dışında cevaplanmayan aramalar yüzünden ciddi şekilde potansiyel kaybediyordu. Zoom üzerinden kısa bir demo yaptık. Değeri anında gördüler ve 5.000 USD peşin olarak tam kuruluma + 30 günlük optimizasyon dönemine onay verdiler.",
       rating: 5,
-      imageUrl: "https://sutwdchlbrukrnygspbg.supabase.co/storage/v1/object/public/images/test/WhatsApp%20Image%202025-11-24%20at%2015.48.08.jpeg",
+      imageUrl: "/images/testimonials/hakan.jpg",
       earnings: "$5,000"
     },
   ];

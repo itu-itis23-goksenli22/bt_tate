@@ -46,7 +46,7 @@ const Footer = dynamic(() => import("@/components/Footer"));
 const BackToTop = dynamic(() => import("@/components/BackToTop"));
 const LiveNotifications = dynamic(() => import("@/components/LiveNotifications"));
 
-export default function TypeformPage() {
+export default function AylikPage() {
   return (
     <main className="min-h-screen">
       <Navbar />

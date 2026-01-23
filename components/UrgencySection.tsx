@@ -2,7 +2,6 @@
 
 import { CHECKOUT_URL } from "@/lib/constants";
 import Image from "next/image";
-import { getStorageImageUrl } from "@/lib/images";
 
 export default function UrgencySection() {
   return (
@@ -33,7 +32,7 @@ export default function UrgencySection() {
               {/* Screen content - Dashboard Image */}
               <div className="absolute inset-0 overflow-hidden">
                 <Image
-                  src={getStorageImageUrl("WhatsApp Image 2025-11-24 at 15.55.25.jpeg")}
+                  src="/images/mockups/phone-mockup-1.jpg"
                   alt="AI SCALE Dashboard"
                   fill
                   className="object-cover"
@@ -115,7 +114,7 @@ export default function UrgencySection() {
         <div className="mb-16">
           <div className="relative w-full aspect-[21/9] rounded-2xl overflow-hidden border-2 border-accent/30 shadow-2xl shadow-accent/20">
             <Image
-              src={getStorageImageUrl("kendinesor.jpg")}
+              src="/images/general/kendinesor.jpg"
               alt="Kendine Sor"
               fill
               className="object-cover"

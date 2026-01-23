@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { getStorageImageUrl } from "@/lib/images";
 
 export default function KendineSorSection() {
   return (
@@ -8,7 +7,7 @@ export default function KendineSorSection() {
         {/* Image with fade edges */}
         <div className="relative w-full aspect-[21/9] rounded-3xl overflow-hidden">
           <Image
-            src={getStorageImageUrl("kendinesor.jpg")}
+            src="/images/general/kendinesor.jpg"
             alt="Kendine Sor"
             fill
             className="object-cover"

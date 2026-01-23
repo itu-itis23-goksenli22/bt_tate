@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { getStorageImageUrl } from "@/lib/images";
 
 export default function PreparedToWorkSection() {
   return (
@@ -60,7 +59,7 @@ export default function PreparedToWorkSection() {
                 {/* Screen content - Real Dashboard Image */}
                 <div className="absolute inset-0 overflow-hidden">
                   <Image
-                    src={getStorageImageUrl("WhatsApp Image 2025-11-24 at 15.55.25.jpeg")}
+                    src="/images/mockups/phone-mockup-1.jpg"
                     alt="AI SCALE Dashboard - Spaces"
                     fill
                     className="object-cover"
@@ -76,7 +75,7 @@ export default function PreparedToWorkSection() {
                 {/* Screen content - Real Course Image */}
                 <div className="absolute inset-0 overflow-hidden">
                   <Image
-                    src={getStorageImageUrl("WhatsApp Image 2025-11-24 at 15.55.25 (1).jpeg")}
+                    src="/images/mockups/phone-mockup-2.jpg"
                     alt="AI SCALE Masterclass Course"
                     fill
                     className="object-cover"

@@ -1,15 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import { getStorageImageUrl } from '@/lib/images';
 
 export default function Logo({ className = "w-9 h-9" }: { className?: string }) {
-  const logoUrl = getStorageImageUrl('ai-scale-logo.png');
-
   return (
     <div className={className}>
       <Image
-        src={logoUrl}
+        src="/images/logo/ai-scale-logo.png"
         alt="AI Scale Logo"
         width={48}
         height={48}

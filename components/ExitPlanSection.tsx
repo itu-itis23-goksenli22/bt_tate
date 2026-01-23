@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { getStorageImageUrl } from "@/lib/images";
 
 export default function ExitPlanSection() {
   return (
@@ -67,7 +66,7 @@ export default function ExitPlanSection() {
                 <div className="relative aspect-[16/10] bg-black rounded-lg overflow-hidden border-8 border-black">
                   {/* Dashboard Image */}
                   <Image
-                    src={getStorageImageUrl("WhatsApp Image 2025-11-24 at 15.52.58.jpeg")}
+                    src="/images/mockups/exitplan.jpg"
                     alt="AI SCALE Dashboard"
                     fill
                     className="object-cover"
