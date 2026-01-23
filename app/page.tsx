@@ -15,9 +15,10 @@ const TestimonialsSection = dynamic(() => import("@/components/TestimonialsSecti
 const WealthMethodsSection = dynamic(() => import("@/components/WealthMethodsSection"));
 const ToolsSection = dynamic(() => import("@/components/ToolsSection"));
 const FAQSection = dynamic(() => import("@/components/FAQSection"));
-const SoldOutPlansSection = dynamic(() => import("@/components/SoldOutPlansSection"));
-const PriceIncreaseSection = dynamic(() => import("@/components/PriceIncreaseSection"));
-const PricingSection = dynamic(() => import("@/components/PricingSection"));
+const TypeformEmbedSection = dynamic(
+  () => import("@/components/TypeformEmbedSection"),
+  { ssr: false }
+);
 const Footer = dynamic(() => import("@/components/Footer"));
 const BackToTop = dynamic(() => import("@/components/BackToTop"));
 const LiveNotifications = dynamic(() => import("@/components/LiveNotifications"));
@@ -39,9 +40,7 @@ export default function Home() {
       <WealthMethodsSection />
       <ToolsSection />
       <FAQSection />
-      <SoldOutPlansSection />
-      <PriceIncreaseSection />
-      <PricingSection />
+      <TypeformEmbedSection />
       <Footer />
       <BackToTop />
       <LiveNotifications />
