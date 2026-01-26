@@ -1,49 +1,24 @@
-import dynamic from "next/dynamic";
-import Navbar from "@/components/Navbar";
-import HeroSection from "@/components/HeroSection";
-import WhatIsSection from "@/components/WhatIsSection";
+import WebinarHeroSection from "@/components/webinar/WebinarHeroSection";
+import WebinarCountdownBanner from "@/components/webinar/WebinarCountdownBanner";
+import WebinarBenefitsSection from "@/components/webinar/WebinarBenefitsSection";
+import WebinarFormSection from "@/components/webinar/WebinarFormSection";
+import WebinarFAQSection from "@/components/webinar/WebinarFAQSection";
+import Footer from "@/components/Footer";
 
-// Lazy load below-the-fold components
-const DualVideoSection = dynamic(() => import("@/components/DualVideoSection"));
-const KendineSorSection = dynamic(() => import("@/components/KendineSorSection"));
-const LockInYearSection = dynamic(() => import("@/components/LockInYearSection"));
-const PreparedToWorkSection = dynamic(() => import("@/components/PreparedToWorkSection"));
-const CurriculumSection = dynamic(() => import("@/components/CurriculumSection"));
-const ExitPlanSection = dynamic(() => import("@/components/ExitPlanSection"));
-const TrustBadges = dynamic(() => import("@/components/TrustBadges"));
-const TestimonialsSection = dynamic(() => import("@/components/TestimonialsSection"));
-const WealthMethodsSection = dynamic(() => import("@/components/WealthMethodsSection"));
-const ToolsSection = dynamic(() => import("@/components/ToolsSection"));
-const FAQSection = dynamic(() => import("@/components/FAQSection"));
-const TypeformEmbedSection = dynamic(
-  () => import("@/components/TypeformEmbedSection"),
-  { ssr: false }
-);
-const Footer = dynamic(() => import("@/components/Footer"));
-const BackToTop = dynamic(() => import("@/components/BackToTop"));
-const LiveNotifications = dynamic(() => import("@/components/LiveNotifications"));
+export const metadata = {
+  title: "DOLU DOLU AI SEMİNERİ - SON KAYITLAR!",
+  description: "Yapay zeka ile para kazanmayı öğrenin. Ücretsiz webinarımıza katılın ve AI ile gelir elde etmeye başlayın.",
+};
 
-export default function Home() {
+export default function WebinarPage() {
   return (
     <main className="min-h-screen">
-      <Navbar />
-      <HeroSection />
-      <WhatIsSection />
-      <DualVideoSection />
-      <KendineSorSection />
-      <LockInYearSection />
-      <PreparedToWorkSection />
-      <CurriculumSection />
-      <ExitPlanSection />
-      <TrustBadges />
-      <TestimonialsSection />
-      <WealthMethodsSection />
-      <ToolsSection />
-      <FAQSection />
-      <TypeformEmbedSection />
+      <WebinarCountdownBanner />
+      <WebinarHeroSection />
+      <WebinarBenefitsSection />
+      <WebinarFormSection />
+      <WebinarFAQSection />
       <Footer />
-      <BackToTop />
-      <LiveNotifications />
     </main>
   );
 }
