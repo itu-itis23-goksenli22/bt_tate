@@ -42,10 +42,10 @@ export default function WebinarFAQSection() {
   ];
 
   return (
-    <section className="py-20 px-4 bg-primary-light">
+    <section className="py-10 md:py-20 px-4 bg-primary-light">
       <div className="max-w-4xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-6 md:mb-12">
           <p className="text-accent text-sm md:text-base uppercase tracking-widest font-semibold mb-4">
             SIKÇA SORULAN SORULAR
           </p>
@@ -62,7 +62,7 @@ export default function WebinarFAQSection() {
         </div>
 
         {/* FAQ Items */}
-        <div className="space-y-4 mb-12">
+        <div className="space-y-4 mb-6 md:mb-12">
           {faqs.map((faq, index) => (
             <div
               key={index}

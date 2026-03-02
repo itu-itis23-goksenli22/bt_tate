@@ -63,10 +63,10 @@ export default function WebinarBenefitsSection() {
   ];
 
   return (
-    <section className="py-20 px-4 bg-primary-light">
+    <section className="py-10 md:py-20 px-4 bg-primary-light">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-8 md:mb-16">
           <p className="text-accent text-sm md:text-base uppercase tracking-widest font-semibold mb-4">
             WEBINARDA NELER ÖĞRENECEKSİNİZ?
           </p>
@@ -85,7 +85,7 @@ export default function WebinarBenefitsSection() {
         </div>
 
         {/* Benefits Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 md:gap-6 md:mb-12">
           {benefits.map((benefit, index) => (
             <div
               key={index}
