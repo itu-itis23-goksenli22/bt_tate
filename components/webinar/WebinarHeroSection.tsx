@@ -6,7 +6,7 @@ export default function WebinarHeroSection() {
   };
 
   return (
-    <section className="relative md:min-h-screen flex items-center justify-center pt-20 pb-8 md:pt-48 md:pb-20 px-2 md:px-4">
+    <section className="relative md:min-h-screen flex items-center justify-center pt-32 pb-8 md:pt-48 md:pb-20 px-2 md:px-4">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary to-primary-light" />
 
@@ -26,7 +26,7 @@ export default function WebinarHeroSection() {
 
         {/* YouTube Video */}
         <div className="max-w-5xl mx-auto mb-4 md:mb-8">
-          <div className="relative aspect-video bg-primary-light/50 rounded-3xl overflow-hidden border border-accent/30 shadow-glow-strong">
+          <div className="relative aspect-video bg-primary-light/50 rounded-2xl md:rounded-3xl overflow-hidden border border-accent/30 shadow-glow-strong">
             <iframe
               className="absolute inset-0 w-full h-full"
               src="https://www.youtube.com/embed/qQbl1YPaI7k?start=335"
