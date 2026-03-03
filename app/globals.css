@@ -162,6 +162,28 @@
     box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
   }
 
+  /* Zoomkayit page styles */
+  .zk-text-gold-gradient {
+    background: linear-gradient(135deg, #E8C872, #D4A843, #C9952D);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .zk-btn-cta {
+    animation: zk-pulse-gold 2s ease-in-out infinite;
+  }
+
+  .zk-progress-fill {
+    animation: zk-fill-bar 2s ease-out forwards;
+  }
+
+  .zk-countdown-box {
+    background: linear-gradient(145deg, #D4A843, #A07830);
+    border-radius: 12px;
+    min-width: 80px;
+  }
+
   .container-custom {
     @apply max-w-container mx-auto px-6 lg:px-8 md:px-6 sm:px-4;
   }
@@ -247,6 +269,21 @@
       opacity: 1;
       transform: translateX(0);
     }
+  }
+
+  /* Zoomkayit keyframes */
+  @keyframes zk-pulse-gold {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(212, 168, 67, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(212, 168, 67, 0.7), 0 0 60px rgba(212, 168, 67, 0.3);
+    }
+  }
+
+  @keyframes zk-fill-bar {
+    from { width: 0%; }
+    to { width: 78%; }
   }
 
   /* Initial state for scroll animations */
