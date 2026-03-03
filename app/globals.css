@@ -134,6 +134,34 @@
     @apply card-trw;
   }
 
+  /* Gold solid button for basarilikayit checkout page */
+  .btn-gold-solid {
+    @apply text-black font-bold rounded-lg transition-all duration-300 uppercase tracking-wider;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    box-shadow: 0 4px 24px rgba(251, 191, 36, 0.4);
+    padding: 1.25rem 3rem;
+    font-size: 1.125rem;
+  }
+
+  .btn-gold-solid:hover {
+    box-shadow: 0 6px 32px rgba(251, 191, 36, 0.6);
+    transform: scale(1.05);
+  }
+
+  /* Gold outline button for basarilikayit pricing */
+  .btn-gold-outline {
+    @apply text-white font-bold rounded-lg transition-all duration-300 uppercase tracking-wider;
+    background: transparent;
+    border: 2px solid #fbbf24;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+
+  .btn-gold-outline:hover {
+    background: rgba(251, 191, 36, 0.1);
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+  }
+
   .container-custom {
     @apply max-w-container mx-auto px-6 lg:px-8 md:px-6 sm:px-4;
   }
