@@ -36,6 +36,10 @@ const config: Config = {
           light: '#fcd34d',
           dark: '#f59e0b',
         },
+        cream: {
+          DEFAULT: '#FFF8E7',
+          dark: '#F5EDD6',
+        },
         border: {
           DEFAULT: 'rgba(255, 255, 255, 0.1)',
           light: 'rgba(255, 255, 255, 0.05)',
