@@ -1,4 +1,3 @@
-import { createClient } from '@supabase/supabase-js';
 import { generateWebinarEmailHTML } from '@/lib/email-template';
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
@@ -8,11 +7,6 @@ const ZOOM_ACCOUNT_ID = process.env.ZOOM_ACCOUNT_ID!;
 const ZOOM_CLIENT_ID = process.env.ZOOM_CLIENT_ID!;
 const ZOOM_CLIENT_SECRET = process.env.ZOOM_CLIENT_SECRET!;
 const ZOOM_WEBINAR_ID = process.env.ZOOM_WEBINAR_ID!;
-
-// Supabase
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 // Resend
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -106,41 +100,6 @@ export async function POST(request: NextRequest) {
       }
     } catch (emailError) {
       console.warn('⚠️ Email send failed (non-critical):', emailError);
-    }
-
-    // 4. Save to Supabase (non-blocking)
-    try {
-      const { data: existing } = await supabase
-        .from('email_subscribers')
-        .select('*')
-        .eq('email', email)
-        .single();
-
-      if (existing) {
-        await supabase
-          .from('email_subscribers')
-          .update({
-            name: `${firstName} ${lastName}`,
-            phone: phone || null,
-            webinar_link_sent: true,
-            webinar_link_sent_at: new Date().toISOString(),
-          })
-          .eq('email', email);
-      } else {
-        await supabase
-          .from('email_subscribers')
-          .insert({
-            email,
-            name: `${firstName} ${lastName}`,
-            phone: phone || null,
-            source: 'webinar_direct',
-            webinar_link_sent: true,
-            webinar_link_sent_at: new Date().toISOString(),
-          });
-      }
-      console.log('✅ Supabase record saved');
-    } catch (dbError) {
-      console.warn('⚠️ Supabase save failed (non-critical):', dbError);
     }
 
     return NextResponse.json({
