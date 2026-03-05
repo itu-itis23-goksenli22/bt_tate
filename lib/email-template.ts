@@ -35,20 +35,20 @@ export const generateWebinarEmailHTML = (name?: string) => {
               </p>
 
               <p style="margin: 0 0 20px 0; color: rgba(255, 255, 255, 0.8); font-size: 16px; line-height: 1.6;">
-                <strong>Yapay zeka ile para kazanmanın sırlarını</strong> öğrenmek için ilk adımı attınız! 🚀
+                <strong>Ücretsiz canlı webinar'a kaydınız başarıyla alındı!</strong> 🚀
               </p>
 
               <p style="margin: 0 0 30px 0; color: rgba(255, 255, 255, 0.7); font-size: 15px; line-height: 1.6;">
-                Ücretsiz webinar'a katılmak için anketi doldurmanız gerekiyor. Bu sayede size en uygun içeriği sunabileceğiz.
+                Webinar gününde size Zoom katılım linkini içeren bir hatırlatma e-postası göndereceğiz. Takvime eklemeyi unutmayın!
               </p>
 
-              <!-- CTA Button -->
+              <!-- Info Box -->
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
-                  <td style="text-align: center; padding: 20px 0;">
-                    <a href="https://aiscale.app/webinar-registration" target="_blank" style="display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #ffffff; text-decoration: none; padding: 18px 40px; border-radius: 12px; font-weight: bold; font-size: 16px; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3); transition: all 0.3s ease;">
-                      🎓 Anketi Doldurun ve Webinar'a Katılın →
-                    </a>
+                  <td style="text-align: center; padding: 20px; background: rgba(59, 130, 246, 0.15); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.3);">
+                    <p style="margin: 0; color: #ffffff; font-size: 16px; font-weight: bold;">
+                      📅 Her Pazar - Saat 20:00 (GMT+3)
+                    </p>
                   </td>
                 </tr>
               </table>
