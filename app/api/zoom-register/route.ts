@@ -1,15 +1,10 @@
-import { generateWebinarEmailHTML } from '@/lib/email-template';
 import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
 
 // Zoom credentials
 const ZOOM_ACCOUNT_ID = process.env.ZOOM_ACCOUNT_ID!;
 const ZOOM_CLIENT_ID = process.env.ZOOM_CLIENT_ID!;
 const ZOOM_CLIENT_SECRET = process.env.ZOOM_CLIENT_SECRET!;
 const ZOOM_WEBINAR_ID = process.env.ZOOM_WEBINAR_ID!;
-
-// Resend
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function getZoomAccessToken(): Promise<string> {
   const credentials = Buffer.from(`${ZOOM_CLIENT_ID}:${ZOOM_CLIENT_SECRET}`).toString('base64');
@@ -85,22 +80,6 @@ export async function POST(request: NextRequest) {
     // 2. Register to Zoom webinar
     const zoomResult = await registerToZoomWebinar(accessToken, email, firstName, lastName, phone);
     console.log('✅ Zoom registration successful:', zoomResult.registrant_id);
-
-    // 3. Send confirmation email (non-blocking)
-    try {
-      if (process.env.RESEND_API_KEY) {
-        const htmlContent = generateWebinarEmailHTML(`${firstName} ${lastName}`);
-        await resend.emails.send({
-          from: 'AI Scale <info@aiscale.app>',
-          to: [email],
-          subject: '🎉 AI Scale Ücretsiz Webinar - Kaydınız Alındı!',
-          html: htmlContent,
-        });
-        console.log('✅ Confirmation email sent');
-      }
-    } catch (emailError) {
-      console.warn('⚠️ Email send failed (non-critical):', emailError);
-    }
 
     return NextResponse.json({
       success: true,
