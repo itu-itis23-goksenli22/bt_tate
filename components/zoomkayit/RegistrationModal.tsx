@@ -7,7 +7,7 @@ interface RegistrationModalProps {
   onClose: () => void;
 }
 
-function getNextSundayDateString(): string {
+function getEventDateString(): string {
   const now = new Date();
   const turkeyOffset = 3 * 60;
   const localOffset = now.getTimezoneOffset();
@@ -18,11 +18,9 @@ function getNextSundayDateString(): string {
   const target = new Date(turkeyNow);
   target.setHours(20, 0, 0, 0);
 
-  if (turkeyNow.getDay() === 0 && turkeyNow.getHours() < 20) {
-    // today
-  } else {
-    const daysUntilSunday = (7 - turkeyNow.getDay()) % 7 || 7;
-    target.setDate(target.getDate() + daysUntilSunday);
+  // If past 20:00 Turkey time, show tomorrow's date
+  if (turkeyNow.getHours() >= 20) {
+    target.setDate(target.getDate() + 1);
   }
 
   const months = [
@@ -49,7 +47,7 @@ export default function RegistrationModal({
   const [dateString, setDateString] = useState("");
 
   useEffect(() => {
-    setDateString(getNextSundayDateString());
+    setDateString(getEventDateString());
   }, []);
 
   useEffect(() => {
@@ -155,7 +153,7 @@ export default function RegistrationModal({
                 gönderildi.
               </p>
               <p className="text-white/50 text-sm">
-                Pazar günü 20:00&apos;da görüşmek üzere!
+                {dateString ? `${dateString} - Görüşmek üzere!` : "Görüşmek üzere!"}
               </p>
               <button
                 onClick={onClose}
