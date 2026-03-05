@@ -2,28 +2,43 @@
 
 import { useState, useEffect } from "react";
 
-function getNextSunday20Turkey(): Date {
+const TURKEY_DAYS = [
+  "Pazar",
+  "Pazartesi",
+  "Salı",
+  "Çarşamba",
+  "Perşembe",
+  "Cuma",
+  "Cumartesi",
+];
+
+function getTurkeyNow(): Date {
   const now = new Date();
   const turkeyOffset = 3 * 60;
   const localOffset = now.getTimezoneOffset();
-  const turkeyNow = new Date(
-    now.getTime() + (turkeyOffset + localOffset) * 60000
-  );
+  return new Date(now.getTime() + (turkeyOffset + localOffset) * 60000);
+}
+
+function getNextWebinar(): { targetLocal: Date; dayName: string } {
+  const now = new Date();
+  const turkeyOffset = 3 * 60;
+  const localOffset = now.getTimezoneOffset();
+  const turkeyNow = getTurkeyNow();
 
   const target = new Date(turkeyNow);
   target.setHours(20, 0, 0, 0);
 
-  if (turkeyNow.getDay() === 0 && turkeyNow.getHours() < 20) {
-    // today is Sunday before 20:00
-  } else {
-    const daysUntilSunday = (7 - turkeyNow.getDay()) % 7 || 7;
-    target.setDate(target.getDate() + daysUntilSunday);
+  // If it's already past 20:00 today in Turkey, target tomorrow
+  if (turkeyNow.getHours() >= 20) {
+    target.setDate(target.getDate() + 1);
   }
+
+  const dayName = TURKEY_DAYS[target.getDay()];
 
   const targetLocal = new Date(
     target.getTime() - (turkeyOffset + localOffset) * 60000
   );
-  return targetLocal;
+  return { targetLocal, dayName };
 }
 
 export default function CountdownTimer() {
@@ -33,6 +48,7 @@ export default function CountdownTimer() {
     minutes: 0,
     seconds: 0,
   });
+  const [dayName, setDayName] = useState("");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -40,8 +56,10 @@ export default function CountdownTimer() {
 
     function updateTimer() {
       const now = new Date().getTime();
-      const targetDate = getNextSunday20Turkey();
-      const distance = targetDate.getTime() - now;
+      const { targetLocal, dayName: day } = getNextWebinar();
+      const distance = targetLocal.getTime() - now;
+
+      setDayName(day);
 
       if (distance > 0) {
         setTimeLeft({
@@ -72,7 +90,9 @@ export default function CountdownTimer() {
   return (
     <div className="text-center mb-6">
       <p className="text-gold font-semibold text-lg mb-4">
-        Pazar 20:00&apos;da Canlı Webinar Başlıyor...
+        {mounted && dayName
+          ? `${dayName} 20:00'da Canlı Webinar Başlıyor...`
+          : "20:00'da Canlı Webinar Başlıyor..."}
       </p>
       <div className="flex items-center justify-center gap-2 md:gap-3">
         {(mounted ? units : labels.map((l) => ({ value: "--", label: l }))).map(

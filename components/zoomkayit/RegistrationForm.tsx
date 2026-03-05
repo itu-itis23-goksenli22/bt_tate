@@ -11,9 +11,12 @@ export default function RegistrationForm() {
       <div className="max-w-md mx-auto px-4">
         <button
           onClick={() => setIsModalOpen(true)}
-          className="zk-btn-cta w-full py-4 md:py-5 bg-gradient-to-r from-gold-dark via-gold to-gold-light text-black font-bold text-xl md:text-2xl rounded-lg hover:brightness-110 transition-all cursor-pointer"
+          className="zk-btn-cta w-full py-5 md:py-6 bg-gradient-to-r from-gold-dark via-gold to-gold-light text-black font-extrabold text-xl md:text-2xl lg:text-3xl rounded-xl hover:brightness-110 transition-all cursor-pointer flex items-center justify-center gap-3 tracking-wide"
         >
           EVET! YERİMİ AYIRT
+          <svg className="w-6 h-6 md:w-7 md:h-7 animate-bounce-x" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
         </button>
 
         {/* Urgency section */}
