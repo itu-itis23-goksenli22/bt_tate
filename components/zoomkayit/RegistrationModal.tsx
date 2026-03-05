@@ -91,6 +91,10 @@ export default function RegistrationModal({
 
       if (res.ok) {
         setStatus("success");
+        // Redirect to VIP upsell page after 1.5s
+        setTimeout(() => {
+          window.location.href = `/kayitbasarili?name=${encodeURIComponent(formData.name)}`;
+        }, 1500);
       } else {
         setStatus("error");
         setErrorMsg(data.error || "Bir hata oluştu. Lütfen tekrar deneyin.");
