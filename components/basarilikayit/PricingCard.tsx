@@ -22,7 +22,7 @@ export default function PricingCard() {
           YATIRIM SEÇENEKLERİNİZ
         </p>
 
-        {/* Option 1: Basic Paket - ₺9,000 */}
+        {/* Option 1: Basic Paket - ₺15,000 */}
         <a
           href={BASARILIKAYIT_CHECKOUT_BASIC}
           target="_blank"

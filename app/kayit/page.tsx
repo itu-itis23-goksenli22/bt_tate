@@ -29,7 +29,7 @@ const Footer = dynamic(
   () => import("@/components/zoomkayit/Footer")
 );
 
-export default function Kayit2Page() {
+export default function KayitPage() {
   return (
     <main className="min-h-screen bg-black text-white font-display">
       {/* Hero + Registration Section */}
