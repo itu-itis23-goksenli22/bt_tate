@@ -96,11 +96,16 @@ const config: Config = {
           '0%, 100%': { transform: 'translateX(0)' },
           '50%': { transform: 'translateX(6px)' },
         },
+        'pulse-gold': {
+          '0%, 100%': { boxShadow: '0 0 15px rgba(251,191,36,0.3)' },
+          '50%': { boxShadow: '0 0 30px rgba(251,191,36,0.6)' },
+        },
       },
       animation: {
         slideInLeft: 'slideInLeft 0.5s ease-out forwards',
         fadeIn: 'fadeIn 0.3s ease-out forwards',
         'bounce-x': 'bounce-x 1s ease-in-out infinite',
+        'pulse-gold': 'pulse-gold 2s ease-in-out infinite',
       },
     },
   },
