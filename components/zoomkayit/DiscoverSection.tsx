@@ -81,7 +81,7 @@ export default function DiscoverSection() {
               <div className="w-72 h-96 md:w-80 md:h-[440px] rounded-2xl overflow-hidden border border-white/10">
                 <Image
                   src="/images/instructor.jpg"
-                  alt="Baturalp Adonis - AI Scale Kurucusu"
+                  alt="Baturalp Tunalı - AI Scale Kurucusu"
                   fill
                   className="object-cover object-top"
                   sizes="(max-width: 768px) 288px, 320px"
@@ -91,7 +91,7 @@ export default function DiscoverSection() {
               {/* Name badge */}
               <div className="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm p-4 rounded-b-2xl border-t border-white/10">
                 <p className="text-gold font-semibold text-lg italic">
-                  Baturalp Adonis
+                  Baturalp Tunalı
                 </p>
                 <p className="text-white/60 text-sm">AI Scale Kurucusu</p>
               </div>
