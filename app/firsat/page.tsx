@@ -5,7 +5,7 @@ import PricingCard from "@/components/basarilikayit/PricingCard";
 import ValueStack from "@/components/basarilikayit/ValueStack";
 
 export const metadata: Metadata = {
-  title: "AI Scale App Community - Şimdi Katılın | ₺9,000",
+  title: "AI Scale App Community - Şimdi Katılın | ₺15,000",
   description:
     "AI Scale App Community ile AI otomasyon yolculuğunuza bugün başlayın. Claude Code, N8N ve B2B SaaS stratejileri. 365 gün para iade garantisi.",
   openGraph: {
