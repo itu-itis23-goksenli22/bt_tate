@@ -52,6 +52,9 @@ const CampusSection = dynamic(
 const ChatWidget = dynamic(
   () => import("@/components/basarilikayit/ChatWidget")
 );
+const VerticalVideos = dynamic(
+  () => import("@/components/basarilikayit/VerticalVideos")
+);
 
 export default function BasarilikayitPage() {
   return (
@@ -85,6 +88,9 @@ export default function BasarilikayitPage() {
           </div>
         </div>
       </section>
+
+      {/* Vertical Video Testimonials */}
+      <VerticalVideos />
 
       {/* Mid-page CTA */}
       <section className="pt-6 pb-0 md:pt-8 md:pb-0 bg-primary text-center px-4">
