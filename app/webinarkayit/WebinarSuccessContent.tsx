@@ -10,40 +10,25 @@ export default function WebinarSuccessContent() {
   const [webinarDay, setWebinarDay] = useState<string>("");
 
   useEffect(() => {
-    // Calculate next webinar date (Sunday only)
-    const getNextWebinarDate = () => {
-      const now = new Date();
-      const turkey = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
-      const currentDay = turkey.getDay();
-      const currentHour = turkey.getHours();
-      const currentMinute = turkey.getMinutes();
+    const dayNames = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
 
-      let daysUntilNext = 0;
+    const now = new Date();
+    const turkey = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
+    const currentHour = turkey.getHours();
 
-      if (currentDay === 0) { // Sunday
-        if (currentHour < 20 || (currentHour === 20 && currentMinute === 0)) {
-          daysUntilNext = 0;
-        } else {
-          daysUntilNext = 7;
-        }
-      } else {
-        daysUntilNext = (7 - currentDay) % 7 || 7;
-      }
+    // Seminer her gün 20:00'da. Saat 20:00 geçtiyse yarını göster.
+    const eventDate = new Date(turkey);
+    if (currentHour >= 20) {
+      eventDate.setDate(eventDate.getDate() + 1);
+    }
+    eventDate.setHours(20, 0, 0, 0);
 
-      const nextWebinar = new Date(turkey);
-      nextWebinar.setDate(turkey.getDate() + daysUntilNext);
-      nextWebinar.setHours(20, 0, 0, 0);
-
-      return nextWebinar;
-    };
-
-    const nextDate = getNextWebinarDate();
-    const day = String(nextDate.getDate()).padStart(2, '0');
-    const month = String(nextDate.getMonth() + 1).padStart(2, '0');
-    const year = nextDate.getFullYear();
+    const day = String(eventDate.getDate()).padStart(2, "0");
+    const month = String(eventDate.getMonth() + 1).padStart(2, "0");
+    const year = eventDate.getFullYear();
 
     setWebinarDate(`${day}.${month}.${year}`);
-    setWebinarDay("Pazar");
+    setWebinarDay(dayNames[eventDate.getDay()]);
   }, []);
 
   return (
