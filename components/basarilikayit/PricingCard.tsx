@@ -51,7 +51,29 @@ export default function PricingCard() {
               BASIC + MASTERCLASS PAKETİ - ₺15,000
             </div>
           </a>
+          {/* Animated click hint below button */}
+          <div
+            className="flex items-center justify-center gap-2 mt-2 pointer-events-none"
+            style={{ animation: "click-hint 1.8s ease-in-out infinite" }}
+          >
+            <svg className="w-5 h-5 text-gold" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7.5 1.5c.83 0 1.5.67 1.5 1.5v7.085l4.947-2.18a1.5 1.5 0 0 1 2.006.85l.052.148a1.5 1.5 0 0 1-.85 1.813L9.64 13.5H9v1.032l5.3 5.3a1.5 1.5 0 0 1 0 2.121l-.354.354a1.5 1.5 0 0 1-2.121 0L6 16.5V3c0-.83.67-1.5 1.5-1.5z"/>
+            </svg>
+            <span className="text-gold font-bold text-sm tracking-wide">
+              TIKLA VE KAYIT OL
+            </span>
+            <svg className="w-5 h-5 text-gold" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7.5 1.5c.83 0 1.5.67 1.5 1.5v7.085l4.947-2.18a1.5 1.5 0 0 1 2.006.85l.052.148a1.5 1.5 0 0 1-.85 1.813L9.64 13.5H9v1.032l5.3 5.3a1.5 1.5 0 0 1 0 2.121l-.354.354a1.5 1.5 0 0 1-2.121 0L6 16.5V3c0-.83.67-1.5 1.5-1.5z"/>
+            </svg>
+          </div>
         </div>
+
+        <style jsx>{`
+          @keyframes click-hint {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.7; }
+          }
+        `}</style>
       </div>
 
       {/* Package comparison */}
