@@ -5,7 +5,7 @@ import PricingCard from "@/components/basarilikayit/PricingCard";
 import ValueStack from "@/components/basarilikayit/ValueStack";
 
 export const metadata: Metadata = {
-  title: "AI Scale App Community - Şimdi Katılın | ₺9,000",
+  title: "AI Scale App Community - Şimdi Katılın | ₺15,000",
   description:
     "AI Scale App Community ile AI otomasyon yolculuğunuza bugün başlayın. Claude Code, N8N ve B2B SaaS stratejileri. 365 gün para iade garantisi.",
   openGraph: {
@@ -52,10 +52,17 @@ const CampusSection = dynamic(
 const ChatWidget = dynamic(
   () => import("@/components/basarilikayit/ChatWidget")
 );
+const VerticalVideos = dynamic(
+  () => import("@/components/basarilikayit/VerticalVideos")
+);
+const CountdownTimer = dynamic(
+  () => import("@/components/basarilikayit/CountdownTimer")
+);
 
 export default function BasarilikayitPage() {
   return (
     <main className="min-h-screen bg-primary">
+      <CountdownTimer />
       <HeaderBar />
 
       {/* Hero: Pricing + Value Stack */}
@@ -86,10 +93,13 @@ export default function BasarilikayitPage() {
         </div>
       </section>
 
+      {/* Vertical Video Testimonials */}
+      <VerticalVideos />
+
       {/* Mid-page CTA */}
       <section className="pt-6 pb-0 md:pt-8 md:pb-0 bg-primary text-center px-4">
         <a
-          href="https://buy.stripe.com/aFa5kEdWMc5LcZbgC43wQ0o"
+          href="https://buy.stripe.com/8x23cwf0Q1r71gtdpS3wQ0j"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block animate-pulse-gold"
