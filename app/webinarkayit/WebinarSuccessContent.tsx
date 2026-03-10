@@ -172,7 +172,7 @@ export default function WebinarSuccessContent() {
             </h3>
             <div className="flex items-center justify-center gap-6">
               <a
-                href="https://www.instagram.com/baturalp.adonis/"
+                href="https://www.instagram.com/baturalp.tunali/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-16 h-16 rounded-full bg-accent/20 border-2 border-accent/40 flex items-center justify-center hover:bg-accent/30 hover:scale-110 transition-all"

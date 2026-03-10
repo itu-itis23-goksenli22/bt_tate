@@ -55,10 +55,14 @@ const ChatWidget = dynamic(
 const VerticalVideos = dynamic(
   () => import("@/components/basarilikayit/VerticalVideos")
 );
+const CountdownTimer = dynamic(
+  () => import("@/components/basarilikayit/CountdownTimer")
+);
 
 export default function BasarilikayitPage() {
   return (
     <main className="min-h-screen bg-primary">
+      <CountdownTimer />
       <HeaderBar />
 
       {/* Hero: Pricing + Value Stack */}
@@ -95,7 +99,7 @@ export default function BasarilikayitPage() {
       {/* Mid-page CTA */}
       <section className="pt-6 pb-0 md:pt-8 md:pb-0 bg-primary text-center px-4">
         <a
-          href="https://buy.stripe.com/aFa5kEdWMc5LcZbgC43wQ0o"
+          href="https://buy.stripe.com/8x23cwf0Q1r71gtdpS3wQ0j"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block animate-pulse-gold"
