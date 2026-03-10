@@ -1,6 +1,6 @@
 "use client";
 
-import { BASARILIKAYIT_CHECKOUT_BASIC } from "@/lib/constants";
+import { BASARILIKAYIT_CHECKOUT_MASTERCLASS } from "@/lib/constants";
 import PaymentLogos from "./PaymentLogos";
 
 export default function BottomCTA() {
@@ -39,7 +39,7 @@ export default function BottomCTA() {
 
         {/* CTA Button */}
         <a
-          href={BASARILIKAYIT_CHECKOUT_BASIC}
+          href={BASARILIKAYIT_CHECKOUT_MASTERCLASS}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block mb-8"

@@ -99,7 +99,7 @@ export default function BasarilikayitPage() {
       {/* Mid-page CTA */}
       <section className="pt-6 pb-0 md:pt-8 md:pb-0 bg-primary text-center px-4">
         <a
-          href="https://buy.stripe.com/8x23cwf0Q1r71gtdpS3wQ0j"
+          href="https://buy.stripe.com/aFa5kEdWMc5LcZbgC43wQ0o"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block animate-pulse-gold"
