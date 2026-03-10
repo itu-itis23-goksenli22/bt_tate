@@ -3,9 +3,9 @@ import { Suspense } from "react";
 import KayitBasariliContent from "./KayitBasariliContent";
 
 export const metadata: Metadata = {
-  title: "Kaydınız Onaylandı - VIP Üyelik Daveti | AI Scale",
+  title: "Kayıt Başarılı - Ücretsiz AI Semineri | AI Scale",
   description:
-    "Canlı etkinliğe kaydınız onaylandı! Özel VIP üyelik fırsatını kaçırmayın.",
+    "Webinar kaydınız başarıyla tamamlandı. Bonus paketinizi hemen indirin!",
   robots: { index: false, follow: false },
 };
 
