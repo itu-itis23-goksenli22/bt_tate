@@ -2,15 +2,15 @@
 
 import { useState, useEffect } from "react";
 
-const COUNTDOWN_MINUTES = 15;
+const COUNTDOWN_SECONDS = 14 * 60 + 22; // 14:22
 
 export default function CountdownTimer() {
-  const [timeLeft, setTimeLeft] = useState(COUNTDOWN_MINUTES * 60);
+  const [timeLeft, setTimeLeft] = useState(COUNTDOWN_SECONDS);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
-        if (prev <= 1) return COUNTDOWN_MINUTES * 60;
+        if (prev <= 1) return COUNTDOWN_SECONDS;
         return prev - 1;
       });
     }, 1000);
@@ -18,7 +18,8 @@ export default function CountdownTimer() {
     return () => clearInterval(timer);
   }, []);
 
-  const minutes = Math.floor(timeLeft / 60);
+  const hours = Math.floor(timeLeft / 3600);
+  const minutes = Math.floor((timeLeft % 3600) / 60);
   const seconds = timeLeft % 60;
 
   return (
@@ -40,6 +41,12 @@ export default function CountdownTimer() {
           SON DAKİKA TEKLİFİ
         </span>
         <div className="flex items-center gap-1">
+          <div className="bg-red-500/10 border border-red-500/30 rounded-md px-2.5 py-1.5 min-w-[44px] text-center">
+            <span className="text-white font-bold text-lg md:text-xl tabular-nums">
+              {String(hours).padStart(2, "0")}
+            </span>
+          </div>
+          <span className="text-red-400 font-bold text-lg animate-pulse">:</span>
           <div className="bg-red-500/10 border border-red-500/30 rounded-md px-2.5 py-1.5 min-w-[44px] text-center">
             <span className="text-white font-bold text-lg md:text-xl tabular-nums">
               {String(minutes).padStart(2, "0")}

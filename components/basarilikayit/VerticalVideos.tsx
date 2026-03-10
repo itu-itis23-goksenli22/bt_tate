@@ -7,8 +7,10 @@ const VIDEOS = [
     id: "nWvImM9U2NQ",
     title: "Başarı Hikayesi 2",
   },
-  // 3. video eklendiğinde buraya ekle:
-  // { id: "YOUTUBE_ID", title: "Efsaneler Ekibi" },
+  {
+    id: "24sobDc1m-8",
+    title: "Başarı Hikayesi 3",
+  },
 ];
 
 export default function VerticalVideos() {
