@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
+import { trackCompleteRegistration } from "@/lib/meta-pixel";
 
 export default function KayitBasariliContent() {
   const searchParams = useSearchParams();
@@ -36,6 +37,12 @@ export default function KayitBasariliContent() {
     const regMonth = String(turkey.getMonth() + 1).padStart(2, "0");
     const regYear = turkey.getFullYear();
     setRegistrationDate(`${regDay}.${regMonth}.${regYear}`);
+
+    // Track registration completion
+    trackCompleteRegistration({
+      content_name: "Webinar Kayıt",
+      status: "completed",
+    });
   }, []);
 
   return (
