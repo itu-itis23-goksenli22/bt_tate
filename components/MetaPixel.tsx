@@ -34,7 +34,7 @@ export default function MetaPixel() {
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '1511075006680097');
+            fbq('init', '793366716531580');
             fbq('track', 'PageView');
           `,
         }}
@@ -44,7 +44,7 @@ export default function MetaPixel() {
           height="1"
           width="1"
           style={{ display: "none" }}
-          src="https://www.facebook.com/tr?id=1511075006680097&ev=PageView&noscript=1"
+          src="https://www.facebook.com/tr?id=793366716531580&ev=PageView&noscript=1"
           alt=""
         />
       </noscript>

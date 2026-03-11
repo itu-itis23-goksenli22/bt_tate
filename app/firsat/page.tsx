@@ -58,10 +58,14 @@ const VerticalVideos = dynamic(
 const CountdownTimer = dynamic(
   () => import("@/components/basarilikayit/CountdownTimer")
 );
+const ViewContentTracker = dynamic(
+  () => import("@/components/basarilikayit/ViewContentTracker")
+);
 
 export default function BasarilikayitPage() {
   return (
     <main className="min-h-screen bg-primary">
+      <ViewContentTracker />
       <CountdownTimer />
       <HeaderBar />
 
