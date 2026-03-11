@@ -70,7 +70,7 @@ export default function ValueStack() {
           </span>
         </div>
         <h3 className="text-white font-bold text-3xl md:text-4xl mt-2">
-          SADECE <span className="text-gold">₺9,000!</span>
+          SADECE <span className="text-gold">₺15,000!</span>
         </h3>
       </div>
 

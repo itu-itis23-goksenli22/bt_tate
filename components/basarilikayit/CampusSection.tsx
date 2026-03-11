@@ -551,7 +551,7 @@ export default function CampusSection() {
   );
 
   return (
-    <section className="pt-3 pb-16 md:pt-3 md:pb-20 bg-primary">
+    <section className="pt-2 pb-16 md:pt-2 md:pb-20 bg-primary">
       <div className="max-w-6xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">

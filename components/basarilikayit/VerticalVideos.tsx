@@ -15,7 +15,7 @@ const VIDEOS = [
 
 export default function VerticalVideos() {
   return (
-    <section className="py-8 md:py-12 bg-primary px-4">
+    <section className="pt-8 pb-2 md:pt-12 md:pb-2 bg-primary px-4">
       <div className="max-w-5xl mx-auto">
         {/* Section title */}
         <h2 className="text-center text-xl md:text-2xl font-bold text-white mb-6 md:mb-8">

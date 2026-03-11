@@ -101,12 +101,12 @@ export default function BasarilikayitPage() {
       <VerticalVideos />
 
       {/* Mid-page CTA */}
-      <section className="pt-6 pb-0 md:pt-8 md:pb-0 bg-primary text-center px-4">
+      <section className="py-1 md:py-2 bg-primary text-center px-4">
         <a
           href="https://buy.stripe.com/aFa5kEdWMc5LcZbgC43wQ0o"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block animate-pulse-gold"
+          className="inline-block animate-pulse-gold rounded-full"
         >
           <div className="relative text-lg md:text-xl font-bold px-10 md:px-16 py-4 md:py-5 bg-gradient-to-r from-yellow-500 via-gold to-yellow-500 text-black rounded-full shadow-[0_0_20px_rgba(251,191,36,0.4)] hover:shadow-[0_0_30px_rgba(251,191,36,0.6)] transition-shadow duration-300">
             YERİMİ AYIRT
@@ -117,6 +117,21 @@ export default function BasarilikayitPage() {
       <CampusSection />
       <GuaranteeSection />
       <ReviewsSection />
+
+      {/* Pre-FAQ CTA */}
+      <section className="py-1 md:py-2 bg-primary text-center px-4">
+        <a
+          href="https://buy.stripe.com/aFa5kEdWMc5LcZbgC43wQ0o"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block animate-pulse-gold rounded-full"
+        >
+          <div className="relative text-lg md:text-xl font-bold px-10 md:px-16 py-4 md:py-5 bg-gradient-to-r from-yellow-500 via-gold to-yellow-500 text-black rounded-full shadow-[0_0_20px_rgba(251,191,36,0.4)] hover:shadow-[0_0_30px_rgba(251,191,36,0.6)] transition-shadow duration-300">
+            YERİMİ AYIRT
+          </div>
+        </a>
+      </section>
+
       <FAQSection />
       <BottomCTA />
       <FooterDisclaimer />
