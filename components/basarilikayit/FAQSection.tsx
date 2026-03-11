@@ -29,10 +29,6 @@ const faqs: FAQItem[] = [
     answer: "Haftalık canlı Q&A oturumları, özel Discord/Slack kanallarında 7/24 topluluk desteği ve deneyimli AI ajans sahiplerinden birebir rehberlik alabilirsiniz. Masterclass paketinde ek olarak canlı mentörlük seansları bulunur.",
   },
   {
-    question: "Basic ile Basic + Masterclass paketi arasındaki fark nedir?",
-    answer: "Basic paket tüm eğitim modüllerini, topluluk erişimini ve temel kaynakları içerir. Masterclass paketi ek olarak canlı mentörlük, Ads stratejisi eğitimi, Setter eğitimi ve tüm premium bonusları kapsar.",
-  },
-  {
     question: "Gerçekten para iade garantisi var mı?",
     answer: "Evet! 365 günlük para iade garantimiz var. Kayıt tarihinden itibaren ilk 365 gün içinde basit iade koşullarını yerine getirmeniz halinde size tam bir geri ödeme sağlıyoruz.",
   },
