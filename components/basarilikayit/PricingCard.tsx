@@ -1,6 +1,6 @@
 "use client";
 
-import { BASARILIKAYIT_CHECKOUT_BASIC, BASARILIKAYIT_CHECKOUT_MASTERCLASS } from "@/lib/constants";
+import { BASARILIKAYIT_CHECKOUT_MASTERCLASS } from "@/lib/constants";
 import PaymentLogos from "./PaymentLogos";
 
 export default function PricingCard() {
@@ -22,25 +22,8 @@ export default function PricingCard() {
           YATIRIM SEÇENEKLERİNİZ
         </p>
 
-        {/* Option 1: Basic Paket - ₺15,000 */}
-        <a
-          href={BASARILIKAYIT_CHECKOUT_BASIC}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block mb-4"
-        >
-          <div className="btn-gold-outline w-full text-center py-4 text-base md:text-lg">
-            BASIC PAKET - ₺9,000
-          </div>
-        </a>
-
-        {/* Option 2: Basic + Masterclass - ₺15,000 with MOST POPULAR badge */}
+        {/* Masterclass Paket - ₺15,000 */}
         <div className="relative mb-6">
-          <div className="absolute -top-3 right-4 z-10">
-            <span className="bg-gradient-to-r from-gold via-gold-light to-gold text-black text-[10px] md:text-xs font-bold px-3 py-1 rounded uppercase tracking-wider">
-              En Popüler
-            </span>
-          </div>
           <a
             href={BASARILIKAYIT_CHECKOUT_MASTERCLASS}
             target="_blank"
@@ -48,7 +31,7 @@ export default function PricingCard() {
             className="block"
           >
             <div className="btn-gold-solid w-full text-center py-4 text-base md:text-lg">
-              BASIC + MASTERCLASS PAKETİ - ₺15,000
+              HEMEN KATIL - ₺15,000
             </div>
           </a>
           {/* Animated click hint below button */}
@@ -76,22 +59,34 @@ export default function PricingCard() {
         `}</style>
       </div>
 
-      {/* Package comparison */}
+      {/* Package contents */}
       <div className="text-center mb-6">
         <p className="text-gold italic font-bold text-sm tracking-wide mb-4">
-          PAKETLER ARASINDAKI FARK
+          PAKET İÇERİĞİ
         </p>
         <div className="space-y-2 text-left">
           <div className="flex items-start gap-2">
             <span className="text-gold text-sm flex-shrink-0">✦</span>
             <p className="text-white/70 text-xs leading-relaxed">
-              <span className="text-white font-semibold">Basic:</span> AI Scale App eğitim programı, topluluk erişimi, N8N & API toolkit, kaynak kiti
+              AI Scale App eğitim programı + topluluk erişimi
             </p>
           </div>
           <div className="flex items-start gap-2">
             <span className="text-gold text-sm flex-shrink-0">✦</span>
             <p className="text-white/70 text-xs leading-relaxed">
-              <span className="text-white font-semibold">Basic + Masterclass:</span> Tüm Basic içerik + AI Scale Masterclass, canlı mentörlük, Ads stratejisi, Setter eğitimi ve tüm bonuslar
+              AI Scale Masterclass + canlı mentörlük
+            </p>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="text-gold text-sm flex-shrink-0">✦</span>
+            <p className="text-white/70 text-xs leading-relaxed">
+              N8N & API toolkit + Ads stratejisi + Setter eğitimi
+            </p>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="text-gold text-sm flex-shrink-0">✦</span>
+            <p className="text-white/70 text-xs leading-relaxed">
+              Tüm bonuslar + kaynak kiti
             </p>
           </div>
         </div>
