@@ -61,6 +61,9 @@ const CountdownTimer = dynamic(
 const ViewContentTracker = dynamic(
   () => import("@/components/basarilikayit/ViewContentTracker")
 );
+const IbanSection = dynamic(
+  () => import("@/components/basarilikayit/IbanSection")
+);
 
 export default function BasarilikayitPage() {
   return (
@@ -134,6 +137,9 @@ export default function BasarilikayitPage() {
 
       <FAQSection />
       <BottomCTA />
+
+      <IbanSection />
+
       <FooterDisclaimer />
       <ChatWidget />
     </main>
