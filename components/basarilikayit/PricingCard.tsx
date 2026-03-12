@@ -139,7 +139,7 @@ export default function PricingCard() {
             Açıklamaya adınızı ve telefon numaranızı yazın.
           </p>
           <a
-            href="https://wa.me/905352529963?text=Merhaba%2C%20havale%20ile%20%C3%B6deme%20yapmak%20istiyorum."
+            href="https://wa.me/12084509523?text=Merhaba%2C%20havale%20ile%20%C3%B6deme%20yapmak%20istiyorum."
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-semibold px-4 py-2 rounded-full transition-colors"

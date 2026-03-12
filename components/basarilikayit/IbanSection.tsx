@@ -95,7 +95,7 @@ export default function IbanSection() {
           </p>
 
           <a
-            href="https://wa.me/905352529963?text=Merhaba%2C%20havale%20ile%20%C3%B6deme%20yapmak%20istiyorum."
+            href="https://wa.me/12084509523?text=Merhaba%2C%20havale%20ile%20%C3%B6deme%20yapmak%20istiyorum."
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold text-sm md:text-base px-6 py-3 rounded-full transition-colors duration-200"
