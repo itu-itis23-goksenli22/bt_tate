@@ -7,11 +7,11 @@ import ValueStack from "@/components/basarilikayit/ValueStack";
 export const metadata: Metadata = {
   title: "AI Scale App Community - Şimdi Katılın | ₺15,000",
   description:
-    "AI Scale App Community ile AI otomasyon yolculuğunuza bugün başlayın. Claude Code, N8N ve B2B SaaS stratejileri. 365 gün para iade garantisi.",
+    "AI Scale App Community ile AI otomasyon yolculuğunuza bugün başlayın. Claude Code, N8N ve B2B SaaS stratejileri.",
   openGraph: {
     title: "AI Scale App Community - Şimdi Katılın",
     description:
-      "AI Scale App Community ile AI otomasyon yolculuğunuza bugün başlayın. 365 gün para iade garantisi.",
+      "AI Scale App Community ile AI otomasyon yolculuğunuza bugün başlayın.",
     images: [
       {
         url: "/opengraph-image.png",
@@ -31,9 +31,6 @@ export const metadata: Metadata = {
 };
 
 // Lazy load below-the-fold components
-const GuaranteeSection = dynamic(
-  () => import("@/components/basarilikayit/GuaranteeSection")
-);
 const ReviewsSection = dynamic(
   () => import("@/components/basarilikayit/ReviewsSection")
 );
@@ -118,7 +115,6 @@ export default function BasarilikayitPage() {
       </section>
 
       <CampusSection />
-      <GuaranteeSection />
       <ReviewsSection />
 
       {/* Pre-FAQ CTA */}

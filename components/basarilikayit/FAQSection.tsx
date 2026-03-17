@@ -29,10 +29,6 @@ const faqs: FAQItem[] = [
     answer: "Haftalık canlı Q&A oturumları, özel Discord/Slack kanallarında 7/24 topluluk desteği ve deneyimli AI ajans sahiplerinden birebir rehberlik alabilirsiniz. Masterclass paketinde ek olarak canlı mentörlük seansları bulunur.",
   },
   {
-    question: "Gerçekten para iade garantisi var mı?",
-    answer: "Evet! 365 günlük para iade garantimiz var. Kayıt tarihinden itibaren ilk 365 gün içinde basit iade koşullarını yerine getirmeniz halinde size tam bir geri ödeme sağlıyoruz.",
-  },
-  {
     question: "Tam zamanlı işim var. Günde ne kadar süre ayırmam gerekiyor?",
     answer: "Programımız esnek bir yapıda tasarlanmıştır. Günde 1-2 saat ayırarak bile ilerleme kaydedebilirsiniz. Birçok üyemiz tam zamanlı işlerinin yanında başarılı AI ajansları kurmuştur.",
   },
