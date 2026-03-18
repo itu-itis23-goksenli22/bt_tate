@@ -38,7 +38,7 @@ export default function RegistrationModal({
   isOpen,
   onClose,
 }: RegistrationModalProps) {
-  const [formData, setFormData] = useState({ name: "", email: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
   const [vipChecked, setVipChecked] = useState(false);
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
@@ -81,7 +81,7 @@ export default function RegistrationModal({
           email: formData.email,
           firstName,
           lastName,
-          phone: "",
+          phone: formData.phone,
         }),
       });
 
@@ -207,6 +207,25 @@ export default function RegistrationModal({
                       setFormData((prev) => ({
                         ...prev,
                         email: e.target.value,
+                      }))
+                    }
+                    required
+                    className="w-full px-4 py-3.5 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors text-base"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-white text-sm font-medium mb-2">
+                    Telefon
+                  </label>
+                  <input
+                    type="tel"
+                    placeholder="+90 5XX XXX XX XX"
+                    value={formData.phone}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        phone: e.target.value,
                       }))
                     }
                     required
