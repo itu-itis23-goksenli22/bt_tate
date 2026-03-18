@@ -38,7 +38,8 @@ export default function RegistrationModal({
   isOpen,
   onClose,
 }: RegistrationModalProps) {
-  const [formData, setFormData] = useState({ name: "", email: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
+  const [vipChecked, setVipChecked] = useState(false);
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -80,7 +81,7 @@ export default function RegistrationModal({
           email: formData.email,
           firstName,
           lastName,
-          phone: "",
+          phone: formData.phone,
         }),
       });
 
@@ -212,6 +213,39 @@ export default function RegistrationModal({
                     className="w-full px-4 py-3.5 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors text-base"
                   />
                 </div>
+
+                <div>
+                  <label className="block text-white text-sm font-medium mb-2">
+                    Telefon
+                  </label>
+                  <input
+                    type="tel"
+                    placeholder="+90 5XX XXX XX XX"
+                    value={formData.phone}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        phone: e.target.value,
+                      }))
+                    }
+                    required
+                    className="w-full px-4 py-3.5 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors text-base"
+                  />
+                </div>
+
+                {/* VIP checkbox */}
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={vipChecked}
+                    onChange={(e) => setVipChecked(e.target.checked)}
+                    className="mt-1 w-4 h-4 rounded border-white/30 accent-gold"
+                  />
+                  <span className="text-white/80 text-sm">
+                    Ücretsiz VIP hediye paketi ve etkinlik öncesi hatırlatma
+                    almak istiyorum
+                  </span>
+                </label>
 
                 {errorMsg && (
                   <p className="text-danger text-sm text-center">{errorMsg}</p>
