@@ -1,4 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 // Zoom credentials
 const ZOOM_ACCOUNT_ID = process.env.ZOOM_ACCOUNT_ID!;
@@ -74,10 +80,45 @@ export async function POST(request: NextRequest) {
 
     console.log('🎯 Zoom webinar registration for:', email);
 
-    // 1. Get Zoom access token
+    // 1. Save to Supabase (non-blocking)
+    try {
+      const { data: existing } = await supabase
+        .from('email_subscribers')
+        .select('id')
+        .eq('email', email)
+        .single();
+
+      if (existing) {
+        await supabase
+          .from('email_subscribers')
+          .update({
+            name: `${firstName} ${lastName}`,
+            phone: phone || null,
+            webinar_link_sent: true,
+            webinar_link_sent_at: new Date().toISOString(),
+          })
+          .eq('email', email);
+      } else {
+        await supabase
+          .from('email_subscribers')
+          .insert({
+            email,
+            name: `${firstName} ${lastName}`,
+            phone: phone || null,
+            source: 'zoom_register',
+            webinar_link_sent: true,
+            webinar_link_sent_at: new Date().toISOString(),
+          });
+      }
+      console.log('✅ Supabase: subscriber saved');
+    } catch (dbError) {
+      console.warn('⚠️ Supabase save failed (non-critical):', dbError);
+    }
+
+    // 2. Get Zoom access token
     const accessToken = await getZoomAccessToken();
 
-    // 2. Register to Zoom webinar
+    // 3. Register to Zoom webinar
     const zoomResult = await registerToZoomWebinar(accessToken, email, firstName, lastName, phone);
     console.log('✅ Zoom registration successful:', zoomResult.registrant_id);
 
