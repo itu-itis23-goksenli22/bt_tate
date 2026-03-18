@@ -40,7 +40,6 @@ export default function RegistrationModal({
 }: RegistrationModalProps) {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
   const [countryCode, setCountryCode] = useState("+90");
-  const [vipChecked, setVipChecked] = useState(false);
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -264,20 +263,6 @@ export default function RegistrationModal({
                     />
                   </div>
                 </div>
-
-                {/* VIP checkbox */}
-                <label className="flex items-start gap-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={vipChecked}
-                    onChange={(e) => setVipChecked(e.target.checked)}
-                    className="mt-1 w-4 h-4 rounded border-white/30 accent-gold"
-                  />
-                  <span className="text-white/80 text-sm">
-                    Ücretsiz VIP hediye paketi ve etkinlik öncesi hatırlatma
-                    almak istiyorum
-                  </span>
-                </label>
 
                 {errorMsg && (
                   <p className="text-danger text-sm text-center">{errorMsg}</p>
