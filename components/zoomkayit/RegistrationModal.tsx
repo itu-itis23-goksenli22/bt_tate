@@ -242,17 +242,34 @@ export default function RegistrationModal({
                     </select>
                     <input
                       type="tel"
-                      placeholder="5XX XXX XX XX"
+                      placeholder={countryCode === "+90" ? "5XX XXX XX XX" : countryCode === "+1" ? "XXX XXX XXXX" : "Telefon numaranız"}
                       value={formData.phone}
                       onChange={(e) => {
-                        const raw = e.target.value.replace(/\D/g, "").slice(0, 10);
+                        const maxLen = countryCode === "+90" ? 10 : countryCode === "+1" ? 10 : 15;
+                        const raw = e.target.value.replace(/\D/g, "").slice(0, maxLen);
                         let formatted = raw;
-                        if (raw.length > 3 && raw.length <= 6) {
-                          formatted = `${raw.slice(0, 3)} ${raw.slice(3)}`;
-                        } else if (raw.length > 6 && raw.length <= 8) {
-                          formatted = `${raw.slice(0, 3)} ${raw.slice(3, 6)} ${raw.slice(6)}`;
-                        } else if (raw.length > 8) {
-                          formatted = `${raw.slice(0, 3)} ${raw.slice(3, 6)} ${raw.slice(6, 8)} ${raw.slice(8)}`;
+                        if (countryCode === "+90") {
+                          // TR: 5XX XXX XX XX
+                          if (raw.length > 3 && raw.length <= 6) formatted = `${raw.slice(0, 3)} ${raw.slice(3)}`;
+                          else if (raw.length > 6 && raw.length <= 8) formatted = `${raw.slice(0, 3)} ${raw.slice(3, 6)} ${raw.slice(6)}`;
+                          else if (raw.length > 8) formatted = `${raw.slice(0, 3)} ${raw.slice(3, 6)} ${raw.slice(6, 8)} ${raw.slice(8)}`;
+                        } else if (countryCode === "+1") {
+                          // US/CA: XXX XXX XXXX
+                          if (raw.length > 3 && raw.length <= 6) formatted = `${raw.slice(0, 3)} ${raw.slice(3)}`;
+                          else if (raw.length > 6) formatted = `${raw.slice(0, 3)} ${raw.slice(3, 6)} ${raw.slice(6)}`;
+                        } else if (countryCode === "+44") {
+                          // UK: XXXX XXX XXXX
+                          if (raw.length > 4 && raw.length <= 7) formatted = `${raw.slice(0, 4)} ${raw.slice(4)}`;
+                          else if (raw.length > 7) formatted = `${raw.slice(0, 4)} ${raw.slice(4, 7)} ${raw.slice(7)}`;
+                        } else if (["+49", "+33", "+31", "+46", "+43", "+32"].includes(countryCode)) {
+                          // EU: XXX XXXX XXXX
+                          if (raw.length > 3 && raw.length <= 7) formatted = `${raw.slice(0, 3)} ${raw.slice(3)}`;
+                          else if (raw.length > 7) formatted = `${raw.slice(0, 3)} ${raw.slice(3, 7)} ${raw.slice(7)}`;
+                        } else if (countryCode === "+994") {
+                          // AZ: XX XXX XX XX
+                          if (raw.length > 2 && raw.length <= 5) formatted = `${raw.slice(0, 2)} ${raw.slice(2)}`;
+                          else if (raw.length > 5 && raw.length <= 7) formatted = `${raw.slice(0, 2)} ${raw.slice(2, 5)} ${raw.slice(5)}`;
+                          else if (raw.length > 7) formatted = `${raw.slice(0, 2)} ${raw.slice(2, 5)} ${raw.slice(5, 7)} ${raw.slice(7)}`;
                         }
                         setFormData((prev) => ({
                           ...prev,
