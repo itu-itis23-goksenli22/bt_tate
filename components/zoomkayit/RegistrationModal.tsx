@@ -38,8 +38,7 @@ export default function RegistrationModal({
   isOpen,
   onClose,
 }: RegistrationModalProps) {
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
-  const [countryCode, setCountryCode] = useState("+90");
+  const [formData, setFormData] = useState({ name: "", email: "" });
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -81,7 +80,7 @@ export default function RegistrationModal({
           email: formData.email,
           firstName,
           lastName,
-          phone: formData.phone.replace(/\D/g, "") ? `${countryCode}${formData.phone.replace(/\D/g, "")}` : "",
+          phone: "",
         }),
       });
 
@@ -212,73 +211,6 @@ export default function RegistrationModal({
                     required
                     className="w-full px-4 py-3.5 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors text-base"
                   />
-                </div>
-
-                <div>
-                  <label className="block text-white text-sm font-medium mb-2">
-                    Telefon
-                  </label>
-                  <div className="flex">
-                    <select
-                      value={countryCode}
-                      onChange={(e) => setCountryCode(e.target.value)}
-                      className="px-2 py-3.5 bg-white/10 border border-white/20 border-r-0 rounded-l-xl text-white text-base focus:outline-none focus:border-gold appearance-none cursor-pointer"
-                      style={{ minWidth: "80px" }}
-                    >
-                      <option value="+90">🇹🇷 +90</option>
-                      <option value="+1">🇺🇸 +1</option>
-                      <option value="+44">🇬🇧 +44</option>
-                      <option value="+49">🇩🇪 +49</option>
-                      <option value="+33">🇫🇷 +33</option>
-                      <option value="+31">🇳🇱 +31</option>
-                      <option value="+46">🇸🇪 +46</option>
-                      <option value="+43">🇦🇹 +43</option>
-                      <option value="+32">🇧🇪 +32</option>
-                      <option value="+994">🇦🇿 +994</option>
-                      <option value="+7">🇷🇺 +7</option>
-                      <option value="+966">🇸🇦 +966</option>
-                      <option value="+971">🇦🇪 +971</option>
-                      <option value="+61">🇦🇺 +61</option>
-                    </select>
-                    <input
-                      type="tel"
-                      placeholder={countryCode === "+90" ? "5XX XXX XX XX" : countryCode === "+1" ? "XXX XXX XXXX" : "Telefon numaranız"}
-                      value={formData.phone}
-                      onChange={(e) => {
-                        const maxLen = countryCode === "+90" ? 10 : countryCode === "+1" ? 10 : 15;
-                        const raw = e.target.value.replace(/\D/g, "").slice(0, maxLen);
-                        let formatted = raw;
-                        if (countryCode === "+90") {
-                          // TR: 5XX XXX XX XX
-                          if (raw.length > 3 && raw.length <= 6) formatted = `${raw.slice(0, 3)} ${raw.slice(3)}`;
-                          else if (raw.length > 6 && raw.length <= 8) formatted = `${raw.slice(0, 3)} ${raw.slice(3, 6)} ${raw.slice(6)}`;
-                          else if (raw.length > 8) formatted = `${raw.slice(0, 3)} ${raw.slice(3, 6)} ${raw.slice(6, 8)} ${raw.slice(8)}`;
-                        } else if (countryCode === "+1") {
-                          // US/CA: XXX XXX XXXX
-                          if (raw.length > 3 && raw.length <= 6) formatted = `${raw.slice(0, 3)} ${raw.slice(3)}`;
-                          else if (raw.length > 6) formatted = `${raw.slice(0, 3)} ${raw.slice(3, 6)} ${raw.slice(6)}`;
-                        } else if (countryCode === "+44") {
-                          // UK: XXXX XXX XXXX
-                          if (raw.length > 4 && raw.length <= 7) formatted = `${raw.slice(0, 4)} ${raw.slice(4)}`;
-                          else if (raw.length > 7) formatted = `${raw.slice(0, 4)} ${raw.slice(4, 7)} ${raw.slice(7)}`;
-                        } else if (["+49", "+33", "+31", "+46", "+43", "+32"].includes(countryCode)) {
-                          // EU: XXX XXXX XXXX
-                          if (raw.length > 3 && raw.length <= 7) formatted = `${raw.slice(0, 3)} ${raw.slice(3)}`;
-                          else if (raw.length > 7) formatted = `${raw.slice(0, 3)} ${raw.slice(3, 7)} ${raw.slice(7)}`;
-                        } else if (countryCode === "+994") {
-                          // AZ: XX XXX XX XX
-                          if (raw.length > 2 && raw.length <= 5) formatted = `${raw.slice(0, 2)} ${raw.slice(2)}`;
-                          else if (raw.length > 5 && raw.length <= 7) formatted = `${raw.slice(0, 2)} ${raw.slice(2, 5)} ${raw.slice(5)}`;
-                          else if (raw.length > 7) formatted = `${raw.slice(0, 2)} ${raw.slice(2, 5)} ${raw.slice(5, 7)} ${raw.slice(7)}`;
-                        }
-                        setFormData((prev) => ({
-                          ...prev,
-                          phone: formatted,
-                        }));
-                      }}
-                      className="w-full px-4 py-3.5 bg-white/5 border border-white/20 rounded-r-xl text-white placeholder-white/40 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors text-base"
-                    />
-                  </div>
                 </div>
 
                 {errorMsg && (

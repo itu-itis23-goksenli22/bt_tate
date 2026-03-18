@@ -6,7 +6,7 @@ export default function WebinarFormSection() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const phone = "";
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<{ success: boolean; message: string; joinUrl?: string } | null>(null);
 
@@ -29,7 +29,7 @@ export default function WebinarFormSection() {
         setFirstName("");
         setLastName("");
         setEmail("");
-        setPhone("");
+        // phone cleared
       } else {
         setResult({ success: false, message: data.error || "Bir hata oluştu." });
       }
@@ -145,20 +145,6 @@ export default function WebinarFormSection() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="ornek@email.com"
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="phone" className="block text-white/80 text-sm font-medium mb-2">
-                      Telefon Numaranız
-                    </label>
-                    <input
-                      id="phone"
-                      type="tel"
-                      required
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      placeholder="+90 5XX XXX XX XX"
                       className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors"
                     />
                   </div>
