@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.therealworldportal.com'),
+  metadataBase: new URL('https://www.aiscaleapp.com'),
   title: {
     default: "AI Scale App - Yapay Zeka ile Para Kazanın",
     template: "%s | AI Scale App"
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "tr_TR",
-    url: "https://www.therealworldportal.com",
+    url: "https://www.aiscaleapp.com",
     siteName: "AI Scale App",
     title: "AI Scale App - Yapay Zeka ile Para Kazanın",
     description: "10+ zenginlik yaratma yöntemi ile finansal özgürlüğe ulaşın.",
