@@ -36,8 +36,9 @@ async function getZoomAccessToken(): Promise<string> {
   return data.access_token;
 }
 
-async function registerToZoomWebinar(accessToken: string, email: string, firstName: string, lastName: string, phone: string) {
-  const response = await fetch(`https://api.zoom.us/v2/webinars/${ZOOM_WEBINAR_ID}/registrants`, {
+async function registerToZoomWebinar(accessToken: string, email: string, firstName: string, lastName: string, phone: string, webinarId?: string) {
+  const targetWebinarId = webinarId || ZOOM_WEBINAR_ID;
+  const response = await fetch(`https://api.zoom.us/v2/webinars/${targetWebinarId}/registrants`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${accessToken}`,
@@ -62,7 +63,7 @@ async function registerToZoomWebinar(accessToken: string, email: string, firstNa
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email, firstName, lastName, phone } = body;
+    const { email, firstName, lastName, phone, webinarId } = body;
 
     if (!email || !email.includes('@')) {
       return NextResponse.json(
@@ -119,7 +120,7 @@ export async function POST(request: NextRequest) {
     const accessToken = await getZoomAccessToken();
 
     // 3. Register to Zoom webinar
-    const zoomResult = await registerToZoomWebinar(accessToken, email, firstName, lastName, phone);
+    const zoomResult = await registerToZoomWebinar(accessToken, email, firstName, lastName, phone, webinarId);
     console.log('✅ Zoom registration successful:', zoomResult.registrant_id);
 
     return NextResponse.json({
