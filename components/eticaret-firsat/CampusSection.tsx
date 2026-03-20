@@ -1,0 +1,420 @@
+"use client";
+
+import { useState } from "react";
+
+interface Module {
+  title: string;
+  lessons: string[];
+}
+
+interface Campus {
+  name: string;
+  icon: string;
+  color: string;
+  modules: Module[];
+}
+
+const campuses: Campus[] = [
+  {
+    name: "E-Commerce & Amazon FBA",
+    icon: "📦",
+    color: "from-purple-500/20 to-pink-500/20",
+    modules: [
+      {
+        title: "AKADEMİYE HOŞGELDİN",
+        lessons: [
+          "AKADEMİYE HOŞGELDİNİZ",
+          "E-COMMERCE DÜNYASI",
+          "EĞİTİM MÜFREDATI",
+          "EĞİTİMLE İLGİLİ TAVSİYELER",
+          "TÜRKİYENİN YENİ DÜZENDENKİ STRATEJİK KONUMU",
+        ],
+      },
+      {
+        title: "1. GİRİŞ",
+        lessons: [
+          "E-COMMERCE",
+          "HESAP AÇMA HAKKINDA",
+          "TR ŞAHIS ŞİRKETİ İLE AMAZON AVRUPA HESAP AÇILIŞI",
+          "PAYONEER HESAP AÇILIŞI",
+          "HESAP AÇMA BELGELERİ PDF TO WORD METHOD",
+          "DEPOSIT METHOD",
+          "ARBITRAGE WHOLESALE BUSINESS MODEL",
+          "FBA VS FBM",
+          "WHOLESALE GİRİŞ",
+          "BUYBOX",
+          "PRIVATE LABEL",
+          "TEDARİKÇİ WEBSİTELERİNE KAYIT",
+          "ANALİZ PROGRAMLARI İNCELEME",
+          "KEYWORD GİRİŞ",
+          "AFFILIATE MARKETING",
+          "BAŞLANGIÇ ÖZET",
+          "BAŞLANGIÇ BÖLÜM KAPANIŞ",
+        ],
+      },
+      {
+        title: "2. ÜRÜN BUL / KEYWORD",
+        lessons: [
+          "BUL BÖLÜM GİRİŞ",
+          "KEYWORD 2",
+          "ÜRÜN BULMA TÜRKİYE STRATEJİSİ",
+          "AMAZON'U TANIMAK",
+          "AMAZON MÜŞTERİ STRATEJİSİ",
+          "AMAZON KRİTİK VERİ ANALİZİ",
+          "BLACK BOX ÜRÜN ARAMA",
+          "BLACK BOX KEYWORD ARAMA",
+          "PINTEREST İLE ÜRÜN VE KEYWORD BULMA",
+          "GELENEKSEL ÜRÜN ARAMA YÖNTEMİ",
+          "KEYWORD ADVANCE 1",
+          "KEYWORD ADVANCE 2",
+          "KEYWORD ADVANCE 3",
+          "KEYWORD ÖZET",
+          "SEZONSAL ÜRÜNLERDE GLOBAL ÜRÜN STRATEJİSİ",
+          "FUARLAR TEDARİKÇİYLE DİREK İLETİŞİME GEÇMEK",
+          "AVRUPA GÖNDERİM VAT STRATEJİSİ GÜMRÜK SÜRECİ PAN-EUROPEAN",
+          "ÇİNLİ SATICILARIN ÜRÜN STRATEJİLERİ",
+          "30 DAKİKADA ÜRÜN BUL",
+          "EGROW GLOBAL PAZAR ANALİZİ KEŞFEDİLMEMİŞ PAZARLAR",
+          "RETAIL ARBITRAGE 1",
+          "RETAIL ARBITRAGE TOPTANCI ÜZERİNDEN ÜRÜN ARAMA",
+          "RETAIL ARBITRAGE ÜRÜN ARAMA BLACK BOX",
+          "RETAIL ARBITRAGE GLOBAL STRATEJİ ADVANCE",
+        ],
+      },
+      {
+        title: "3. ÜRÜNÜ YAPILANDIR / MARKA",
+        lessons: [
+          "Minimum Order Quantity ve Tedarikçi İletişimi",
+          "7 Adımda Markalaşma Brand Management",
+          "Marketing Advance Marka ve Paket",
+          "Marketing Advance 2 ve Nöromarketing Dizayn",
+          "Nöromarketing analiz ve Eyetracking",
+          "Tedarikçi İletişimi ve Pazarlık",
+          "Tedarikçilerle Pazarlık Advance",
+          "Tedarikçi ve Nakliye Kontrat Detayları",
+          "Alibaba Tedarikçi Dikkat Edilmesi Gerekenler",
+          "Retail Arbitraj&Wholesale Listing Oluşturma",
+          "Product Approval Süreci",
+          "Listing Oluşturma Keyword Strateji",
+          "Listing Oluşturma Keyword Strateji 2",
+          "FBA Shipping Plan",
+        ],
+      },
+      {
+        title: "4. SATIŞA BAŞLA",
+        lessons: [
+          "Satış Bölüm Özeti",
+          "Giveaway Keyword Index",
+          "Giveaway Yorum",
+          "Exact PPC Lansman",
+          "PPC Advance",
+          "PPC 2",
+          "Kupon Kodu",
+        ],
+      },
+      {
+        title: "5. POZİSYONUNU KORU VE BÜYÜ",
+        lessons: [
+          "Tüketici Davranışı ve Fiyat",
+          "Satış Bölüm Sonu",
+          "Super Url GEM",
+          "Müşteri Negatif Yorum Değiştirme",
+          "Günlük İş Takibi",
+          "İade Ayarları",
+          "Removal Order",
+          "Negatif Dükkan Yorumları Silme",
+          "Marka Koruma Adımları",
+          "Kitle Oluşturma",
+        ],
+      },
+    ],
+  },
+  {
+    name: "Shopify Dropshipping",
+    icon: "🏪",
+    color: "from-indigo-500/20 to-purple-500/20",
+    modules: [
+      {
+        title: "GİRİŞ VE MINDSET",
+        lessons: [
+          "HOŞGELDİNİZ",
+          "MINDSET VE RECESSION",
+          "EĞLENCELİ HALE GETİR",
+          "NELER ÖĞRENECEĞİZ",
+          "SHOPIFY KAYIT",
+          "DROPSHIPPING VS FBA",
+        ],
+      },
+      {
+        title: "SHOPIFY STORE KURULUMU",
+        lessons: [
+          "SHOPIFY GENEL BAKIŞ",
+          "MAĞAZA ADI SEÇİMİ GENEL NICHE",
+          "CANVA LOGO OLUŞTURMA",
+          "SHOPIFY POLICIES",
+          "KULLANILACAK UYGULAMALAR",
+          "DESIGN VE ÜRÜN YÜKLEME",
+          "ÖDEME SİSTEMLERİ",
+          "SİPARİŞ TAKİBİ",
+          "TEDARİKÇİ VE LİNKLER",
+        ],
+      },
+      {
+        title: "ÜRÜN ARAŞTIRMA",
+        lessons: [
+          "MOTİVASYON SNIPER MINDSET",
+          "ÜRÜN SEÇİM KRİTERİ",
+          "ÜRÜN SEÇİM METHOD 1-5",
+          "DİJİTAL ÜRÜNLÜ MAĞZA ÖRNEĞİ",
+        ],
+      },
+      {
+        title: "ŞİRKET WISE&STRIPE KURULUMU",
+        lessons: ["1ST FORMATION"],
+      },
+      {
+        title: "TIKTOK ADS",
+        lessons: [
+          "TIKTOK ADS GENEL BAKIŞ",
+          "TIKTOK PIXEL EKLEME",
+          "TIKTOK İÇERİK",
+          "TIKTOK REKLAM AYARLARI",
+          "TIKTOK TEST REKLAM STRATEJİSİ",
+          "TIKTOK ADS SONUÇ ANALİZİ",
+        ],
+      },
+      {
+        title: "TIKTOK ORGANIC",
+        lessons: [
+          "ÖZET TIKTOK ORGANIC",
+          "TIKTOK ORGANİK ÜRÜN VİRAL ALGORİTMASI",
+          "SHADOW BAN",
+          "ORGANİK TEST AŞAMASI",
+          "WİNNER ÜRÜNDEN SONRA VE KAPANIS",
+        ],
+      },
+      {
+        title: "CANLI YAYINLAR",
+        lessons: [
+          "CANLI YAYINLAR 1",
+          "CANLI YAYINLAR 2",
+          "CANLI YAYINLAR 3",
+          "CANLI YAYINLAR 4",
+        ],
+      },
+    ],
+  },
+  {
+    name: "ETSY",
+    icon: "🛍️",
+    color: "from-green-500/20 to-emerald-500/20",
+    modules: [
+      {
+        title: "1. GİRİŞ",
+        lessons: ["GİRİŞ", "Başlangıç", "Neden ETSY?", "Etsy.com İnceleme", "ETSY Fee'leri", "ETSY Hikayem"],
+      },
+      {
+        title: "2. HESAP OLUŞTURMA",
+        lessons: ["KULLANICI HESABI NASIL OLUŞTURULUR"],
+      },
+      {
+        title: "3. DÜKKAN AÇMAK",
+        lessons: ["Satış Dükkanı Nasıl Oluşturulur? Hesap Bilgileri, Logo, Banner ve İpuçları"],
+      },
+      {
+        title: "4. ÜRÜN BULMAK",
+        lessons: ["Keyword ile Ürün Bulma", "Sezonsal Ürün Bulma", "Online Ürün Bulma", "Fiziksel Ürün Bulma ve Tedarikçi İletişimi"],
+      },
+      {
+        title: "5. ÜRÜN LİSTELEME",
+        lessons: ["Fotoğraf ve Video", "Size Chart", "Tag Description", "Fiyat Planı Excel", "Kargo ve Genel Listeleme"],
+      },
+      {
+        title: "6. SATIŞ VE PAZARLAMA",
+        lessons: ["Sipariş Almak", "Sipariş Ödemesi", "Sipariş Kontrolü ve Yorum", "Sipariş Takibi Ek", "Reklam Sosyal Medya", "Kuponlar ve İndirimler", "Sayfa Düzeni"],
+      },
+      {
+        title: "7. KARGO",
+        lessons: ["Free Shipping", "Shipping Profile Kargo Firmaları", "Kargo İade"],
+      },
+      {
+        title: "8. DÜKKANI KORUMAK VE BÜYÜTMEK",
+        lessons: ["Günlük İş Takibi", "Müşteri Takibi", "Tagler", "Yeni Listeleme", "Yorum ve Feedback"],
+      },
+      {
+        title: "9. SIKÇA SORULAN SORULAR",
+        lessons: ["Genel Tekrar", "Excel Çalışması", "TOPTANCI LİSTESİ"],
+      },
+    ],
+  },
+  {
+    name: "N8N ile Yapay Zeka",
+    icon: "🤖",
+    color: "from-blue-500/20 to-cyan-500/20",
+    modules: [
+      {
+        title: "1. GİRİŞ: AJANS VİZYONU & STRATEJİK BAKIŞ",
+        lessons: [
+          "Yapay Zeka Eğitimi ile Geleceği Şekillendirin",
+          "Dijital Otomasyon Ajansı ve Başarı Stratejileri",
+          "Dijital Otomasyon Ajansı Modeli ve Yeni Fırsatlar",
+          "Yapay Zeka ile Geleceği Yakalamak",
+          "Başarılı Ajans Sahiplerinin Sahip Olduğu Zihniyet",
+          "Otomasyon Süreçlerinde Satışın Önemi ve Stratejileri",
+        ],
+      },
+      {
+        title: "2. STRATEJİ VE PLANLAMA",
+        lessons: [
+          "Doğru Niş Seçimi ve Yüksek Gelir Elde Etme Stratejileri",
+          "Ajans Modeli Oluşturma Stratejileri",
+          "Girişimciler Neden Başarısız Olur? En Sık Yapılan Hatalar",
+          "30 Günlük Yol Haritası: Öğren, Uygula, Sat",
+        ],
+      },
+      {
+        title: "3. TEKNİK UYGULAMA (TOOLKIT VE PROJELER)",
+        lessons: [
+          "N8N Nedir?",
+          "N8N Bilgisayara Kurulumu, Ücretsiz Kullanımı ve Üyelik Sistemi",
+          "N8N ile Neler Yapılabilir?",
+          "N8N Workflows Sayfasından Template Kullanımı",
+          "N8N Node Türleri",
+          "Google (Drive, Calendar, Gmail) API Key Almak",
+          "OPENAI API Nasıl Alınır? N8N İçerisinde GPT Kullanmak",
+          "ve daha fazlası...",
+        ],
+      },
+      {
+        title: "MASTERCLASS (PRO ÜYELERİMİZE ÖZEL)",
+        lessons: [
+          "Yapay Zeka ile Akıllı Chatbot Oluşturma",
+          "Bolt ile SaaS Platformu Kurmak",
+          "N8N Haberleri Görselleştiren Otomasyon",
+          "Karmaşık Workflow Oluşturma ve Yönetme",
+        ],
+      },
+    ],
+  },
+  {
+    name: "Kripto Para Yatırımı",
+    icon: "₿",
+    color: "from-yellow-500/20 to-orange-500/20",
+    modules: [
+      {
+        title: "KRİPTO PARA",
+        lessons: ["Emir Tipleri", "Hesap Güvenliği", "Kripto Para Borsası Nedir?", "Kripto Para Cüzdanı Nedir?"],
+      },
+      {
+        title: "TEKNİK ANALİZ",
+        lessons: ["Trading View", "Mum Grafikleri", "Destek ve Direnç", "Trendler", "İndikatörler", "Fibonacci", "Setup Oluşturma"],
+      },
+      {
+        title: "RİSK VE PORTFÖY YÖNETİMİ",
+        lessons: ["Kademeli Alış", "Kademeli Satış", "Portföy Yönetimi", "Risk Unsurları", "Yatırımcı Tipi"],
+      },
+    ],
+  },
+];
+
+export default function EticaretCampusSection() {
+  const [openCampus, setOpenCampus] = useState<number | null>(null);
+  const [openModule, setOpenModule] = useState<Record<string, boolean>>({});
+
+  const toggleModule = (campusIndex: number, moduleIndex: number) => {
+    const key = `${campusIndex}-${moduleIndex}`;
+    setOpenModule((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const totalLessons = campuses.reduce(
+    (sum, c) => sum + c.modules.reduce((s, m) => s + m.lessons.length, 0),
+    0
+  );
+
+  return (
+    <section className="pt-2 pb-16 md:pt-2 md:pb-20 bg-primary">
+      <div className="max-w-6xl mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-white italic uppercase tracking-wide mb-4">
+            EĞİTİM MÜFREDATI
+          </h2>
+          <p className="text-white/60 text-base md:text-lg">
+            {campuses.length} kampüste {totalLessons}+ ders ile kapsamlı eğitim içeriği
+          </p>
+        </div>
+
+        {/* Campuses Accordion */}
+        <div className="space-y-4">
+          {campuses.map((campus, campusIndex) => (
+            <div
+              key={campusIndex}
+              className="rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-sm"
+            >
+              <button
+                onClick={() => setOpenCampus(openCampus === campusIndex ? null : campusIndex)}
+                className="w-full px-5 py-4 md:px-6 md:py-5 flex items-center justify-between hover:bg-white/5 transition-all"
+              >
+                <div className="flex items-center gap-3 md:gap-4">
+                  <span className="text-2xl md:text-3xl">{campus.icon}</span>
+                  <div className="text-left">
+                    <h3 className="text-base md:text-xl font-bold text-white">{campus.name}</h3>
+                    <p className="text-white/50 text-xs md:text-sm">{campus.modules.length} modül</p>
+                  </div>
+                </div>
+                <svg
+                  className={`w-5 h-5 md:w-6 md:h-6 text-gold transition-transform duration-300 ${openCampus === campusIndex ? "rotate-180" : ""}`}
+                  fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {openCampus === campusIndex && (
+                <div className="px-4 pb-4 md:px-6 md:pb-6 space-y-3">
+                  {campus.modules.map((module, moduleIndex) => (
+                    <div key={moduleIndex} className="rounded-xl bg-primary/40 border border-white/5 overflow-hidden">
+                      <button
+                        onClick={() => toggleModule(campusIndex, moduleIndex)}
+                        className="w-full px-4 py-3 flex items-center justify-between hover:bg-white/5 transition-all"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0">
+                            <span className="text-gold font-bold text-xs md:text-sm">{moduleIndex + 1}</span>
+                          </div>
+                          <span className="text-white font-semibold text-left text-xs md:text-sm">{module.title}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-white/40 text-[10px] md:text-xs">{module.lessons.length} ders</span>
+                          <svg
+                            className={`w-4 h-4 md:w-5 md:h-5 text-gold transition-transform duration-300 ${openModule[`${campusIndex}-${moduleIndex}`] ? "rotate-180" : ""}`}
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </div>
+                      </button>
+
+                      {openModule[`${campusIndex}-${moduleIndex}`] && (
+                        <div className="px-3 pb-3 md:px-4 md:pb-4 space-y-1.5">
+                          {module.lessons.map((lesson, lessonIndex) => (
+                            <div key={lessonIndex} className="flex items-start gap-2.5 px-3 py-1.5 rounded-lg hover:bg-white/5 transition-all">
+                              <svg className="w-4 h-4 md:w-5 md:h-5 text-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
+                              </svg>
+                              <span className="text-white/60 text-xs md:text-sm">{lesson}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
