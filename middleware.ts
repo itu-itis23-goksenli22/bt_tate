@@ -10,9 +10,14 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(new URL("/eticaret", request.url));
   }
 
-  // Block /eticaret from non-dijitalakademi.live domains — return 404
-  if (pathname === "/eticaret" && !host.includes("dijitalakademi.live")) {
+  // Block /eticaret paths from non-dijitalakademi.live domains — return 404
+  if (pathname.startsWith("/eticaret") && !host.includes("dijitalakademi.live")) {
     return NextResponse.rewrite(new URL("/not-found", request.url));
+  }
+
+  // dijitalakademi.live/kayitbasarili → /eticaret/kayitbasarili
+  if (host.includes("dijitalakademi.live") && pathname === "/kayitbasarili") {
+    return NextResponse.rewrite(new URL("/eticaret/kayitbasarili", request.url));
   }
 
   // /zoomkayit removed → redirect to home
@@ -24,5 +29,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/eticaret", "/zoomkayit"],
+  matcher: ["/", "/eticaret", "/eticaret/:path*", "/kayitbasarili", "/zoomkayit"],
 };
