@@ -48,7 +48,7 @@ export default function HeroSection() {
           <div className="relative aspect-video bg-white/5 rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_30px_rgba(251,191,36,0.15)]">
             <iframe
               className="absolute inset-0 w-full h-full"
-              src="https://www.youtube.com/embed/qQbl1YPaI7k?start=335"
+              src="https://www.youtube.com/embed/HCfNJz-odxQ"
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
