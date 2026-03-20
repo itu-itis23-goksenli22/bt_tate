@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { BASARILIKAYIT_CHECKOUT_MASTERCLASS } from "@/lib/constants";
+const ETICARET_CHECKOUT_URL = "https://buy.stripe.com/eVafZ51vugc00WQfZ5";
 import PaymentLogos from "../basarilikayit/PaymentLogos";
 
 export default function EticaretPricingCard() {
@@ -34,7 +34,7 @@ export default function EticaretPricingCard() {
         {/* Masterclass Paket - ₺9,900 */}
         <div className="relative mb-6">
           <a
-            href={BASARILIKAYIT_CHECKOUT_MASTERCLASS}
+            href={ETICARET_CHECKOUT_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="block"
