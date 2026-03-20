@@ -66,7 +66,7 @@ export default function EticaretValueStack() {
       <div className="text-center mb-8">
         <div className="inline-block bg-danger/90 rounded-lg px-6 py-2 mb-2">
           <span className="text-white font-bold text-3xl md:text-5xl line-through decoration-2">
-            ₺37,000
+            ₺35,000
           </span>
         </div>
         <h3 className="text-white font-bold text-3xl md:text-4xl mt-2">
