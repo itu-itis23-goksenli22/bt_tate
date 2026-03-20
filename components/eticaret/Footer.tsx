@@ -18,7 +18,7 @@ export default function Footer() {
           </a>
           {/* YouTube */}
           <a
-            href="https://youtube.com/@baturalpadonis"
+            href="https://www.youtube.com/@baturalp.tunali"
             target="_blank"
             rel="noopener noreferrer"
             className="text-white/40 hover:text-gold transition-colors"
