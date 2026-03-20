@@ -217,7 +217,7 @@ export default function KayitBasariliContent() {
                 </svg>
               </a>
               <a
-                href="https://www.youtube.com/@baturalp.adonis"
+                href="https://www.youtube.com/@baturalp.tunali"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-16 h-16 rounded-full bg-gold/20 border-2 border-gold/40 flex items-center justify-center hover:bg-gold/30 hover:scale-110 transition-all"
