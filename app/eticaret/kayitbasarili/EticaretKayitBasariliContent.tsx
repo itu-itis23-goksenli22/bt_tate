@@ -52,7 +52,7 @@ export default function EticaretKayitBasariliContent() {
     trackCompleteRegistration({
       content_name: "E-Ticaret Webinar Kayıt",
       status: "completed",
-      value: 0,
+      value: 1,
       currency: "TRY",
     });
   }, []);

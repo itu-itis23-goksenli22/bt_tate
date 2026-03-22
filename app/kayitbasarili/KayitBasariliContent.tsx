@@ -52,7 +52,7 @@ export default function KayitBasariliContent() {
     trackCompleteRegistration({
       content_name: "Webinar Kayıt",
       status: "completed",
-      value: 0,
+      value: 1,
       currency: "TRY",
     });
   }, []);
