@@ -1,28 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
-import { trackPurchase } from "@/lib/meta-pixel";
-
 const GOLD = "#fbbf24";
 const GOLD_DARK = "#f59e0b";
 const GOLD_BG = "rgba(251, 191, 36,";
 
 export default function EticaretOdemeonayContent() {
-  useEffect(() => {
-    // Browser pixel — Purchase event (dijitalakademi.live = 9900 TRY)
-    trackPurchase({ value: 9900, currency: "TRY" });
-
-    // Server-side CAPI — Purchase event
-    fetch("/api/meta-capi", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        eventName: "Purchase",
-        sourceUrl: window.location.href,
-        customData: { value: 9900, currency: "TRY" },
-      }),
-    }).catch(() => {});
-  }, []);
+  // Purchase event is sent via Stripe webhook → /api/stripe-webhook → Meta CAPI
+  // No browser pixel here to avoid duplicate events
 
   return (
     <main
