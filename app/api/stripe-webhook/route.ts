@@ -1,39 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import crypto from "crypto";
+import Stripe from "stripe";
 import { sendCAPIEvent } from "@/lib/meta-capi";
 
-const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET!;
+const stripe = new Stripe("sk_placeholder", {
+  apiVersion: "2025-04-30.basil",
+});
 
-// Verify Stripe webhook signature
-function verifyStripeSignature(
-  payload: string,
-  signature: string,
-  secret: string
-): boolean {
-  const elements = signature.split(",").reduce(
-    (acc, part) => {
-      const [key, val] = part.split("=", 2);
-      if (key === "t") acc.timestamp = val;
-      if (key === "v1") acc.signatures.push(val);
-      return acc;
-    },
-    { timestamp: "", signatures: [] as string[] }
-  );
-
-  if (!elements.timestamp || elements.signatures.length === 0) return false;
-
-  const signedPayload = `${elements.timestamp}.${payload}`;
-  const expected = crypto
-    .createHmac("sha256", secret)
-    .update(signedPayload)
-    .digest("hex");
-
-  return elements.signatures.some(
-    (sig) =>
-      sig.length === expected.length &&
-      crypto.timingSafeEqual(Buffer.from(sig, "hex"), Buffer.from(expected, "hex"))
-  );
-}
+const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET!;
 
 export async function POST(request: NextRequest) {
   try {
@@ -44,20 +17,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing signature" }, { status: 400 });
     }
 
-    // Verify webhook is from Stripe
-    const isValid = verifyStripeSignature(body, signature, STRIPE_WEBHOOK_SECRET);
-    if (!isValid) {
-      console.error("Invalid Stripe webhook signature");
+    // Verify webhook using Stripe SDK (only needs webhook secret, not API key)
+    let event: Stripe.Event;
+    try {
+      event = stripe.webhooks.constructEvent(body, signature, WEBHOOK_SECRET);
+    } catch (err) {
+      console.error("Stripe signature verification failed:", err);
       return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
     }
 
-    const event = JSON.parse(body);
-
     // Only handle successful checkout sessions
     if (event.type === "checkout.session.completed") {
-      const session = event.data.object;
+      const session = event.data.object as Stripe.Checkout.Session;
       const email = session.customer_details?.email || session.customer_email;
-      const amountTotal = session.amount_total; // in cents (kuruş)
+      const amountTotal = session.amount_total; // in kuruş
       const currency = (session.currency || "try").toUpperCase();
       const customerName = session.customer_details?.name || "";
 
