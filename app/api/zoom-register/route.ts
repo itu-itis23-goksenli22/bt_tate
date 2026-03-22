@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { sendCAPIEvent } from '@/lib/meta-capi';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -122,6 +123,29 @@ export async function POST(request: NextRequest) {
     // 3. Register to Zoom webinar
     const zoomResult = await registerToZoomWebinar(accessToken, email, firstName, lastName, phone, webinarId);
     console.log('✅ Zoom registration successful:', zoomResult.registrant_id);
+
+    // 4. Send Meta CAPI server-side CompleteRegistration event (non-blocking)
+    const referer = request.headers.get('referer') || 'https://aiscaleapp.com';
+    const clientIp = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '';
+    const userAgent = request.headers.get('user-agent') || '';
+    sendCAPIEvent({
+      eventName: 'CompleteRegistration',
+      sourceUrl: referer,
+      userData: {
+        email,
+        firstName,
+        lastName,
+        phone: phone || undefined,
+        clientIpAddress: clientIp,
+        clientUserAgent: userAgent,
+      },
+      customData: {
+        content_name: webinarId === '86257770515' ? 'E-Ticaret Webinar Kayıt' : 'Webinar Kayıt',
+        status: 'completed',
+        value: 1,
+        currency: 'TRY',
+      },
+    }).catch(err => console.warn('⚠️ CAPI non-critical error:', err));
 
     return NextResponse.json({
       success: true,
