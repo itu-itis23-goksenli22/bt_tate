@@ -56,7 +56,7 @@ const CountdownTimer = dynamic(
   () => import("@/components/basarilikayit/CountdownTimer")
 );
 const ViewContentTracker = dynamic(
-  () => import("@/components/basarilikayit/ViewContentTracker")
+  () => import("@/components/eticaret-firsat/ViewContentTracker")
 );
 const EticaretIbanSection = dynamic(
   () => import("@/components/eticaret-firsat/IbanSection")
