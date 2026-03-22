@@ -62,16 +62,35 @@ export default function EticaretValueStack() {
         </div>
       </div>
 
-      {/* Pricing display */}
-      <div className="text-center mb-8">
-        <div className="inline-block bg-danger/90 rounded-lg px-6 py-2 mb-2">
-          <span className="text-white font-bold text-3xl md:text-5xl line-through decoration-2">
-            ₺35,000
-          </span>
+      {/* 3-tier Pricing display */}
+      <div className="text-center mb-8 space-y-3">
+        {/* 1st tier - Original price */}
+        <div>
+          <p className="text-white/50 text-sm mb-1">Normal Fiyat</p>
+          <div className="inline-block bg-white/10 rounded-lg px-6 py-2">
+            <span className="text-white/60 font-bold text-2xl md:text-4xl line-through decoration-2 decoration-red-500">
+              ₺35,000
+            </span>
+          </div>
         </div>
-        <h3 className="text-white font-bold text-3xl md:text-4xl mt-2">
-          SADECE <span className="text-gold">₺9,900!</span>
-        </h3>
+        {/* 2nd tier - Discounted price */}
+        <div>
+          <p className="text-white/50 text-sm mb-1">İndirimli Fiyat</p>
+          <div className="inline-block bg-danger/80 rounded-lg px-6 py-2">
+            <span className="text-white font-bold text-2xl md:text-4xl line-through decoration-2">
+              ₺17,500
+            </span>
+          </div>
+        </div>
+        {/* 3rd tier - Special link price */}
+        <div>
+          <p className="text-gold text-sm font-semibold mb-1">🔥 Bu Linke Özel Fiyat</p>
+          <div className="inline-block bg-gradient-to-r from-gold/20 to-yellow-500/20 border-2 border-gold rounded-xl px-8 py-3 animate-pulse">
+            <span className="text-gold font-bold text-3xl md:text-5xl">
+              ₺9,900
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* Main features with green checkmarks */}
