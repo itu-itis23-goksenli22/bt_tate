@@ -10,19 +10,29 @@ function verifyStripeSignature(
   signature: string,
   secret: string
 ): boolean {
-  const parts = signature.split(",");
-  const timestamp = parts.find((p) => p.startsWith("t="))?.split("=")[1];
-  const sig = parts.find((p) => p.startsWith("v1="))?.split("=")[1];
+  const elements = signature.split(",").reduce(
+    (acc, part) => {
+      const [key, val] = part.split("=", 2);
+      if (key === "t") acc.timestamp = val;
+      if (key === "v1") acc.signatures.push(val);
+      return acc;
+    },
+    { timestamp: "", signatures: [] as string[] }
+  );
 
-  if (!timestamp || !sig) return false;
+  if (!elements.timestamp || elements.signatures.length === 0) return false;
 
-  const signedPayload = `${timestamp}.${payload}`;
+  const signedPayload = `${elements.timestamp}.${payload}`;
   const expected = crypto
     .createHmac("sha256", secret)
     .update(signedPayload)
     .digest("hex");
 
-  return crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected));
+  return elements.signatures.some(
+    (sig) =>
+      sig.length === expected.length &&
+      crypto.timingSafeEqual(Buffer.from(sig, "hex"), Buffer.from(expected, "hex"))
+  );
 }
 
 export async function POST(request: NextRequest) {
