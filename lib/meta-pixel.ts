@@ -1,10 +1,32 @@
 // Meta Pixel helper functions for tracking events
 
+const PIXEL_ID = "793366716531580";
+
 declare global {
   interface Window {
     fbq: any;
   }
 }
+
+// Re-initialize pixel with Advanced Matching user data
+export const setAdvancedMatching = (userData: {
+  em?: string; // email
+  fn?: string; // first name (lowercase)
+  ln?: string; // last name (lowercase)
+  ph?: string; // phone (digits only, with country code)
+}) => {
+  if (typeof window !== "undefined" && window.fbq) {
+    // Clean the data
+    const cleanData: Record<string, string> = {};
+    if (userData.em) cleanData.em = userData.em.toLowerCase().trim();
+    if (userData.fn) cleanData.fn = userData.fn.toLowerCase().trim();
+    if (userData.ln) cleanData.ln = userData.ln.toLowerCase().trim();
+    if (userData.ph) cleanData.ph = userData.ph.replace(/\D/g, "");
+
+    // Re-init pixel with user data for Advanced Matching
+    window.fbq("init", PIXEL_ID, cleanData);
+  }
+};
 
 export const trackEvent = (eventName: string, data?: Record<string, any>) => {
   if (typeof window !== "undefined" && window.fbq) {

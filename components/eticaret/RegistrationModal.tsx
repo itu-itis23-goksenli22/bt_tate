@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { setAdvancedMatching } from "@/lib/meta-pixel";
 
 interface RegistrationModalProps {
   isOpen: boolean;
@@ -89,9 +90,11 @@ export default function RegistrationModal({
 
       if (res.ok) {
         setStatus("success");
-        // Redirect to VIP upsell page after 1.5s
+        // Advanced Matching — send user data to Meta Pixel
+        setAdvancedMatching({ em: formData.email, fn: firstName, ln: lastName });
+        // Redirect to success page after 1.5s (pass email for pixel tracking)
         setTimeout(() => {
-          window.location.href = `/kayitbasarili?name=${encodeURIComponent(formData.name)}`;
+          window.location.href = `/kayitbasarili?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`;
         }, 1500);
       } else {
         setStatus("error");
