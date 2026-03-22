@@ -2,11 +2,12 @@
 
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { trackCompleteRegistration } from "@/lib/meta-pixel";
+import { trackCompleteRegistration, setAdvancedMatching } from "@/lib/meta-pixel";
 
 export default function KayitBasariliContent() {
   const searchParams = useSearchParams();
   const name = searchParams.get("name") || "Değerli Katılımcı";
+  const email = searchParams.get("email") || "";
   const [webinarDate, setWebinarDate] = useState<string>("");
   const [webinarDay, setWebinarDay] = useState<string>("");
   const [registrationDate, setRegistrationDate] = useState<string>("");
@@ -38,10 +39,21 @@ export default function KayitBasariliContent() {
     const regYear = turkey.getFullYear();
     setRegistrationDate(`${regDay}.${regMonth}.${regYear}`);
 
-    // Track registration completion
+    // Advanced Matching — send user data to Meta Pixel
+    if (email) {
+      const nameParts = name.split(" ");
+      setAdvancedMatching({
+        em: email,
+        fn: nameParts[0] || "",
+        ln: nameParts.slice(1).join(" ") || "",
+      });
+    }
+    // Track registration completion with value/currency
     trackCompleteRegistration({
       content_name: "Webinar Kayıt",
       status: "completed",
+      value: 0,
+      currency: "TRY",
     });
   }, []);
 

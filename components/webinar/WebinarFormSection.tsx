@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { setAdvancedMatching, trackCompleteRegistration } from "@/lib/meta-pixel";
 
 export default function WebinarFormSection() {
   const [firstName, setFirstName] = useState("");
@@ -25,6 +26,14 @@ export default function WebinarFormSection() {
       const data = await response.json();
 
       if (response.ok) {
+        // Advanced Matching — send user data to Meta Pixel
+        setAdvancedMatching({ em: email, fn: firstName, ln: lastName });
+        trackCompleteRegistration({
+          content_name: "Webinar Kayıt",
+          status: "completed",
+          value: 0,
+          currency: "TRY",
+        });
         setResult({ success: true, message: data.message, joinUrl: data.joinUrl });
         setFirstName("");
         setLastName("");
