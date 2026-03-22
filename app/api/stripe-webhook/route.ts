@@ -4,7 +4,7 @@ import { sendCAPIEvent } from "@/lib/meta-capi";
 
 const stripe = new Stripe("sk_placeholder");
 
-const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET!;
+const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "";
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,13 +15,29 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing signature" }, { status: 400 });
     }
 
-    // Verify webhook using Stripe SDK (only needs webhook secret, not API key)
+    if (!WEBHOOK_SECRET) {
+      console.error("STRIPE_WEBHOOK_SECRET env var is not set!");
+      return NextResponse.json(
+        { error: "Webhook secret not configured" },
+        { status: 500 }
+      );
+    }
+
+    // Verify webhook using Stripe SDK
     let event: Stripe.Event;
     try {
       event = stripe.webhooks.constructEvent(body, signature, WEBHOOK_SECRET);
-    } catch (err) {
-      console.error("Stripe signature verification failed:", err);
-      return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Unknown error";
+      console.error(
+        `Stripe signature verification failed: ${message}`,
+        `Secret starts with: ${WEBHOOK_SECRET.substring(0, 10)}...`,
+        `Signature header: ${signature.substring(0, 30)}...`
+      );
+      return NextResponse.json(
+        { error: "Invalid signature", detail: message },
+        { status: 400 }
+      );
     }
 
     // Only handle successful checkout sessions
