@@ -31,7 +31,7 @@ export default function WebinarFormSection() {
         trackCompleteRegistration({
           content_name: "Webinar Kayıt",
           status: "completed",
-          value: 0,
+          value: 1,
           currency: "TRY",
         });
         setResult({ success: true, message: data.message, joinUrl: data.joinUrl });
