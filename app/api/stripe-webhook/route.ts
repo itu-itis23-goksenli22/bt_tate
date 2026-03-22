@@ -2,9 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { sendCAPIEvent } from "@/lib/meta-capi";
 
-const stripe = new Stripe("sk_placeholder", {
-  apiVersion: "2025-04-30.basil",
-});
+const stripe = new Stripe("sk_placeholder");
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET!;
 
