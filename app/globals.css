@@ -172,37 +172,6 @@
 
   .zk-btn-cta {
     animation: zk-pulse-gold 2s ease-in-out infinite;
-    position: relative;
-    overflow: hidden;
-    transform: scale(1);
-    transition: transform 0.2s ease, filter 0.2s ease;
-  }
-
-  .zk-btn-cta:hover {
-    transform: scale(1.05);
-    filter: brightness(1.15);
-  }
-
-  .zk-btn-cta:active {
-    transform: scale(0.98);
-  }
-
-  /* Shimmer sweep effect */
-  .zk-btn-cta::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.35),
-      transparent
-    );
-    animation: zk-shimmer 2.5s ease-in-out infinite;
-    pointer-events: none;
   }
 
   .zk-progress-fill {
@@ -305,19 +274,10 @@
   /* Zoomkayit keyframes */
   @keyframes zk-pulse-gold {
     0%, 100% {
-      box-shadow: 0 0 25px rgba(212, 168, 67, 0.5), 0 0 50px rgba(212, 168, 67, 0.2);
+      box-shadow: 0 0 20px rgba(212, 168, 67, 0.4);
     }
     50% {
-      box-shadow: 0 0 50px rgba(212, 168, 67, 0.8), 0 0 80px rgba(212, 168, 67, 0.4), 0 0 120px rgba(212, 168, 67, 0.15);
-    }
-  }
-
-  @keyframes zk-shimmer {
-    0% {
-      left: -100%;
-    }
-    50%, 100% {
-      left: 150%;
+      box-shadow: 0 0 40px rgba(212, 168, 67, 0.7), 0 0 60px rgba(212, 168, 67, 0.3);
     }
   }
 

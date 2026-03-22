@@ -21,6 +21,11 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(new URL("/eticaret/firsat", request.url));
   }
 
+  // dijitalakademi.live/odemeonay → /eticaret/odemeonay
+  if (isDijitalAkademi && pathname === "/odemeonay") {
+    return NextResponse.rewrite(new URL("/eticaret/odemeonay", request.url));
+  }
+
   // Block /eticaret page from non-dijitalakademi.live domains (only exact /eticaret path)
   if (pathname === "/eticaret" && !isDijitalAkademi) {
     return new NextResponse(null, { status: 404 });
@@ -35,5 +40,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/eticaret", "/eticaret/:path*", "/kayitbasarili", "/firsat", "/zoomkayit"],
+  matcher: ["/", "/eticaret", "/eticaret/:path*", "/kayitbasarili", "/firsat", "/odemeonay", "/zoomkayit"],
 };
