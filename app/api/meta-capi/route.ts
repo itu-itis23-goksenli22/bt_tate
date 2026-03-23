@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'eventName required' }, { status: 400 });
     }
 
-    const clientIp = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '';
+    const clientIp = request.headers.get('x-real-ip') || request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '';
     const userAgent = request.headers.get('user-agent') || '';
 
     const result = await sendCAPIEvent({
