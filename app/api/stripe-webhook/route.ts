@@ -55,12 +55,19 @@ export async function POST(request: NextRequest) {
         `💰 Stripe Purchase: ${email} | ${value} ${currency} | ${customerName}`
       );
 
+      // Determine which pixel to send to based on success_url
+      const successUrl = session.success_url || "";
+      const isDijital = successUrl.includes("dijitalakademi");
+      const sourceUrl = isDijital
+        ? "https://dijitalakademi.live/odemeonay"
+        : "https://www.aiscaleapp.com/odemeonay";
+
       // Send Purchase event to Meta CAPI with email
       if (email) {
         const nameParts = customerName.split(" ");
         await sendCAPIEvent({
           eventName: "Purchase",
-          sourceUrl: "https://www.aiscaleapp.com/odemeonay",
+          sourceUrl,
           userData: {
             email,
             firstName: nameParts[0] || "",
@@ -71,7 +78,7 @@ export async function POST(request: NextRequest) {
             currency,
           },
         });
-        console.log(`✅ Meta CAPI Purchase sent for ${email}`);
+        console.log(`✅ Meta CAPI Purchase sent for ${email} → ${isDijital ? "Dijital Akademi" : "AI Scale"} pixel`);
       }
     }
 

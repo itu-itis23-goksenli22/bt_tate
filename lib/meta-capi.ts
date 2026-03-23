@@ -1,9 +1,19 @@
 // Meta Conversions API (CAPI) - Server-side event tracking
 import crypto from "crypto";
 
-const PIXEL_ID = "793366716531580";
+// Dual pixel support: aiscaleapp.com vs dijitalakademi.live
+const AISCALE_PIXEL_ID = "793366716531580";
+const DIJITAL_PIXEL_ID = "1261057665474950";
 const META_CAPI_ACCESS_TOKEN = process.env.META_CAPI_ACCESS_TOKEN!;
+const META_CAPI_ACCESS_TOKEN_DIJITAL = process.env.META_CAPI_ACCESS_TOKEN_DIJITAL || META_CAPI_ACCESS_TOKEN;
 const META_API_VERSION = "v21.0";
+
+function getPixelConfig(sourceUrl: string) {
+  if (sourceUrl.includes("dijitalakademi")) {
+    return { pixelId: DIJITAL_PIXEL_ID, token: META_CAPI_ACCESS_TOKEN_DIJITAL };
+  }
+  return { pixelId: AISCALE_PIXEL_ID, token: META_CAPI_ACCESS_TOKEN };
+}
 
 // Hash user data with SHA-256 (Meta requirement)
 function hashData(value: string): string {
@@ -56,14 +66,15 @@ export async function sendCAPIEvent(params: CAPIEventParams) {
   if (customData) eventData.custom_data = customData;
 
   try {
+    const { pixelId, token } = getPixelConfig(sourceUrl);
     const response = await fetch(
-      `https://graph.facebook.com/${META_API_VERSION}/${PIXEL_ID}/events`,
+      `https://graph.facebook.com/${META_API_VERSION}/${pixelId}/events`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           data: [eventData],
-          access_token: META_CAPI_ACCESS_TOKEN,
+          access_token: token,
         }),
       }
     );
