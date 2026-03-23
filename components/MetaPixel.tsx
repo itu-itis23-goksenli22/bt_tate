@@ -20,7 +20,7 @@ export default function MetaPixel() {
 
   return (
     <>
-      {/* Meta Pixel Code */}
+      {/* Meta Pixel Code — domain-based dual pixel */}
       <Script
         id="meta-pixel"
         strategy="afterInteractive"
@@ -34,7 +34,8 @@ export default function MetaPixel() {
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '793366716531580');
+            var pixelId = window.location.hostname.includes('dijitalakademi') ? '1261057665474950' : '793366716531580';
+            fbq('init', pixelId);
             fbq('track', 'PageView');
           `,
         }}

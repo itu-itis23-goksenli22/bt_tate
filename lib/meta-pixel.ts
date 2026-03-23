@@ -1,6 +1,12 @@
 // Meta Pixel helper functions for tracking events
 
-const PIXEL_ID = "793366716531580";
+// Domain-based pixel ID
+const getPixelId = () => {
+  if (typeof window !== "undefined" && window.location.hostname.includes("dijitalakademi")) {
+    return "1261057665474950";
+  }
+  return "793366716531580";
+};
 
 declare global {
   interface Window {
@@ -24,7 +30,7 @@ export const setAdvancedMatching = (userData: {
     if (userData.ph) cleanData.ph = userData.ph.replace(/\D/g, "");
 
     // Re-init pixel with user data for Advanced Matching
-    window.fbq("init", PIXEL_ID, cleanData);
+    window.fbq("init", getPixelId(), cleanData);
   }
 };
 
