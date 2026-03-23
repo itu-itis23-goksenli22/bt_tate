@@ -31,9 +31,22 @@ const Footer = dynamic(
 
 export default function EticaretPage() {
   return (
-    <main className="min-h-screen bg-black text-white font-display">
+    <main className="min-h-screen bg-[#060612] text-white font-display relative">
+      {/* Grid background */}
+      <div className="fixed inset-0 pointer-events-none" style={{
+        backgroundImage: `linear-gradient(rgba(100,130,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(100,130,255,0.07) 1px, transparent 1px)`,
+        backgroundSize: '40px 40px',
+      }} />
+      {/* Top gradient glow */}
+      <div className="fixed top-[-200px] left-1/2 -translate-x-1/2 w-[1000px] h-[600px] pointer-events-none" style={{
+        background: 'radial-gradient(ellipse, rgba(100,80,200,0.12) 0%, transparent 70%)',
+      }} />
+      {/* Bottom right glow */}
+      <div className="fixed bottom-[-100px] right-[-100px] w-[600px] h-[600px] rounded-full pointer-events-none" style={{
+        background: 'radial-gradient(circle, rgba(251,191,36,0.08) 0%, transparent 70%)',
+      }} />
       {/* Hero + Registration Section */}
-      <div className="bg-gradient-to-b from-black via-[#0a0a0a] to-black">
+      <div className="relative z-10">
         <HeroSection />
         <CountdownTimer />
 
@@ -74,13 +87,17 @@ export default function EticaretPage() {
       </div>
 
       {/* Discover Section */}
-      <DiscoverSection />
+      <div className="relative z-10">
+        <DiscoverSection />
+      </div>
 
       {/* Bonus Section */}
-      <BonusSection />
+      <div className="relative z-10">
+        <BonusSection />
+      </div>
 
       {/* Second CTA */}
-      <section className="py-16 px-4 bg-gradient-to-b from-transparent to-black">
+      <section className="py-16 px-4 bg-gradient-to-b from-transparent to-[#060612] relative z-10">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
             E-Ticaret Devrimi Başladı.
@@ -95,10 +112,14 @@ export default function EticaretPage() {
       </section>
 
       {/* FAQ Section */}
-      <FAQSection />
+      <div className="relative z-10">
+        <FAQSection />
+      </div>
 
       {/* Footer */}
-      <Footer />
+      <div className="relative z-10">
+        <Footer />
+      </div>
     </main>
   );
 }
