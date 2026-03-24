@@ -1,5 +1,5 @@
 // Checkout URL for all CTA buttons
-export const CHECKOUT_URL = 'https://ai-scale.circle.so/checkout/aiscaleapp-aylik'
+export const CHECKOUT_URL = 'https://www.skool.com/aiscaleapp-9624/about'
 
 // Basarilikayit checkout URLs
 export const BASARILIKAYIT_CHECKOUT_BASIC = 'https://buy.stripe.com/8x23cwf0Q1r71gtdpS3wQ0j'
