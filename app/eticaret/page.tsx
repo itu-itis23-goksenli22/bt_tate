@@ -31,23 +31,13 @@ const Footer = dynamic(
 
 export default function EticaretPage() {
   return (
-    <main className="min-h-screen bg-[#0a0014] text-white font-display relative">
-      {/* Grid background - dark purple */}
+    <main className="min-h-screen text-white font-display relative">
+      {/* Background image */}
       <div className="fixed inset-0 pointer-events-none" style={{
-        backgroundImage: `linear-gradient(rgba(120,60,200,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(120,60,200,0.06) 1px, transparent 1px)`,
-        backgroundSize: '40px 40px',
-      }} />
-      {/* Top gradient glow - purple */}
-      <div className="fixed top-[-200px] left-1/2 -translate-x-1/2 w-[1000px] h-[600px] pointer-events-none" style={{
-        background: 'radial-gradient(ellipse, rgba(100,40,180,0.15) 0%, transparent 70%)',
-      }} />
-      {/* Bottom right glow - gold/purple mix */}
-      <div className="fixed bottom-[-100px] right-[-100px] w-[600px] h-[600px] rounded-full pointer-events-none" style={{
-        background: 'radial-gradient(circle, rgba(251,191,36,0.06) 0%, transparent 70%)',
-      }} />
-      {/* Left purple glow */}
-      <div className="fixed top-[30%] left-[-150px] w-[500px] h-[500px] rounded-full pointer-events-none" style={{
-        background: 'radial-gradient(circle, rgba(80,20,160,0.12) 0%, transparent 70%)',
+        backgroundImage: `url('/arkaplansite.png')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
       }} />
       {/* Hero + Registration Section */}
       <div className="relative z-10">
