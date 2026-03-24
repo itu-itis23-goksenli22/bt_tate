@@ -85,6 +85,7 @@ export default function RootLayout({
           href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap"
           rel="stylesheet"
         />
+        <meta name="facebook-domain-verification" content="cay5i2fp2p3cmrbhybm9d385v9xxj0" />
       </head>
       <body className={inter.className}>
         <MetaPixel />
