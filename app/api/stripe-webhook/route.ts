@@ -51,35 +51,35 @@ export async function POST(request: NextRequest) {
       // Convert from kuruş to TRY (divide by 100)
       const value = amountTotal ? amountTotal / 100 : 0;
 
-      console.log(
-        `💰 Stripe Purchase: ${email} | ${value} ${currency} | ${customerName}`
-      );
-
-      // Determine which pixel to send to based on success_url
+      // Determine which pixel to send to based on success_url or metadata
       const successUrl = session.success_url || "";
-      const isDijital = successUrl.includes("dijitalakademi");
+      const metadataSource = (session.metadata as Record<string, string>)?.source || "";
+      const isDijital = successUrl.includes("dijitalakademi") || metadataSource.includes("dijitalakademi");
+
       const sourceUrl = isDijital
         ? "https://dijitalakademi.live/odemeonay"
         : "https://www.aiscaleapp.com/odemeonay";
 
-      // Send Purchase event to Meta CAPI with email
-      if (email) {
-        const nameParts = customerName.split(" ");
-        await sendCAPIEvent({
-          eventName: "Purchase",
-          sourceUrl,
-          userData: {
-            email,
-            firstName: nameParts[0] || "",
-            lastName: nameParts.slice(1).join(" ") || "",
-          },
-          customData: {
-            value,
-            currency,
-          },
-        });
-        console.log(`✅ Meta CAPI Purchase sent for ${email} → ${isDijital ? "Dijital Akademi" : "AI Scale"} pixel`);
-      }
+      console.log(
+        `💰 Stripe Purchase: ${email || "no-email"} | ${value} ${currency} | ${customerName} | success_url: ${successUrl || "null"} | pixel: ${isDijital ? "Dijital" : "AIScale"}`
+      );
+
+      // Send Purchase event to Meta CAPI (even without email, send with whatever data we have)
+      const nameParts = customerName.split(" ");
+      await sendCAPIEvent({
+        eventName: "Purchase",
+        sourceUrl,
+        userData: {
+          email: email || undefined,
+          firstName: nameParts[0] || "",
+          lastName: nameParts.slice(1).join(" ") || "",
+        },
+        customData: {
+          value,
+          currency,
+        },
+      });
+      console.log(`✅ Meta CAPI Purchase sent for ${email || "unknown"} → ${isDijital ? "Dijital Akademi" : "AI Scale"} pixel`);
     }
 
     return NextResponse.json({ received: true });
