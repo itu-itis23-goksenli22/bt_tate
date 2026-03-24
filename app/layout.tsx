@@ -61,6 +61,9 @@ export const metadata: Metadata = {
       { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
     ],
   },
+  other: {
+    "facebook-domain-verification": "1rdvh63um2pq53vmblo44tle2mg7y0",
+  },
 };
 
 export const viewport: Viewport = {
