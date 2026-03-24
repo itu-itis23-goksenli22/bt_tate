@@ -65,10 +65,7 @@ const EticaretIbanSection = dynamic(
 export default function EticaretFirsatPage() {
   return (
     <main className="min-h-screen relative" style={{
-      backgroundImage: `url('/arkaplansite.png')`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundAttachment: 'fixed',
+      background: 'linear-gradient(135deg, #0a0020 0%, #1a0030 30%, #3d1040 55%, #8b3a15 85%, #c45a10 100%)',
     }}>
       <ViewContentTracker />
       <CountdownTimer />

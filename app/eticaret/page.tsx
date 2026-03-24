@@ -32,12 +32,9 @@ const Footer = dynamic(
 export default function EticaretPage() {
   return (
     <main className="min-h-screen text-white font-display relative">
-      {/* Background image */}
+      {/* Background gradient */}
       <div className="fixed inset-0 pointer-events-none" style={{
-        backgroundImage: `url('/arkaplansite.png')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
+        background: 'linear-gradient(135deg, #0a0020 0%, #1a0030 30%, #3d1040 55%, #8b3a15 85%, #c45a10 100%)',
       }} />
       {/* Hero + Registration Section */}
       <div className="relative z-10">
