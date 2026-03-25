@@ -142,7 +142,7 @@ export async function POST(request: NextRequest) {
       customData: {
         content_name: webinarId === '86257770515' ? 'E-Ticaret Webinar Kayıt' : 'Webinar Kayıt',
         status: 'completed',
-        value: 1,
+        value: parseFloat((Math.random() * 0.98 + 0.01).toFixed(2)),
         currency: 'TRY',
       },
     }).catch(err => console.warn('⚠️ CAPI non-critical error:', err));

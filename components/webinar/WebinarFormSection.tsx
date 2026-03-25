@@ -31,7 +31,7 @@ export default function WebinarFormSection() {
         trackCompleteRegistration({
           content_name: "Webinar Kayıt",
           status: "completed",
-          value: 1,
+          value: parseFloat((Math.random() * 0.98 + 0.01).toFixed(2)),
           currency: "TRY",
         });
         setResult({ success: true, message: data.message, joinUrl: data.joinUrl });
