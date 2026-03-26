@@ -11,6 +11,7 @@ export default function KayitBasariliContent() {
   const [webinarDate, setWebinarDate] = useState<string>("");
   const [webinarDay, setWebinarDay] = useState<string>("");
   const [registrationDate, setRegistrationDate] = useState<string>("");
+  const [calendarUrl, setCalendarUrl] = useState<string>("");
 
   useEffect(() => {
     const dayNames = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
@@ -32,6 +33,15 @@ export default function KayitBasariliContent() {
 
     setWebinarDate(`${day}.${month}.${year}`);
     setWebinarDay(dayNames[eventDate.getDay()]);
+
+    // Google Calendar URL — webinar 20:00-21:00 Turkey time (UTC+3 → 17:00-18:00 UTC)
+    const startUTC = new Date(eventDate);
+    startUTC.setHours(20 - 3, 0, 0, 0); // Convert Turkey 20:00 to UTC 17:00
+    const endUTC = new Date(startUTC);
+    endUTC.setHours(endUTC.getHours() + 1);
+    const fmt = (d: Date) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Ucretsiz AI Webinari - Yapay Zeka ile Ilk 10,000$ Kazanin')}&dates=${fmt(startUTC)}/${fmt(endUTC)}&details=${encodeURIComponent('Canli AI Webinari\nKatilim linkiniz email adresinize gonderildi.\n\nBaturalp Tunali ile yapay zeka kullanarak nasil para kazanacaginizi ogrenin.')}&location=${encodeURIComponent('Zoom (Link email ile gonderildi)')}`;
+    setCalendarUrl(gcalUrl);
 
     // Registration date (today in Turkey timezone)
     const regDay = String(turkey.getDate()).padStart(2, "0");
@@ -106,6 +116,22 @@ export default function KayitBasariliContent() {
                 </p>
               )}
             </div>
+          </div>
+
+          {/* Google Calendar Button */}
+          <div className="max-w-3xl mx-auto mb-12">
+            <p className="text-white/80 text-center text-lg mb-3">Semineri takvime ekle, katılmayı unutma!</p>
+            <a href={calendarUrl || '#'} target="_blank" rel="noopener noreferrer" onClick={(e) => { if (!calendarUrl) e.preventDefault(); }}>
+              <button className="bg-white text-gray-800 font-bold text-lg px-8 py-4 rounded-xl hover:bg-gray-100 transition-all w-full flex items-center justify-center gap-3 cursor-pointer shadow-lg">
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+                  <rect x="3" y="4" width="18" height="18" rx="2" stroke="#4285F4" strokeWidth="2"/>
+                  <path d="M3 10h18" stroke="#4285F4" strokeWidth="2"/>
+                  <path d="M8 2v4M16 2v4" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
+                  <path d="M7 14h2v2H7zM11 14h2v2h-2zM15 14h2v2h-2z" fill="#4285F4"/>
+                </svg>
+                Google Takvime Ekle
+              </button>
+            </a>
           </div>
 
           {/* Video Section */}
