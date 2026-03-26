@@ -34,13 +34,9 @@ export default function KayitBasariliContent() {
     setWebinarDate(`${day}.${month}.${year}`);
     setWebinarDay(dayNames[eventDate.getDay()]);
 
-    // Google Calendar URL — webinar 20:00-21:00 Turkey time (UTC+3 → 17:00-18:00 UTC)
-    const startUTC = new Date(eventDate);
-    startUTC.setHours(20 - 3, 0, 0, 0); // Convert Turkey 20:00 to UTC 17:00
-    const endUTC = new Date(startUTC);
-    endUTC.setHours(endUTC.getHours() + 1);
-    const fmt = (d: Date) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-    const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Ucretsiz AI Webinari - Yapay Zeka ile Ilk 10,000$ Kazanin')}&dates=${fmt(startUTC)}/${fmt(endUTC)}&details=${encodeURIComponent('Canli AI Webinari\nKatilim linkiniz email adresinize gonderildi.\n\nBaturalp Tunali ile yapay zeka kullanarak nasil para kazanacaginizi ogrenin.')}&location=${encodeURIComponent('Zoom (Link email ile gonderildi)')}`;
+    // Google Calendar URL — webinar 20:00-21:00 Turkey time with timezone parameter
+    const dateStr = `${year}${month}${day}`;
+    const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Ucretsiz AI Webinari - Yapay Zeka ile Ilk 10,000$ Kazanin')}&dates=${dateStr}T200000/${dateStr}T210000&ctz=Europe/Istanbul&details=${encodeURIComponent('Canli AI Webinari\nKatilim linkiniz email adresinize gonderildi.\n\nBaturalp Tunali ile yapay zeka kullanarak nasil para kazanacaginizi ogrenin.')}&location=${encodeURIComponent('Zoom (Link email ile gonderildi)')}`;
     setCalendarUrl(gcalUrl);
 
     // Registration date (today in Turkey timezone)
