@@ -65,7 +65,7 @@ export default function EticaretKayitBasariliContent() {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-primary via-primary-light to-primary">
-      <section className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-4">
+      <section className="relative min-h-screen flex items-center justify-center pt-16 pb-20 px-4">
         <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary to-primary-light" />
 
         <div className="relative z-10 max-w-6xl mx-auto text-center">
@@ -84,14 +84,6 @@ export default function EticaretKayitBasariliContent() {
             <span className="text-gold block mt-2">{name}!</span>
           </h1>
 
-          <div className="flex items-center justify-center space-x-2 text-white/60 text-sm md:text-base mb-8">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="10" strokeWidth="2" />
-              <path strokeWidth="2" d="M12 6v6l4 2" />
-            </svg>
-            <p>E-Ticaret canlı seminere hoş geldiniz</p>
-          </div>
-
           {/* Email Notification Banner */}
           <div className="max-w-3xl mx-auto mb-12">
             <div className="bg-gold/10 border-2 border-gold rounded-2xl p-6 md:p-8">
@@ -104,13 +96,27 @@ export default function EticaretKayitBasariliContent() {
                 </h2>
               </div>
               <p className="text-white/80 text-base md:text-lg">
-                Seminere katılmak için e-posta kutunuzu kontrol edin ve <strong className="text-white">{webinarDate} {webinarDay} saat 20:00{"'"}da</strong> gelen katılım linkine tıklayarak seminere katılın. Spam klasörünü de kontrol etmeyi unutmayın.
+                E-posta adresinize bir <strong className="text-white">Zoom katılım linki</strong> gönderdik. <strong className="text-white">{webinarDate} {webinarDay} saat 20:00{"'"}da</strong> e-postanızdaki linke tıklayın, Zoom açılacak ve canlı seminere katılacaksınız. E-postayı bulamıyorsanız <strong className="text-white">spam/gereksiz</strong> klasörünü de kontrol edin.
               </p>
               {registrationDate && (
                 <p className="text-white/50 text-sm mt-3">
                   Kayıt tarihiniz: {registrationDate}
                 </p>
               )}
+            </div>
+          </div>
+
+          {/* Video Section */}
+          <div className="max-w-5xl mx-auto mb-12">
+            <div className="relative aspect-video bg-primary-light/50 rounded-3xl overflow-hidden border border-gold/30 shadow-[0_0_40px_rgba(251,191,36,0.3)]">
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src="https://www.youtube.com/embed/cIbDH0lWMc0"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
             </div>
           </div>
 
@@ -128,20 +134,6 @@ export default function EticaretKayitBasariliContent() {
                 Google Takvime Ekle
               </button>
             </a>
-          </div>
-
-          {/* Video Section */}
-          <div className="max-w-5xl mx-auto mb-12">
-            <div className="relative aspect-video bg-primary-light/50 rounded-3xl overflow-hidden border border-gold/30 shadow-[0_0_40px_rgba(251,191,36,0.3)]">
-              <iframe
-                className="absolute inset-0 w-full h-full"
-                src="https://www.youtube.com/embed/cIbDH0lWMc0"
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
-            </div>
           </div>
 
           {/* Webinar Details Card */}

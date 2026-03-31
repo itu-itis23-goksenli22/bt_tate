@@ -3,14 +3,35 @@
 import { useState, useEffect } from "react";
 
 const COUNTDOWN_SECONDS = 14 * 60 + 22; // 14:22
+const STORAGE_KEY = "countdown_end_time";
+
+function getInitialTimeLeft(): number {
+  if (typeof window === "undefined") return COUNTDOWN_SECONDS;
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored) {
+    const remaining = Math.floor((parseInt(stored, 10) - Date.now()) / 1000);
+    if (remaining > 0) return remaining;
+  }
+  // No valid stored time — set a new end time
+  const endTime = Date.now() + COUNTDOWN_SECONDS * 1000;
+  localStorage.setItem(STORAGE_KEY, String(endTime));
+  return COUNTDOWN_SECONDS;
+}
 
 export default function CountdownTimer() {
   const [timeLeft, setTimeLeft] = useState(COUNTDOWN_SECONDS);
 
   useEffect(() => {
+    setTimeLeft(getInitialTimeLeft());
+
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
-        if (prev <= 1) return COUNTDOWN_SECONDS;
+        if (prev <= 1) {
+          // Timer expired — start fresh
+          const endTime = Date.now() + COUNTDOWN_SECONDS * 1000;
+          localStorage.setItem(STORAGE_KEY, String(endTime));
+          return COUNTDOWN_SECONDS;
+        }
         return prev - 1;
       });
     }, 1000);
