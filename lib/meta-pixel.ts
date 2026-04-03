@@ -34,9 +34,13 @@ export const setAdvancedMatching = (userData: {
   }
 };
 
-export const trackEvent = (eventName: string, data?: Record<string, any>) => {
+export const trackEvent = (eventName: string, data?: Record<string, any>, eventId?: string) => {
   if (typeof window !== "undefined" && window.fbq) {
-    window.fbq("track", eventName, data);
+    if (eventId) {
+      window.fbq("track", eventName, data, { eventID: eventId });
+    } else {
+      window.fbq("track", eventName, data);
+    }
   }
 };
 
@@ -61,8 +65,8 @@ export const trackViewContent = (data?: {
   content_type?: string;
   value?: number;
   currency?: string;
-}) => {
-  trackEvent("ViewContent", data);
+}, eventId?: string) => {
+  trackEvent("ViewContent", data, eventId);
 };
 
 export const trackAddToCart = (data?: {
@@ -110,6 +114,6 @@ export const trackCompleteRegistration = (data?: {
   value?: number;
   currency?: string;
   status?: string;
-}) => {
-  trackEvent("CompleteRegistration", data);
+}, eventId?: string) => {
+  trackEvent("CompleteRegistration", data, eventId);
 };

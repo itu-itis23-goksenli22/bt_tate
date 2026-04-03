@@ -4,7 +4,7 @@ import { sendCAPIEvent } from '@/lib/meta-capi';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { eventName, sourceUrl, customData, eventId, email, firstName, lastName } = body;
+    const { eventName, sourceUrl, customData, eventId, eventTime, email, firstName, lastName, fbc, fbp } = body;
 
     if (!eventName) {
       return NextResponse.json({ error: 'eventName required' }, { status: 400 });
@@ -16,6 +16,7 @@ export async function POST(request: NextRequest) {
     const result = await sendCAPIEvent({
       eventName,
       eventId,
+      eventTime: eventTime ? Number(eventTime) : undefined,
       sourceUrl: sourceUrl || request.headers.get('referer') || 'https://aiscaleapp.com',
       userData: {
         email: email || undefined,
@@ -23,6 +24,8 @@ export async function POST(request: NextRequest) {
         lastName: lastName || undefined,
         clientIpAddress: clientIp,
         clientUserAgent: userAgent,
+        fbc: fbc || undefined,
+        fbp: fbp || undefined,
       },
       customData,
     });

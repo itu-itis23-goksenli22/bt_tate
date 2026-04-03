@@ -1,7 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { setAdvancedMatching } from "@/lib/meta-pixel";
+import { setAdvancedMatching, trackCompleteRegistration } from "@/lib/meta-pixel";
+
+function getCookie(name: string): string | undefined {
+  if (typeof document === "undefined") return undefined;
+  const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+  return match ? decodeURIComponent(match[2]) : undefined;
+}
 
 interface RegistrationModalProps {
   isOpen: boolean;
@@ -83,6 +89,8 @@ export default function RegistrationModal({
           lastName,
           phone: "",
           webinarId: "86257770515",
+          fbc: getCookie("_fbc"),
+          fbp: getCookie("_fbp"),
         }),
       });
 
@@ -92,7 +100,14 @@ export default function RegistrationModal({
         setStatus("success");
         // Advanced Matching — send user data to Meta Pixel
         setAdvancedMatching({ em: formData.email, fn: firstName, ln: lastName });
-        // Redirect to success page after 1.5s (pass email for pixel tracking)
+        // Client-side CompleteRegistration with same eventId as server for dedup
+        trackCompleteRegistration({
+          content_name: "E-Ticaret Webinar Kayıt",
+          status: "completed",
+          value: data.eventValue,
+          currency: "TRY",
+        }, data.eventId);
+        // Redirect to success page after 1.5s
         setTimeout(() => {
           window.location.href = `/kayitbasarili?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`;
         }, 1500);

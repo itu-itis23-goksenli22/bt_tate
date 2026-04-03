@@ -3,13 +3,19 @@
 import { useState } from "react";
 import { setAdvancedMatching, trackCompleteRegistration } from "@/lib/meta-pixel";
 
+function getCookie(name: string): string | undefined {
+  if (typeof document === "undefined") return undefined;
+  const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+  return match ? decodeURIComponent(match[2]) : undefined;
+}
+
 export default function WebinarFormSection() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const phone = "";
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [result, setResult] = useState<{ success: boolean; message: string; joinUrl?: string } | null>(null);
+  const [result, setResult] = useState<{ success: boolean; message: string; joinUrl?: string; eventId?: string; eventValue?: number } | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,7 +26,7 @@ export default function WebinarFormSection() {
       const response = await fetch("/api/zoom-register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, firstName, lastName, phone }),
+        body: JSON.stringify({ email, firstName, lastName, phone, fbc: getCookie("_fbc"), fbp: getCookie("_fbp") }),
       });
 
       const data = await response.json();
@@ -31,10 +37,10 @@ export default function WebinarFormSection() {
         trackCompleteRegistration({
           content_name: "Webinar Kayıt",
           status: "completed",
-          value: parseFloat((Math.random() * 0.98 + 0.01).toFixed(2)),
+          value: data.eventValue,
           currency: "TRY",
-        });
-        setResult({ success: true, message: data.message, joinUrl: data.joinUrl });
+        }, data.eventId);
+        setResult({ success: true, message: data.message, joinUrl: data.joinUrl, eventId: data.eventId, eventValue: data.eventValue });
         setFirstName("");
         setLastName("");
         setEmail("");

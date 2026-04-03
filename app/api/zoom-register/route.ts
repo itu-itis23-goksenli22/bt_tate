@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import crypto from 'crypto';
 import { sendCAPIEvent } from '@/lib/meta-capi';
 
 const supabase = createClient(
@@ -64,7 +65,7 @@ async function registerToZoomWebinar(accessToken: string, email: string, firstNa
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email, firstName, lastName, phone, webinarId } = body;
+    const { email, firstName, lastName, phone, webinarId, fbc, fbp } = body;
 
     if (!email || !email.includes('@')) {
       return NextResponse.json(
@@ -128,8 +129,11 @@ export async function POST(request: NextRequest) {
     const referer = request.headers.get('referer') || 'https://aiscaleapp.com';
     const clientIp = request.headers.get('x-real-ip') || request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '';
     const userAgent = request.headers.get('user-agent') || '';
+    const eventId = crypto.randomUUID();
+    const eventValue = parseFloat((Math.random() * 0.98 + 0.01).toFixed(2));
     sendCAPIEvent({
       eventName: 'CompleteRegistration',
+      eventId,
       sourceUrl: referer,
       userData: {
         email,
@@ -138,11 +142,13 @@ export async function POST(request: NextRequest) {
         phone: phone || undefined,
         clientIpAddress: clientIp,
         clientUserAgent: userAgent,
+        fbc: fbc || undefined,
+        fbp: fbp || undefined,
       },
       customData: {
         content_name: webinarId === '86257770515' ? 'E-Ticaret Webinar Kayıt' : 'Webinar Kayıt',
         status: 'completed',
-        value: parseFloat((Math.random() * 0.98 + 0.01).toFixed(2)),
+        value: eventValue,
         currency: 'TRY',
       },
     }).catch(err => console.warn('⚠️ CAPI non-critical error:', err));
@@ -151,6 +157,8 @@ export async function POST(request: NextRequest) {
       success: true,
       message: 'Webinara başarıyla kaydoldunuz!',
       joinUrl: zoomResult.join_url,
+      eventId,
+      eventValue,
     });
   } catch (error) {
     console.error('❌ Zoom register error:', error);
