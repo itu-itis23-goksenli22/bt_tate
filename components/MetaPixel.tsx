@@ -55,7 +55,6 @@ export default function MetaPixel() {
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
             var pixelId = window.location.hostname.includes('dijitalakademi') ? '1261057665474950' : '793366716531580';
-            fbq('set', 'autoConfig', false, pixelId);
             fbq('init', pixelId);
             var pvEventId = 'pv_' + Date.now() + '_' + Math.random().toString(36).substr(2,9);
             window.__pageViewEventId = pvEventId;
