@@ -98,15 +98,15 @@ export default function RegistrationModal({
 
       if (res.ok) {
         setStatus("success");
-        // Advanced Matching — send user data to Meta Pixel
-        setAdvancedMatching({ em: formData.email, fn: firstName, ln: lastName });
-        // Client-side CompleteRegistration with same eventId as server for dedup
+        // Fire CompleteRegistration BEFORE re-init to avoid pixel reset issues
         trackCompleteRegistration({
           content_name: "E-Ticaret Webinar Kayıt",
           status: "completed",
           value: data.eventValue,
           currency: "TRY",
         }, data.eventId);
+        // Advanced Matching — send user data to Meta Pixel (after track call)
+        setAdvancedMatching({ em: formData.email, fn: firstName, ln: lastName });
         // Redirect to success page after 1.5s
         setTimeout(() => {
           window.location.href = `/kayitbasarili?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`;

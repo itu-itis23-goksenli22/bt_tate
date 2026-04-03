@@ -32,14 +32,15 @@ export default function WebinarFormSection() {
       const data = await response.json();
 
       if (response.ok) {
-        // Advanced Matching — send user data to Meta Pixel
-        setAdvancedMatching({ em: email, fn: firstName, ln: lastName });
+        // Fire CompleteRegistration BEFORE re-init to avoid pixel reset issues
         trackCompleteRegistration({
           content_name: "Webinar Kayıt",
           status: "completed",
           value: data.eventValue,
           currency: "TRY",
         }, data.eventId);
+        // Advanced Matching — send user data to Meta Pixel (after track call)
+        setAdvancedMatching({ em: email, fn: firstName, ln: lastName });
         setResult({ success: true, message: data.message, joinUrl: data.joinUrl, eventId: data.eventId, eventValue: data.eventValue });
         setFirstName("");
         setLastName("");
