@@ -76,6 +76,9 @@ export async function sendCAPIEvent(params: CAPIEventParams) {
         body: JSON.stringify({
           data: [eventData],
           access_token: token,
+          ...(sourceUrl.includes("dijitalakademi")
+            ? { test_event_code: "TEST95230" }
+            : { test_event_code: "TEST87285" }),
         }),
       }
     );
