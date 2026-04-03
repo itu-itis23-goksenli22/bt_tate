@@ -26,6 +26,7 @@ function hashData(value: string): string {
 interface CAPIEventParams {
   eventName: string;
   eventId?: string;
+  eventTime?: number; // Unix timestamp - for sending past events
   sourceUrl: string;
   userData: {
     email?: string;
@@ -41,7 +42,7 @@ interface CAPIEventParams {
 }
 
 export async function sendCAPIEvent(params: CAPIEventParams) {
-  const { eventName, eventId, sourceUrl, userData, customData } = params;
+  const { eventName, eventId, eventTime, sourceUrl, userData, customData } = params;
 
   // Build user_data with hashed values
   const user_data: Record<string, any> = {};
@@ -56,7 +57,7 @@ export async function sendCAPIEvent(params: CAPIEventParams) {
 
   const eventData: Record<string, any> = {
     event_name: eventName,
-    event_time: Math.floor(Date.now() / 1000),
+    event_time: eventTime || Math.floor(Date.now() / 1000),
     action_source: "website",
     event_source_url: sourceUrl,
     user_data,
@@ -75,6 +76,7 @@ export async function sendCAPIEvent(params: CAPIEventParams) {
         body: JSON.stringify({
           data: [eventData],
           access_token: token,
+          test_event_code: "TEST87285", // TEMPORARY — remove after testing
         }),
       }
     );
