@@ -76,7 +76,6 @@ export async function sendCAPIEvent(params: CAPIEventParams) {
         body: JSON.stringify({
           data: [eventData],
           access_token: token,
-          test_event_code: "TEST87285", // TEMPORARY — remove after testing
         }),
       }
     );
