@@ -7,7 +7,6 @@ declare global {
   interface Window {
     fbq: any;
     _fbq: any;
-    __pageViewEventId?: string;
   }
 }
 
@@ -19,13 +18,16 @@ function getCookie(name: string): string | undefined {
 
 export default function MetaPixel() {
   useEffect(() => {
-    // Send server-side PageView via CAPI (same eventId as browser for dedup)
-    const eventId = window.__pageViewEventId;
-    if (!eventId) return;
+    // Fire PageView from useEffect to ensure correct URL (inline script may fire too early)
+    if (typeof window === "undefined" || !window.fbq) return;
 
+    const pvEventId = 'pv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    window.fbq('track', 'PageView', {}, { eventID: pvEventId });
+
+    // Send matching server-side PageView via CAPI for dedup
     const payload = JSON.stringify({
       eventName: "PageView",
-      eventId,
+      eventId: pvEventId,
       sourceUrl: window.location.href,
       fbc: getCookie("_fbc"),
       fbp: getCookie("_fbp"),
@@ -56,9 +58,6 @@ export default function MetaPixel() {
             'https://connect.facebook.net/en_US/fbevents.js');
             var pixelId = window.location.hostname.includes('dijitalakademi') ? '1261057665474950' : '793366716531580';
             fbq('init', pixelId);
-            var pvEventId = 'pv_' + Date.now() + '_' + Math.random().toString(36).substr(2,9);
-            window.__pageViewEventId = pvEventId;
-            fbq('track', 'PageView', {}, {eventID: pvEventId});
           `,
         }}
       />
