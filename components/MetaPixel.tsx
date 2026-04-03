@@ -18,8 +18,11 @@ function getCookie(name: string): string | undefined {
 
 export default function MetaPixel() {
   useEffect(() => {
-    // Fire PageView from useEffect to ensure correct URL (inline script may fire too early)
     if (typeof window === "undefined" || !window.fbq) return;
+    // Prevent duplicate PageView from middleware rewrite (dijitalakademi.live)
+    const currentPath = window.location.pathname;
+    if ((window as any).__pvFiredPath === currentPath) return;
+    (window as any).__pvFiredPath = currentPath;
 
     const pvEventId = 'pv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
     window.fbq('track', 'PageView', {}, { eventID: pvEventId });
