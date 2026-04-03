@@ -7,14 +7,34 @@ declare global {
   interface Window {
     fbq: any;
     _fbq: any;
+    __pageViewEventId?: string;
   }
+}
+
+function getCookie(name: string): string | undefined {
+  if (typeof document === "undefined") return undefined;
+  const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+  return match ? decodeURIComponent(match[2]) : undefined;
 }
 
 export default function MetaPixel() {
   useEffect(() => {
-    // Initialize Facebook Pixel
-    if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("track", "PageView");
+    // Send server-side PageView via CAPI (same eventId as browser for dedup)
+    const eventId = window.__pageViewEventId;
+    if (!eventId) return;
+
+    const payload = JSON.stringify({
+      eventName: "PageView",
+      eventId,
+      sourceUrl: window.location.href,
+      fbc: getCookie("_fbc"),
+      fbp: getCookie("_fbp"),
+    });
+
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon("/api/meta-capi", new Blob([payload], { type: "application/json" }));
+    } else {
+      fetch("/api/meta-capi", { method: "POST", headers: { "Content-Type": "application/json" }, body: payload }).catch(() => {});
     }
   }, []);
 
@@ -36,7 +56,9 @@ export default function MetaPixel() {
             'https://connect.facebook.net/en_US/fbevents.js');
             var pixelId = window.location.hostname.includes('dijitalakademi') ? '1261057665474950' : '793366716531580';
             fbq('init', pixelId);
-            fbq('track', 'PageView');
+            var pvEventId = 'pv_' + Date.now() + '_' + Math.random().toString(36).substr(2,9);
+            window.__pageViewEventId = pvEventId;
+            fbq('track', 'PageView', {}, {eventID: pvEventId});
           `,
         }}
       />
