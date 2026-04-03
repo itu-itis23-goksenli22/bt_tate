@@ -1,6 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { setAdvancedMatching, trackCompleteRegistration } from "@/lib/meta-pixel";
+
+function getCookie(name: string): string | undefined {
+  if (typeof document === "undefined") return undefined;
+  const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+  return match ? decodeURIComponent(match[2]) : undefined;
+}
 
 interface RegistrationModalProps {
   isOpen: boolean;
@@ -81,6 +88,8 @@ export default function RegistrationModal({
           firstName,
           lastName,
           phone: "",
+          fbc: getCookie("_fbc"),
+          fbp: getCookie("_fbp"),
         }),
       });
 
@@ -88,6 +97,14 @@ export default function RegistrationModal({
 
       if (res.ok) {
         setStatus("success");
+        // Fire CompleteRegistration with same eventId as server for dedup
+        trackCompleteRegistration({
+          content_name: "Webinar Kayıt",
+          status: "completed",
+          value: data.eventValue,
+          currency: "TRY",
+        }, data.eventId);
+        setAdvancedMatching({ em: formData.email, fn: firstName, ln: lastName });
         // Redirect to VIP upsell page after 1.5s
         setTimeout(() => {
           window.location.href = `/kayitbasarili?name=${encodeURIComponent(formData.name)}`;
