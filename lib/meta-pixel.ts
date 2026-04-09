@@ -14,7 +14,8 @@ declare global {
   }
 }
 
-// Re-initialize pixel with Advanced Matching user data
+// Send user data for Advanced Matching WITHOUT re-initializing pixel
+// Using fbq('setUserProperties') avoids duplicate init which causes duplicate events
 export const setAdvancedMatching = (userData: {
   em?: string; // email
   fn?: string; // first name (lowercase)
@@ -29,8 +30,8 @@ export const setAdvancedMatching = (userData: {
     if (userData.ln) cleanData.ln = userData.ln.toLowerCase().trim();
     if (userData.ph) cleanData.ph = userData.ph.replace(/\D/g, "");
 
-    // Re-init pixel with user data for Advanced Matching
-    window.fbq("init", getPixelId(), cleanData);
+    // Set user properties without re-init (prevents duplicate PageView)
+    window.fbq("setUserProperties", getPixelId(), cleanData);
   }
 };
 
