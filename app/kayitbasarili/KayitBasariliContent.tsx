@@ -9,11 +9,20 @@ const CHECKOUT_URL = "https://buy.stripe.com/5kQcN68Cs7Pvf7j2Le3wQ0r";
 const CTA_GRADIENT = "linear-gradient(271.63deg, #C19D44 -20%, #E8D48B 20%, #FDF3AD 50%, #E8D48B 80%, #C19D44 120%)";
 const GOLD_BG_SUBTLE = "linear-gradient(223deg, rgba(170,129,60,0.14) 0%, rgba(170,129,60,0.10) 100%)";
 
+function getThankYouUrl(name: string, email: string) {
+  const params = new URLSearchParams();
+  if (name && name !== "Değerli Katılımcı") params.set("name", name);
+  if (email) params.set("email", email);
+  const qs = params.toString();
+  return `/kayitbasarili/tesekkurler${qs ? `?${qs}` : ""}`;
+}
+
 export default function KayitBasariliContent() {
   const searchParams = useSearchParams();
   const name = searchParams.get("name") || "Değerli Katılımcı";
   const email = searchParams.get("email") || "";
   const [webinarTime, setWebinarTime] = useState("");
+  const thankYouUrl = getThankYouUrl(name, email);
 
   useEffect(() => {
     const dayNames = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
@@ -108,7 +117,7 @@ export default function KayitBasariliContent() {
           </div>
 
           {/* 5. First CTA Block */}
-          <CTABlock />
+          <CTABlock thankYouUrl={thankYouUrl} />
 
           {/* 6. 5X Guarantee */}
           <div className="my-10 rounded-[9px] border border-dashed border-[#AA813C]/40 p-6 md:p-8 text-center"
@@ -129,7 +138,7 @@ export default function KayitBasariliContent() {
               adresine yazmanız yeterli — paranızın tamamını iade ederiz, soru sormadan!
             </p>
             <p className="mt-4">
-              <a href="/" className="text-white/30 text-[12px] underline italic hover:text-white/40 transition-colors">
+              <a href={thankYouUrl} className="text-white/30 text-[12px] underline italic hover:text-white/40 transition-colors">
                 Hayır, ücretsiz webinara devam edeceğim
               </a>
             </p>
@@ -150,7 +159,7 @@ export default function KayitBasariliContent() {
           </div>
 
           {/* 8. Second CTA Block */}
-          <CTABlock />
+          <CTABlock thankYouUrl={thankYouUrl} />
 
           {/* 9. VIP Member Benefits */}
           <div className="my-10 rounded-[9px] border border-dashed border-[#AA813C]/40 p-6 md:p-10"
@@ -210,7 +219,7 @@ export default function KayitBasariliContent() {
           </div>
 
           {/* 11. Third CTA Block */}
-          <CTABlock />
+          <CTABlock thankYouUrl={thankYouUrl} />
 
           {/* 12. Testimonials */}
           <div className="my-10 text-center">
@@ -266,7 +275,7 @@ export default function KayitBasariliContent() {
           </div>
 
           {/* Final No Thank You - Full width solid gray */}
-          <NoThankYouButton />
+          <NoThankYouButton href={thankYouUrl} />
         </div>
       </main>
     </>
@@ -275,7 +284,7 @@ export default function KayitBasariliContent() {
 
 /* ─── Sub-components ─── */
 
-function CTABlock() {
+function CTABlock({ thankYouUrl }: { thankYouUrl: string }) {
   return (
     <div className="my-6">
       {/* CTA buton + alt yazı tek blok */}
@@ -291,15 +300,15 @@ function CTABlock() {
       </a>
 
       {/* No Thank You - Full width solid gray */}
-      <NoThankYouButton />
+      <NoThankYouButton href={thankYouUrl} />
     </div>
   );
 }
 
-function NoThankYouButton() {
+function NoThankYouButton({ href }: { href: string }) {
   return (
     <div className="mt-3">
-      <a href="/" className="block bg-[#333] rounded-[10px] py-4 px-6 text-center hover:bg-[#3a3a3a] transition-colors">
+      <a href={href} className="block bg-[#333] rounded-[10px] py-4 px-6 text-center hover:bg-[#3a3a3a] transition-colors">
         <div className="text-white/60 text-[14px] font-medium">Hayır Teşekkürler.</div>
         <div className="text-white/35 text-[12px] mt-0.5">
           &quot;Özel VIP Deneyimini&quot; kaçırmayı tercih ediyorum
