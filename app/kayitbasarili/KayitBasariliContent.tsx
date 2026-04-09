@@ -238,16 +238,16 @@ export default function KayitBasariliContent() {
             </h2>
             <div className="space-y-4 max-w-lg mx-auto">
               <TestimonialCard
-                name="Kübra J."
-                role="AI Digital Dealer"
+                name="Elif K."
+                role="AI Scale Topluluk Üyesi"
                 text="Katıldığım en iyi eğitimlerden biriydi! Herkese tavsiye ederim."
-                initial="K"
+                initial="E"
               />
               <TestimonialCard
-                name="Ryan T."
-                role="AI Digital Dealer"
+                name="Burak D."
+                role="AI Scale Topluluk Üyesi"
                 text="VIP üyeliği almayı neredeyse pas geçiyordum ama çok iyi ki geçmedim. Birebir soru-cevap oturumu tam da ihtiyacım olan şeydi. Aldığım tek bir taktik bile ödediğimin 10 katını hak ediyordu."
-                initial="R"
+                initial="B"
               />
             </div>
             <div className="mt-8">
