@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { setAdvancedMatching } from "@/lib/meta-pixel";
+import { setAdvancedMatching, trackCompleteRegistration } from "@/lib/meta-pixel";
 
 const CHECKOUT_URL = "https://buy.stripe.com/5kQcN68Cs7Pvf7j2Le3wQ0r";
 
@@ -46,6 +46,13 @@ export default function KayitBasariliContent() {
         ln: nameParts.slice(1).join(" ") || "",
       });
     }
+    // Track registration completion with value/currency
+    trackCompleteRegistration({
+      content_name: "Webinar Kayıt",
+      status: "completed",
+      value: parseFloat((Math.random() * 0.98 + 0.01).toFixed(2)),
+      currency: "TRY",
+    });
   }, []);
 
   return (
