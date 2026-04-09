@@ -18,23 +18,40 @@ function getCookie(name: string): string | undefined {
 
 export default function MetaPixel() {
   useEffect(() => {
-    // Send server-side PageView via CAPI (same eventId as browser for dedup)
-    const eventId = (window as any).__pageViewEventId;
-    if (!eventId) return;
+    // Wait for fbevents.js to load and set _fbp cookie before sending CAPI
+    // Without this delay, _fbp is undefined on first page load (race condition)
+    const sendCAPI = () => {
+      const eventId = (window as any).__pageViewEventId;
+      if (!eventId) return;
 
-    const payload = JSON.stringify({
-      eventName: "PageView",
-      eventId,
-      sourceUrl: window.location.href,
-      fbc: getCookie("_fbc"),
-      fbp: getCookie("_fbp"),
-    });
+      const payload = JSON.stringify({
+        eventName: "PageView",
+        eventId,
+        sourceUrl: window.location.href,
+        fbc: getCookie("_fbc"),
+        fbp: getCookie("_fbp"),
+      });
 
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon("/api/meta-capi", new Blob([payload], { type: "application/json" }));
-    } else {
-      fetch("/api/meta-capi", { method: "POST", headers: { "Content-Type": "application/json" }, body: payload }).catch(() => {});
-    }
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon("/api/meta-capi", new Blob([payload], { type: "application/json" }));
+      } else {
+        fetch("/api/meta-capi", { method: "POST", headers: { "Content-Type": "application/json" }, body: payload }).catch(() => {});
+      }
+    };
+
+    // Retry until _fbp cookie is available (max 3 seconds)
+    let attempts = 0;
+    const maxAttempts = 6;
+    const checkAndSend = () => {
+      attempts++;
+      if (getCookie("_fbp") || attempts >= maxAttempts) {
+        sendCAPI();
+      } else {
+        setTimeout(checkAndSend, 500);
+      }
+    };
+    // Start checking after 500ms (give fbevents.js time to load)
+    setTimeout(checkAndSend, 500);
   }, []);
 
   return (
