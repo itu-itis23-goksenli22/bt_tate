@@ -68,6 +68,7 @@ export async function POST(request: NextRequest) {
       const nameParts = customerName.split(" ");
       await sendCAPIEvent({
         eventName: "Purchase",
+        eventId: `purchase_${session.id}`,
         sourceUrl,
         userData: {
           email: email || undefined,
