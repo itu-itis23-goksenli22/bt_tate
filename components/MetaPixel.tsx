@@ -18,11 +18,11 @@ function getCookie(name: string): string | undefined {
 
 export default function MetaPixel() {
   useEffect(() => {
-    // Wait for fbevents.js to load and set _fbp cookie before sending CAPI
-    // Without this delay, _fbp is undefined on first page load (race condition)
+    // Wait for BOTH the inline script to set __pageViewEventId AND fbevents.js to set _fbp cookie
+    // This prevents the race condition where CAPI fires before the pixel is fully initialized
     const sendCAPI = () => {
       const eventId = (window as any).__pageViewEventId;
-      if (!eventId) return;
+      if (!eventId) return; // No browser event to dedupe against
 
       const payload = JSON.stringify({
         eventName: "PageView",
@@ -32,26 +32,33 @@ export default function MetaPixel() {
         fbp: getCookie("_fbp"),
       });
 
-      if (navigator.sendBeacon) {
-        navigator.sendBeacon("/api/meta-capi", new Blob([payload], { type: "application/json" }));
-      } else {
-        fetch("/api/meta-capi", { method: "POST", headers: { "Content-Type": "application/json" }, body: payload }).catch(() => {});
-      }
+      // fetch with keepalive is more reliable than sendBeacon for our use case
+      // (sendBeacon has size limits and doesn't return errors)
+      fetch("/api/meta-capi", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+        keepalive: true,
+      }).catch(() => {});
     };
 
-    // Retry until _fbp cookie is available (max 3 seconds)
+    // Retry up to 10 times (5 seconds total) waiting for:
+    // 1. __pageViewEventId to be set by inline script
+    // 2. _fbp cookie to be set by fbevents.js
     let attempts = 0;
-    const maxAttempts = 6;
+    const maxAttempts = 10;
     const checkAndSend = () => {
       attempts++;
-      if (getCookie("_fbp") || attempts >= maxAttempts) {
+      const hasEventId = !!(window as any).__pageViewEventId;
+      const hasFbp = !!getCookie("_fbp");
+      if ((hasEventId && hasFbp) || attempts >= maxAttempts) {
         sendCAPI();
       } else {
         setTimeout(checkAndSend, 500);
       }
     };
-    // Start checking after 500ms (give fbevents.js time to load)
-    setTimeout(checkAndSend, 500);
+    // Start checking after 200ms (give inline script time to run)
+    setTimeout(checkAndSend, 200);
   }, []);
 
   return (

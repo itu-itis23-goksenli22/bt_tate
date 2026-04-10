@@ -18,21 +18,33 @@ export default function EticaretViewContentTracker() {
       value: 9900,
       currency: "TRY",
     };
-    // Browser pixel with eventId for dedup
-    trackViewContent(customData, eventId);
-    // Server-side CAPI with same eventId + fbc/fbp
-    fetch("/api/meta-capi", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        eventName: "ViewContent",
-        eventId,
-        sourceUrl: window.location.href,
-        customData,
-        fbc: getCookie("_fbc"),
-        fbp: getCookie("_fbp"),
-      }),
-    }).catch(() => {});
+    // Browser pixel with eventId for dedup — wait for fbp cookie to avoid race condition
+    let attempts = 0;
+    const maxAttempts = 6;
+    const fireEvents = () => {
+      attempts++;
+      if (!getCookie("_fbp") && attempts < maxAttempts) {
+        setTimeout(fireEvents, 500);
+        return;
+      }
+      // Browser pixel
+      trackViewContent(customData, eventId);
+      // Server-side CAPI with same eventId + fbc/fbp
+      fetch("/api/meta-capi", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          eventName: "ViewContent",
+          eventId,
+          sourceUrl: window.location.href,
+          customData,
+          fbc: getCookie("_fbc"),
+          fbp: getCookie("_fbp"),
+        }),
+        keepalive: true,
+      }).catch(() => {});
+    };
+    setTimeout(fireEvents, 500);
   }, []);
 
   return null;

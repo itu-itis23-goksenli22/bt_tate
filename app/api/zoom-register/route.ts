@@ -62,10 +62,31 @@ async function registerToZoomWebinar(accessToken: string, email: string, firstNa
   return response.json();
 }
 
+function parseCookies(header: string | null): Record<string, string> {
+  if (!header) return {};
+  const out: Record<string, string> = {};
+  header.split(';').forEach(c => {
+    const [k, ...v] = c.trim().split('=');
+    if (k) out[k] = v.join('=');
+  });
+  return out;
+}
+
+function generateFbp(): string {
+  const random = Math.floor(Math.random() * 9e9) + 1e9;
+  return `fb.1.${Date.now()}.${random}`;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email, firstName, lastName, phone, webinarId, fbc, fbp } = body;
+    const { email, firstName, lastName, phone, webinarId, fbc: bodyFbc, fbp: bodyFbp } = body;
+
+    // Server-side fallback for fbp/fbc — read from cookie header if not in body
+    const cookies = parseCookies(request.headers.get('cookie'));
+    let fbp = bodyFbp || cookies['_fbp'];
+    const fbc = bodyFbc || cookies['_fbc'];
+    if (!fbp) fbp = generateFbp();
 
     if (!email || !email.includes('@')) {
       return NextResponse.json(
