@@ -188,7 +188,7 @@ export default function TesekkurlerContent() {
 
             <p className="text-[#C19D44] font-bold text-[16px] mb-2">Hazırlık:</p>
             <p className="text-white/70 text-[14px] leading-relaxed">
-              Bilgisayarınızda veya telefonunuzda <strong className="text-white">Zoom uygulamasının</strong> kurulu olduğundan emin olun. Notlarınızı almak için kalem ve kağıdı da hazır bulundurmanızı öneririz.
+              Semineri en iyi deneyimlemek için sessiz bir ortamda olmanızı ve notlarınızı almak için <strong className="text-white">kalem ve kağıt</strong> hazır bulundurmanızı öneririz.
             </p>
           </div>
 
