@@ -16,6 +16,11 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(new URL("/eticaret/kayitbasarili", request.url));
   }
 
+  // dijitalakademi.live/kayitbasarili/tesekkurler → /eticaret/kayitbasarili/tesekkurler
+  if (isDijitalAkademi && pathname === "/kayitbasarili/tesekkurler") {
+    return NextResponse.rewrite(new URL("/eticaret/kayitbasarili/tesekkurler", request.url));
+  }
+
   // dijitalakademi.live/firsat → /eticaret/firsat
   if (isDijitalAkademi && pathname === "/firsat") {
     return NextResponse.rewrite(new URL("/eticaret/firsat", request.url));
@@ -40,5 +45,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/eticaret", "/eticaret/:path*", "/kayitbasarili", "/firsat", "/odemeonay", "/zoomkayit"],
+  matcher: ["/", "/eticaret", "/eticaret/:path*", "/kayitbasarili", "/kayitbasarili/tesekkurler", "/firsat", "/odemeonay", "/zoomkayit"],
 };

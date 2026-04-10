@@ -4,23 +4,35 @@ import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { setAdvancedMatching } from "@/lib/meta-pixel";
 
+const CHECKOUT_URL = "https://buy.stripe.com/eVafZ51vugc00WQfZ5";
+
+const CTA_GRADIENT = "linear-gradient(271.63deg, #C19D44 -20%, #E8D48B 20%, #FDF3AD 50%, #E8D48B 80%, #C19D44 120%)";
+const GOLD_BG_SUBTLE = "linear-gradient(223deg, rgba(170,129,60,0.14) 0%, rgba(170,129,60,0.10) 100%)";
+
+function getThankYouUrl(name: string, email: string) {
+  const params = new URLSearchParams();
+  if (name && name !== "Değerli Katılımcı") params.set("name", name);
+  if (email) params.set("email", email);
+  const qs = params.toString();
+  return `/kayitbasarili/tesekkurler${qs ? `?${qs}` : ""}`;
+}
+
 export default function EticaretKayitBasariliContent() {
   const searchParams = useSearchParams();
   const name = searchParams.get("name") || "Değerli Katılımcı";
   const email = searchParams.get("email") || "";
-  const [webinarDate, setWebinarDate] = useState<string>("");
-  const [webinarDay, setWebinarDay] = useState<string>("");
-  const [registrationDate, setRegistrationDate] = useState<string>("");
-  const [calendarUrl, setCalendarUrl] = useState<string>("");
+  const [webinarDate, setWebinarDate] = useState("");
+  const [webinarDay, setWebinarDay] = useState("");
+  const [webinarFull, setWebinarFull] = useState("");
+  const [registrationDate, setRegistrationDate] = useState("");
+  const [countdown, setCountdown] = useState({ hours: "00", minutes: "00", seconds: "00" });
+  const thankYouUrl = getThankYouUrl(name, email);
 
   useEffect(() => {
     const dayNames = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
-
     const now = new Date();
     const turkey = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
     const currentHour = turkey.getHours();
-
-    // Seminer her gün 20:00'da. Saat 20:00 geçtiyse yarını göster.
     const eventDate = new Date(turkey);
     if (currentHour >= 20) {
       eventDate.setDate(eventDate.getDate() + 1);
@@ -33,19 +45,13 @@ export default function EticaretKayitBasariliContent() {
 
     setWebinarDate(`${day}.${month}.${year}`);
     setWebinarDay(dayNames[eventDate.getDay()]);
+    setWebinarFull(`${day}.${month} ${dayNames[eventDate.getDay()]} 20:00`);
 
-    // Google Calendar URL — webinar 20:00-21:00 Turkey time with timezone parameter
-    const dateStr = `${year}${month}${day}`;
-    const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('E-Ticaret Webinari - Online Gelir Elde Edin')}&dates=${dateStr}T200000/${dateStr}T210000&ctz=Europe/Istanbul&details=${encodeURIComponent('Canli E-Ticaret Webinari\nKatilim linkiniz email adresinize gonderildi.\n\nE-Ticaret ile nasil online gelir elde edebileceginizi ogrenin.')}&location=${encodeURIComponent('Zoom (Link email ile gonderildi)')}`;
-    setCalendarUrl(gcalUrl);
-
-    // Registration date (today in Turkey timezone)
     const regDay = String(turkey.getDate()).padStart(2, "0");
     const regMonth = String(turkey.getMonth() + 1).padStart(2, "0");
     const regYear = turkey.getFullYear();
     setRegistrationDate(`${regDay}.${regMonth}.${regYear}`);
 
-    // Advanced Matching — send user data to Meta Pixel
     if (email) {
       const nameParts = name.split(" ");
       setAdvancedMatching({
@@ -54,58 +60,100 @@ export default function EticaretKayitBasariliContent() {
         ln: nameParts.slice(1).join(" ") || "",
       });
     }
+    // Note: CompleteRegistration is already fired in RegistrationModal with
+    // proper eventId for dedup. Do NOT fire again here to avoid duplicates.
+
+    // Countdown timer
+    const updateCountdown = () => {
+      const nowMs = Date.now();
+      const turkeyNow = new Date(new Date(nowMs).toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
+      const target = new Date(turkeyNow);
+      if (turkeyNow.getHours() >= 20) {
+        target.setDate(target.getDate() + 1);
+      }
+      target.setHours(20, 0, 0, 0);
+
+      const diff = target.getTime() - turkeyNow.getTime();
+      if (diff <= 0) return;
+
+      const h = Math.floor(diff / (1000 * 60 * 60));
+      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+      setCountdown({
+        hours: String(h).padStart(2, "0"),
+        minutes: String(m).padStart(2, "0"),
+        seconds: String(s).padStart(2, "0"),
+      });
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-primary via-primary-light to-primary">
-      <section className="relative min-h-screen flex items-center justify-center pt-16 pb-20 px-4">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary to-primary-light" />
+    <>
+      {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+      <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
-        <div className="relative z-10 max-w-6xl mx-auto text-center">
-          {/* Success Badge */}
-          <div className="mb-4">
-            <div className="inline-block bg-gold/20 border-2 border-gold rounded-full p-3 mb-4">
-              <svg className="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+      <main className="min-h-screen bg-[#0c0c0c] text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+        {/* 1. Solid Gold Banner - Remind user of webinar time */}
+        <div className="bg-[#C19D44] text-center py-3 px-4">
+          <p className="text-black font-semibold text-[14px] md:text-[16px]">
+            📅 Webinara şu saatte katılmayı unutmayın: {webinarFull || "..."}
+          </p>
+        </div>
+
+        <div className="max-w-[680px] mx-auto px-4 py-8">
+          {/* 2. Email Notification Banner */}
+          <div className="mb-8 rounded-[9px] border-2 border-[#C19D44] p-5 md:p-6"
+            style={{ background: GOLD_BG_SUBTLE }}>
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <svg className="w-6 h-6 text-[#C19D44] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
+              <h2 className="text-[18px] md:text-[20px] font-bold text-[#C19D44]">
+                Katılım Linkiniz E-posta Adresinize Gönderildi!
+              </h2>
             </div>
-          </div>
-
-          {/* Success Message */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            <span className="text-white block">Kaydınız Tamamlandı</span>
-            <span className="text-gold block mt-2">{name}!</span>
-          </h1>
-
-          {/* Email Notification Banner */}
-          <div className="max-w-3xl mx-auto mb-12">
-            <div className="bg-gold/10 border-2 border-gold rounded-2xl p-6 md:p-8">
-              <div className="flex items-center justify-center gap-3 mb-3">
-                <svg className="w-8 h-8 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                <h2 className="text-xl md:text-2xl font-bold text-gold">
-                  Katılım Linkiniz E-posta Adresinize Gönderildi!
-                </h2>
-              </div>
-              <p className="text-white/80 text-base md:text-lg">
-                E-posta adresinize bir <strong className="text-white">Zoom katılım linki</strong> gönderdik. <strong className="text-white">{webinarDate} {webinarDay} saat 20:00{"'"}da</strong> e-postanızdaki linke tıklayın, Zoom açılacak ve canlı seminere katılacaksınız. E-postayı bulamıyorsanız <strong className="text-white">spam/gereksiz</strong> klasörünü de kontrol edin.
+            <p className="text-white/70 text-[14px] md:text-[15px] text-center leading-relaxed">
+              E-posta adresinize bir <strong className="text-white">Zoom katılım linki</strong> gönderdik.{" "}
+              <strong className="text-white">{webinarDate} {webinarDay} saat 20:00{"'"}da</strong>{" "}
+              e-postanızdaki linke tıklayın, Zoom açılacak ve canlı seminere katılacaksınız.
+              E-postayı bulamıyorsanız <strong className="text-white">spam/gereksiz</strong> klasörünü de kontrol edin.
+            </p>
+            {registrationDate && (
+              <p className="text-white/40 text-[12px] text-center mt-3">
+                Kayıt tarihiniz: {registrationDate}
               </p>
-              {registrationDate && (
-                <p className="text-white/50 text-sm mt-3">
-                  Kayıt tarihiniz: {registrationDate}
-                </p>
-              )}
-            </div>
+            )}
           </div>
 
-          {/* Video Section */}
-          <div className="max-w-5xl mx-auto mb-12">
-            <div className="relative aspect-video bg-primary-light/50 rounded-3xl overflow-hidden border border-gold/30 shadow-[0_0_40px_rgba(251,191,36,0.3)]">
+          {/* 3. Main Heading */}
+          <div className="text-center mb-6">
+            <h1 className="text-[32px] md:text-[44px] font-extrabold leading-[1.12] mb-3">
+              Aşağıdaki Videoyu İzleyenler{" "}
+              <span className="block">Büyük Bir Avantaj Elde Ediyor...</span>
+            </h1>
+            <p className="text-white/40 text-[14px]">
+              İşte Tek Seferlik <span className="italic font-semibold text-white/60">VIP Üye</span> Olma Fırsatınız
+            </p>
+          </div>
+
+          {/* 3. Video Section */}
+          <div className="mb-3">
+            <p className="text-center text-[10px] text-white/25 uppercase tracking-[3px] mb-1">
+              BU VİDEO HAYATINIZI DEĞİŞTİREBİLİR
+            </p>
+            <p className="text-center text-[#C19D44] text-[10px] font-bold uppercase tracking-[2px] mb-3">
+              BUNU GERÇEKTEN PAS MI GEÇECEKSİNİZ!?
+            </p>
+            <div className="relative aspect-video bg-black rounded-md overflow-hidden">
               <iframe
                 className="absolute inset-0 w-full h-full"
                 src="https://www.youtube.com/embed/cIbDH0lWMc0"
-                title="YouTube video player"
+                title="VIP Video"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
@@ -113,123 +161,313 @@ export default function EticaretKayitBasariliContent() {
             </div>
           </div>
 
-          {/* Google Calendar Button */}
-          <div className="max-w-3xl mx-auto mb-12">
-            <p className="text-white/80 text-center text-lg mb-3">Semineri takvime ekle, katılmayı unutma!</p>
-            <a href={calendarUrl || '#'} target="_blank" rel="noopener noreferrer" onClick={(e) => { if (!calendarUrl) e.preventDefault(); }}>
-              <button className="bg-white text-gray-800 font-bold text-lg px-8 py-4 rounded-xl hover:bg-gray-100 transition-all w-full flex items-center justify-center gap-3 cursor-pointer shadow-lg">
-                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
-                  <rect x="3" y="4" width="18" height="18" rx="2" stroke="#4285F4" strokeWidth="2"/>
-                  <path d="M3 10h18" stroke="#4285F4" strokeWidth="2"/>
-                  <path d="M8 2v4M16 2v4" stroke="#4285F4" strokeWidth="2" strokeLinecap="round"/>
-                  <path d="M7 14h2v2H7zM11 14h2v2h-2zM15 14h2v2h-2z" fill="#4285F4"/>
-                </svg>
-                Google Takvime Ekle
+          {/* Countdown Timer */}
+          <div className="text-center mb-8 mt-6">
+            <p className="text-white font-bold text-[16px] mb-4">Eğitim Başlamasına Kalan Süre:</p>
+            <div className="flex justify-center items-center gap-3">
+              <CountdownBox value={countdown.hours} label="Saat" />
+              <span className="text-white/60 text-[28px] font-bold">:</span>
+              <CountdownBox value={countdown.minutes} label="Dakika" />
+              <span className="text-white/60 text-[28px] font-bold">:</span>
+              <CountdownBox value={countdown.seconds} label="Saniye" />
+            </div>
+          </div>
+
+          {/* VIP Button under video */}
+          <div className="text-center mb-6">
+            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+              <button className="text-white font-bold text-[15px] px-7 py-2.5 rounded-md shadow-md hover:brightness-110 transition-all cursor-pointer inline-flex items-center gap-2"
+                style={{ background: "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)" }}>
+                💎 VIP Üye Ol ✅
               </button>
             </a>
           </div>
 
-          {/* Webinar Details Card */}
-          <div className="max-w-2xl mx-auto mb-12">
-            <div className="bg-primary-light/50 backdrop-blur-lg border border-white/10 rounded-2xl p-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-                Webinar Detayları
-              </h2>
-              <div className="space-y-4 text-left">
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0">
-                    <svg className="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-white/60 text-sm">Tarih</p>
-                    <p className="text-white font-semibold text-lg">{webinarDate} {webinarDay && `(${webinarDay})`}</p>
-                  </div>
+          {/* 4. Social Proof Bar */}
+          <div className="text-center mb-6 space-y-1.5">
+            <p className="text-[#C19D44] text-[12px] font-semibold">
+              ⚠️ VIP Kontenjanlar SINIRLI - AI Toolkit özel erişimi nedeniyle
+            </p>
+            <TrustpilotBadge />
+          </div>
+
+          {/* 5. First CTA Block */}
+          <CTABlock thankYouUrl={thankYouUrl} />
+
+          {/* 6. 5X Guarantee */}
+          <div className="my-10 rounded-[9px] border border-dashed border-[#AA813C]/40 p-6 md:p-8 text-center"
+            style={{ background: GOLD_BG_SUBTLE }}>
+            <div className="inline-block mb-4">
+              <div className="w-[90px] h-[90px] mx-auto rounded-full flex items-center justify-center border-[3px] border-[#AA813C]/50"
+                style={{ background: CTA_GRADIENT }}>
+                <div className="text-center leading-tight">
+                  <div className="text-[22px] font-extrabold text-black">5X</div>
+                  <div className="text-[7px] font-bold text-black/60 uppercase tracking-wider">GUARANTEE</div>
+                  <div className="text-black/50 text-xs">✓</div>
                 </div>
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0">
-                    <svg className="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <circle cx="12" cy="12" r="10" strokeWidth="2" />
-                      <path strokeWidth="2" d="M12 6v6l4 2" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-white/60 text-sm">Saat</p>
-                    <p className="text-white font-semibold text-lg">20:00 (Türkiye Saati)</p>
-                  </div>
+              </div>
+            </div>
+            <p className="text-white/60 text-[14px] max-w-lg mx-auto leading-relaxed">
+              Eğitimimize katılın ve VIP kaynaklarını kullanın. Eğer ödediğinizin en az 5 katı değer bulamadığınızı düşünürseniz,{" "}
+              <a href="mailto:info@aiscale.app" className="text-blue-400 underline">info@aiscale.app</a>{" "}
+              adresine yazmanız yeterli — paranızın tamamını iade ederiz, soru sormadan!
+            </p>
+            <p className="mt-4">
+              <a href={thankYouUrl} className="text-white/30 text-[12px] underline italic hover:text-white/40 transition-colors">
+                Hayır, ücretsiz webinara devam edeceğim
+              </a>
+            </p>
+          </div>
+
+          {/* 7. Social Proof - Entrepreneurs */}
+          <div className="text-center my-8">
+            <div className="flex justify-center -space-x-1 mb-2">
+              {["bg-blue-600", "bg-emerald-600", "bg-purple-600", "bg-rose-600", "bg-amber-500", "bg-pink-600", "bg-indigo-600"].map((color, i) => (
+                <div key={i} className={`w-7 h-7 rounded-full ${color} border-[1.5px] border-[#0c0c0c] flex items-center justify-center text-white text-[9px] font-bold`}>
+                  {["E", "S", "B", "A", "K", "M", "T"][i]}
                 </div>
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0">
-                    <svg className="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-white/60 text-sm">Katılım Linki</p>
-                    <p className="text-white font-semibold">Email adresinize gönderilecek</p>
-                  </div>
+              ))}
+            </div>
+            <p className="text-white/50 text-[12px]">
+              <span className="font-bold text-white/70">60,000+</span> girişimci eğitimimize katıldı
+            </p>
+          </div>
+
+          {/* 8. Second CTA Block */}
+          <CTABlock thankYouUrl={thankYouUrl} />
+
+          {/* 9. VIP Member Benefits */}
+          <div className="my-10 rounded-[9px] border border-dashed border-[#AA813C]/40 p-6 md:p-10"
+            style={{ background: GOLD_BG_SUBTLE }}>
+            <h2 className="text-[26px] md:text-[34px] font-extrabold text-center leading-tight mb-1">
+              VIP Üye Olarak Neler
+            </h2>
+            <h2 className="text-[26px] md:text-[34px] font-extrabold text-center mb-8">
+              <span className="text-[#D5B356]">Elde Edeceksiniz</span>
+            </h2>
+            <div className="space-y-7">
+              <BenefitItem
+                title="Manychat Kurulum Rehberi ($497 Değerinde)"
+                description="Instagram ve Messenger otomasyonlarınızı profesyonelce kurmanız için adım adım rehber. Müşterilerinize otomatik yanıt verin, satışlarınızı artırın."
+              />
+              <BenefitItem
+                title="AI Shopify Kurulum Rehberi ($597 Değerinde)"
+                description="Yapay zeka destekli araçlarla Shopify mağazanızı sıfırdan kurun. Ürün araştırmasından mağaza tasarımına kadar her adım detaylı anlatılıyor."
+              />
+              <BenefitItem
+                title="Milyon Dolarlık AI Automation Kiti ($997 Değerinde)"
+                description="Yılların deneme yanılmasını atlayın. Halihazırda milyonlarca dolar kazandıran işletmeleri inceleyerek aynı stratejileri kendi işinize uygulayın."
+              />
+              <BenefitItem
+                title="Lifetime Replay Access ($97 Değerinde)"
+                description="Etkinliğin bir dakikasını bile kaçırsanız... ya da tekrar izlemek isterseniz, kayıtlara SONSUZA KADAR erişim hakkınız var."
+              />
+            </div>
+          </div>
+
+          {/* 10. Pricing Card */}
+          <div className="my-8">
+            <div className="rounded-[9px] border border-dashed border-[#AA813C]/60 p-6 md:p-8"
+              style={{ background: GOLD_BG_SUBTLE }}>
+              <h3 className="text-[22px] md:text-[28px] font-extrabold text-center mb-6">
+                $2,000+ Değer{" "}
+                <span className="text-[#D5B356] italic underline">Sadece $19</span>
+              </h3>
+              <div className="border-t border-[#AA813C]/30 mb-5" />
+              <div className="space-y-3">
+                <PricingRow label="Manychat Kurulum Rehberi" value="$497" />
+                <PricingRow label="AI Shopify Kurulum Rehberi" value="$597" />
+                <PricingRow label="Milyon Dolarlık AI Automation Kiti" value="$997" />
+                <PricingRow label="Lifetime Replay Access" value="$97" />
+              </div>
+              <div className="border-t border-[#AA813C]/30 mt-5 pt-5">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-white/60 text-[14px] font-semibold">Toplam Değer:</span>
+                  <span className="text-white/60 text-[14px] font-bold">$2,000+</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-[#D5B356] font-bold text-[15px]">Sizin Tek Seferlik Yatırımınız:</span>
+                  <span className="text-[#D5B356] font-extrabold text-[20px]">Sadece $19</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Bonus Package CTA */}
-          <div className="max-w-3xl mx-auto mb-12">
-            <div className="bg-primary-light/50 backdrop-blur-lg border border-gold/40 rounded-2xl p-8">
-              <div className="mb-6">
-                <svg className="w-16 h-16 text-gold mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
-                </svg>
-                <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
-                  500$ Değerinde Bonus Paket
-                </h2>
-                <p className="text-white/70 mb-6">
-                  E-Ticaret Başlangıç Paketinize hemen erişin
-                </p>
-              </div>
-              <a
-                href="https://www.notion.so/Yapay-Zeka-H-zl-Ba-lang-Paketi-2aea3d46179c81f28341ea38e05b15f8?source=copy_link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <button className="bg-gold text-black font-bold text-lg px-12 py-4 rounded-xl shadow-[0_0_40px_rgba(251,191,36,0.3)] hover:shadow-[0_0_60px_rgba(251,191,36,0.5)] hover:brightness-110 transition-all w-full cursor-pointer">
-                  Bonus Paketi İndir →
-                </button>
-              </a>
+          {/* 11. Third CTA Block */}
+          <CTABlock thankYouUrl={thankYouUrl} />
+
+          {/* 12. Testimonials */}
+          <div className="my-10 text-center">
+            <h2 className="text-[26px] md:text-[34px] font-extrabold mb-1">
+              Diğer VIP Üyeler Ne
+            </h2>
+            <h2 className="text-[26px] md:text-[34px] font-extrabold mb-8">
+              <span className="text-[#D5B356]">Diyor...</span>
+            </h2>
+            <div className="space-y-4 max-w-lg mx-auto">
+              <TestimonialCard
+                name="Elif K."
+                role="AI Scale Topluluk Üyesi"
+                text="Katıldığım en iyi eğitimlerden biriydi! Herkese tavsiye ederim."
+                initial="E"
+              />
+              <TestimonialCard
+                name="Burak D."
+                role="AI Scale Topluluk Üyesi"
+                text="VIP üyeliği almayı neredeyse pas geçiyordum ama çok iyi ki geçmedim. Birebir soru-cevap oturumu tam da ihtiyacım olan şeydi. Aldığım tek bir taktik bile ödediğimin 10 katını hak ediyordu."
+                initial="B"
+              />
+            </div>
+            <div className="mt-8">
+              <TrustpilotBadge />
             </div>
           </div>
 
-          {/* Social Media Section */}
-          <div className="max-w-3xl mx-auto">
-            <h3 className="text-xl md:text-2xl font-bold text-white mb-6">
-              Sosyal Medya Hesaplarımızdan Bizi Takip Et
-            </h3>
-            <div className="flex items-center justify-center gap-6">
-              <a
-                href="https://www.instagram.com/baturalp.tunali/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-16 h-16 rounded-full bg-gold/20 border-2 border-gold/40 flex items-center justify-center hover:bg-gold/30 hover:scale-110 transition-all"
-              >
-                <svg className="w-8 h-8 text-gold" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                </svg>
-              </a>
-              <a
-                href="https://www.youtube.com/@baturalp.tunali"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-16 h-16 rounded-full bg-gold/20 border-2 border-gold/40 flex items-center justify-center hover:bg-gold/30 hover:scale-110 transition-all"
-              >
-                <svg className="w-8 h-8 text-gold" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
-                </svg>
-              </a>
-            </div>
+          {/* 13. Final Urgency CTA */}
+          <div className="my-8 rounded-[9px] border border-dashed border-[#AA813C]/40 p-8 md:p-12 text-center"
+            style={{ background: GOLD_BG_SUBTLE }}>
+            <h2 className="text-[28px] md:text-[38px] font-extrabold mb-1">
+              Bu Tek Seferlik Teklifi
+            </h2>
+            <h2 className="text-[28px] md:text-[38px] font-extrabold mb-3">
+              <span className="text-[#D5B356]">Kaçırmayın</span>
+            </h2>
+            <p className="text-[#e85d5d] text-[13px] mb-6">
+              Bu sayfa kapanacak ve bu teklifi bir daha göremeyeceksiniz.
+            </p>
+            {/* CTA buton + alt yazı tek blok */}
+            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="block rounded-[10px] overflow-hidden hover:brightness-105 transition-all">
+              <div className="py-5 px-6" style={{ background: CTA_GRADIENT }}>
+                <div className="text-black font-extrabold text-[22px] md:text-[28px]">
+                  VIP Üyelere Şimdi Katıl &raquo;
+                </div>
+                <div className="text-black/50 text-[13px] mt-1">
+                  Yapay Zeka ile ilk adımını hemen at
+                </div>
+              </div>
+            </a>
+            <p className="text-white/40 text-[12px] mt-4">%100 Para İade Garantisi</p>
+          </div>
+
+          {/* Final No Thank You - Full width solid gray */}
+          <NoThankYouButton href={thankYouUrl} />
+        </div>
+      </main>
+    </>
+  );
+}
+
+/* ─── Sub-components ─── */
+
+function CTABlock({ thankYouUrl }: { thankYouUrl: string }) {
+  return (
+    <div className="my-6">
+      {/* CTA buton + alt yazı tek blok */}
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="block rounded-[10px] overflow-hidden hover:brightness-105 transition-all">
+        <div className="py-5 px-6 text-center" style={{ background: CTA_GRADIENT }}>
+          <div className="text-black font-extrabold text-[22px] md:text-[28px]">
+            VIP Üyelere Şimdi Katıl &raquo;
+          </div>
+          <div className="text-black/50 text-[13px] mt-1">
+            Yapay Zeka ile ilk adımını hemen at
           </div>
         </div>
-      </section>
-    </main>
+      </a>
+
+      {/* No Thank You - Full width solid gray */}
+      <NoThankYouButton href={thankYouUrl} />
+    </div>
+  );
+}
+
+function NoThankYouButton({ href }: { href: string }) {
+  return (
+    <div className="mt-3">
+      <a href={href} className="block bg-[#333] rounded-[10px] py-4 px-6 text-center hover:bg-[#3a3a3a] transition-colors">
+        <div className="text-white/60 text-[14px] font-medium">Hayır Teşekkürler.</div>
+        <div className="text-white/35 text-[12px] mt-0.5">
+          &quot;Özel VIP Deneyimini&quot; kaçırmayı tercih ediyorum
+        </div>
+      </a>
+    </div>
+  );
+}
+
+function BenefitItem({ title, description }: { title: string; description: string }) {
+  return (
+    <div className="flex gap-3 items-start border-b border-white/5 pb-6 last:border-0 last:pb-0">
+      {/* Gold checkmark circle - emoji style */}
+      <div className="flex-shrink-0 w-7 h-7 rounded-full bg-[#C19D44]/25 border border-[#C19D44]/50 flex items-center justify-center mt-0.5">
+        <svg className="w-4 h-4 text-[#C19D44]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <div>
+        <h3 className="text-[14px] md:text-[16px] font-bold text-white mb-1">{title}</h3>
+        <p className="text-white/45 text-[13px] leading-relaxed">{description}</p>
+      </div>
+    </div>
+  );
+}
+
+function PricingRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex justify-between items-center">
+      <span className="text-white/60 text-[14px]">{label}</span>
+      <span className="text-white/50 text-[14px] font-semibold">(Değer: {value})</span>
+    </div>
+  );
+}
+
+function TestimonialCard({ name, role, text, initial }: { name: string; role: string; text: string; initial: string }) {
+  return (
+    <div className="rounded-[10px] bg-[#222] border border-white/5 p-6 text-left">
+      <div className="flex items-center gap-0.5 mb-3">
+        {[1, 2, 3, 4, 5].map((s) => (
+          <svg key={s} className="w-5 h-5 text-[#f5c518]" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+        ))}
+      </div>
+      <p className="text-white/70 text-[14px] mb-4 leading-relaxed">&quot;{text}&quot;</p>
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 font-bold text-[14px]">
+          {initial}
+        </div>
+        <div>
+          <p className="text-white/80 font-semibold text-[14px]">{name}</p>
+          <p className="text-white/40 text-[12px]">{role}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CountdownBox({ value, label }: { value: string; label: string }) {
+  return (
+    <div className="bg-[#1a1a1a] border border-[#AA813C]/40 rounded-lg px-4 py-3 min-w-[75px]">
+      <div className="text-[#C19D44] text-[28px] md:text-[36px] font-extrabold leading-none">{value}</div>
+      <div className="text-white/40 text-[11px] mt-1">{label}</div>
+    </div>
+  );
+}
+
+function TrustpilotBadge() {
+  return (
+    <div className="flex items-center justify-center gap-2">
+      <span className="text-[#00b67a] text-[16px]">★</span>
+      <span className="text-white text-[14px] font-semibold">Trustpilot</span>
+      <span className="text-[#00b67a] font-bold text-[14px]">1,500+</span>
+      <div className="flex gap-[1px]">
+        {[1, 2, 3, 4, 5].map((s) => (
+          <div key={s} className="w-[20px] h-[20px] bg-[#00b67a] flex items-center justify-center">
+            <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+            </svg>
+          </div>
+        ))}
+      </div>
+      <span className="text-[#00b67a] text-[14px] font-semibold">Reviews</span>
+    </div>
   );
 }
