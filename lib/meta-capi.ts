@@ -68,24 +68,15 @@ export async function sendCAPIEvent(params: CAPIEventParams) {
 
   try {
     const { pixelId, token } = getPixelConfig(sourceUrl);
-
-    // TEMPORARY: test_event_code for aiscaleapp.com server-side event testing
-    // Remove after verification in Meta Events Manager Test Events panel
-    const isAiscale = !sourceUrl.includes("dijitalakademi");
-    const payload: Record<string, any> = {
-      data: [eventData],
-      access_token: token,
-    };
-    if (isAiscale) {
-      payload.test_event_code = "TEST96103";
-    }
-
     const response = await fetch(
       `https://graph.facebook.com/${META_API_VERSION}/${pixelId}/events`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          data: [eventData],
+          access_token: token,
+        }),
       }
     );
 
