@@ -21,7 +21,11 @@ export default function KayitBasariliContent() {
   const searchParams = useSearchParams();
   const name = searchParams.get("name") || "Değerli Katılımcı";
   const email = searchParams.get("email") || "";
-  const [webinarTime, setWebinarTime] = useState("");
+  const [webinarDate, setWebinarDate] = useState("");
+  const [webinarDay, setWebinarDay] = useState("");
+  const [webinarFull, setWebinarFull] = useState("");
+  const [registrationDate, setRegistrationDate] = useState("");
+  const [countdown, setCountdown] = useState({ hours: "00", minutes: "00", seconds: "00" });
   const thankYouUrl = getThankYouUrl(name, email);
 
   useEffect(() => {
@@ -34,9 +38,19 @@ export default function KayitBasariliContent() {
       eventDate.setDate(eventDate.getDate() + 1);
     }
     eventDate.setHours(20, 0, 0, 0);
+
     const day = String(eventDate.getDate()).padStart(2, "0");
     const month = String(eventDate.getMonth() + 1).padStart(2, "0");
-    setWebinarTime(`${day}.${month} ${dayNames[eventDate.getDay()]} 20:00`);
+    const year = eventDate.getFullYear();
+
+    setWebinarDate(`${day}.${month}.${year}`);
+    setWebinarDay(dayNames[eventDate.getDay()]);
+    setWebinarFull(`${day}.${month} ${dayNames[eventDate.getDay()]} 20:00`);
+
+    const regDay = String(turkey.getDate()).padStart(2, "0");
+    const regMonth = String(turkey.getMonth() + 1).padStart(2, "0");
+    const regYear = turkey.getFullYear();
+    setRegistrationDate(`${regDay}.${regMonth}.${regYear}`);
 
     if (email) {
       const nameParts = name.split(" ");
@@ -48,6 +62,34 @@ export default function KayitBasariliContent() {
     }
     // Note: CompleteRegistration is already fired in RegistrationModal with
     // proper eventId for dedup. Do NOT fire again here to avoid duplicates.
+
+    // Countdown timer
+    const updateCountdown = () => {
+      const nowMs = Date.now();
+      const turkeyNow = new Date(new Date(nowMs).toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
+      const target = new Date(turkeyNow);
+      if (turkeyNow.getHours() >= 20) {
+        target.setDate(target.getDate() + 1);
+      }
+      target.setHours(20, 0, 0, 0);
+
+      const diff = target.getTime() - turkeyNow.getTime();
+      if (diff <= 0) return;
+
+      const h = Math.floor(diff / (1000 * 60 * 60));
+      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+      setCountdown({
+        hours: String(h).padStart(2, "0"),
+        minutes: String(m).padStart(2, "0"),
+        seconds: String(s).padStart(2, "0"),
+      });
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -56,20 +98,39 @@ export default function KayitBasariliContent() {
       <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
       <main className="min-h-screen bg-[#0c0c0c] text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-        {/* 1. Gold Confirmation Banner */}
-        <div className="pt-5 px-4">
-          <div className="max-w-2xl mx-auto border border-dashed border-[#AA813C]/50 rounded-[9px] py-4 px-5 text-center"
-            style={{ background: GOLD_BG_SUBTLE }}>
-            <p className="text-[16px] md:text-[18px] font-bold leading-snug italic"
-              style={{ color: "#C19D44" }}>
-              Canlı Etkinliğe {webinarTime || "{{webinar_time}}"} Saatinde Katılımınız Onaylandı!{" "}
-              Devam Etmeden Önce Aşağıdaki Önemli Daveti İzleyin
-            </p>
-          </div>
+        {/* 1. Solid Gold Banner - Remind user of webinar time */}
+        <div className="bg-[#C19D44] text-center py-3 px-4">
+          <p className="text-black font-semibold text-[14px] md:text-[16px]">
+            📅 Webinara şu saatte katılmayı unutmayın: {webinarFull || "..."}
+          </p>
         </div>
 
         <div className="max-w-[680px] mx-auto px-4 py-8">
-          {/* 2. Main Heading */}
+          {/* 2. Email Notification Banner */}
+          <div className="mb-8 rounded-[9px] border-2 border-[#C19D44] p-5 md:p-6"
+            style={{ background: GOLD_BG_SUBTLE }}>
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <svg className="w-6 h-6 text-[#C19D44] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <h2 className="text-[18px] md:text-[20px] font-bold text-[#C19D44]">
+                Katılım Linkiniz E-posta Adresinize Gönderildi!
+              </h2>
+            </div>
+            <p className="text-white/70 text-[14px] md:text-[15px] text-center leading-relaxed">
+              E-posta adresinize bir <strong className="text-white">Zoom katılım linki</strong> gönderdik.{" "}
+              <strong className="text-white">{webinarDate} {webinarDay} saat 20:00{"'"}da</strong>{" "}
+              e-postanızdaki linke tıklayın, Zoom açılacak ve canlı seminere katılacaksınız.
+              E-postayı bulamıyorsanız <strong className="text-white">spam/gereksiz</strong> klasörünü de kontrol edin.
+            </p>
+            {registrationDate && (
+              <p className="text-white/40 text-[12px] text-center mt-3">
+                Kayıt tarihiniz: {registrationDate}
+              </p>
+            )}
+          </div>
+
+          {/* 3. Main Heading */}
           <div className="text-center mb-6">
             <h1 className="text-[32px] md:text-[44px] font-extrabold leading-[1.12] mb-3">
               Aşağıdaki Videoyu İzleyenler{" "}
@@ -98,6 +159,35 @@ export default function KayitBasariliContent() {
                 allowFullScreen
               />
             </div>
+          </div>
+
+          {/* Countdown Timer */}
+          <div className="text-center mb-8 mt-6">
+            <p className="text-white font-bold text-[16px] mb-4">Eğitim Başlamasına Kalan Süre:</p>
+            <div className="flex justify-center items-center gap-3">
+              <CountdownBox value={countdown.hours} label="Saat" />
+              <span className="text-white/60 text-[28px] font-bold">:</span>
+              <CountdownBox value={countdown.minutes} label="Dakika" />
+              <span className="text-white/60 text-[28px] font-bold">:</span>
+              <CountdownBox value={countdown.seconds} label="Saniye" />
+            </div>
+          </div>
+
+          {/* Workshop Details */}
+          <div className="text-center mb-4">
+            <p className="text-white/60 text-[14px]">Eğitim detaylarınız</p>
+          </div>
+          <div className="rounded-[9px] p-6 md:p-8 text-center mb-8 border border-dashed border-[#AA813C]/50"
+            style={{ background: GOLD_BG_SUBTLE }}>
+            <p className="text-[#C19D44] font-bold text-[16px] mb-4">Eğitiminiz:</p>
+            <p className="text-white/60 text-[14px] mb-1">{webinarDate} {webinarDay && `(${webinarDay})`}</p>
+            <p className="text-white/60 text-[14px] mb-5">Saat 20:00 (Türkiye Saati)</p>
+
+            <p className="text-[#C19D44] font-bold text-[16px] mb-1">Nasıl Katılırsınız:</p>
+            <p className="text-white/60 text-[14px] mb-5">E-postanıza katılım linkini göndereceğiz</p>
+
+            <p className="text-[#C19D44] font-bold text-[16px] mb-1">Hatırlatma Gönderilecek:</p>
+            <p className="text-white/60 text-[14px]">{email || "E-posta adresiniz"}</p>
           </div>
 
           {/* VIP Button under video */}
@@ -366,6 +456,15 @@ function TestimonialCard({ name, role, text, initial }: { name: string; role: st
           <p className="text-white/40 text-[12px]">{role}</p>
         </div>
       </div>
+    </div>
+  );
+}
+
+function CountdownBox({ value, label }: { value: string; label: string }) {
+  return (
+    <div className="bg-[#1a1a1a] border border-[#AA813C]/40 rounded-lg px-4 py-3 min-w-[75px]">
+      <div className="text-[#C19D44] text-[28px] md:text-[36px] font-extrabold leading-none">{value}</div>
+      <div className="text-white/40 text-[11px] mt-1">{label}</div>
     </div>
   );
 }
