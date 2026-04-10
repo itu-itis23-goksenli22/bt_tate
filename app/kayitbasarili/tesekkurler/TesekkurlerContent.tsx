@@ -92,7 +92,7 @@ export default function TesekkurlerContent() {
         {/* 1. Gold Banner */}
         <div className="bg-[#C19D44] text-center py-3 px-4">
           <p className="text-black font-semibold text-[14px] md:text-[16px]">
-            📅 Tarihi Kaydedin: {webinarFull || "..."}
+            📅 Webinara şu saatte katılmayı unutmayın: {webinarFull || "..."}
           </p>
         </div>
 
@@ -103,7 +103,7 @@ export default function TesekkurlerContent() {
               Tebrikler!
             </h1>
             <p className="text-white text-[16px] md:text-[20px] font-semibold mt-2">
-              AI Scale Eğitimi İçin Yeriniz Ayrıldı 🔒
+              AI Scale Semineri İçin Yeriniz Ayrıldı 🔒
             </p>
             {/* Gold line decoration */}
             <div className="flex justify-center mt-3">
@@ -165,21 +165,31 @@ export default function TesekkurlerContent() {
             </div>
           </div>
 
-          {/* 5. Workshop Detayları */}
+          {/* 5. Seminer Detayları */}
           <div className="text-center mb-4">
-            <p className="text-white/60 text-[14px]">Eğitim detaylarınız</p>
+            <p className="text-white/60 text-[14px]">Seminer detaylarınız</p>
           </div>
           <div className="rounded-[9px] p-6 md:p-8 text-center mb-8 border border-dashed border-[#AA813C]/50"
             style={{ background: GOLD_BG_SUBTLE }}>
-            <p className="text-[#C19D44] font-bold text-[16px] mb-4">Eğitiminiz:</p>
-            <p className="text-white/60 text-[14px] mb-1">{webinarDate} {webinarDay && `(${webinarDay})`}</p>
-            <p className="text-white/60 text-[14px] mb-5">Saat 20:00 (Türkiye Saati)</p>
+            <p className="text-[#C19D44] font-bold text-[16px] mb-2">Seminer Tarihi:</p>
+            <p className="text-white/70 text-[14px] mb-1">{webinarDate} {webinarDay && `(${webinarDay})`}</p>
+            <p className="text-white/70 text-[14px] mb-6">Saat 20:00 (Türkiye Saati • GMT+3)</p>
 
-            <p className="text-[#C19D44] font-bold text-[16px] mb-1">Nasıl Katılırsınız:</p>
-            <p className="text-white/60 text-[14px] mb-5">E-postanıza katılım linkini göndereceğiz</p>
+            <p className="text-[#C19D44] font-bold text-[16px] mb-2">Seminere Nasıl Katılacaksınız:</p>
+            <p className="text-white/70 text-[14px] leading-relaxed mb-2">
+              Seminere <strong className="text-white">Zoom üzerinden canlı</strong> olarak katılacaksınız.
+            </p>
+            <p className="text-white/70 text-[14px] leading-relaxed mb-2">
+              Seminer başlamadan önce <strong className="text-white">{email || "e-posta adresinize"}</strong> adresine özel Zoom katılım linki göndereceğiz.
+            </p>
+            <p className="text-white/70 text-[14px] leading-relaxed mb-6">
+              Seminer saati geldiğinde e-postanızdaki linke tıklamanız yeterli — tek tıkla canlı yayına bağlanacaksınız.
+            </p>
 
-            <p className="text-[#C19D44] font-bold text-[16px] mb-1">Hatırlatma Gönderilecek:</p>
-            <p className="text-white/60 text-[14px]">{email || "E-posta adresiniz"}</p>
+            <p className="text-[#C19D44] font-bold text-[16px] mb-2">Hazırlık:</p>
+            <p className="text-white/70 text-[14px] leading-relaxed">
+              Bilgisayarınızda veya telefonunuzda <strong className="text-white">Zoom uygulamasının</strong> kurulu olduğundan emin olun. Notlarınızı almak için kalem ve kağıdı da hazır bulundurmanızı öneririz.
+            </p>
           </div>
 
           {/* Google Calendar Button */}
