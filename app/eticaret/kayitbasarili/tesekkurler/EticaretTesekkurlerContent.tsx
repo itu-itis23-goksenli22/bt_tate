@@ -104,7 +104,7 @@ export default function EticaretTesekkurlerContent() {
               Tebrikler!
             </h1>
             <p className="text-white text-[16px] md:text-[20px] font-semibold mt-2">
-              AI Scale Semineri İçin Yeriniz Ayrıldı 🔒
+              E-Ticaret Semineri İçin Yeriniz Ayrıldı 🔒
             </p>
             {/* Gold line decoration */}
             <div className="flex justify-center mt-3">
