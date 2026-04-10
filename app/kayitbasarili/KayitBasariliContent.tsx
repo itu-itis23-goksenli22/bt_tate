@@ -173,23 +173,6 @@ export default function KayitBasariliContent() {
             </div>
           </div>
 
-          {/* Workshop Details */}
-          <div className="text-center mb-4">
-            <p className="text-white/60 text-[14px]">Eğitim detaylarınız</p>
-          </div>
-          <div className="rounded-[9px] p-6 md:p-8 text-center mb-8 border border-dashed border-[#AA813C]/50"
-            style={{ background: GOLD_BG_SUBTLE }}>
-            <p className="text-[#C19D44] font-bold text-[16px] mb-4">Eğitiminiz:</p>
-            <p className="text-white/60 text-[14px] mb-1">{webinarDate} {webinarDay && `(${webinarDay})`}</p>
-            <p className="text-white/60 text-[14px] mb-5">Saat 20:00 (Türkiye Saati)</p>
-
-            <p className="text-[#C19D44] font-bold text-[16px] mb-1">Nasıl Katılırsınız:</p>
-            <p className="text-white/60 text-[14px] mb-5">E-postanıza katılım linkini göndereceğiz</p>
-
-            <p className="text-[#C19D44] font-bold text-[16px] mb-1">Hatırlatma Gönderilecek:</p>
-            <p className="text-white/60 text-[14px]">{email || "E-posta adresiniz"}</p>
-          </div>
-
           {/* VIP Button under video */}
           <div className="text-center mb-6">
             <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
