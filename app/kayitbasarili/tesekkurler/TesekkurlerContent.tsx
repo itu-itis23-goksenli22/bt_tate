@@ -165,30 +165,17 @@ export default function TesekkurlerContent() {
             </div>
           </div>
 
-          {/* 5. Seminer Detayları */}
-          <div className="text-center mb-4">
-            <p className="text-white/60 text-[14px]">Seminer detaylarınız</p>
-          </div>
+          {/* 5. Seminer Detayları — ultra kısa */}
           <div className="rounded-[9px] p-6 md:p-8 text-center mb-8 border border-dashed border-[#AA813C]/50"
             style={{ background: GOLD_BG_SUBTLE }}>
-            <p className="text-[#C19D44] font-bold text-[16px] mb-2">Seminer Tarihi:</p>
-            <p className="text-white/70 text-[14px] mb-1">{webinarDate} {webinarDay && `(${webinarDay})`}</p>
-            <p className="text-white/70 text-[14px] mb-6">Saat 20:00 (Türkiye Saati • GMT+3)</p>
-
-            <p className="text-[#C19D44] font-bold text-[16px] mb-2">Seminere Nasıl Katılacaksınız:</p>
-            <p className="text-white/70 text-[14px] leading-relaxed mb-2">
-              Seminere <strong className="text-white">Zoom üzerinden canlı</strong> olarak katılacaksınız.
+            <p className="text-[#C19D44] font-extrabold text-[22px] md:text-[26px] mb-1">
+              {webinarDate} {webinarDay && `(${webinarDay})`}
             </p>
-            <p className="text-white/70 text-[14px] leading-relaxed mb-2">
-              Seminer başlamadan önce <strong className="text-white">{email || "e-posta adresinize"}</strong> adresine özel Zoom katılım linki göndereceğiz.
+            <p className="text-white font-bold text-[16px] md:text-[18px] mb-5">
+              Saat 20:00 (Türkiye Saati)
             </p>
-            <p className="text-white/70 text-[14px] leading-relaxed mb-6">
-              Seminer saati geldiğinde e-postanızdaki linke tıklamanız yeterli — tek tıkla canlı yayına bağlanacaksınız.
-            </p>
-
-            <p className="text-[#C19D44] font-bold text-[16px] mb-2">Hazırlık:</p>
-            <p className="text-white/70 text-[14px] leading-relaxed">
-              Semineri en iyi deneyimlemek için sessiz bir ortamda olmanızı ve notlarınızı almak için <strong className="text-white">kalem ve kağıt</strong> hazır bulundurmanızı öneririz.
+            <p className="text-white/80 text-[14px] md:text-[15px] leading-relaxed">
+              💻 Zoom linki <strong className="text-white">e-postanızda</strong> — seminer saati geldiğinde tek tıkla katılın.
             </p>
           </div>
 
