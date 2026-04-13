@@ -141,8 +141,41 @@ export default function KayitBasariliContent() {
             </p>
           </div>
 
-          {/* 3. Video Section */}
-          <div className="mb-3">
+          {/* Countdown Timer — moved above video */}
+          <div className="text-center mb-6">
+            <p className="text-white font-bold text-[16px] mb-4">Eğitim Başlamasına Kalan Süre:</p>
+            <div className="flex justify-center items-center gap-3">
+              <CountdownBox value={countdown.hours} label="Saat" />
+              <span className="text-white/60 text-[28px] font-bold">:</span>
+              <CountdownBox value={countdown.minutes} label="Dakika" />
+              <span className="text-white/60 text-[28px] font-bold">:</span>
+              <CountdownBox value={countdown.seconds} label="Saniye" />
+            </div>
+          </div>
+
+          {/* VIP Button — moved above video */}
+          <div className="text-center mb-6">
+            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+              <button className="text-white font-bold text-[15px] px-7 py-2.5 rounded-md shadow-md hover:brightness-110 transition-all cursor-pointer inline-flex items-center gap-2"
+                style={{ background: "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)" }}>
+                💎 VIP Üye Ol ✅
+              </button>
+            </a>
+          </div>
+
+          {/* Social Proof Bar — moved above video */}
+          <div className="text-center mb-6 space-y-1.5">
+            <p className="text-[#C19D44] text-[12px] font-semibold">
+              ⚠️ VIP Kontenjanlar SINIRLI - AI Toolkit özel erişimi nedeniyle
+            </p>
+            <TrustpilotBadge />
+          </div>
+
+          {/* First CTA Block — moved above video */}
+          <CTABlock thankYouUrl={thankYouUrl} />
+
+          {/* 3. Video Section — moved below the CTAs */}
+          <div className="mb-3 mt-8">
             <p className="text-center text-[10px] text-white/25 uppercase tracking-[3px] mb-1">
               BU VİDEO HAYATINIZI DEĞİŞTİREBİLİR
             </p>
@@ -161,38 +194,30 @@ export default function KayitBasariliContent() {
             </div>
           </div>
 
-          {/* Countdown Timer */}
-          <div className="text-center mb-8 mt-6">
-            <p className="text-white font-bold text-[16px] mb-4">Eğitim Başlamasına Kalan Süre:</p>
-            <div className="flex justify-center items-center gap-3">
-              <CountdownBox value={countdown.hours} label="Saat" />
-              <span className="text-white/60 text-[28px] font-bold">:</span>
-              <CountdownBox value={countdown.minutes} label="Dakika" />
-              <span className="text-white/60 text-[28px] font-bold">:</span>
-              <CountdownBox value={countdown.seconds} label="Saniye" />
+          {/* Seminere Hazırlık — VIP'i hazırlık olarak konumlandır */}
+          <div className="my-10 rounded-[9px] border border-dashed border-[#AA813C]/40 p-6 md:p-8"
+            style={{ background: GOLD_BG_SUBTLE }}>
+            <h2 className="text-[22px] md:text-[28px] font-extrabold text-center mb-2">
+              🎯 Seminere Tam Hazırlıklı <span className="text-[#D5B356]">Katıl</span>
+            </h2>
+            <p className="text-white/50 text-[13px] text-center mb-6 max-w-lg mx-auto">
+              VIP üyeler seminere hazırlanıp geldiği için çok daha fazla sonuç alıyor
+            </p>
+            <div className="space-y-5 max-w-lg mx-auto">
+              <PrepItem text="Seminere gelmeden Manychat ve AI Shopify rehberlerini inceleyerek temel bilgileri öğren — seminerde ileri seviye taktiklere odaklanabilirsin" />
+              <PrepItem text="Milyon dolarlık strateji kitinden başarılı iş modellerini analiz et — seminerde kendi planını oluşturmanı kolaylaştırır" />
+              <PrepItem text="VIP üyeler seminerde birebir soru-cevap hakkına sahip — sorularını şimdiden hazırla" />
+              <PrepItem text="Kayıtları sonsuza kadar izle — kaçırdığın detayları tekrar tekrar izleyerek uygulayabilirsin" />
+            </div>
+            <div className="text-center mt-6">
+              <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+                <button className="text-black font-bold text-[14px] px-6 py-2.5 rounded-md hover:brightness-110 transition-all cursor-pointer"
+                  style={{ background: CTA_GRADIENT }}>
+                  Tüm bunlar sadece $19 — Hemen Hazırlanmaya Başla →
+                </button>
+              </a>
             </div>
           </div>
-
-          {/* VIP Button under video */}
-          <div className="text-center mb-6">
-            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
-              <button className="text-white font-bold text-[15px] px-7 py-2.5 rounded-md shadow-md hover:brightness-110 transition-all cursor-pointer inline-flex items-center gap-2"
-                style={{ background: "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)" }}>
-                💎 VIP Üye Ol ✅
-              </button>
-            </a>
-          </div>
-
-          {/* 4. Social Proof Bar */}
-          <div className="text-center mb-6 space-y-1.5">
-            <p className="text-[#C19D44] text-[12px] font-semibold">
-              ⚠️ VIP Kontenjanlar SINIRLI - AI Toolkit özel erişimi nedeniyle
-            </p>
-            <TrustpilotBadge />
-          </div>
-
-          {/* 5. First CTA Block */}
-          <CTABlock thankYouUrl={thankYouUrl} />
 
           {/* 6. 5X Guarantee */}
           <div className="my-10 rounded-[9px] border border-dashed border-[#AA813C]/40 p-6 md:p-8 text-center"
@@ -323,6 +348,35 @@ export default function KayitBasariliContent() {
             </div>
           </div>
 
+          {/* Başarı Hikayeleri — Gerçek Sonuçlar */}
+          <div className="my-10">
+            <h2 className="text-[26px] md:text-[34px] font-extrabold text-center mb-1">
+              Gerçek <span className="text-[#D5B356]">Başarı Hikayeleri</span>
+            </h2>
+            <p className="text-white/40 text-[14px] text-center mb-6">
+              AI Scale topluluğundan gerçek sonuçlar
+            </p>
+            <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 md:grid md:grid-cols-3 md:overflow-visible md:snap-none md:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+              {[
+                { id: "U17038k3dZs", title: "Başarı Hikayesi 1" },
+                { id: "nWvImM9U2NQ", title: "Başarı Hikayesi 2" },
+                { id: "24sobDc1m-8", title: "Başarı Hikayesi 3" },
+              ].map((video) => (
+                <div key={video.id} className="snap-center shrink-0 w-[70vw] sm:w-[55vw] md:w-auto md:shrink">
+                  <div className="relative w-full overflow-hidden rounded-xl border border-white/10 bg-black" style={{ paddingBottom: "177.78%" }}>
+                    <iframe
+                      className="absolute inset-0 w-full h-full"
+                      src={`https://www.youtube.com/embed/${video.id}`}
+                      title={video.title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* 13. Final Urgency CTA */}
           <div className="my-8 rounded-[9px] border border-dashed border-[#AA813C]/40 p-8 md:p-12 text-center"
             style={{ background: GOLD_BG_SUBTLE }}>
@@ -439,6 +493,19 @@ function TestimonialCard({ name, role, text, initial }: { name: string; role: st
           <p className="text-white/40 text-[12px]">{role}</p>
         </div>
       </div>
+    </div>
+  );
+}
+
+function PrepItem({ text }: { text: string }) {
+  return (
+    <div className="flex gap-3 items-start">
+      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#C19D44]/25 border border-[#C19D44]/50 flex items-center justify-center mt-0.5">
+        <svg className="w-3.5 h-3.5 text-[#C19D44]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <p className="text-white/70 text-[14px] leading-relaxed">{text}</p>
     </div>
   );
 }
