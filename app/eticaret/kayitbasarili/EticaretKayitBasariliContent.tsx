@@ -141,41 +141,8 @@ export default function EticaretKayitBasariliContent() {
             </p>
           </div>
 
-          {/* Countdown Timer — moved above video */}
-          <div className="text-center mb-6">
-            <p className="text-white font-bold text-[16px] mb-4">Eğitim Başlamasına Kalan Süre:</p>
-            <div className="flex justify-center items-center gap-3">
-              <CountdownBox value={countdown.hours} label="Saat" />
-              <span className="text-white/60 text-[28px] font-bold">:</span>
-              <CountdownBox value={countdown.minutes} label="Dakika" />
-              <span className="text-white/60 text-[28px] font-bold">:</span>
-              <CountdownBox value={countdown.seconds} label="Saniye" />
-            </div>
-          </div>
-
-          {/* VIP Button — moved above video */}
-          <div className="text-center mb-6">
-            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
-              <button className="text-white font-bold text-[15px] px-7 py-2.5 rounded-md shadow-md hover:brightness-110 transition-all cursor-pointer inline-flex items-center gap-2"
-                style={{ background: "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)" }}>
-                💎 VIP Üye Ol ✅
-              </button>
-            </a>
-          </div>
-
-          {/* Social Proof Bar — moved above video */}
-          <div className="text-center mb-6 space-y-1.5">
-            <p className="text-[#C19D44] text-[12px] font-semibold">
-              ⚠️ VIP Kontenjanlar SINIRLI - AI Toolkit özel erişimi nedeniyle
-            </p>
-            <TrustpilotBadge />
-          </div>
-
-          {/* First CTA Block — moved above video */}
-          <CTABlock thankYouUrl={thankYouUrl} />
-
-          {/* 3. Video Section — moved below the CTAs */}
-          <div className="mb-3 mt-8">
+          {/* 3. Video Section */}
+          <div className="mb-3">
             <p className="text-center text-[10px] text-white/25 uppercase tracking-[3px] mb-1">
               BU VİDEO HAYATINIZI DEĞİŞTİREBİLİR
             </p>
@@ -193,6 +160,39 @@ export default function EticaretKayitBasariliContent() {
               />
             </div>
           </div>
+
+          {/* Countdown Timer */}
+          <div className="text-center mb-8 mt-6">
+            <p className="text-white font-bold text-[16px] mb-4">Eğitim Başlamasına Kalan Süre:</p>
+            <div className="flex justify-center items-center gap-3">
+              <CountdownBox value={countdown.hours} label="Saat" />
+              <span className="text-white/60 text-[28px] font-bold">:</span>
+              <CountdownBox value={countdown.minutes} label="Dakika" />
+              <span className="text-white/60 text-[28px] font-bold">:</span>
+              <CountdownBox value={countdown.seconds} label="Saniye" />
+            </div>
+          </div>
+
+          {/* VIP Button under video */}
+          <div className="text-center mb-6">
+            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+              <button className="text-white font-bold text-[15px] px-7 py-2.5 rounded-md shadow-md hover:brightness-110 transition-all cursor-pointer inline-flex items-center gap-2"
+                style={{ background: "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)" }}>
+                💎 VIP Üye Ol ✅
+              </button>
+            </a>
+          </div>
+
+          {/* Social Proof Bar */}
+          <div className="text-center mb-6 space-y-1.5">
+            <p className="text-[#C19D44] text-[12px] font-semibold">
+              ⚠️ VIP Kontenjanlar SINIRLI - AI Toolkit özel erişimi nedeniyle
+            </p>
+            <TrustpilotBadge />
+          </div>
+
+          {/* First CTA Block */}
+          <CTABlock thankYouUrl={thankYouUrl} />
 
           {/* Seminere Hazırlık — VIP'i hazırlık olarak konumlandır */}
           <div className="my-10 rounded-[9px] border border-dashed border-[#AA813C]/40 p-6 md:p-8"
