@@ -141,6 +141,9 @@ export default function KayitBasariliContent() {
             </p>
           </div>
 
+          {/* CTA above video */}
+          <CTABlock thankYouUrl={thankYouUrl} />
+
           {/* 3. Video Section */}
           <div className="mb-3">
             <p className="text-center text-[10px] text-white/25 uppercase tracking-[3px] mb-1">
