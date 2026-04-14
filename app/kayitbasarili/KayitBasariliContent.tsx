@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { setAdvancedMatching } from "@/lib/meta-pixel";
 
-const CHECKOUT_URL = "https://buy.stripe.com/5kQcN68Cs7Pvf7j2Le3wQ0r";
+const CHECKOUT_URL = "https://buy.stripe.com/cNi8wQ4mcb1HcZb71u3wQ0s";
 
 const CTA_GRADIENT = "linear-gradient(271.63deg, #C19D44 -20%, #E8D48B 20%, #FDF3AD 50%, #E8D48B 80%, #C19D44 120%)";
 const GOLD_BG_SUBTLE = "linear-gradient(223deg, rgba(170,129,60,0.14) 0%, rgba(170,129,60,0.10) 100%)";
@@ -213,7 +213,7 @@ export default function KayitBasariliContent() {
               <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
                 <button className="text-black font-bold text-[14px] px-6 py-2.5 rounded-md hover:brightness-110 transition-all cursor-pointer"
                   style={{ background: CTA_GRADIENT }}>
-                  Tüm bunlar sadece $19 — Hemen Hazırlanmaya Başla →
+                  Tüm bunlar sadece $9.90 — Hemen Hazırlanmaya Başla →
                 </button>
               </a>
             </div>
@@ -296,7 +296,7 @@ export default function KayitBasariliContent() {
               style={{ background: GOLD_BG_SUBTLE }}>
               <h3 className="text-[22px] md:text-[28px] font-extrabold text-center mb-6">
                 $2,000+ Değer{" "}
-                <span className="text-[#D5B356] italic underline">Sadece $19</span>
+                <span className="text-[#D5B356] italic underline">Sadece $9.90</span>
               </h3>
               <div className="border-t border-[#AA813C]/30 mb-5" />
               <div className="space-y-3">
@@ -312,7 +312,7 @@ export default function KayitBasariliContent() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-[#D5B356] font-bold text-[15px]">Sizin Tek Seferlik Yatırımınız:</span>
-                  <span className="text-[#D5B356] font-extrabold text-[20px]">Sadece $19</span>
+                  <span className="text-[#D5B356] font-extrabold text-[20px]">Sadece $9.90</span>
                 </div>
               </div>
             </div>
