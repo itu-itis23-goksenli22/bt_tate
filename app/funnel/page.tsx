@@ -13,8 +13,8 @@ export default function FunnelPage() {
   return (
     <Suspense
       fallback={
-        <main className="min-h-screen bg-[#0a0613] flex items-center justify-center">
-          <div className="animate-spin w-8 h-8 border-2 border-[#D946EF] border-t-transparent rounded-full" />
+        <main className="min-h-screen bg-white flex items-center justify-center">
+          <div className="animate-spin w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full" />
         </main>
       }
     >

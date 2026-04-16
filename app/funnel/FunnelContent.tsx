@@ -2,9 +2,6 @@
 
 import Script from "next/script";
 
-const MAGENTA_BG_SUBTLE = "linear-gradient(223deg, rgba(217,70,239,0.12) 0%, rgba(162,28,175,0.08) 100%)";
-const CTA_GRADIENT_MAGENTA = "linear-gradient(135deg, #A21CAF 0%, #D946EF 50%, #E879F9 100%)";
-
 const TESTIMONIAL_VIDEOS = [
   { id: "U17038k3dZs", name: "Müşteri 1", role: "Online Koç" },
   { id: "nWvImM9U2NQ", name: "Müşteri 2", role: "İş Danışmanı" },
@@ -19,69 +16,61 @@ export default function FunnelContent() {
     <>
       {/* eslint-disable-next-line @next/next/no-page-custom-font */}
       <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet"
       />
 
       <main
-        className="min-h-screen bg-[#0a0613] text-white"
-        style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+        className="min-h-screen bg-white text-slate-900"
+        style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif" }}
       >
         {/* 1. TOP BAR */}
-        <header className="border-b border-[#2a1f4a] bg-[#0a0613]/90 backdrop-blur-sm sticky top-0 z-40">
-          <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-center">
-            <div className="flex items-center gap-2">
-              <div
-                className="w-7 h-7 rounded-md flex items-center justify-center font-extrabold text-white text-[14px]"
-                style={{ background: CTA_GRADIENT_MAGENTA }}
-              >
+        <header className="border-b border-slate-200 bg-white/95 backdrop-blur-sm sticky top-0 z-40">
+          <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-center">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center font-extrabold text-white text-[15px] shadow-sm">
                 F
               </div>
-              <span className="font-extrabold tracking-wide text-[16px] md:text-[18px]">
-                AI SCALE <span className="text-[#D946EF]">FUNNEL</span>
+              <span className="font-bold tracking-tight text-[17px] md:text-[19px] text-slate-900">
+                Funnel<span className="text-blue-600">.</span>
               </span>
             </div>
           </div>
         </header>
 
         {/* HERO SECTION */}
-        <section className="px-4 pt-10 pb-12 md:pt-16 md:pb-16">
+        <section className="px-4 pt-12 pb-8 md:pt-20 md:pb-12 bg-gradient-to-b from-blue-50 via-white to-white">
           <div className="max-w-4xl mx-auto text-center">
-            {/* 2. PILL BADGE */}
-            <div
-              className="inline-block border border-[#D946EF]/40 rounded-full px-5 py-2 mb-6"
-              style={{ background: MAGENTA_BG_SUBTLE }}
-            >
-              <p className="text-[#E879F9] text-[11px] md:text-[13px] font-bold uppercase tracking-[2px]">
-                ONLİNE KOÇLAR & DANIŞMANLAR & İŞLETMELER İÇİN
+            {/* Pill */}
+            <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 rounded-full px-4 py-1.5 mb-6 border border-blue-200">
+              <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-pulse" />
+              <p className="text-[12px] md:text-[13px] font-semibold uppercase tracking-wider">
+                Online Koçlar & Danışmanlar & İşletmeler için
               </p>
             </div>
 
-            {/* 3. BIG HEADLINE */}
-            <h1 className="text-[34px] md:text-[56px] font-extrabold leading-[1.08] mb-4">
-              Sana 7 Gün İçinde Instagram&apos;ından
-              <span className="block text-[#D946EF] mt-2">
-                Aylık 100.000 TL Kazandıracak Funnel
+            {/* Headline */}
+            <h1 className="text-[32px] md:text-[52px] font-extrabold leading-[1.1] mb-5 text-slate-900 tracking-tight">
+              Türkiye&apos;de %94 Koç Tutarlı Müşteri Kazanma Yolu Arıyor
+              <span className="block bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent mt-2">
+                İşte 7 Günde Kuracağımız Sistem
               </span>
-              Kuruyoruz
             </h1>
 
-            {/* 4. SUB-LINE */}
-            <p className="text-white/60 text-[14px] md:text-[18px] max-w-2xl mx-auto mb-8">
-              Türkiye&apos;de 100+ koçun ve danışmanın kullandığı sistemin aynısı —
-              Done-with-you & Done-for-you modelleriyle Instagram&apos;ını gelir makinesine dönüştür.
+            {/* Sub-line */}
+            <p className="text-slate-600 text-[15px] md:text-[18px] max-w-2xl mx-auto mb-2">
+              Done-with-you & Done-for-you modelleriyle Instagram&apos;ından{" "}
+              <strong className="text-slate-900">aylık 100.000 TL+</strong>{" "}
+              kazandıracak funnel sistemini birlikte kuruyoruz.
+            </p>
+            <p className="text-slate-500 text-[13px] mb-10">
+              Türkiye&apos;de 100+ koçun kullandığı sistemin aynısı
             </p>
 
-            {/* 5. VSL VIDEO */}
+            {/* VSL VIDEO */}
             <div className="max-w-3xl mx-auto">
-              <p className="text-center text-[10px] text-[#D946EF] uppercase tracking-[3px] mb-2 font-bold">
-                ▼ VİDEOYU SONUNA KADAR İZLE ▼
-              </p>
-              <div
-                className="relative rounded-xl overflow-hidden p-2"
-                style={{ background: MAGENTA_BG_SUBTLE, border: "1px solid rgba(217,70,239,0.3)" }}
-              >
-                <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
+              <div className="relative rounded-2xl overflow-hidden bg-white p-2 shadow-2xl shadow-blue-500/10 border border-slate-200">
+                <div className="relative aspect-video bg-slate-900 rounded-xl overflow-hidden">
                   <iframe
                     className="absolute inset-0 w-full h-full"
                     src="https://www.youtube.com/embed/cIbDH0lWMc0"
@@ -92,35 +81,32 @@ export default function FunnelContent() {
                   />
                 </div>
               </div>
-              <p className="text-white/40 text-[12px] text-center mt-3 italic">
-                ⚠️ Sesini açmayı unutma
+              <p className="text-slate-500 text-[13px] mt-4">
+                ▼ <span className="font-semibold">Son adım:</span> Aşağıdaki tarihten görüşme zamanını seç
               </p>
             </div>
           </div>
         </section>
 
-        {/* 6 + 7. QUALIFY / TYPEFORM EMBED */}
-        <section className="px-4 py-12 md:py-16 border-t border-[#2a1f4a]">
+        {/* QUALIFY / TYPEFORM EMBED */}
+        <section id="apply" className="px-4 py-12 md:py-16 bg-white">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8">
-              <p className="text-[11px] text-[#E879F9] uppercase tracking-[3px] font-bold mb-2">
-                SON ADIM
+              <p className="text-[11px] text-blue-600 uppercase tracking-[3px] font-bold mb-3">
+                Son Adım
               </p>
-              <h2 className="text-[28px] md:text-[40px] font-extrabold mb-3">
-                Aşağıdan{" "}
-                <span className="text-[#D946EF]">Uygun Olup Olmadığını</span> Gör
+              <h2 className="text-[28px] md:text-[40px] font-extrabold mb-3 text-slate-900 tracking-tight">
+                Uygun Olup Olmadığını{" "}
+                <span className="text-blue-600">Aşağıdan Gör</span>
               </h2>
-              <p className="text-white/50 text-[14px] md:text-[16px] max-w-xl mx-auto">
+              <p className="text-slate-600 text-[14px] md:text-[16px] max-w-xl mx-auto">
                 12 kısa soruyu cevapla, takvimden uygun olduğun saati seç —
                 seninle 1-on-1 stratejik görüşme yapalım.
               </p>
             </div>
 
-            {/* Typeform Embed Placeholder */}
-            <div
-              className="rounded-[12px] border border-dashed border-[#D946EF]/40 p-2 md:p-4 max-w-3xl mx-auto"
-              style={{ background: MAGENTA_BG_SUBTLE }}
-            >
+            {/* Typeform Embed Card */}
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3 md:p-6 max-w-3xl mx-auto shadow-lg shadow-slate-200/50">
               {/* TODO: Buraya kullanıcının vereceği Typeform ID gelecek.
                   Aktif etmek için aşağıdaki div'in data-tf-live attribute'una
                   gerçek Typeform ID'sini koy ve placeholder mesajı sil. */}
@@ -132,50 +118,47 @@ export default function FunnelContent() {
 
               {/* Geçici placeholder mesaj — Typeform aktif olunca silinecek */}
               <div
-                className="flex flex-col items-center justify-center text-center py-20 px-6"
+                className="flex flex-col items-center justify-center text-center py-20 px-6 bg-white rounded-xl border border-dashed border-slate-300"
                 style={{ minHeight: "500px" }}
               >
-                <div
-                  className="w-16 h-16 rounded-full flex items-center justify-center mb-4"
-                  style={{ background: CTA_GRADIENT_MAGENTA }}
-                >
+                <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-gradient-to-br from-blue-500 to-blue-700 shadow-md">
                   <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                   </svg>
                 </div>
-                <h3 className="text-[20px] md:text-[24px] font-bold mb-2">
+                <h3 className="text-[20px] md:text-[24px] font-bold mb-2 text-slate-900">
                   Form Yakında Aktif Olacak
                 </h3>
-                <p className="text-white/50 text-[14px] max-w-md">
+                <p className="text-slate-500 text-[14px] max-w-md">
                   12 soruluk başvuru formu hazırlanıyor. Çok kısa sürede burada olacak.
                 </p>
               </div>
 
-              <p className="text-white/30 text-[12px] text-center mt-3 italic">
+              <p className="text-slate-400 text-[12px] text-center mt-3 italic">
                 Form yüklenmiyorsa sayfayı yenileyin.
               </p>
             </div>
           </div>
         </section>
 
-        {/* 8 + 9. PROOF IT WORKS — TESTIMONIAL VIDEOS */}
-        <section className="px-4 py-12 md:py-16 border-t border-[#2a1f4a]">
+        {/* PROOF IT WORKS — TESTIMONIAL VIDEOS */}
+        <section className="px-4 py-12 md:py-20 bg-gradient-to-b from-slate-50 to-white border-t border-slate-200">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-10">
-              <p className="text-[11px] text-[#E879F9] uppercase tracking-[3px] font-bold mb-2">
-                KANITI GÖR
+            <div className="text-center mb-12">
+              <p className="text-[11px] text-blue-600 uppercase tracking-[3px] font-bold mb-3">
+                Kanıtı Gör
               </p>
-              <h2 className="text-[28px] md:text-[40px] font-extrabold mb-3">
+              <h2 className="text-[28px] md:text-[42px] font-extrabold mb-3 text-slate-900 tracking-tight">
                 Müşterilerimizden{" "}
-                <span className="text-[#D946EF]">Dinleyin</span>
+                <span className="text-blue-600">Dinleyin</span>
               </h2>
-              <p className="text-white/50 text-[14px] md:text-[16px] max-w-2xl mx-auto">
+              <p className="text-slate-600 text-[14px] md:text-[16px] max-w-2xl mx-auto">
                 Türkiye&apos;nin dört bir yanından koçlar, danışmanlar ve işletme sahipleri
                 bu sistemle Instagram&apos;larını gerçek bir gelir makinesine dönüştürdü.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
               {TESTIMONIAL_VIDEOS.map((v, i) => (
                 <TestimonialVideoCard
                   key={`${v.id}-${i}`}
@@ -188,10 +171,10 @@ export default function FunnelContent() {
           </div>
         </section>
 
-        {/* 10. TESTIMONIAL QUOTES */}
-        <section className="px-4 py-12 md:py-16 border-t border-[#2a1f4a]">
+        {/* TESTIMONIAL QUOTES */}
+        <section className="px-4 py-12 md:py-16 bg-white border-t border-slate-200">
           <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
               <TestimonialQuoteCard
                 name="Elif K."
                 role="Yaşam Koçu"
@@ -211,11 +194,32 @@ export default function FunnelContent() {
           </div>
         </section>
 
-        {/* 11. EARNINGS DISCLAIMER */}
-        <section className="px-4 py-10 border-t border-[#2a1f4a]">
+        {/* CTA REMINDER */}
+        <section className="px-4 py-12 md:py-16 bg-blue-600 text-white">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-[26px] md:text-[36px] font-extrabold mb-4 tracking-tight">
+              Hazırsan, başvurunu doldur
+            </h2>
+            <p className="text-blue-100 text-[15px] md:text-[17px] mb-6">
+              12 soru, 3 dakika. Uygun bulursak seninle ücretsiz strateji görüşmesi yaparız.
+            </p>
+            <a
+              href="#apply"
+              className="inline-flex items-center gap-2 bg-white text-blue-700 font-bold text-[15px] md:text-[16px] px-7 py-3.5 rounded-full hover:shadow-xl hover:scale-105 transition-all"
+            >
+              Başvuruyu Başlat
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+          </div>
+        </section>
+
+        {/* EARNINGS DISCLAIMER */}
+        <section className="px-4 py-10 bg-slate-50 border-t border-slate-200">
           <div className="max-w-4xl mx-auto text-center">
-            <p className="text-white/30 text-[11px] md:text-[12px] leading-relaxed">
-              <strong className="text-white/40">KAZANÇ & GELİR FERAGATNAMESİ:</strong>{" "}
+            <p className="text-slate-500 text-[11px] md:text-[12px] leading-relaxed">
+              <strong className="text-slate-700">KAZANÇ & GELİR FERAGATNAMESİ:</strong>{" "}
               Lütfen paylaşılan sonuçların tipik olmadığını anlayın. Bu sonuçları
               tekrarlayacağınızı ima etmiyoruz. Doğrudan yanıt pazarlamasında ve
               reklamcılıkta yıllarca süren deneyimimiz ve bunun sonucunda oluşan bir
@@ -229,24 +233,21 @@ export default function FunnelContent() {
           </div>
         </section>
 
-        {/* 12. FOOTER */}
-        <footer className="px-4 py-8 border-t border-[#2a1f4a]">
+        {/* FOOTER */}
+        <footer className="px-4 py-10 bg-slate-900 text-slate-400">
           <div className="max-w-6xl mx-auto text-center">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <div
-                className="w-6 h-6 rounded-md flex items-center justify-center font-extrabold text-white text-[12px]"
-                style={{ background: CTA_GRADIENT_MAGENTA }}
-              >
+            <div className="flex items-center justify-center gap-2.5 mb-4">
+              <div className="w-7 h-7 rounded-md bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center font-extrabold text-white text-[13px]">
                 F
               </div>
-              <span className="font-extrabold tracking-wide text-[14px]">
-                AI SCALE <span className="text-[#D946EF]">FUNNEL</span>
+              <span className="font-bold tracking-tight text-[15px] text-white">
+                Funnel<span className="text-blue-400">.</span>
               </span>
             </div>
-            <p className="text-white/30 text-[11px] mb-2">
-              © 2026 AI Scale Funnel. Tüm hakları saklıdır.
+            <p className="text-slate-500 text-[12px] mb-2">
+              © 2026 Funnel. Tüm hakları saklıdır.
             </p>
-            <p className="text-white/20 text-[10px] max-w-xl mx-auto leading-relaxed">
+            <p className="text-slate-600 text-[10px] max-w-xl mx-auto leading-relaxed">
               FACEBOOK&trade; veya Meta&trade; tarafından desteklenmemektedir.
               Bu site Facebook&trade;&apos;un bir parçası değildir.
             </p>
@@ -272,11 +273,8 @@ function TestimonialVideoCard({
   role: string;
 }) {
   return (
-    <div className="bg-[#15102a] border border-[#2a1f4a] rounded-xl overflow-hidden hover:border-[#D946EF]/40 transition-colors">
-      <div
-        className="relative w-full bg-black"
-        style={{ paddingBottom: "177.78%" }}
-      >
+    <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/10 transition-all">
+      <div className="relative w-full bg-slate-900" style={{ paddingBottom: "177.78%" }}>
         <iframe
           className="absolute inset-0 w-full h-full"
           src={`https://www.youtube.com/embed/${videoId}`}
@@ -285,11 +283,11 @@ function TestimonialVideoCard({
           allowFullScreen
         />
       </div>
-      <div className="p-4">
-        <p className="text-[#D946EF] font-bold text-[14px] md:text-[15px]">
-          {name}
+      <div className="p-5">
+        <p className="text-slate-900 font-bold text-[15px]">{name}</p>
+        <p className="text-blue-600 text-[12px] font-medium uppercase tracking-wider mt-0.5">
+          {role}
         </p>
-        <p className="text-white/50 text-[12px]">{role}</p>
       </div>
     </div>
   );
@@ -305,14 +303,19 @@ function TestimonialQuoteCard({
   text: string;
 }) {
   return (
-    <div className="bg-[#15102a] border border-[#2a1f4a] rounded-xl p-6 hover:border-[#D946EF]/40 transition-colors">
-      <p className="text-[#D946EF] font-bold text-[14px] mb-1">{name}</p>
-      <p className="text-white/40 text-[11px] mb-4 uppercase tracking-wider">
-        {role}
+    <div className="bg-slate-50 border border-slate-200 rounded-2xl p-7 hover:border-blue-400 hover:shadow-lg transition-all">
+      <svg className="w-6 h-6 text-blue-500 mb-3" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+      </svg>
+      <p className="text-slate-700 text-[14px] md:text-[15px] leading-relaxed mb-5">
+        {text}
       </p>
-      <p className="text-white/80 text-[13px] md:text-[14px] italic leading-relaxed">
-        &ldquo;{text}&rdquo;
-      </p>
+      <div className="border-t border-slate-200 pt-4">
+        <p className="text-slate-900 font-bold text-[14px]">{name}</p>
+        <p className="text-blue-600 text-[11px] font-medium uppercase tracking-wider mt-0.5">
+          {role}
+        </p>
+      </div>
     </div>
   );
 }
