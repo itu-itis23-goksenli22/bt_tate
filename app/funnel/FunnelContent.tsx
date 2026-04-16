@@ -1,6 +1,34 @@
 "use client";
 
+import Image from "next/image";
 import Script from "next/script";
+
+const DISCOVER_ITEMS = [
+  {
+    title: "DM Reklamlarıyla Kaliteli Lead'ler Yakalayın",
+    desc: "Instagram DM reklamlarını sıfırdan kurarak hedef kitlenizden günlük tutarlı başvurular almanın formülünü öğrenin — hiçbir teknik bilgiye gerek olmadan.",
+  },
+  {
+    title: "Funnel Mimarisini Sıfırdan Kurun",
+    desc: "Reklamdan → DM'e → Strateji görüşmesine → Müşteriye dönüştüren 4 adımlı sistemi adım adım kurmayı öğrenin.",
+  },
+  {
+    title: "İçerik Stratejisi ile Otorite Olun",
+    desc: "Instagram'da koç ve danışman olarak konumlanmanızı sağlayan reels, story ve post formatlarını ve Türkiye'de işe yarayan örnekleri inceleyin.",
+  },
+  {
+    title: "Manychat ile DM Otomasyonunu Devreye Alın",
+    desc: "DM otomasyonu kurarak gece-gündüz lead toplamayı, otomatik kalifiye etmeyi ve Calendly randevularını sağlamayı öğrenin.",
+  },
+  {
+    title: "Premium Fiyatlandırma & Yüksek Bilet Satışı",
+    desc: "1.000$+ paketlerinizi DM görüşmelerinde nasıl konumlayacağınızı, fiyat itirazlarını nasıl aşacağınızı ve closing'i nasıl yapacağınızı öğrenin.",
+  },
+  {
+    title: "İlk 100.000 TL Yol Haritanızı Alın",
+    desc: "ARTIK: Adım adım takip edebileceğiniz net bir 90 günlük plana sahip olun — ve onu nasıl 500.000 TL'ye ölçekleyeceğinizi görün.",
+  },
+];
 
 const TESTIMONIAL_VIDEOS = [
   { id: "U17038k3dZs", name: "Müşteri 1", role: "Online Koç" },
@@ -167,6 +195,65 @@ export default function FunnelContent() {
                   role={v.role}
                 />
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* DISCOVER / WHAT YOU'LL LEARN — dark band for visual contrast against light hero */}
+        <section className="px-4 py-14 md:py-20 bg-slate-900 text-white border-t border-slate-200">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center md:text-left mb-10 md:mb-14 max-w-3xl">
+              <p className="text-[11px] text-blue-400 uppercase tracking-[3px] font-bold mb-3">
+                Bu Sistemde Ne Var?
+              </p>
+              <h2 className="text-[28px] md:text-[42px] font-extrabold leading-tight tracking-tight">
+                Bu <span className="text-blue-400">7 Günlük Programda</span>{" "}
+                Keşfedecekleriniz...
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10 items-start">
+              {/* Left: 6-item list (2 columns wide) */}
+              <div className="lg:col-span-2 space-y-6">
+                {DISCOVER_ITEMS.map((item, i) => (
+                  <div key={i} className="flex gap-4 items-start">
+                    <div className="flex-shrink-0 w-7 h-7 rounded-full bg-blue-500 flex items-center justify-center mt-0.5 shadow-lg shadow-blue-500/30">
+                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-[15px] md:text-[17px] font-bold text-white mb-1.5">
+                        {item.title}
+                      </h3>
+                      <p className="text-slate-400 text-[13px] md:text-[14px] leading-relaxed">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Right: instructor card */}
+              <div className="relative max-w-sm mx-auto lg:mx-0 w-full">
+                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-slate-700 shadow-2xl shadow-blue-500/10">
+                  <Image
+                    src="/images/instructor.jpg"
+                    alt="Baturalp Tunalı"
+                    fill
+                    sizes="(min-width: 1024px) 320px, (min-width: 640px) 380px, 90vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent p-5">
+                    <p className="text-blue-400 font-extrabold text-[18px] md:text-[20px] italic">
+                      Baturalp Tunalı
+                    </p>
+                    <p className="text-white/70 text-[12px] md:text-[13px] mt-0.5">
+                      InstaFunnel Eğitmeni & Kurucu
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
