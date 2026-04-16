@@ -3,6 +3,8 @@
 import Image from "next/image";
 import Script from "next/script";
 
+/* TESTIMONIAL_VIDEOS removed — section deleted by user request */
+
 const DISCOVER_ITEMS = [
   {
     title: "DM Reklamlarıyla Kaliteli Lead'ler Yakalayın",
@@ -28,15 +30,6 @@ const DISCOVER_ITEMS = [
     title: "İlk 100.000 TL Yol Haritanızı Alın",
     desc: "ARTIK: Adım adım takip edebileceğiniz net bir 90 günlük plana sahip olun — ve onu nasıl 500.000 TL'ye ölçekleyeceğinizi görün.",
   },
-];
-
-const TESTIMONIAL_VIDEOS = [
-  { id: "U17038k3dZs", name: "Müşteri 1", role: "Online Koç" },
-  { id: "nWvImM9U2NQ", name: "Müşteri 2", role: "İş Danışmanı" },
-  { id: "24sobDc1m-8", name: "Müşteri 3", role: "Fitness Koçu" },
-  { id: "U17038k3dZs", name: "Müşteri 4", role: "Beslenme Uzmanı" },
-  { id: "nWvImM9U2NQ", name: "Müşteri 5", role: "Mindset Koçu" },
-  { id: "24sobDc1m-8", name: "Müşteri 6", role: "Pazarlama Danışmanı" },
 ];
 
 export default function FunnelContent() {
@@ -73,26 +66,22 @@ export default function FunnelContent() {
             <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 rounded-full px-4 py-1.5 mb-6 border border-blue-200">
               <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-pulse" />
               <p className="text-[12px] md:text-[13px] font-semibold uppercase tracking-wider">
-                Online Koçlar & Danışmanlar & İşletmeler için
+                Aylık 50.000 – 300.000 TL Kazanan Online Koçlar İçin
               </p>
             </div>
 
             {/* Headline */}
             <h1 className="text-[32px] md:text-[52px] font-extrabold leading-[1.1] mb-5 text-slate-900 tracking-tight">
-              Türkiye&apos;de %94 Koç Tutarlı Müşteri Kazanma Yolu Arıyor
+              Bize 7 Gün Verin,
               <span className="block bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent mt-2">
-                İşte 7 Günde Kuracağımız Sistem
+                Aylık 100.000 TL Müşteri Getiren Funnel
               </span>
+              Sistemini Koçluk İşinize Kuralım
             </h1>
 
             {/* Sub-line */}
-            <p className="text-slate-600 text-[15px] md:text-[18px] max-w-2xl mx-auto mb-2">
-              Done-with-you & Done-for-you modelleriyle Instagram&apos;ından{" "}
-              <strong className="text-slate-900">aylık 100.000 TL+</strong>{" "}
-              kazandıracak funnel sistemini birlikte kuruyoruz.
-            </p>
-            <p className="text-slate-500 text-[13px] mb-10">
-              Türkiye&apos;de 100+ koçun kullandığı sistemin aynısı
+            <p className="text-slate-600 text-[15px] md:text-[18px] max-w-2xl mx-auto mb-10">
+              Türkiye&apos;de 100+ koçun aylık 100.000 TL&apos;ye ölçeklenmek için kullandığı sistemin aynısı.
             </p>
 
             {/* VSL VIDEO */}
@@ -165,36 +154,6 @@ export default function FunnelContent() {
               <p className="text-slate-400 text-[12px] text-center mt-3 italic">
                 Form yüklenmiyorsa sayfayı yenileyin.
               </p>
-            </div>
-          </div>
-        </section>
-
-        {/* PROOF IT WORKS — TESTIMONIAL VIDEOS */}
-        <section className="px-4 py-12 md:py-20 bg-gradient-to-b from-slate-50 to-white border-t border-slate-200">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <p className="text-[11px] text-blue-600 uppercase tracking-[3px] font-bold mb-3">
-                Kanıtı Gör
-              </p>
-              <h2 className="text-[28px] md:text-[42px] font-extrabold mb-3 text-slate-900 tracking-tight">
-                Müşterilerimizden{" "}
-                <span className="text-blue-600">Dinleyin</span>
-              </h2>
-              <p className="text-slate-600 text-[14px] md:text-[16px] max-w-2xl mx-auto">
-                Türkiye&apos;nin dört bir yanından koçlar, danışmanlar ve işletme sahipleri
-                bu sistemle Instagram&apos;larını gerçek bir gelir makinesine dönüştürdü.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-              {TESTIMONIAL_VIDEOS.map((v, i) => (
-                <TestimonialVideoCard
-                  key={`${v.id}-${i}`}
-                  videoId={v.id}
-                  name={v.name}
-                  role={v.role}
-                />
-              ))}
             </div>
           </div>
         </section>
@@ -349,36 +308,6 @@ export default function FunnelContent() {
 }
 
 /* ─── Sub-components ─── */
-
-function TestimonialVideoCard({
-  videoId,
-  name,
-  role,
-}: {
-  videoId: string;
-  name: string;
-  role: string;
-}) {
-  return (
-    <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/10 transition-all">
-      <div className="relative w-full bg-slate-900" style={{ paddingBottom: "177.78%" }}>
-        <iframe
-          className="absolute inset-0 w-full h-full"
-          src={`https://www.youtube.com/embed/${videoId}`}
-          title={`${name} — ${role}`}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        />
-      </div>
-      <div className="p-5">
-        <p className="text-slate-900 font-bold text-[15px]">{name}</p>
-        <p className="text-blue-600 text-[12px] font-medium uppercase tracking-wider mt-0.5">
-          {role}
-        </p>
-      </div>
-    </div>
-  );
-}
 
 function TestimonialQuoteCard({
   name,
