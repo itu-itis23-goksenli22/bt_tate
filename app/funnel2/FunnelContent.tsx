@@ -3,714 +3,333 @@
 import Image from "next/image";
 import Script from "next/script";
 
-/* ────────────────────────────────────────────────────────────── DATA ── */
-
-type Benefit = { num: string; title: string; desc: string };
-
-const BENEFITS: Benefit[] = [
+const DISCOVER_ITEMS = [
   {
-    num: "01",
     title: "DM Reklamlarıyla Kaliteli Lead'ler Yakalayın",
     desc: "Instagram DM reklamlarını sıfırdan kurarak hedef kitlenizden günlük tutarlı başvurular almanın formülünü öğrenin — hiçbir teknik bilgiye gerek olmadan.",
   },
   {
-    num: "02",
     title: "Funnel Mimarisini Sıfırdan Kurun",
     desc: "Reklamdan → DM'e → Strateji görüşmesine → Müşteriye dönüştüren 4 adımlı sistemi adım adım kurmayı öğrenin.",
   },
   {
-    num: "03",
     title: "İçerik Stratejisi ile Otorite Olun",
     desc: "Instagram'da koç ve danışman olarak konumlanmanızı sağlayan reels, story ve post formatlarını ve Türkiye'de işe yarayan örnekleri inceleyin.",
   },
   {
-    num: "04",
     title: "Manychat ile DM Otomasyonunu Devreye Alın",
     desc: "DM otomasyonu kurarak gece-gündüz lead toplamayı, otomatik kalifiye etmeyi ve Calendly randevularını sağlamayı öğrenin.",
   },
   {
-    num: "05",
     title: "Premium Fiyatlandırma & Yüksek Bilet Satışı",
     desc: "1.000$+ paketlerinizi DM görüşmelerinde nasıl konumlayacağınızı, fiyat itirazlarını nasıl aşacağınızı ve closing'i nasıl yapacağınızı öğrenin.",
   },
   {
-    num: "06",
     title: "İlk 100.000 TL Yol Haritanızı Alın",
     desc: "ARTIK: Adım adım takip edebileceğiniz net bir 90 günlük plana sahip olun — ve onu nasıl 500.000 TL'ye ölçekleyeceğinizi görün.",
   },
 ];
-
-type Quote = { name: string; role: string; text: string };
-
-const QUOTES: Quote[] = [
-  {
-    name: "Elif K.",
-    role: "Yaşam Koçu",
-    text: "İlk reklamım daha ilk haftada işe yaradı ve hâlâ çalışmaya devam ediyor.",
-  },
-  {
-    name: "Burak D.",
-    role: "Airbnb Danışmanı",
-    text: "Funnel'i kurmadan önce tutarlı müşteri kazanma stratejim yoktu. Şimdi bir sistemim var.",
-  },
-  {
-    name: "Mert A.",
-    role: "Mindset Koçu",
-    text: "Sonunda referanslara bağlı kalmadan, tahmin edilebilir şekilde müşteri kazanmanın yolunu buldum.",
-  },
-];
-
-/* Grain texture data URL — generated SVG noise overlay */
-const GRAIN_BG =
-  "url(\"data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>\")";
-
-/* Color tokens (kept inline for clarity)
-   Cream    #EFE7D2     surface
-   Cream-2  #E5DCBC     deeper surface
-   Olive    #1A2A1F     primary text
-   Sienna   #C84B27     accent (CTA, highlights)
-   Brown    #5C4F38     muted label
-   Sage     #7B8B6F     tertiary accent (rarely used)
-*/
-
-/* ────────────────────────────────────────────────────────────── PAGE ── */
 
 export default function FunnelContent() {
   return (
     <>
       {/* eslint-disable-next-line @next/next/no-page-custom-font */}
       <link
-        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet"
       />
 
-      <div className="relative bg-[#EFE7D2] text-[#1A2A1F] min-h-screen overflow-hidden">
-        {/* Persistent grain overlay */}
-        <div
-          aria-hidden
-          className="pointer-events-none fixed inset-0 z-50 opacity-[0.18] mix-blend-multiply"
-          style={{ backgroundImage: GRAIN_BG, backgroundSize: "200px 200px" }}
-        />
-
-        <main
-          className="relative z-10"
-          style={{ fontFamily: "'Geist', system-ui, sans-serif" }}
-        >
-          {/* ─────────────────────────────────────────── TOP BAR */}
-          <header className="border-b border-[#1A2A1F]/15 bg-[#EFE7D2]/80 backdrop-blur-sm sticky top-0 z-40">
-            <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-4 md:py-5 flex items-center justify-between">
-              <a
-                href="/funnel2"
-                className="text-[22px] md:text-[26px] tracking-[-0.02em] leading-none"
-                style={{
-                  fontFamily: "'Fraunces', serif",
-                  fontVariationSettings: "'opsz' 144",
-                  fontWeight: 400,
-                  fontStyle: "italic",
-                }}
-              >
+      <main
+        className="min-h-screen bg-[#F5EFE0] text-[#1F2A1B]"
+        style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif" }}
+      >
+        {/* TOP BAR */}
+        <header className="border-b border-[#1F2A1B]/15 bg-[#F5EFE0]/95 backdrop-blur-sm sticky top-0 z-40">
+          <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-center">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#C84B27] to-[#8B2F12] flex items-center justify-center font-extrabold text-[#F5EFE0] text-[15px] shadow-sm">
+                F
+              </div>
+              <span className="font-bold tracking-tight text-[17px] md:text-[19px] text-[#1F2A1B]">
                 Funnel<span className="text-[#C84B27]">.</span>
-              </a>
-
-              <nav className="flex items-center gap-6 md:gap-8">
-                <span
-                  className="hidden md:inline text-[10px] tracking-[0.25em] uppercase text-[#5C4F38]"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                >
-                  Bölüm 01 — 04
-                </span>
-                <a
-                  href="#apply"
-                  className="group flex items-center gap-2 text-[12px] md:text-[13px] tracking-[0.15em] uppercase font-medium border-b border-[#1A2A1F] pb-0.5 hover:text-[#C84B27] hover:border-[#C84B27] transition-colors"
-                >
-                  Başvur
-                  <span className="transition-transform group-hover:translate-x-1">
-                    →
-                  </span>
-                </a>
-              </nav>
-            </div>
-          </header>
-
-          {/* ─────────────────────────────────────────── HERO */}
-          <section className="px-5 md:px-10 pt-14 md:pt-24 pb-20 md:pb-32 max-w-[1280px] mx-auto">
-            {/* Section meta row */}
-            <div className="flex items-baseline justify-between mb-10 md:mb-16">
-              <span
-                className="text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-[#5C4F38]"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
-              >
-                No. 01 / Vizyon
-              </span>
-              <span
-                className="text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-[#5C4F38]"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
-              >
-                İST. — 2026
               </span>
             </div>
+          </div>
+        </header>
 
-            {/* Audience pill — bracket-style instead of solid pill */}
-            <div className="flex items-center gap-3 mb-10 md:mb-14">
-              <span className="block w-8 md:w-12 h-px bg-[#1A2A1F]/40" />
-              <span
-                className="text-[11px] md:text-[12px] tracking-[0.18em] uppercase text-[#1A2A1F]"
-                style={{
-                  fontFamily: "'JetBrains Mono', monospace",
-                  fontWeight: 500,
-                }}
-              >
+        {/* HERO */}
+        <section className="px-4 pt-12 pb-8 md:pt-20 md:pb-12 bg-gradient-to-b from-[#EDE3CC] via-[#F5EFE0] to-[#F5EFE0]">
+          <div className="max-w-4xl mx-auto text-center">
+            {/* Pill */}
+            <div className="inline-flex items-center gap-2 bg-[#C84B27]/10 text-[#8B2F12] rounded-full px-4 py-1.5 mb-6 border border-[#C84B27]/30">
+              <span className="w-1.5 h-1.5 bg-[#C84B27] rounded-full animate-pulse" />
+              <p className="text-[12px] md:text-[13px] font-semibold uppercase tracking-wider">
                 Aylık 50.000 – 300.000 TL Kazanan Online Koçlar İçin
-              </span>
-              <span className="hidden md:block flex-1 h-px bg-[#1A2A1F]/40" />
+              </p>
             </div>
 
-            {/* Mega headline — Fraunces, mixed weights & italic */}
-            <h1
-              className="text-[44px] sm:text-[64px] md:text-[88px] lg:text-[112px] leading-[0.95] tracking-[-0.035em] mb-12 md:mb-16 max-w-[1080px]"
-              style={{
-                fontFamily: "'Fraunces', serif",
-                fontVariationSettings: "'opsz' 144",
-                fontWeight: 400,
-              }}
-            >
-              Bize <span className="font-medium">7 Gün</span> Verin —
-              <br />
-              <span
-                className="italic text-[#C84B27]"
-                style={{ fontVariationSettings: "'opsz' 144", fontWeight: 400 }}
-              >
-                Aylık 100.000 TL
-              </span>{" "}
-              Müşteri Getiren
-              <br />
-              <span className="font-medium">Funnel Sistemini</span> Koçluk
-              İşinize Kuralım.
+            {/* Headline */}
+            <h1 className="text-[32px] md:text-[52px] font-extrabold leading-[1.1] mb-5 text-[#1F2A1B] tracking-tight">
+              Bize 7 Gün Verin,
+              <span className="block bg-gradient-to-r from-[#C84B27] to-[#E8794F] bg-clip-text text-transparent mt-2">
+                Aylık 100.000 TL Müşteri Getiren Funnel
+              </span>
+              Sistemini Koçluk İşinize Kuralım
             </h1>
 
-            {/* Body sub-line + meta column on the right */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 mb-14 md:mb-20">
-              <div className="md:col-span-7 lg:col-span-6">
-                <p className="text-[16px] md:text-[19px] leading-[1.55] text-[#1A2A1F]/75 max-w-[560px]">
-                  Türkiye&apos;de{" "}
-                  <span className="text-[#1A2A1F] font-medium underline decoration-[#C84B27] decoration-2 underline-offset-4">
-                    100&apos;den fazla koç
-                  </span>{" "}
-                  aylık 100.000 TL&apos;ye ölçeklenmek için bu sistemin aynısını
-                  kullandı. Şimdi senin işin için kuruyoruz.
+            {/* Sub-line */}
+            <p className="text-[#1F2A1B]/70 text-[15px] md:text-[18px] max-w-2xl mx-auto mb-10">
+              Türkiye&apos;de 100+ koçun aylık 100.000 TL&apos;ye ölçeklenmek için kullandığı sistemin aynısı.
+            </p>
+
+            {/* VSL VIDEO */}
+            <div className="max-w-3xl mx-auto">
+              <div className="relative rounded-2xl overflow-hidden bg-[#F5EFE0] p-2 shadow-2xl shadow-[#C84B27]/15 border border-[#1F2A1B]/15">
+                <div className="relative aspect-video bg-[#1F2A1B] rounded-xl overflow-hidden">
+                  <iframe
+                    className="absolute inset-0 w-full h-full"
+                    src="https://www.youtube.com/embed/cIbDH0lWMc0"
+                    title="Instagram Funnel VSL"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+              <p className="text-[#1F2A1B]/50 text-[13px] mt-4">
+                ▼ <span className="font-semibold">Son adım:</span> Aşağıdaki tarihten görüşme zamanını seç
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* QUALIFY / TYPEFORM EMBED */}
+        <section id="apply" className="px-4 py-12 md:py-16 bg-[#F5EFE0]">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-8">
+              <p className="text-[11px] text-[#C84B27] uppercase tracking-[3px] font-bold mb-3">
+                Son Adım
+              </p>
+              <h2 className="text-[28px] md:text-[40px] font-extrabold mb-3 text-[#1F2A1B] tracking-tight">
+                Uygun Olup Olmadığını{" "}
+                <span className="text-[#C84B27]">Aşağıdan Gör</span>
+              </h2>
+              <p className="text-[#1F2A1B]/70 text-[14px] md:text-[16px] max-w-xl mx-auto">
+                12 kısa soruyu cevapla, takvimden uygun olduğun saati seç —
+                seninle 1-on-1 stratejik görüşme yapalım.
+              </p>
+            </div>
+
+            {/* Typeform Embed Card */}
+            <div className="rounded-2xl border border-[#1F2A1B]/15 bg-[#EDE3CC] p-3 md:p-6 max-w-3xl mx-auto shadow-lg shadow-[#1F2A1B]/10">
+              {/* TODO: Buraya kullanıcının vereceği Typeform ID gelecek.
+                  Aktif etmek için aşağıdaki div'in data-tf-live attribute'una
+                  gerçek Typeform ID'sini koy ve placeholder mesajı sil. */}
+              <div
+                data-tf-live="REPLACE_WITH_TYPEFORM_ID"
+                className="w-full"
+                style={{ minHeight: "600px" }}
+              />
+
+              {/* Geçici placeholder mesaj — Typeform aktif olunca silinecek */}
+              <div
+                className="flex flex-col items-center justify-center text-center py-20 px-6 bg-[#F5EFE0] rounded-xl border border-dashed border-[#1F2A1B]/25"
+                style={{ minHeight: "500px" }}
+              >
+                <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-gradient-to-br from-[#C84B27] to-[#8B2F12] shadow-md">
+                  <svg className="w-8 h-8 text-[#F5EFE0]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                  </svg>
+                </div>
+                <h3 className="text-[20px] md:text-[24px] font-bold mb-2 text-[#1F2A1B]">
+                  Form Yakında Aktif Olacak
+                </h3>
+                <p className="text-[#1F2A1B]/60 text-[14px] max-w-md">
+                  12 soruluk başvuru formu hazırlanıyor. Çok kısa sürede burada olacak.
                 </p>
               </div>
 
-              <div className="md:col-span-5 lg:col-span-4 lg:col-start-9 flex md:justify-end">
-                <div className="flex items-center gap-3 text-[#5C4F38]">
-                  <div
-                    className="text-[10px] tracking-[0.25em] uppercase"
-                    style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                  >
-                    İlk Adım
-                  </div>
-                  <span className="block w-6 h-px bg-[#5C4F38]/50" />
-                  <a
-                    href="#apply"
-                    className="text-[13px] tracking-[0.05em] text-[#1A2A1F] hover:text-[#C84B27] transition-colors group"
-                  >
-                    Aşağıdaki videoyu izle{" "}
-                    <span className="inline-block transition-transform group-hover:translate-y-1">
-                      ↓
-                    </span>
-                  </a>
-                </div>
-              </div>
+              <p className="text-[#1F2A1B]/40 text-[12px] text-center mt-3 italic">
+                Form yüklenmiyorsa sayfayı yenileyin.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* DISCOVER / WHAT YOU'LL LEARN */}
+        <section className="px-4 py-14 md:py-20 bg-[#1F2A1B] text-[#F5EFE0] border-t border-[#1F2A1B]/15">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center md:text-left mb-10 md:mb-14 max-w-3xl">
+              <p className="text-[11px] text-[#E8794F] uppercase tracking-[3px] font-bold mb-3">
+                Bu Sistemde Ne Var?
+              </p>
+              <h2 className="text-[28px] md:text-[42px] font-extrabold leading-tight tracking-tight">
+                Bu <span className="text-[#E8794F]">7 Günlük Programda</span>{" "}
+                Keşfedecekleriniz...
+              </h2>
             </div>
 
-            {/* Video — editorial frame with corner brackets */}
-            <div className="relative">
-              {/* Corner brackets */}
-              <span className="absolute -top-2 -left-2 w-5 h-5 border-t-2 border-l-2 border-[#1A2A1F]" />
-              <span className="absolute -top-2 -right-2 w-5 h-5 border-t-2 border-r-2 border-[#1A2A1F]" />
-              <span className="absolute -bottom-2 -left-2 w-5 h-5 border-b-2 border-l-2 border-[#1A2A1F]" />
-              <span className="absolute -bottom-2 -right-2 w-5 h-5 border-b-2 border-r-2 border-[#1A2A1F]" />
-
-              <div className="relative aspect-video bg-[#1A2A1F] overflow-hidden">
-                <iframe
-                  className="absolute inset-0 w-full h-full"
-                  src="https://www.youtube.com/embed/cIbDH0lWMc0"
-                  title="Funnel — Tanıtım Videosu"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                />
-              </div>
-
-              {/* Caption row below video */}
-              <div className="mt-3 md:mt-4 flex items-baseline justify-between text-[#5C4F38]">
-                <span
-                  className="text-[10px] tracking-[0.25em] uppercase"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                >
-                  Vid. 01 / Sistem Tanıtımı
-                </span>
-                <span
-                  className="text-[10px] tracking-[0.25em] uppercase italic"
-                  style={{ fontFamily: "'Fraunces', serif" }}
-                >
-                  Ses açmayı unutma —
-                </span>
-              </div>
-            </div>
-          </section>
-
-          {/* ─────────────────────────────────────────── APPLY */}
-          <section
-            id="apply"
-            className="border-t border-[#1A2A1F]/15 bg-[#E5DCBC]/40"
-          >
-            <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-20 md:py-28">
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 mb-12 md:mb-14">
-                <div className="md:col-span-6">
-                  <span
-                    className="block text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-[#5C4F38] mb-4"
-                    style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                  >
-                    No. 02 / Uygunluk
-                  </span>
-                  <h2
-                    className="text-[36px] md:text-[56px] lg:text-[68px] leading-[0.95] tracking-[-0.03em]"
-                    style={{
-                      fontFamily: "'Fraunces', serif",
-                      fontVariationSettings: "'opsz' 144",
-                      fontWeight: 400,
-                    }}
-                  >
-                    Programa{" "}
-                    <span className="italic font-normal text-[#C84B27]">
-                      uygun
-                    </span>{" "}
-                    musun?
-                  </h2>
-                </div>
-
-                <div className="md:col-span-5 md:col-start-8 flex items-end">
-                  <p className="text-[15px] md:text-[16px] leading-[1.6] text-[#1A2A1F]/75 max-w-[460px]">
-                    12 kısa soruyu cevapla, takvimden uygun olduğun saati seç.
-                    Seninle <span className="italic">1-on-1 stratejik
-                    görüşme</span> yapalım — tamamen ücretsiz.
-                  </p>
-                </div>
-              </div>
-
-              {/* Typeform card with editorial frame */}
-              <div className="relative max-w-[840px] mx-auto">
-                {/* Top label tape */}
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#C84B27] text-[#EFE7D2] px-4 py-1.5">
-                  <span
-                    className="text-[10px] tracking-[0.3em] uppercase"
-                    style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                  >
-                    Form / 12 Soru
-                  </span>
-                </div>
-
-                <div className="bg-[#EFE7D2] border border-[#1A2A1F]/30 p-3 md:p-5">
-                  {/* Typeform live target — kullanıcı ID'yi REPLACE_WITH_TYPEFORM_ID
-                      yerine yapıştırınca aktif olur. Aşağıdaki placeholder
-                      sonra silinmeli. */}
-                  <div
-                    data-tf-live="REPLACE_WITH_TYPEFORM_ID"
-                    className="w-full"
-                    style={{ minHeight: 600 }}
-                  />
-
-                  {/* Geçici placeholder */}
-                  <div
-                    className="bg-[#EFE7D2] border border-dashed border-[#1A2A1F]/30 px-6 py-20 md:py-28 text-center"
-                    style={{ minHeight: 500 }}
-                  >
-                    <div className="inline-block mb-6">
-                      <span
-                        className="block text-[10px] tracking-[0.3em] uppercase text-[#5C4F38] mb-1"
-                        style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                      >
-                        — Yakında —
-                      </span>
-                      <span
-                        className="text-[28px] md:text-[40px] italic"
-                        style={{
-                          fontFamily: "'Fraunces', serif",
-                          fontWeight: 400,
-                        }}
-                      >
-                        Form Hazırlanıyor
-                      </span>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10 items-start">
+              {/* Left: 6-item list (2 columns wide) */}
+              <div className="lg:col-span-2 space-y-6">
+                {DISCOVER_ITEMS.map((item, i) => (
+                  <div key={i} className="flex gap-4 items-start">
+                    <div className="flex-shrink-0 w-7 h-7 rounded-full bg-[#C84B27] flex items-center justify-center mt-0.5 shadow-lg shadow-[#C84B27]/30">
+                      <svg className="w-4 h-4 text-[#F5EFE0]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
                     </div>
-                    <p className="text-[14px] md:text-[15px] text-[#1A2A1F]/65 max-w-md mx-auto">
-                      12 soruluk başvuru formu yakında bu alanda olacak.
-                      Bu süreçte e-posta adresinden takvim daveti
-                      gönderiyoruz.
+                    <div>
+                      <h3 className="text-[15px] md:text-[17px] font-bold text-[#F5EFE0] mb-1.5">
+                        {item.title}
+                      </h3>
+                      <p className="text-[#F5EFE0]/60 text-[13px] md:text-[14px] leading-relaxed">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Right: instructor card */}
+              <div className="relative max-w-sm mx-auto lg:mx-0 w-full">
+                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-[#F5EFE0]/15 shadow-2xl shadow-[#C84B27]/15">
+                  <Image
+                    src="/images/instructor.jpg"
+                    alt="Baturalp Tunalı"
+                    fill
+                    sizes="(min-width: 1024px) 320px, (min-width: 640px) 380px, 90vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#1F2A1B] via-[#1F2A1B]/80 to-transparent p-5">
+                    <p className="text-[#E8794F] font-extrabold text-[18px] md:text-[20px] italic">
+                      Baturalp Tunalı
+                    </p>
+                    <p className="text-[#F5EFE0]/70 text-[12px] md:text-[13px] mt-0.5">
+                      InstaFunnel Eğitmeni & Kurucu
                     </p>
                   </div>
                 </div>
-
-                {/* Bottom mono caption */}
-                <div className="mt-3 flex items-center justify-between">
-                  <span
-                    className="text-[10px] tracking-[0.25em] uppercase text-[#5C4F38]"
-                    style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                  >
-                    Şifrelenmiş — Yalnızca biz okuyoruz
-                  </span>
-                  <span
-                    className="text-[10px] tracking-[0.25em] uppercase text-[#5C4F38]"
-                    style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                  >
-                    ≈ 3 dk
-                  </span>
-                </div>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* ─────────────────────────────────────────── DISCOVER / 7-DAY PROGRAM */}
-          <section className="border-t border-[#1A2A1F]/15">
-            <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-20 md:py-32">
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 mb-14 md:mb-24">
-                <div className="md:col-span-7">
-                  <span
-                    className="block text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-[#5C4F38] mb-4"
-                    style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                  >
-                    No. 03 / Program — 7 Gün
-                  </span>
-                  <h2
-                    className="text-[40px] sm:text-[56px] md:text-[80px] lg:text-[96px] leading-[0.92] tracking-[-0.035em]"
-                    style={{
-                      fontFamily: "'Fraunces', serif",
-                      fontVariationSettings: "'opsz' 144",
-                      fontWeight: 400,
-                    }}
-                  >
-                    Bu 7 günde
-                    <br />
-                    <span className="italic font-normal text-[#C84B27]">
-                      keşfedeceklerin
-                    </span>
-                    .
-                  </h2>
-                </div>
-                <div className="md:col-span-4 md:col-start-9 flex md:items-end">
-                  <p className="text-[15px] md:text-[16px] leading-[1.6] text-[#1A2A1F]/75">
-                    Her bir madde, programın bir gününe denk geliyor. Sonunda
-                    tek başına yürütebileceğin tutarlı bir Instagram funnel
-                    sistemine sahip oluyorsun.
-                  </p>
-                </div>
-              </div>
-
-              {/* Two-column: benefits list (8 cols) + instructor card (4 cols) */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-                {/* Benefits */}
-                <ol className="lg:col-span-8 space-y-8 md:space-y-10">
-                  {BENEFITS.map((b) => (
-                    <li
-                      key={b.num}
-                      className="grid grid-cols-[auto_1fr] gap-5 md:gap-8 pb-8 md:pb-10 border-b border-[#1A2A1F]/15 last:border-0 last:pb-0"
-                    >
-                      <span
-                        className="text-[44px] md:text-[60px] leading-none text-[#C84B27] tracking-[-0.04em] tabular-nums"
-                        style={{
-                          fontFamily: "'Fraunces', serif",
-                          fontVariationSettings: "'opsz' 144",
-                          fontWeight: 300,
-                          fontStyle: "italic",
-                        }}
-                      >
-                        {b.num}
-                      </span>
-                      <div>
-                        <h3
-                          className="text-[22px] md:text-[28px] leading-[1.15] tracking-[-0.015em] mb-3 md:mb-4"
-                          style={{
-                            fontFamily: "'Fraunces', serif",
-                            fontVariationSettings: "'opsz' 144",
-                            fontWeight: 500,
-                          }}
-                        >
-                          {b.title}
-                        </h3>
-                        <p className="text-[14px] md:text-[15px] leading-[1.6] text-[#1A2A1F]/75 max-w-[640px]">
-                          {b.desc}
-                        </p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-
-                {/* Instructor card — sticky on desktop */}
-                <aside className="lg:col-span-4 lg:sticky lg:top-28">
-                  <div className="relative">
-                    {/* Photo */}
-                    <div className="relative aspect-[4/5] bg-[#1A2A1F] overflow-hidden border border-[#1A2A1F]">
-                      <Image
-                        src="/images/instructor.jpg"
-                        alt="Baturalp Tunalı"
-                        fill
-                        sizes="(min-width: 1024px) 380px, 90vw"
-                        className="object-cover"
-                      />
-                      {/* corner brackets */}
-                      <span className="absolute top-3 left-3 w-3 h-3 border-t border-l border-[#EFE7D2]" />
-                      <span className="absolute top-3 right-3 w-3 h-3 border-t border-r border-[#EFE7D2]" />
-                      <span className="absolute bottom-3 left-3 w-3 h-3 border-b border-l border-[#EFE7D2]" />
-                      <span className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-[#EFE7D2]" />
-                    </div>
-
-                    {/* Caption block */}
-                    <div className="mt-4">
-                      <span
-                        className="block text-[10px] tracking-[0.3em] uppercase text-[#5C4F38] mb-2"
-                        style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                      >
-                        Eğitmen — Foto. 01
-                      </span>
-                      <h3
-                        className="text-[28px] md:text-[34px] leading-none italic"
-                        style={{
-                          fontFamily: "'Fraunces', serif",
-                          fontVariationSettings: "'opsz' 144",
-                          fontWeight: 400,
-                        }}
-                      >
-                        Baturalp Tunalı
-                      </h3>
-                      <p
-                        className="mt-2 text-[13px] md:text-[14px] tracking-[0.05em] text-[#1A2A1F]/75"
-                        style={{ fontFamily: "'Geist', sans-serif" }}
-                      >
-                        InstaFunnel Eğitmeni{" "}
-                        <span className="text-[#C84B27]">·</span> Kurucu
-                      </p>
-                      <div className="mt-3 h-px bg-[#1A2A1F]/20" />
-                      <p className="mt-3 text-[12px] md:text-[13px] leading-[1.55] text-[#1A2A1F]/65 italic">
-                        &ldquo;Bu sistem, beni de dahil olmak üzere 100&apos;den
-                        fazla koçun aylık 6 haneli rakamlara ulaşmasını
-                        sağladı.&rdquo;
-                      </p>
-                    </div>
-                  </div>
-                </aside>
-              </div>
+        {/* TESTIMONIAL QUOTES */}
+        <section className="px-4 py-12 md:py-16 bg-[#F5EFE0] border-t border-[#1F2A1B]/15">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+              <TestimonialQuoteCard
+                name="Elif K."
+                role="Yaşam Koçu"
+                text="İlk reklamım daha ilk haftada işe yaradı ve hala çalışmaya devam ediyor."
+              />
+              <TestimonialQuoteCard
+                name="Burak D."
+                role="Airbnb Danışmanı"
+                text="Funnel'i kurmadan önce tutarlı müşteri kazanma stratejim yoktu. Şimdi bir sistemim var."
+              />
+              <TestimonialQuoteCard
+                name="Mert A."
+                role="Mindset Koçu"
+                text="Sonunda referanslara bağlı kalmadan, tahmin edilebilir şekilde müşteri kazanmanın yolunu buldum."
+              />
             </div>
-          </section>
+          </div>
+        </section>
 
-          {/* ─────────────────────────────────────────── QUOTES */}
-          <section className="border-t border-[#1A2A1F]/15 bg-[#E5DCBC]/40">
-            <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-20 md:py-28">
-              <div className="flex items-baseline justify-between mb-12 md:mb-16">
-                <span
-                  className="text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-[#5C4F38]"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                >
-                  No. 04 / Sözler
-                </span>
-                <span
-                  className="hidden md:inline text-[10px] tracking-[0.3em] uppercase text-[#5C4F38]"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                >
-                  Müşterilerden — 2025/2026
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                {QUOTES.map((q, i) => (
-                  <figure
-                    key={q.name}
-                    className={`relative bg-[#EFE7D2] border border-[#1A2A1F]/20 p-7 md:p-9 ${
-                      i === 1 ? "md:translate-y-6 lg:translate-y-10" : ""
-                    }`}
-                  >
-                    {/* Big serif quote glyph */}
-                    <span
-                      aria-hidden
-                      className="absolute -top-5 left-6 text-[80px] md:text-[110px] leading-none text-[#C84B27]"
-                      style={{
-                        fontFamily: "'Fraunces', serif",
-                        fontVariationSettings: "'opsz' 144",
-                        fontWeight: 400,
-                      }}
-                    >
-                      &ldquo;
-                    </span>
-
-                    <blockquote
-                      className="pt-6 text-[18px] md:text-[22px] leading-[1.35] tracking-[-0.005em]"
-                      style={{
-                        fontFamily: "'Fraunces', serif",
-                        fontVariationSettings: "'opsz' 144",
-                        fontWeight: 400,
-                        fontStyle: "italic",
-                      }}
-                    >
-                      {q.text}
-                    </blockquote>
-
-                    <figcaption className="mt-6 pt-5 border-t border-[#1A2A1F]/15 flex items-baseline justify-between">
-                      <span
-                        className="text-[15px] font-medium tracking-tight"
-                        style={{ fontFamily: "'Geist', sans-serif" }}
-                      >
-                        {q.name}
-                      </span>
-                      <span
-                        className="text-[10px] tracking-[0.25em] uppercase text-[#5C4F38]"
-                        style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                      >
-                        {q.role}
-                      </span>
-                    </figcaption>
-                  </figure>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* ─────────────────────────────────────────── CTA REMINDER */}
-          <section className="border-t border-[#1A2A1F]/15 bg-[#1A2A1F] text-[#EFE7D2] relative overflow-hidden">
-            {/* Marquee word backdrop — decorative, very low opacity */}
-            <div
-              aria-hidden
-              className="absolute inset-y-0 left-0 right-0 flex items-center pointer-events-none"
-              style={{
-                fontFamily: "'Fraunces', serif",
-                fontWeight: 300,
-                fontStyle: "italic",
-                fontSize: "min(28vw, 320px)",
-                lineHeight: 1,
-                color: "#EFE7D2",
-                opacity: 0.04,
-                whiteSpace: "nowrap",
-                letterSpacing: "-0.04em",
-              }}
+        {/* CTA REMINDER */}
+        <section className="px-4 py-12 md:py-16 bg-[#C84B27] text-[#F5EFE0]">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-[26px] md:text-[36px] font-extrabold mb-4 tracking-tight">
+              Hazırsan, başvurunu doldur
+            </h2>
+            <p className="text-[#F5EFE0]/85 text-[15px] md:text-[17px] mb-6">
+              12 soru, 3 dakika. Uygun bulursak seninle ücretsiz strateji görüşmesi yaparız.
+            </p>
+            <a
+              href="#apply"
+              className="inline-flex items-center gap-2 bg-[#F5EFE0] text-[#C84B27] font-bold text-[15px] md:text-[16px] px-7 py-3.5 rounded-full hover:shadow-xl hover:scale-105 transition-all"
             >
-              başvur · başvur · başvur ·
-            </div>
+              Başvuruyu Başlat
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+          </div>
+        </section>
 
-            <div className="relative max-w-[1280px] mx-auto px-5 md:px-10 py-20 md:py-28 text-center">
-              <span
-                className="block text-[10px] md:text-[11px] tracking-[0.35em] uppercase text-[#C84B27] mb-6"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
-              >
-                — Sıra Sende —
+        {/* EARNINGS DISCLAIMER */}
+        <section className="px-4 py-10 bg-[#EDE3CC] border-t border-[#1F2A1B]/15">
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="text-[#1F2A1B]/55 text-[11px] md:text-[12px] leading-relaxed">
+              <strong className="text-[#1F2A1B]/75">KAZANÇ & GELİR FERAGATNAMESİ:</strong>{" "}
+              Lütfen paylaşılan sonuçların tipik olmadığını anlayın. Bu sonuçları
+              tekrarlayacağınızı ima etmiyoruz. Doğrudan yanıt pazarlamasında ve
+              reklamcılıkta yıllarca süren deneyimimiz ve bunun sonucunda oluşan bir
+              kitlemiz var. Ortalama bir kişinin satın aldığı herhangi bir &quot;nasıl
+              yapılır&quot; bilgisinden çok az sonuç aldığını biliyoruz. Sonuçlarınız
+              geçmişiniz, deneyiminiz, çalışma etiğiniz dahil ancak bunlarla sınırlı
+              olmayan birçok faktöre bağlı olarak değişecektir. Tüm işler kayıt
+              gerektirir ve büyük ve sürekli çaba gerektirir. Bunu kabul etmeye
+              istekli değilseniz, lütfen BU PROGRAMI ALMAYIN.
+            </p>
+          </div>
+        </section>
+
+        {/* FOOTER */}
+        <footer className="px-4 py-10 bg-[#1F2A1B] text-[#F5EFE0]/60">
+          <div className="max-w-6xl mx-auto text-center">
+            <div className="flex items-center justify-center gap-2.5 mb-4">
+              <div className="w-7 h-7 rounded-md bg-gradient-to-br from-[#C84B27] to-[#8B2F12] flex items-center justify-center font-extrabold text-[#F5EFE0] text-[13px]">
+                F
+              </div>
+              <span className="font-bold tracking-tight text-[15px] text-[#F5EFE0]">
+                Funnel<span className="text-[#E8794F]">.</span>
               </span>
-              <h2
-                className="text-[44px] sm:text-[64px] md:text-[88px] lg:text-[104px] leading-[0.95] tracking-[-0.035em] mb-8 md:mb-10"
-                style={{
-                  fontFamily: "'Fraunces', serif",
-                  fontVariationSettings: "'opsz' 144",
-                  fontWeight: 400,
-                }}
-              >
-                Hazırsan,
-                <br />
-                <span className="italic">başvurunu</span> doldur.
-              </h2>
-              <p className="text-[15px] md:text-[17px] text-[#EFE7D2]/70 mb-10 md:mb-12 max-w-xl mx-auto">
-                12 soru. 3 dakika. Uygun bulduğumuz takdirde seninle ücretsiz
-                strateji görüşmesi yaparız.
-              </p>
-
-              <a
-                href="#apply"
-                className="group inline-flex items-center gap-4 bg-[#C84B27] text-[#EFE7D2] px-7 md:px-9 py-4 md:py-5 hover:bg-[#EFE7D2] hover:text-[#1A2A1F] transition-colors border-2 border-[#C84B27] hover:border-[#EFE7D2]"
-              >
-                <span
-                  className="text-[14px] md:text-[15px] tracking-[0.18em] uppercase font-medium"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                >
-                  Başvuruyu Başlat
-                </span>
-                <span className="text-[20px] transition-transform group-hover:translate-x-1">
-                  →
-                </span>
-              </a>
             </div>
-          </section>
-
-          {/* ─────────────────────────────────────────── DISCLAIMER */}
-          <section className="border-t border-[#1A2A1F]/15 bg-[#EFE7D2]">
-            <div className="max-w-[860px] mx-auto px-5 md:px-10 py-12 md:py-16">
-              <div className="flex items-baseline gap-3 mb-4">
-                <span className="block w-8 h-px bg-[#1A2A1F]/40" />
-                <span
-                  className="text-[10px] tracking-[0.3em] uppercase text-[#5C4F38]"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                >
-                  Yasal — Kazanç Feragatnamesi
-                </span>
-              </div>
-              <p className="text-[12px] md:text-[13px] leading-[1.7] text-[#1A2A1F]/55">
-                Lütfen paylaşılan sonuçların tipik olmadığını anlayın. Bu
-                sonuçları tekrarlayacağınızı ima etmiyoruz. Doğrudan yanıt
-                pazarlamasında ve reklamcılıkta yıllarca süren deneyimimiz ve
-                bunun sonucunda oluşan bir kitlemiz var. Ortalama bir kişinin
-                satın aldığı herhangi bir &ldquo;nasıl yapılır&rdquo;
-                bilgisinden çok az sonuç aldığını biliyoruz. Sonuçlarınız
-                geçmişiniz, deneyiminiz ve çalışma etiğiniz dahil ancak bunlarla
-                sınırlı olmayan birçok faktöre bağlı olarak değişecektir. Tüm
-                işler kayıt gerektirir ve büyük, sürekli çaba ister. Bunu kabul
-                etmeye istekli değilseniz, lütfen bu programa başvurmayın.
-              </p>
-            </div>
-          </section>
-
-          {/* ─────────────────────────────────────────── FOOTER */}
-          <footer className="border-t border-[#1A2A1F]/15 bg-[#EFE7D2]">
-            <div className="max-w-[1280px] mx-auto px-5 md:px-10 py-10 md:py-14">
-              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-                <div>
-                  <a
-                    href="/funnel2"
-                    className="text-[36px] md:text-[48px] leading-none tracking-[-0.03em] inline-block"
-                    style={{
-                      fontFamily: "'Fraunces', serif",
-                      fontVariationSettings: "'opsz' 144",
-                      fontWeight: 400,
-                      fontStyle: "italic",
-                    }}
-                  >
-                    Funnel<span className="text-[#C84B27]">.</span>
-                  </a>
-                  <p
-                    className="mt-2 text-[11px] tracking-[0.2em] uppercase text-[#5C4F38]"
-                    style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                  >
-                    Online Koçlar İçin Instagram Sistemi
-                  </p>
-                </div>
-
-                <div className="flex flex-col items-start md:items-end gap-2">
-                  <span
-                    className="text-[11px] tracking-[0.2em] uppercase text-[#1A2A1F]/55"
-                    style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                  >
-                    © 2026 Funnel.
-                  </span>
-                  <span className="text-[11px] text-[#1A2A1F]/40 max-w-md md:text-right leading-[1.5]">
-                    FACEBOOK&trade; veya Meta&trade; tarafından
-                    desteklenmemektedir. Bu site Facebook&trade;&apos;un bir
-                    parçası değildir.
-                  </span>
-                </div>
-              </div>
-            </div>
-          </footer>
-        </main>
-      </div>
+            <p className="text-[#F5EFE0]/50 text-[12px] mb-2">
+              © 2026 Funnel. Tüm hakları saklıdır.
+            </p>
+            <p className="text-[#F5EFE0]/35 text-[10px] max-w-xl mx-auto leading-relaxed">
+              FACEBOOK&trade; veya Meta&trade; tarafından desteklenmemektedir.
+              Bu site Facebook&trade;&apos;un bir parçası değildir.
+            </p>
+          </div>
+        </footer>
+      </main>
 
       {/* Typeform script — lazy load */}
-      <Script
-        src="//embed.typeform.com/next/embed.js"
-        strategy="lazyOnload"
-      />
+      <Script src="//embed.typeform.com/next/embed.js" strategy="lazyOnload" />
     </>
+  );
+}
+
+/* ─── Sub-components ─── */
+
+function TestimonialQuoteCard({
+  name,
+  role,
+  text,
+}: {
+  name: string;
+  role: string;
+  text: string;
+}) {
+  return (
+    <div className="bg-[#EDE3CC] border border-[#1F2A1B]/15 rounded-2xl p-7 hover:border-[#C84B27]/40 hover:shadow-lg transition-all">
+      <svg className="w-6 h-6 text-[#C84B27] mb-3" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+      </svg>
+      <p className="text-[#1F2A1B]/85 text-[14px] md:text-[15px] leading-relaxed mb-5">
+        {text}
+      </p>
+      <div className="border-t border-[#1F2A1B]/15 pt-4">
+        <p className="text-[#1F2A1B] font-bold text-[14px]">{name}</p>
+        <p className="text-[#C84B27] text-[11px] font-medium uppercase tracking-wider mt-0.5">
+          {role}
+        </p>
+      </div>
+    </div>
   );
 }
