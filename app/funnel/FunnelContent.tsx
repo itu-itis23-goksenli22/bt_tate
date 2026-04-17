@@ -14,7 +14,7 @@ const DISCOVER_ITEMS = [
   },
   {
     title: "İçerik Stratejisi ile Otorite Olun",
-    desc: "Instagram'da koç ve danışman olarak konumlanmanızı sağlayan reels, story ve post formatlarını ve Türkiye'de işe yarayan örnekleri inceleyin.",
+    desc: "Instagram'da koç, danışman veya marka olarak konumlanmanızı sağlayan reels, story ve post formatlarını ve Türkiye'de işe yarayan örnekleri inceleyin.",
   },
   {
     title: "Manychat ile DM Otomasyonunu Devreye Alın",
@@ -57,7 +57,7 @@ export default function FunnelContent() {
             <div className="inline-flex items-center gap-2 bg-[#111a2e] text-[#93c5fd] rounded-full px-4 py-1.5 mb-6 border border-[#1f2c46]">
               <span className="w-1.5 h-1.5 bg-[#60a5fa] rounded-full animate-pulse" />
               <p className="text-[12px] md:text-[13px] font-semibold uppercase tracking-wider">
-                Aylık 50.000 – 300.000 TL Kazanan Online Koçlar İçin
+                Online Koçlar, Danışmanlar & İşletmeler İçin
               </p>
             </div>
 
@@ -67,12 +67,12 @@ export default function FunnelContent() {
               <span className="block text-[#60a5fa] mt-2">
                 Müşteri Çeken Funnel
               </span>
-              Sistemini Koçluk İşinize Kuralım
+              Sistemini İşinize Kuralım
             </h1>
 
             {/* Sub-line */}
             <p className="text-white/60 text-[15px] md:text-[18px] max-w-2xl mx-auto mb-10">
-              Türkiye&apos;de 100+ koçun ölçeklenmek için kullandığı sistemin aynısı.
+              Türkiye&apos;de 100+ koç, danışman ve işletmenin ölçeklenmek için kullandığı sistemin aynısı.
             </p>
 
             {/* VSL VIDEO */}

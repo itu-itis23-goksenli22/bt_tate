@@ -3,9 +3,9 @@ import { Suspense } from "react";
 import FunnelContent from "./FunnelContent";
 
 export const metadata: Metadata = {
-  title: "Instagram Funnel | Online Koçlar & Danışmanlar | AI Scale Funnel",
+  title: "Instagram Funnel | Online Koçlar, Danışmanlar & İşletmeler",
   description:
-    "7 gün içinde Instagram'ından aylık 100.000 TL kazandıracak funnel kurma sistemini öğren. Online koçlar, danışmanlar ve işletmeler için.",
+    "7 gün içinde Instagram'ından müşteri çeken funnel sistemini kuralım. Online koçlar, danışmanlar ve işletmeler için.",
   robots: { index: false, follow: false }, // ad traffic only
 };
 
