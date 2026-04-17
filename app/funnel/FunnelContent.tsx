@@ -72,7 +72,7 @@ export default function FunnelContent() {
 
             {/* Sub-line */}
             <p className="text-white/60 text-[15px] md:text-[18px] max-w-2xl mx-auto mb-10">
-              Türkiye&apos;de 100+ koç, danışman ve işletmenin ölçeklenmek için kullandığı sistemin aynısı.
+              100&apos;den fazla koç, danışman ve işletme, satış sistemlerini büyütmek için bize güveniyor.
             </p>
 
             {/* VSL VIDEO */}
