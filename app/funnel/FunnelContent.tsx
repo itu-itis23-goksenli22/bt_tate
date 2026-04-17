@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Script from "next/script";
 
 const DISCOVER_ITEMS = [
   {
@@ -115,29 +114,13 @@ export default function FunnelContent() {
 
             {/* Typeform Embed Card */}
             <div className="rounded-2xl border border-[#1f2c46] bg-[#111a2e] p-3 md:p-6 max-w-3xl mx-auto shadow-lg shadow-black/30">
-              <div
-                data-tf-live="REPLACE_WITH_TYPEFORM_ID"
-                className="w-full"
-                style={{ minHeight: "600px" }}
+              <iframe
+                title="Başvuru Formu"
+                src="https://7szwmlbargu.typeform.com/to/ibVe7h9t"
+                className="w-full rounded-xl bg-white"
+                style={{ height: "720px", border: 0 }}
+                allow="camera; microphone; autoplay; encrypted-media;"
               />
-
-              {/* Geçici placeholder mesaj — Typeform aktif olunca silinecek */}
-              <div
-                className="flex flex-col items-center justify-center text-center py-20 px-6 bg-[#0b1220] rounded-xl border border-dashed border-[#1f2c46]"
-                style={{ minHeight: "500px" }}
-              >
-                <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-gradient-to-br from-blue-500 to-blue-700 shadow-md">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                  </svg>
-                </div>
-                <h3 className="text-[20px] md:text-[24px] font-bold mb-2 text-white">
-                  Form Yakında Aktif Olacak
-                </h3>
-                <p className="text-white/60 text-[14px] max-w-md">
-                  12 soruluk başvuru formu hazırlanıyor. Çok kısa sürede burada olacak.
-                </p>
-              </div>
 
               <p className="text-white/40 text-[12px] text-center mt-3 italic">
                 Form yüklenmiyorsa sayfayı yenileyin.
@@ -262,9 +245,6 @@ export default function FunnelContent() {
           </div>
         </footer>
       </main>
-
-      {/* Typeform script — lazy load */}
-      <Script src="//embed.typeform.com/next/embed.js" strategy="lazyOnload" />
     </>
   );
 }
