@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { setAdvancedMatching, trackCompleteRegistration } from "@/lib/meta-pixel";
+import { setAdvancedMatching, trackCompleteRegistration, trackLead } from "@/lib/meta-pixel";
 
 function getCookie(name: string): string | undefined {
   if (typeof document === "undefined") return undefined;
@@ -105,6 +105,13 @@ export default function RegistrationModal({
           value: data.eventValue,
           currency: "TRY",
         }, data.eventId);
+        // Fire Lead event (separate eventId) for Meta's "Maximize leads" optimization
+        trackLead({
+          content_name: "E-Ticaret Webinar Kayıt",
+          content_category: "webinar",
+          value: data.eventValue,
+          currency: "TRY",
+        }, data.leadEventId);
         // Advanced Matching — send user data to Meta Pixel (after track call)
         setAdvancedMatching({ em: formData.email, fn: firstName, ln: lastName });
         // Redirect to success page after 1.5s

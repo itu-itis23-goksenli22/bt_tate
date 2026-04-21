@@ -107,8 +107,8 @@ export const trackLead = (data?: {
   content_category?: string;
   value?: number;
   currency?: string;
-}) => {
-  trackEvent("Lead", data);
+}, eventId?: string) => {
+  trackEvent("Lead", data, eventId);
 };
 
 export const trackCompleteRegistration = (data?: {

@@ -151,34 +151,52 @@ export async function POST(request: NextRequest) {
     const clientIp = request.headers.get('x-real-ip') || request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '';
     const userAgent = request.headers.get('user-agent') || '';
     const eventId = crypto.randomUUID();
+    const leadEventId = crypto.randomUUID();
     const eventValue = parseFloat((Math.random() * 0.98 + 0.01).toFixed(2));
+    const contentName = webinarId === '86257770515' ? 'E-Ticaret Webinar Kayıt' : 'Webinar Kayıt';
+    const sharedUserData = {
+      email,
+      firstName,
+      lastName,
+      phone: phone || undefined,
+      clientIpAddress: clientIp,
+      clientUserAgent: userAgent,
+      fbc: fbc || undefined,
+      fbp: fbp || undefined,
+    };
     sendCAPIEvent({
       eventName: 'CompleteRegistration',
       eventId,
       sourceUrl: referer,
-      userData: {
-        email,
-        firstName,
-        lastName,
-        phone: phone || undefined,
-        clientIpAddress: clientIp,
-        clientUserAgent: userAgent,
-        fbc: fbc || undefined,
-        fbp: fbp || undefined,
-      },
+      userData: sharedUserData,
       customData: {
-        content_name: webinarId === '86257770515' ? 'E-Ticaret Webinar Kayıt' : 'Webinar Kayıt',
+        content_name: contentName,
         status: 'completed',
         value: eventValue,
         currency: 'TRY',
       },
     }).catch(err => console.warn('⚠️ CAPI non-critical error:', err));
 
+    // 4b. Also send a Lead event — required for Meta's "Maximize leads" optimization
+    sendCAPIEvent({
+      eventName: 'Lead',
+      eventId: leadEventId,
+      sourceUrl: referer,
+      userData: sharedUserData,
+      customData: {
+        content_name: contentName,
+        content_category: 'webinar',
+        value: eventValue,
+        currency: 'TRY',
+      },
+    }).catch(err => console.warn('⚠️ CAPI Lead non-critical error:', err));
+
     return NextResponse.json({
       success: true,
       message: 'Webinara başarıyla kaydoldunuz!',
       joinUrl: zoomResult.join_url,
       eventId,
+      leadEventId,
       eventValue,
     });
   } catch (error) {

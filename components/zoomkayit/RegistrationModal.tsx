@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { setAdvancedMatching, trackCompleteRegistration } from "@/lib/meta-pixel";
+import { setAdvancedMatching, trackCompleteRegistration, trackLead } from "@/lib/meta-pixel";
 
 function getCookie(name: string): string | undefined {
   if (typeof document === "undefined") return undefined;
@@ -104,6 +104,13 @@ export default function RegistrationModal({
           value: data.eventValue,
           currency: "TRY",
         }, data.eventId);
+        // Fire Lead event (different eventId) to feed Meta's "Maximize leads" optimization
+        trackLead({
+          content_name: "Webinar Kayıt",
+          content_category: "webinar",
+          value: data.eventValue,
+          currency: "TRY",
+        }, data.leadEventId);
         setAdvancedMatching({ em: formData.email, fn: firstName, ln: lastName });
         // Redirect to VIP upsell page after 1.5s
         setTimeout(() => {
