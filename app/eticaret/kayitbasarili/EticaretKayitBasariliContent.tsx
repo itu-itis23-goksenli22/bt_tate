@@ -328,8 +328,8 @@ export default function EticaretKayitBasariliContent() {
             </div>
           </div>
 
-          {/* 11. Third CTA Block */}
-          <CTABlock thankYouUrl={thankYouUrl} />
+          {/* 11. MAIN Checkout CTA — yeşil, Stripe'a yönlendirir, diğer tüm butonlar buraya scroll olur */}
+          <MainCheckoutCTA thankYouUrl={thankYouUrl} />
 
           {/* 12. Testimonials */}
           <div className="my-10 text-center">
@@ -399,13 +399,13 @@ export default function EticaretKayitBasariliContent() {
             <p className="text-[#e85d5d] text-[13px] mb-6">
               Bu sayfa kapanacak ve bu teklifi bir daha göremeyeceksiniz.
             </p>
-            {/* Asıl Stripe checkout butonu — yeşil */}
-            <a id="final-vip-cta" href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="block rounded-[10px] overflow-hidden hover:brightness-110 transition-all shadow-lg shadow-emerald-500/30 scroll-mt-24">
-              <div className="py-5 px-6" style={{ background: GREEN_GRADIENT }}>
-                <div className="text-white font-extrabold text-[22px] md:text-[28px]">
+            {/* Final CTA — yukarıdaki asıl yeşil butona scroll eder */}
+            <a href="#final-vip-cta" onClick={scrollToFinalCTA} className="block rounded-[10px] overflow-hidden hover:brightness-105 transition-all cursor-pointer">
+              <div className="py-5 px-6" style={{ background: CTA_GRADIENT }}>
+                <div className="text-black font-extrabold text-[22px] md:text-[28px]">
                   VIP Üyelere Şimdi Katıl &raquo;
                 </div>
-                <div className="text-white/80 text-[13px] mt-1">
+                <div className="text-black/50 text-[13px] mt-1">
                   Yapay Zeka ile ilk adımını hemen at
                 </div>
               </div>
@@ -422,6 +422,25 @@ export default function EticaretKayitBasariliContent() {
 }
 
 /* ─── Sub-components ─── */
+
+function MainCheckoutCTA({ thankYouUrl }: { thankYouUrl: string }) {
+  return (
+    <div className="my-6">
+      {/* Tek asıl Stripe butonu — yeşil, sayfadaki tüm üst/alt butonlar buraya scroll eder */}
+      <a id="final-vip-cta" href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="block rounded-[10px] overflow-hidden hover:brightness-110 transition-all shadow-lg shadow-emerald-500/30 scroll-mt-24">
+        <div className="py-5 px-6 text-center" style={{ background: GREEN_GRADIENT }}>
+          <div className="text-white font-extrabold text-[22px] md:text-[28px]">
+            VIP Üyelere Şimdi Katıl &raquo;
+          </div>
+          <div className="text-white/80 text-[13px] mt-1">
+            Yapay Zeka ile ilk adımını hemen at
+          </div>
+        </div>
+      </a>
+      <NoThankYouButton href={thankYouUrl} />
+    </div>
+  );
+}
 
 function CTABlock({ thankYouUrl }: { thankYouUrl: string }) {
   return (
