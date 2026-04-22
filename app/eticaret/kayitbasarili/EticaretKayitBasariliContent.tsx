@@ -7,7 +7,14 @@ import { setAdvancedMatching } from "@/lib/meta-pixel";
 const CHECKOUT_URL = "https://buy.stripe.com/cNi8wQ4mcb1HcZb71u3wQ0s";
 
 const CTA_GRADIENT = "linear-gradient(271.63deg, #C19D44 -20%, #E8D48B 20%, #FDF3AD 50%, #E8D48B 80%, #C19D44 120%)";
+const GREEN_GRADIENT = "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)";
 const GOLD_BG_SUBTLE = "linear-gradient(223deg, rgba(170,129,60,0.14) 0%, rgba(170,129,60,0.10) 100%)";
+
+function scrollToFinalCTA(e: React.MouseEvent) {
+  e.preventDefault();
+  const el = document.getElementById("final-vip-cta");
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+}
 
 function getThankYouUrl(name: string, email: string) {
   const params = new URLSearchParams();
@@ -392,13 +399,13 @@ export default function EticaretKayitBasariliContent() {
             <p className="text-[#e85d5d] text-[13px] mb-6">
               Bu sayfa kapanacak ve bu teklifi bir daha göremeyeceksiniz.
             </p>
-            {/* CTA buton + alt yazı tek blok */}
-            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="block rounded-[10px] overflow-hidden hover:brightness-105 transition-all">
-              <div className="py-5 px-6" style={{ background: CTA_GRADIENT }}>
-                <div className="text-black font-extrabold text-[22px] md:text-[28px]">
+            {/* Asıl Stripe checkout butonu — yeşil */}
+            <a id="final-vip-cta" href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="block rounded-[10px] overflow-hidden hover:brightness-110 transition-all shadow-lg shadow-emerald-500/30 scroll-mt-24">
+              <div className="py-5 px-6" style={{ background: GREEN_GRADIENT }}>
+                <div className="text-white font-extrabold text-[22px] md:text-[28px]">
                   VIP Üyelere Şimdi Katıl &raquo;
                 </div>
-                <div className="text-black/50 text-[13px] mt-1">
+                <div className="text-white/80 text-[13px] mt-1">
                   Yapay Zeka ile ilk adımını hemen at
                 </div>
               </div>
@@ -419,8 +426,8 @@ export default function EticaretKayitBasariliContent() {
 function CTABlock({ thankYouUrl }: { thankYouUrl: string }) {
   return (
     <div className="my-6">
-      {/* CTA buton + alt yazı tek blok */}
-      <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="block rounded-[10px] overflow-hidden hover:brightness-105 transition-all">
+      {/* Üst CTA butonları: aşağıdaki asıl VIP butonuna yönlendirir */}
+      <a href="#final-vip-cta" onClick={scrollToFinalCTA} className="block rounded-[10px] overflow-hidden hover:brightness-105 transition-all cursor-pointer">
         <div className="py-5 px-6 text-center" style={{ background: CTA_GRADIENT }}>
           <div className="text-black font-extrabold text-[22px] md:text-[28px]">
             VIP Üyelere Şimdi Katıl &raquo;
