@@ -102,6 +102,28 @@ export async function POST(request: NextRequest) {
           console.log(`ℹ️ No email rule for amount=${amount} ${ccy} — skipped`);
         }
       }
+
+      // Notify Hetzner purchase-tracker (fire-and-forget, non-blocking)
+      // Hetzner downse veya yavaşsa Stripe webhook bloklanmaz — 5sn timeout
+      if (email && process.env.HETZNER_API_URL && process.env.HETZNER_WEBHOOK_SECRET) {
+        const hetznerSource = isDijital ? "dijitalakademi" : "aiscale";
+        fetch(`${process.env.HETZNER_API_URL}/mark-purchased`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.HETZNER_WEBHOOK_SECRET}`,
+          },
+          body: JSON.stringify({
+            email,
+            source: hetznerSource,
+            amount: amountTotal ?? 0,
+            currency: (session.currency || "try").toLowerCase(),
+          }),
+          signal: AbortSignal.timeout(5000),
+        })
+          .then((r) => console.log(`📡 Hetzner mark-purchased ${email} → ${r.status}`))
+          .catch((err) => console.warn("⚠️ Hetzner notify failed:", err.message || err));
+      }
     }
 
     return NextResponse.json({ received: true });
