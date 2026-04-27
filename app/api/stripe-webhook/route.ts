@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { sendCAPIEvent } from "@/lib/meta-capi";
+import { sendCourseWelcomeEmail, sendVipUpsellEmail } from "@/lib/purchase-emails";
 
 const stripe = new Stripe("sk_placeholder");
 
@@ -81,6 +82,26 @@ export async function POST(request: NextRequest) {
         },
       });
       console.log(`✅ Meta CAPI Purchase sent for ${email || "unknown"} → ${isDijital ? "Dijital Akademi" : "AI Scale"} pixel`);
+
+      // Send purchase confirmation email (non-blocking)
+      // $9.90 USD = 990 cents → VIP upsell mail
+      // 15.000 TL = 1.500.000 kuruş → Course welcome mail
+      if (email) {
+        const amount = amountTotal ?? 0;
+        const ccy = (session.currency || "try").toLowerCase();
+
+        if (ccy === "usd" && amount === 990) {
+          sendVipUpsellEmail(email)
+            .then(() => console.log(`📧 VIP upsell email sent to ${email}`))
+            .catch((err) => console.warn("⚠️ VIP email failed:", err));
+        } else if (ccy === "try" && amount === 1500000) {
+          sendCourseWelcomeEmail(email)
+            .then(() => console.log(`📧 Course welcome email sent to ${email}`))
+            .catch((err) => console.warn("⚠️ Welcome email failed:", err));
+        } else {
+          console.log(`ℹ️ No email rule for amount=${amount} ${ccy} — skipped`);
+        }
+      }
     }
 
     return NextResponse.json({ received: true });
