@@ -5,7 +5,7 @@ import PricingCard from "@/components/firsat2/PricingCard";
 import ValueStack from "@/components/firsat2/ValueStack";
 
 export const metadata: Metadata = {
-  title: "AI Scale App Community - Özel Fırsat | ₺9,900",
+  title: "AI Scale App Community - Özel Fırsat | ₺2,900",
   description:
     "AI Scale App Community ile AI otomasyon yolculuğunuza bugün başlayın. Claude Code, N8N ve B2B SaaS stratejileri. Özel indirimli fiyat.",
   openGraph: {
@@ -62,7 +62,7 @@ const IbanSection = dynamic(
   () => import("@/components/firsat2/IbanSection")
 );
 
-const FIRSAT2_CHECKOUT_URL = "https://buy.stripe.com/eVafZ51vugc00WQfZ5";
+const FIRSAT2_CHECKOUT_URL = "https://buy.stripe.com/6oUbJ26uk6LrbV7etW3wQ0t";
 
 export default function Firsat2Page() {
   return (

@@ -81,7 +81,7 @@ export default function IbanSection() {
                 Tutar:
               </span>
               <span className="text-gold font-bold text-sm md:text-base">
-                ₺9,900
+                ₺2,900
               </span>
             </div>
           </div>

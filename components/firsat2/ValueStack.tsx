@@ -87,7 +87,7 @@ export default function ValueStack() {
           <p className="text-gold text-sm font-semibold mb-1">🔥 Bu Linke Özel Fiyat</p>
           <div className="inline-block bg-gradient-to-r from-gold/20 to-yellow-500/20 border-2 border-gold rounded-xl px-8 py-3 animate-pulse">
             <span className="text-gold font-bold text-3xl md:text-5xl">
-              ₺9,900
+              ₺2,900
             </span>
           </div>
         </div>

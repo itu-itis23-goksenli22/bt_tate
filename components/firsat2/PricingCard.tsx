@@ -3,7 +3,7 @@
 import { useState } from "react";
 import PaymentLogos from "@/components/basarilikayit/PaymentLogos";
 
-const FIRSAT2_CHECKOUT_URL = "https://buy.stripe.com/eVafZ51vugc00WQfZ5";
+const FIRSAT2_CHECKOUT_URL = "https://buy.stripe.com/6oUbJ26uk6LrbV7etW3wQ0t";
 
 export default function PricingCard() {
   const [copied, setCopied] = useState(false);
@@ -50,7 +50,7 @@ export default function PricingCard() {
           >
             <div className="btn-gold-solid w-full text-center py-5 px-4">
               <span className="block text-xs font-medium opacity-80 mb-1">🔥 Bu Linke Özel Fiyat</span>
-              <span className="block text-2xl md:text-3xl font-extrabold">HEMEN KATIL — ₺9,900</span>
+              <span className="block text-2xl md:text-3xl font-extrabold">HEMEN KATIL — ₺2,900</span>
             </div>
           </a>
           {/* Animated click hint below button */}
@@ -143,7 +143,7 @@ export default function PricingCard() {
             </button>
           </div>
           <p className="text-white/50 text-xs mb-1">
-            Baturalp Tunalı &middot; <span className="text-gold font-semibold">₺9,900</span>
+            Baturalp Tunalı &middot; <span className="text-gold font-semibold">₺2,900</span>
           </p>
           <p className="text-white/40 text-[11px] mb-3">
             Açıklamaya adınızı ve telefon numaranızı yazın.
