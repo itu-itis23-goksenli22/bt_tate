@@ -124,9 +124,10 @@ function vipUpsellBody(): string {
     <div style="background:#ecfdf5;border-left:4px solid #10b981;padding:14px 16px;margin:24px 0;border-radius:4px;">
       <p style="margin:0 0 6px 0;"><strong>🚀 Sonraki Adım</strong></p>
       <p style="margin:0;">
-        Seminerde görüşeceğiz! Seminer sonrasında, asıl <strong>AI Scale topluluğuna</strong>
-        katılma fırsatın da olacak — orada tüm video kütüphanesine, canlı Q&amp;A oturumlarına
-        ve diğer girişimcilerle networking'e erişim kazanacaksın. Detaylar seminer sırasında!
+        Seminere mutlaka katıl ve <strong>baştan sona izle</strong> — diğer katılımcılardan
+        bir adım önde başlayacaksın. Bu paketi önceden incelediğin için seminerde paylaşılan
+        ileri seviye stratejileri ve sürpriz fırsatları çok daha hızlı uygulamaya
+        dökebileceksin. Seminerin sonuna kadar kalanlar her zaman en çok kazananlar oluyor.
       </p>
     </div>
     <p>
