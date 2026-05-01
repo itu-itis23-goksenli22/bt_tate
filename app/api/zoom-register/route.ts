@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import crypto from 'crypto';
 import { sendCAPIEvent } from '@/lib/meta-capi';
+import { sendWebinarYoutubeEmail } from '@/lib/purchase-emails';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -190,6 +191,14 @@ export async function POST(request: NextRequest) {
         currency: 'TRY',
       },
     }).catch(err => console.warn('⚠️ CAPI Lead non-critical error:', err));
+
+    // 5. Send YouTube engagement email (aiscale only, NOT eticaret) — non-blocking
+    const isEticaret = webinarId === '86257770515';
+    if (!isEticaret) {
+      sendWebinarYoutubeEmail(email, firstName)
+        .then(() => console.log(`📧 YouTube engagement email sent to ${email}`))
+        .catch(err => console.warn('⚠️ YouTube email failed:', err?.message || err));
+    }
 
     return NextResponse.json({
       success: true,

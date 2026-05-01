@@ -149,3 +149,60 @@ export async function sendVipUpsellEmail(to: string) {
   if (error) throw error;
   return data;
 }
+
+/* ─────────────────────────────────────────────────────────────────────
+ * 3) Webinar Welcome — Zoom kayıt sonrası YouTube engagement
+ *    Sadece aiscale tarafına atılıyor (eticaret webinar'a değil).
+ * ───────────────────────────────────────────────────────────────────── */
+const YOUTUBE_CHANNEL = "https://www.youtube.com/@baturalp.tunali";
+
+function webinarWelcomeBody(firstName: string): string {
+  const safeName = firstName ? firstName.replace(/[<>]/g, "") : "";
+  return `
+    <p>Selam${safeName ? ` ${safeName}` : ""},</p>
+    <p>
+      AI Scale ücretsiz seminerine kaydolduğun için teşekkürler! 🎉
+      Aramızda görüşene kadar sana faydalı olabilecek bir şey paylaşmak istedik.
+    </p>
+    <div style="background:#f0f9ff;border-left:4px solid #2563eb;padding:14px 16px;margin:20px 0;border-radius:4px;">
+      <p style="margin:0 0 6px 0;"><strong>🎬 Seminere Kadar Bunu İzle</strong></p>
+      <p style="margin:0;">
+        Baturalp Tunalı'nın YouTube kanalında <strong>yapay zeka, otomasyon ve
+        ölçeklenme</strong> üzerine onlarca pratik video var. Seminerden önce 1-2
+        video izleyenler içeriği çok daha iyi yakalıyor — temel kavramları
+        zaten oturmuş halde geliyorlar.
+      </p>
+    </div>
+    <p style="margin:24px 0;text-align:center;">
+      <a href="${YOUTUBE_CHANNEL}"
+         style="display:inline-block;background:#FF0000;color:#ffffff;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;">
+        ▶ YouTube Kanalını Ziyaret Et
+      </a>
+    </p>
+    <p style="color:#555;font-size:13px;text-align:center;">
+      <a href="${YOUTUBE_CHANNEL}" style="color:#555;">${YOUTUBE_CHANNEL}</a>
+    </p>
+    <p>
+      <strong>Önerimiz:</strong> Yapay zeka ile ilgili son 2-3 videoyu izle,
+      hangi konuların seni yakaladığını gör — seminerde bu konuları çok daha
+      derin ele alacağız.
+    </p>
+    <p>
+      Seminer linkin sana ayrı bir mailde gönderildi. Aklına takılan bir şey
+      olursa <a href="mailto:info@aiscale.app" style="color:#2563eb;">info@aiscale.app</a>
+      adresinden bize ulaşabilirsin.
+    </p>
+    <p>Seminerde görüşmek üzere!<br /><strong>AI Scale Ekibi</strong></p>
+  `;
+}
+
+export async function sendWebinarYoutubeEmail(to: string, firstName?: string) {
+  const { data, error } = await resend.emails.send({
+    from: FROM,
+    to: [to],
+    subject: "🎬 Seminere Kadar — Sana Özel Yapay Zeka Videoları",
+    html: shell(webinarWelcomeBody(firstName || "")),
+  });
+  if (error) throw error;
+  return data;
+}
