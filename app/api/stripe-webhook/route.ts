@@ -65,23 +65,32 @@ export async function POST(request: NextRequest) {
         `💰 Stripe Purchase: ${email || "no-email"} | ${value} ${currency} | ${customerName} | success_url: ${successUrl || "null"} | pixel: ${isDijital ? "Dijital" : "AIScale"}`
       );
 
-      // Send Purchase event to Meta CAPI (even without email, send with whatever data we have)
+      // Send Purchase event to Meta CAPI — but SKIP $9.90 VIP upsells.
+      // Hedef 15.000 TL kurs satışları; $9.90 VIP'ler Meta optimizasyonunu bozmasın.
       const nameParts = customerName.split(" ");
-      await sendCAPIEvent({
-        eventName: "Purchase",
-        eventId: `purchase_${session.id}`,
-        sourceUrl,
-        userData: {
-          email: email || undefined,
-          firstName: nameParts[0] || "",
-          lastName: nameParts.slice(1).join(" ") || "",
-        },
-        customData: {
-          value,
-          currency,
-        },
-      });
-      console.log(`✅ Meta CAPI Purchase sent for ${email || "unknown"} → ${isDijital ? "Dijital Akademi" : "AI Scale"} pixel`);
+      const ccyLower = (session.currency || "try").toLowerCase();
+      const amountForCheck = amountTotal ?? 0;
+      const isVipUpsell = ccyLower === "usd" && amountForCheck === 990;
+
+      if (!isVipUpsell) {
+        await sendCAPIEvent({
+          eventName: "Purchase",
+          eventId: `purchase_${session.id}`,
+          sourceUrl,
+          userData: {
+            email: email || undefined,
+            firstName: nameParts[0] || "",
+            lastName: nameParts.slice(1).join(" ") || "",
+          },
+          customData: {
+            value,
+            currency,
+          },
+        });
+        console.log(`✅ Meta CAPI Purchase sent for ${email || "unknown"} → ${isDijital ? "Dijital Akademi" : "AI Scale"} pixel`);
+      } else {
+        console.log(`⏭️ Skipped Meta CAPI Purchase for $9.90 VIP upsell: ${email || "unknown"} — kampanya optimizasyonunu korumak için.`);
+      }
 
       // Send purchase confirmation email (non-blocking)
       // $9.90 USD = 990 cents → VIP upsell mail
