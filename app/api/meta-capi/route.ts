@@ -26,7 +26,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'eventName required' }, { status: 400 });
     }
 
-    const clientIp = request.headers.get('x-real-ip') || request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '';
+    // Vercel IP extraction priority: x-real-ip > x-vercel-forwarded-for > x-forwarded-for
+    // Meta CAPI "multiple users per IP" hatası proxy chain'in yanlış index'inden geliyordu.
+    const clientIp =
+      request.headers.get('x-real-ip')?.trim() ||
+      request.headers.get('x-vercel-forwarded-for')?.split(',')[0]?.trim() ||
+      request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+      '';
     const userAgent = request.headers.get('user-agent') || '';
 
     // Server-side fallback: read _fbp/_fbc from cookie header if not in body

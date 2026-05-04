@@ -149,7 +149,11 @@ export async function POST(request: NextRequest) {
 
     // 4. Send Meta CAPI server-side CompleteRegistration event (non-blocking)
     const referer = request.headers.get('referer') || 'https://aiscaleapp.com';
-    const clientIp = request.headers.get('x-real-ip') || request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '';
+    const clientIp =
+      request.headers.get('x-real-ip')?.trim() ||
+      request.headers.get('x-vercel-forwarded-for')?.split(',')[0]?.trim() ||
+      request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+      '';
     const userAgent = request.headers.get('user-agent') || '';
     const eventId = crypto.randomUUID();
     const leadEventId = crypto.randomUUID();
