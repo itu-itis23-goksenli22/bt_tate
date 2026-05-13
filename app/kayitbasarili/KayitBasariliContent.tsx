@@ -137,19 +137,80 @@ export default function KayitBasariliContent() {
             )}
           </div>
 
-          {/* 3. Main Heading */}
-          <div className="text-center mb-6">
-            <h1 className="text-[32px] md:text-[44px] font-extrabold leading-[1.12] mb-3">
-              Aşağıdaki Videoyu İzleyenler{" "}
-              <span className="block">Büyük Bir Avantaj Elde Ediyor...</span>
+          {/* 3. BEKLE! Hero — VIP paketi tarif eden urgency bloğu */}
+          <div className="text-center mb-8 mt-4">
+            {/* BEKLE! */}
+            <h1
+              className="font-black tracking-tight leading-none mb-6"
+              style={{
+                fontSize: "clamp(72px, 16vw, 128px)",
+                color: "#C19D44",
+                textShadow: "0 4px 24px rgba(193,157,68,0.25)",
+              }}
+            >
+              BEKLE!
             </h1>
-            <p className="text-white/40 text-[14px]">
-              İşte Tek Seferlik <span className="italic font-semibold text-white/60">VIP Üye</span> Olma Fırsatınız
+
+            {/* Alt başlık */}
+            <p className="text-white font-bold text-[22px] md:text-[34px] leading-tight mb-6">
+              Kaydını Onaylamadan Önce:
+            </p>
+
+            {/* Ana mesaj */}
+            <p className="text-white text-[22px] md:text-[30px] font-bold leading-snug mb-6 max-w-2xl mx-auto">
+              <span style={{ color: "#D5B356" }} className="whitespace-nowrap">
+                $2.000+ değerindeki VIP paketi
+              </span>
+              ,{" "}
+              <span className="underline decoration-[#C19D44] decoration-2 underline-offset-4">
+                sadece bu sayfaya özel
+              </span>{" "}
+              olarak açtık.
+            </p>
+
+            {/* Highlight: $9.90 */}
+            <p className="text-white text-[24px] md:text-[34px] font-extrabold leading-tight mb-8 max-w-2xl mx-auto">
+              Ve seminere başlamadan, sana bunu{" "}
+              <span
+                className="inline-block px-3 py-1 rounded-[6px] text-black mx-1 align-middle"
+                style={{ background: CTA_GRADIENT }}
+              >
+                SADECE $9.90
+              </span>{" "}
+              karşılığında veriyoruz.
+            </p>
+
+            {/* Paket açıklaması — bizim gerçek içeriklerimiz */}
+            <p className="text-white/80 text-[14px] md:text-[16px] leading-relaxed max-w-xl mx-auto mb-5">
+              Manychat ile DM otomasyonu kurulumu. AI destekli Shopify mağaza
+              rehberi. Milyon dolarlık AI Automation kiti. Tüm seminer
+              kayıtlarına ömür boyu erişim. Aylarca uğraşmadan, doğru sırayla
+              uygulayacağın her şey...
+            </p>
+
+            <p className="text-white text-[18px] md:text-[22px] font-semibold mb-3">
+              Hepsi bu pakette, hepsi senin için hazır.
+            </p>
+
+            <p className="text-white/60 text-[14px] md:text-[16px] italic max-w-xl mx-auto">
+              Hızlı davranırsan, sen daha seminere bile katılmadan elinde olacak.
             </p>
           </div>
 
           {/* CTA above video */}
           <CTABlock thankYouUrl={thankYouUrl} />
+
+          {/* Sole decline — Ecom Degree style, only one on the page, NOT under any VIP button */}
+          <div className="mt-2 mb-8 text-center px-2">
+            <a
+              href={thankYouUrl}
+              className="text-white/40 text-[13px] md:text-[15px] underline hover:text-white/60 transition-colors leading-relaxed inline-block max-w-2xl"
+            >
+              Hayır teşekkürler, VIP paketini almadan webinara katılacağım. Bu
+              teklifin sayfadan ayrıldığım anda sonsuza dek kaybolacağını ve bir
+              daha asla göremeyeceğimi anlıyorum.
+            </a>
+          </div>
 
           {/* 3. Video Section */}
           <div className="mb-3">
@@ -413,8 +474,6 @@ export default function KayitBasariliContent() {
             <p className="text-white/40 text-[12px] mt-4">%100 Para İade Garantisi</p>
           </div>
 
-          {/* Final No Thank You - Full width solid gray */}
-          <NoThankYouButton href={thankYouUrl} />
         </div>
       </main>
     </>
@@ -423,7 +482,7 @@ export default function KayitBasariliContent() {
 
 /* ─── Sub-components ─── */
 
-function MainCheckoutCTA({ thankYouUrl }: { thankYouUrl: string }) {
+function MainCheckoutCTA({ thankYouUrl: _thankYouUrl }: { thankYouUrl: string }) {
   return (
     <div className="my-6">
       {/* Tek asıl Stripe butonu — yeşil, sayfadaki tüm üst/alt butonlar buraya scroll eder */}
@@ -437,12 +496,11 @@ function MainCheckoutCTA({ thankYouUrl }: { thankYouUrl: string }) {
           </div>
         </div>
       </a>
-      <NoThankYouButton href={thankYouUrl} />
     </div>
   );
 }
 
-function CTABlock({ thankYouUrl }: { thankYouUrl: string }) {
+function CTABlock({ thankYouUrl: _thankYouUrl }: { thankYouUrl: string }) {
   return (
     <div className="my-6">
       {/* Üst CTA butonları: aşağıdaki asıl VIP butonuna yönlendirir */}
@@ -456,9 +514,6 @@ function CTABlock({ thankYouUrl }: { thankYouUrl: string }) {
           </div>
         </div>
       </a>
-
-      {/* No Thank You - Full width solid gray */}
-      <NoThankYouButton href={thankYouUrl} />
     </div>
   );
 }
