@@ -65,32 +65,36 @@ export async function POST(request: NextRequest) {
         `💰 Stripe Purchase: ${email || "no-email"} | ${value} ${currency} | ${customerName} | success_url: ${successUrl || "null"} | pixel: ${isDijital ? "Dijital" : "AIScale"}`
       );
 
-      // Send Purchase event to Meta CAPI — but SKIP $9.90 VIP upsells.
-      // Hedef 15.000 TL kurs satışları; $9.90 VIP'ler Meta optimizasyonunu bozmasın.
+      // Meta CAPI event'i:
+      //  • 15.000 TL kurs → "Purchase" (15k TL kampanyalarının optimize ettiği event)
+      //  • $9.90 VIP upsell → "VIPUpsell" custom event (Purchase pool'unu kirletmez)
+      //    Amaç: $9.90 alanlardan custom audience + Lookalike çıkartmak, ama 15k TL
+      //    Purchase optimizasyonunu bozmamak.
       const nameParts = customerName.split(" ");
       const ccyLower = (session.currency || "try").toLowerCase();
       const amountForCheck = amountTotal ?? 0;
       const isVipUpsell = ccyLower === "usd" && amountForCheck === 990;
 
-      if (!isVipUpsell) {
-        await sendCAPIEvent({
-          eventName: "Purchase",
-          eventId: `purchase_${session.id}`,
-          sourceUrl,
-          userData: {
-            email: email || undefined,
-            firstName: nameParts[0] || "",
-            lastName: nameParts.slice(1).join(" ") || "",
-          },
-          customData: {
-            value,
-            currency,
-          },
-        });
-        console.log(`✅ Meta CAPI Purchase sent for ${email || "unknown"} → ${isDijital ? "Dijital Akademi" : "AI Scale"} pixel`);
-      } else {
-        console.log(`⏭️ Skipped Meta CAPI Purchase for $9.90 VIP upsell: ${email || "unknown"} — kampanya optimizasyonunu korumak için.`);
-      }
+      const eventName = isVipUpsell ? "VIPUpsell" : "Purchase";
+      const eventIdPrefix = isVipUpsell ? "vipupsell" : "purchase";
+
+      await sendCAPIEvent({
+        eventName,
+        eventId: `${eventIdPrefix}_${session.id}`,
+        sourceUrl,
+        userData: {
+          email: email || undefined,
+          firstName: nameParts[0] || "",
+          lastName: nameParts.slice(1).join(" ") || "",
+        },
+        customData: {
+          value,
+          currency,
+        },
+      });
+      console.log(
+        `✅ Meta CAPI ${eventName} sent for ${email || "unknown"} → ${isDijital ? "Dijital Akademi" : "AI Scale"} pixel (${value} ${currency})`
+      );
 
       // Send purchase confirmation email (non-blocking)
       // $9.90 USD = 990 cents → VIP upsell mail
