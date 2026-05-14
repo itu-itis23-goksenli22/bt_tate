@@ -3,13 +3,14 @@
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { setAdvancedMatching } from "@/lib/meta-pixel";
-import VipEmbeddedCheckout from "@/components/VipEmbeddedCheckout";
+// VipEmbeddedCheckout şimdilik devre dışı — eski Stripe Payment Link redirect'ine
+// dönüldü. Component dosyası duruyor (components/VipEmbeddedCheckout.tsx), istenirse
+// tekrar import edilip aktifleştirilebilir.
 
-// Not: Eski CHECKOUT_URL (buy.stripe.com Payment Link) artık doğrudan kullanılmıyor.
-// VipEmbeddedCheckout component'i sayfa içi Stripe Embedded Checkout açar; env
-// vars eksikse aynı Payment Link'e fallback yapar (bkz. components/VipEmbeddedCheckout.tsx).
+const CHECKOUT_URL = "https://buy.stripe.com/cNi8wQ4mcb1HcZb71u3wQ0s";
 
 const CTA_GRADIENT = "linear-gradient(271.63deg, #C19D44 -20%, #E8D48B 20%, #FDF3AD 50%, #E8D48B 80%, #C19D44 120%)";
+const GREEN_GRADIENT = "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)";
 const GOLD_BG_SUBTLE = "linear-gradient(223deg, rgba(170,129,60,0.14) 0%, rgba(170,129,60,0.10) 100%)";
 
 function scrollToFinalCTA(e: React.MouseEvent) {
@@ -141,11 +142,10 @@ export default function KayitBasariliContent() {
             </p>
           </div>
 
-          {/* PRIMARY: Stripe Embedded Checkout — BEKLE! hero'nun hemen altında.
-                 Sayfa açılır açılmaz form mount oluyor (eager mount).
-                 #final-vip-cta anchor'u burada → diğer "VIP Üyelere Şimdi Katıl"
-                 butonları bu konuma scroll eder. */}
-          <VipEmbeddedCheckout email={email} name={name} source="aiscaleapp" />
+          {/* PRIMARY CTA — Stripe Payment Link'e redirect (eski güvenli akış).
+                 Tüm sayfadaki diğer "VIP Üyelere Şimdi Katıl" butonları
+                 scrollToFinalCTA ile buradaki #final-vip-cta anchor'una scroll eder. */}
+          <CTABlock thankYouUrl={thankYouUrl} />
 
           {/* Sole decline — Ecom Degree style, only one on the page */}
           <div className="mt-2 mb-8 text-center px-2">
@@ -379,19 +379,8 @@ export default function KayitBasariliContent() {
             </div>
           </div>
 
-          {/* Secondary CTA — embed yukarıda, burada sadece "yukarı dön" scroll butonu */}
-          <div className="my-6">
-            <a href="#final-vip-cta" onClick={scrollToFinalCTA} className="block rounded-[10px] overflow-hidden hover:brightness-105 transition-all cursor-pointer">
-              <div className="py-5 px-6 text-center" style={{ background: CTA_GRADIENT }}>
-                <div className="text-black font-extrabold text-[22px] md:text-[28px]">
-                  VIP Üyelere Şimdi Katıl &raquo;
-                </div>
-                <div className="text-black/50 text-[13px] mt-1">
-                  Yukarıdaki ödeme formuna geri dön
-                </div>
-              </div>
-            </a>
-          </div>
+          {/* Secondary MAIN Checkout — Stripe Payment Link redirect (yeşil, yeni sekme) */}
+          <MainCheckoutCTA />
 
           {/* 12. Testimonials */}
           <div className="my-10 text-center">
@@ -483,9 +472,30 @@ export default function KayitBasariliContent() {
 
 /* ─── Sub-components ─── */
 
-// MainCheckoutCTA kaldırıldı — yerine <VipEmbeddedCheckout /> kullanılıyor.
-// Eski yeşil Payment Link butonu fallback olarak VipEmbeddedCheckout içinde
-// FallbackButton component'i halinde duruyor.
+function MainCheckoutCTA() {
+  return (
+    <div className="my-6">
+      {/* Tek asıl Stripe butonu — yeşil, sayfadaki tüm üst/alt butonlar buraya scroll eder.
+          buy.stripe.com Payment Link'ine yeni sekmede yönlendirir. */}
+      <a
+        id="final-vip-cta"
+        href={CHECKOUT_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block rounded-[10px] overflow-hidden hover:brightness-110 transition-all shadow-lg shadow-emerald-500/30 scroll-mt-24"
+      >
+        <div className="py-5 px-6 text-center" style={{ background: GREEN_GRADIENT }}>
+          <div className="text-white font-extrabold text-[22px] md:text-[28px]">
+            VIP Üyelere Şimdi Katıl &raquo;
+          </div>
+          <div className="text-white/80 text-[13px] mt-1">
+            Yapay Zeka ile ilk adımını hemen at
+          </div>
+        </div>
+      </a>
+    </div>
+  );
+}
 
 function CTABlock({ thankYouUrl: _thankYouUrl }: { thankYouUrl: string }) {
   return (
