@@ -141,10 +141,13 @@ export default function KayitBasariliContent() {
             </p>
           </div>
 
-          {/* CTA above video */}
-          <CTABlock thankYouUrl={thankYouUrl} />
+          {/* PRIMARY: Stripe Embedded Checkout — BEKLE! hero'nun hemen altında.
+                 Sayfa açılır açılmaz form mount oluyor (eager mount).
+                 #final-vip-cta anchor'u burada → diğer "VIP Üyelere Şimdi Katıl"
+                 butonları bu konuma scroll eder. */}
+          <VipEmbeddedCheckout email={email} name={name} source="aiscaleapp" />
 
-          {/* Sole decline — Ecom Degree style, only one on the page, NOT under any VIP button */}
+          {/* Sole decline — Ecom Degree style, only one on the page */}
           <div className="mt-2 mb-8 text-center px-2">
             <a
               href={thankYouUrl}
@@ -376,12 +379,19 @@ export default function KayitBasariliContent() {
             </div>
           </div>
 
-          {/* 11. MAIN Checkout — Stripe Embedded Checkout (sayfa içi iframe).
-                 Env vars (STRIPE_SECRET_KEY + STRIPE_VIP_PRICE_ID + NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
-                 yoksa otomatik olarak eski yeşil Payment Link butonuna fallback yapar.
-                 Sayfadaki tüm "VIP Üyelere Şimdi Katıl" butonları scrollToFinalCTA ile
-                 buradaki #final-vip-cta anchor'una scroll eder. */}
-          <VipEmbeddedCheckout email={email} name={name} source="aiscaleapp" />
+          {/* Secondary CTA — embed yukarıda, burada sadece "yukarı dön" scroll butonu */}
+          <div className="my-6">
+            <a href="#final-vip-cta" onClick={scrollToFinalCTA} className="block rounded-[10px] overflow-hidden hover:brightness-105 transition-all cursor-pointer">
+              <div className="py-5 px-6 text-center" style={{ background: CTA_GRADIENT }}>
+                <div className="text-black font-extrabold text-[22px] md:text-[28px]">
+                  VIP Üyelere Şimdi Katıl &raquo;
+                </div>
+                <div className="text-black/50 text-[13px] mt-1">
+                  Yukarıdaki ödeme formuna geri dön
+                </div>
+              </div>
+            </a>
+          </div>
 
           {/* 12. Testimonials */}
           <div className="my-10 text-center">
