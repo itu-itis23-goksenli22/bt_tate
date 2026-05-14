@@ -46,9 +46,6 @@ export default function VipEmbeddedCheckout({
   //   'loading'  → /api/create-checkout-session POST atılıyor (initial state)
   //   'ready'    → clientSecret geldi, EmbeddedCheckout mount edilir
   //   'fallback' → API 503/500 veya pk yok veya timeout → eski Payment Link butonu
-  //
-  // NEXT_PUBLIC_* env vars build-time'da bundle'a girer; SSR + client'ta aynı
-  // değeri görürüz → hydration flicker yok.
   const hasPublishableKey = Boolean(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
   );
@@ -57,6 +54,16 @@ export default function VipEmbeddedCheckout({
   );
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const startedRef = useRef(false);
+
+  // DEBUG — production'da console'a basıyor ki user bana DevTools'tan iletebilsin
+  // eslint-disable-next-line no-console
+  console.log("[VipEmbed] render", {
+    state,
+    hasPublishableKey,
+    pkPrefix:
+      (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "").slice(0, 12),
+    hasClientSecret: Boolean(clientSecret),
+  });
 
   useEffect(() => {
     if (!hasPublishableKey) return;
