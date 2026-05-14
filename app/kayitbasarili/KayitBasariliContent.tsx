@@ -3,11 +3,13 @@
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { setAdvancedMatching } from "@/lib/meta-pixel";
+import VipEmbeddedCheckout from "@/components/VipEmbeddedCheckout";
 
-const CHECKOUT_URL = "https://buy.stripe.com/cNi8wQ4mcb1HcZb71u3wQ0s";
+// Not: Eski CHECKOUT_URL (buy.stripe.com Payment Link) artık doğrudan kullanılmıyor.
+// VipEmbeddedCheckout component'i sayfa içi Stripe Embedded Checkout açar; env
+// vars eksikse aynı Payment Link'e fallback yapar (bkz. components/VipEmbeddedCheckout.tsx).
 
 const CTA_GRADIENT = "linear-gradient(271.63deg, #C19D44 -20%, #E8D48B 20%, #FDF3AD 50%, #E8D48B 80%, #C19D44 120%)";
-const GREEN_GRADIENT = "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)";
 const GOLD_BG_SUBTLE = "linear-gradient(223deg, rgba(170,129,60,0.14) 0%, rgba(170,129,60,0.10) 100%)";
 
 function scrollToFinalCTA(e: React.MouseEvent) {
@@ -229,9 +231,9 @@ export default function KayitBasariliContent() {
             </div>
           </div>
 
-          {/* VIP Button under video */}
+          {/* VIP Button under countdown — embed forma scroll eder */}
           <div className="text-center mb-6">
-            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+            <a href="#final-vip-cta" onClick={scrollToFinalCTA}>
               <button className="text-white font-bold text-[15px] px-7 py-2.5 rounded-md shadow-md hover:brightness-110 transition-all cursor-pointer inline-flex items-center gap-2"
                 style={{ background: "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)" }}>
                 💎 VIP Üye Ol ✅
@@ -266,7 +268,7 @@ export default function KayitBasariliContent() {
               <PrepItem text="Kayıtları sonsuza kadar izle — kaçırdığın detayları tekrar tekrar izleyerek uygulayabilirsin" />
             </div>
             <div className="text-center mt-6">
-              <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
+              <a href="#final-vip-cta" onClick={scrollToFinalCTA}>
                 <button className="text-black font-bold text-[14px] px-6 py-2.5 rounded-md hover:brightness-110 transition-all cursor-pointer"
                   style={{ background: CTA_GRADIENT }}>
                   Tüm bunlar sadece $9.90 — Hemen Hazırlanmaya Başla →
@@ -374,8 +376,12 @@ export default function KayitBasariliContent() {
             </div>
           </div>
 
-          {/* 11. MAIN Checkout CTA — yeşil, Stripe'a yönlendirir, diğer tüm butonlar buraya scroll olur */}
-          <MainCheckoutCTA thankYouUrl={thankYouUrl} />
+          {/* 11. MAIN Checkout — Stripe Embedded Checkout (sayfa içi iframe).
+                 Env vars (STRIPE_SECRET_KEY + STRIPE_VIP_PRICE_ID + NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
+                 yoksa otomatik olarak eski yeşil Payment Link butonuna fallback yapar.
+                 Sayfadaki tüm "VIP Üyelere Şimdi Katıl" butonları scrollToFinalCTA ile
+                 buradaki #final-vip-cta anchor'una scroll eder. */}
+          <VipEmbeddedCheckout email={email} name={name} source="aiscaleapp" />
 
           {/* 12. Testimonials */}
           <div className="my-10 text-center">
@@ -467,23 +473,9 @@ export default function KayitBasariliContent() {
 
 /* ─── Sub-components ─── */
 
-function MainCheckoutCTA({ thankYouUrl: _thankYouUrl }: { thankYouUrl: string }) {
-  return (
-    <div className="my-6">
-      {/* Tek asıl Stripe butonu — yeşil, sayfadaki tüm üst/alt butonlar buraya scroll eder */}
-      <a id="final-vip-cta" href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="block rounded-[10px] overflow-hidden hover:brightness-110 transition-all shadow-lg shadow-emerald-500/30 scroll-mt-24">
-        <div className="py-5 px-6 text-center" style={{ background: GREEN_GRADIENT }}>
-          <div className="text-white font-extrabold text-[22px] md:text-[28px]">
-            VIP Üyelere Şimdi Katıl &raquo;
-          </div>
-          <div className="text-white/80 text-[13px] mt-1">
-            Yapay Zeka ile ilk adımını hemen at
-          </div>
-        </div>
-      </a>
-    </div>
-  );
-}
+// MainCheckoutCTA kaldırıldı — yerine <VipEmbeddedCheckout /> kullanılıyor.
+// Eski yeşil Payment Link butonu fallback olarak VipEmbeddedCheckout içinde
+// FallbackButton component'i halinde duruyor.
 
 function CTABlock({ thankYouUrl: _thankYouUrl }: { thankYouUrl: string }) {
   return (
