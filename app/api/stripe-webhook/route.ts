@@ -75,8 +75,17 @@ export async function POST(request: NextRequest) {
       const amountForCheck = amountTotal ?? 0;
       const isVipUpsell = ccyLower === "usd" && amountForCheck === 990;
 
-      const eventName = isVipUpsell ? "VIPUpsell" : "Purchase";
-      const eventIdPrefix = isVipUpsell ? "vipupsell" : "purchase";
+      // $9.90 VIP upsell → "Subscribe" standard event (Meta'nın hazır kategorisi).
+      // 15.000 TL kurs → "Purchase" (mevcut akış).
+      // Subscribe seçildi çünkü:
+      //   1. Meta indexing gecikmesi yok (standard event)
+      //   2. Custom Conversion dropdown'da hazır
+      //   3. Semantic uyumlu (VIP üyelik = subscription)
+      //   4. Purchase optimizasyonunu kirletmez (ayrı event türü)
+      // Custom Conversion bu Subscribe'ı URL contains "odemeonay" filtre ile
+      // izole edip sadece $9.90 satışlarını sayar.
+      const eventName = isVipUpsell ? "Subscribe" : "Purchase";
+      const eventIdPrefix = isVipUpsell ? "subscribe" : "purchase";
 
       await sendCAPIEvent({
         eventName,
