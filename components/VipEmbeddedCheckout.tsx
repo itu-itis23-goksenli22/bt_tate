@@ -1,18 +1,16 @@
 "use client";
 
-// VIP $9.90 Embedded Stripe Checkout
+// VIP $9.90 Embedded Stripe Checkout — eager-mount versiyonu
 //
-// Sayfa içine iframe olarak gömülen Stripe Checkout. Kullanıcı redirect olmadan
-// ödeme yapar. Webhook (/api/stripe-webhook) checkout.session.completed alır
-// ve VIPUpsell custom event'i Meta'ya, email + Hetzner notify her zamanki gibi
-// devam eder.
+// Sayfa açılır açılmaz Stripe Checkout Session yaratır ve iframe'i mount eder.
+// Kullanıcı butona tıklamak zorunda değil — form direkt orada görünür (Ecom
+// Degree pattern). Webhook (/api/stripe-webhook) checkout.session.completed
+// alır ve VIPUpsell custom event'i Meta'ya gönderir.
 //
-// Production-safe: STRIPE_* env varları yoksa /api/create-checkout-session 503
-// döner ve burada eski yeşil Stripe Payment Link butonu fallback olarak görünür.
-// Yani Vercel'de env vars set edilmediği sürece sayfa kırılmıyor — sadece embed
-// devreye girmiyor.
+// Production-safe: API 503/500 dönerse veya pk yoksa eski yeşil Payment Link
+// butonu fallback olarak gösterilir.
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { loadStripe, type Stripe as StripeJs } from "@stripe/stripe-js";
 import {
   EmbeddedCheckoutProvider,
@@ -44,73 +42,85 @@ export default function VipEmbeddedCheckout({
   name,
   source = "aiscaleapp",
 }: Props) {
-  // Durum makinesi: 'idle' → kullanıcı henüz tıklamadı, yeşil buton göster
-  //                  'loading' → /api/create-checkout-session POST atılıyor
-  //                  'ready' → clientSecret geldi, EmbeddedCheckout mount edilir
-  //                  'fallback' → API 503 veya pk yok → eski Payment Link butonu
+  // Durum makinesi:
+  //   'loading'  → /api/create-checkout-session POST atılıyor (initial state)
+  //   'ready'    → clientSecret geldi, EmbeddedCheckout mount edilir
+  //   'fallback' → API 503/500 veya pk yok veya timeout → eski Payment Link butonu
   //
   // NEXT_PUBLIC_* env vars build-time'da bundle'a girer; SSR + client'ta aynı
   // değeri görürüz → hydration flicker yok.
   const hasPublishableKey = Boolean(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
   );
-  const [state, setState] = useState<"idle" | "loading" | "ready" | "fallback">(
-    hasPublishableKey ? "idle" : "fallback"
+  const [state, setState] = useState<"loading" | "ready" | "fallback">(
+    hasPublishableKey ? "loading" : "fallback"
   );
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const startedRef = useRef(false);
 
-  async function handleStart() {
+  useEffect(() => {
+    if (!hasPublishableKey) return;
     if (startedRef.current) return;
     startedRef.current = true;
-    setState("loading");
 
-    try {
-      const res = await fetch("/api/create-checkout-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, name, source }),
-      });
+    // Timeout — 12 saniyede session gelmezse fallback'a düş
+    const timeoutId = setTimeout(() => {
+      if (!startedRef.current) return;
+      console.warn("Stripe session fetch timed out, falling back");
+      setState((prev) => (prev === "loading" ? "fallback" : prev));
+    }, 12000);
 
-      if (!res.ok) {
-        // 503 → env vars set değil; 500 → Stripe API hatası
-        console.warn("Embedded checkout unavailable, fallback to Payment Link");
+    (async () => {
+      try {
+        const res = await fetch("/api/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, name, source }),
+        });
+
+        if (!res.ok) {
+          console.warn(
+            `Embedded checkout endpoint returned ${res.status}, falling back`
+          );
+          setState("fallback");
+          return;
+        }
+
+        const data = (await res.json()) as { clientSecret?: string };
+        if (!data.clientSecret) {
+          setState("fallback");
+          return;
+        }
+
+        setClientSecret(data.clientSecret);
+        setState("ready");
+      } catch (err) {
+        console.warn("Embedded checkout fetch failed:", err);
         setState("fallback");
-        return;
+      } finally {
+        clearTimeout(timeoutId);
       }
+    })();
 
-      const data = await res.json();
-      if (!data.clientSecret) {
-        setState("fallback");
-        return;
-      }
-
-      setClientSecret(data.clientSecret);
-      setState("ready");
-    } catch (err) {
-      console.warn("Embedded checkout fetch failed:", err);
-      setState("fallback");
-    }
-  }
+    return () => clearTimeout(timeoutId);
+  }, [hasPublishableKey, email, name, source]);
 
   // Durum: ready → Stripe iframe mount et
   if (state === "ready" && clientSecret) {
     const promise = getStripePromise();
     if (!promise) {
-      // teorik olarak buraya düşmez ama TS happy olsun
       return <FallbackButton />;
     }
     return (
-      <div
-        id="final-vip-cta"
-        className="my-6 rounded-[10px] overflow-hidden bg-white scroll-mt-24"
-      >
-        <EmbeddedCheckoutProvider
-          stripe={promise}
-          options={{ clientSecret }}
-        >
-          <EmbeddedCheckout />
-        </EmbeddedCheckoutProvider>
+      <div id="final-vip-cta" className="my-6 scroll-mt-24">
+        <div className="rounded-[10px] overflow-hidden bg-white shadow-lg shadow-emerald-500/20">
+          <EmbeddedCheckoutProvider
+            stripe={promise}
+            options={{ clientSecret }}
+          >
+            <EmbeddedCheckout />
+          </EmbeddedCheckoutProvider>
+        </div>
       </div>
     );
   }
@@ -120,44 +130,20 @@ export default function VipEmbeddedCheckout({
     return <FallbackButton />;
   }
 
-  // Durum: loading
-  if (state === "loading") {
-    return (
-      <div
-        id="final-vip-cta"
-        className="my-6 rounded-[10px] py-6 px-6 text-center scroll-mt-24"
-        style={{ background: GREEN_GRADIENT }}
-      >
-        <div className="text-white font-bold text-[18px] inline-flex items-center gap-2">
-          <span className="inline-block w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-          Ödeme formu yükleniyor...
-        </div>
-      </div>
-    );
-  }
-
-  // Durum: idle → "Embed'i başlat" butonu (kullanıcı tıklayana kadar Stripe'a
-  // request atmıyoruz; performans + maliyet açısından makul)
+  // Durum: loading (initial) — yeşil placeholder
   return (
-    <div className="my-6">
-      <button
-        id="final-vip-cta"
-        type="button"
-        onClick={handleStart}
-        className="block w-full rounded-[10px] overflow-hidden hover:brightness-110 transition-all shadow-lg shadow-emerald-500/30 cursor-pointer scroll-mt-24"
-      >
-        <div
-          className="py-5 px-6 text-center"
-          style={{ background: GREEN_GRADIENT }}
-        >
-          <div className="text-white font-extrabold text-[22px] md:text-[28px]">
-            VIP Üyelere Şimdi Katıl &raquo;
-          </div>
-          <div className="text-white/80 text-[13px] mt-1">
-            Güvenli ödeme formu hemen burada açılır — yeni sekme gerektirmez
-          </div>
-        </div>
-      </button>
+    <div
+      id="final-vip-cta"
+      className="my-6 rounded-[10px] py-10 px-6 text-center scroll-mt-24 shadow-lg shadow-emerald-500/30"
+      style={{ background: GREEN_GRADIENT }}
+    >
+      <div className="text-white font-bold text-[18px] inline-flex items-center gap-3">
+        <span className="inline-block w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+        Güvenli ödeme formu yükleniyor...
+      </div>
+      <p className="text-white/70 text-[13px] mt-2">
+        Bir saniye, kart bilgilerini girebilmen için form hazırlanıyor.
+      </p>
     </div>
   );
 }
@@ -172,7 +158,10 @@ function FallbackButton() {
         rel="noopener noreferrer"
         className="block rounded-[10px] overflow-hidden hover:brightness-110 transition-all shadow-lg shadow-emerald-500/30 scroll-mt-24"
       >
-        <div className="py-5 px-6 text-center" style={{ background: GREEN_GRADIENT }}>
+        <div
+          className="py-5 px-6 text-center"
+          style={{ background: GREEN_GRADIENT }}
+        >
           <div className="text-white font-extrabold text-[22px] md:text-[28px]">
             VIP Üyelere Şimdi Katıl &raquo;
           </div>
