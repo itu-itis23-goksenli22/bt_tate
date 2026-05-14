@@ -96,15 +96,19 @@ export default function RegistrationModal({
       const data = await res.json();
 
       if (res.ok) {
-        setStatus("success");
-        // Fire CompleteRegistration with same eventId as server for dedup
+        // "Kaydınız Tamamlandı" modal'ı gösterMİYORuz — direkt /kayitbasarili'ye redirect.
+        // status "loading"de kaldığı için kullanıcı submit butonundaki spinner'ı görmeye
+        // devam eder, sonra anında upsell sayfasına geçer.
+        //
+        // Tracking event'leri (fbq) browser'da fire-and-forget — 200ms delay
+        // sendBeacon flush'ı için yeterli. setAdvancedMatching localStorage'a yazar,
+        // anında çalışır.
         trackCompleteRegistration({
           content_name: "Webinar Kayıt",
           status: "completed",
           value: data.eventValue,
           currency: "TRY",
         }, data.eventId);
-        // Fire Lead event (different eventId) to feed Meta's "Maximize leads" optimization
         trackLead({
           content_name: "Webinar Kayıt",
           content_category: "webinar",
@@ -112,10 +116,9 @@ export default function RegistrationModal({
           currency: "TRY",
         }, data.leadEventId);
         setAdvancedMatching({ em: formData.email, fn: firstName, ln: lastName });
-        // Redirect to VIP upsell page after 1.5s
         setTimeout(() => {
-          window.location.href = `/kayitbasarili?name=${encodeURIComponent(formData.name)}`;
-        }, 1500);
+          window.location.href = `/kayitbasarili?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`;
+        }, 200);
       } else {
         setStatus("error");
         setErrorMsg(data.error || "Bir hata oluştu. Lütfen tekrar deneyin.");
