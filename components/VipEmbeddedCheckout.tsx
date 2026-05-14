@@ -55,15 +55,43 @@ export default function VipEmbeddedCheckout({
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const startedRef = useRef(false);
 
-  // DEBUG — production'da console'a basıyor ki user bana DevTools'tan iletebilsin
+  // DEBUG — console.warn çünkü next.config.js prod'da console.log siliyor
   // eslint-disable-next-line no-console
-  console.log("[VipEmbed] render", {
+  console.warn("[VipEmbed] render", {
     state,
     hasPublishableKey,
     pkPrefix:
       (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "").slice(0, 12),
     hasClientSecret: Boolean(clientSecret),
   });
+
+  // GÖRSEL DEBUG — kırmızı çerçeveli debug paneli (geçici, sorun bulunca silinecek)
+  const DebugBanner = (
+    <div
+      style={{
+        background: "#ff3b3b",
+        color: "white",
+        padding: "12px",
+        margin: "8px 0",
+        border: "3px solid yellow",
+        fontWeight: "bold",
+        fontSize: "14px",
+        textAlign: "center",
+        zIndex: 9999,
+        position: "relative",
+      }}
+    >
+      🔍 EMBED DEBUG → state: <code>{state}</code> | hasPK:{" "}
+      {String(hasPublishableKey)} | hasCS:{" "}
+      {String(Boolean(clientSecret))} | pkPrefix:{" "}
+      <code>
+        {(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "(none)").slice(
+          0,
+          12
+        )}
+      </code>
+    </div>
+  );
 
   useEffect(() => {
     if (!hasPublishableKey) return;
@@ -116,42 +144,58 @@ export default function VipEmbeddedCheckout({
   if (state === "ready" && clientSecret) {
     const promise = getStripePromise();
     if (!promise) {
-      return <FallbackButton />;
+      return (
+        <>
+          {DebugBanner}
+          <FallbackButton />
+        </>
+      );
     }
     return (
-      <div id="final-vip-cta" className="my-6 scroll-mt-24">
-        <div className="rounded-[10px] overflow-hidden bg-white shadow-lg shadow-emerald-500/20">
-          <EmbeddedCheckoutProvider
-            stripe={promise}
-            options={{ clientSecret }}
-          >
-            <EmbeddedCheckout />
-          </EmbeddedCheckoutProvider>
+      <>
+        {DebugBanner}
+        <div id="final-vip-cta" className="my-6 scroll-mt-24">
+          <div className="rounded-[10px] overflow-hidden bg-white shadow-lg shadow-emerald-500/20">
+            <EmbeddedCheckoutProvider
+              stripe={promise}
+              options={{ clientSecret }}
+            >
+              <EmbeddedCheckout />
+            </EmbeddedCheckoutProvider>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   // Durum: fallback → eski yeşil Payment Link butonu (yeni sekmede)
   if (state === "fallback") {
-    return <FallbackButton />;
+    return (
+      <>
+        {DebugBanner}
+        <FallbackButton />
+      </>
+    );
   }
 
   // Durum: loading (initial) — yeşil placeholder
   return (
-    <div
-      id="final-vip-cta"
-      className="my-6 rounded-[10px] py-10 px-6 text-center scroll-mt-24 shadow-lg shadow-emerald-500/30"
-      style={{ background: GREEN_GRADIENT }}
-    >
-      <div className="text-white font-bold text-[18px] inline-flex items-center gap-3">
-        <span className="inline-block w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-        Güvenli ödeme formu yükleniyor...
+    <>
+      {DebugBanner}
+      <div
+        id="final-vip-cta"
+        className="my-6 rounded-[10px] py-10 px-6 text-center scroll-mt-24 shadow-lg shadow-emerald-500/30"
+        style={{ background: GREEN_GRADIENT }}
+      >
+        <div className="text-white font-bold text-[18px] inline-flex items-center gap-3">
+          <span className="inline-block w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+          Güvenli ödeme formu yükleniyor...
+        </div>
+        <p className="text-white/70 text-[13px] mt-2">
+          Bir saniye, kart bilgilerini girebilmen için form hazırlanıyor.
+        </p>
       </div>
-      <p className="text-white/70 text-[13px] mt-2">
-        Bir saniye, kart bilgilerini girebilmen için form hazırlanıyor.
-      </p>
-    </div>
+    </>
   );
 }
 
