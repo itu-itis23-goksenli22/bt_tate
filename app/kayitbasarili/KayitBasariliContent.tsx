@@ -28,37 +28,10 @@ export default function KayitBasariliContent() {
   const searchParams = useSearchParams();
   const name = searchParams.get("name") || "Değerli Katılımcı";
   const email = searchParams.get("email") || "";
-  const [webinarDate, setWebinarDate] = useState("");
-  const [webinarDay, setWebinarDay] = useState("");
-  const [webinarFull, setWebinarFull] = useState("");
-  const [registrationDate, setRegistrationDate] = useState("");
   const [countdown, setCountdown] = useState({ hours: "00", minutes: "00", seconds: "00" });
   const thankYouUrl = getThankYouUrl(name, email);
 
   useEffect(() => {
-    const dayNames = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
-    const now = new Date();
-    const turkey = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
-    const currentHour = turkey.getHours();
-    const eventDate = new Date(turkey);
-    if (currentHour >= 20) {
-      eventDate.setDate(eventDate.getDate() + 1);
-    }
-    eventDate.setHours(20, 0, 0, 0);
-
-    const day = String(eventDate.getDate()).padStart(2, "0");
-    const month = String(eventDate.getMonth() + 1).padStart(2, "0");
-    const year = eventDate.getFullYear();
-
-    setWebinarDate(`${day}.${month}.${year}`);
-    setWebinarDay(dayNames[eventDate.getDay()]);
-    setWebinarFull(`${day}.${month} ${dayNames[eventDate.getDay()]} 20:00`);
-
-    const regDay = String(turkey.getDate()).padStart(2, "0");
-    const regMonth = String(turkey.getMonth() + 1).padStart(2, "0");
-    const regYear = turkey.getFullYear();
-    setRegistrationDate(`${regDay}.${regMonth}.${regYear}`);
-
     if (email) {
       const nameParts = name.split(" ");
       setAdvancedMatching({
@@ -105,40 +78,9 @@ export default function KayitBasariliContent() {
       <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
       <main className="min-h-screen bg-[#0c0c0c] text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-        {/* 1. Solid Gold Banner - Remind user of webinar time */}
-        <div className="bg-[#C19D44] text-center py-3 px-4">
-          <p className="text-black font-semibold text-[14px] md:text-[16px]">
-            📅 Webinara şu saatte katılmayı unutmayın: {webinarFull || "..."}
-          </p>
-        </div>
-
         <div className="max-w-[680px] mx-auto px-4 py-8">
-          {/* 2. Email Notification Banner */}
-          <div className="mb-8 rounded-[9px] border-2 border-[#C19D44] p-5 md:p-6"
-            style={{ background: GOLD_BG_SUBTLE }}>
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <svg className="w-6 h-6 text-[#C19D44] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              <h2 className="text-[18px] md:text-[20px] font-bold text-[#C19D44]">
-                Katılım Linkiniz E-posta Adresinize Gönderildi!
-              </h2>
-            </div>
-            <p className="text-white/70 text-[14px] md:text-[15px] text-center leading-relaxed">
-              E-posta adresinize bir <strong className="text-white">Zoom katılım linki</strong> gönderdik.{" "}
-              <strong className="text-white">{webinarDate} {webinarDay} saat 20:00{"'"}da</strong>{" "}
-              e-postanızdaki linke tıklayın, Zoom açılacak ve canlı seminere katılacaksınız.
-              E-postayı bulamıyorsanız <strong className="text-white">spam/gereksiz</strong> klasörünü de kontrol edin.
-            </p>
-            {registrationDate && (
-              <p className="text-white/40 text-[12px] text-center mt-3">
-                Kayıt tarihiniz: {registrationDate}
-              </p>
-            )}
-          </div>
-
-          {/* 3. BEKLE! Hero — VIP paketi tarif eden urgency bloğu */}
-          <div className="text-center mb-8 mt-4">
+          {/* 1. BEKLE! Hero — VIP paketi tarif eden urgency bloğu */}
+          <div className="text-center mb-8 mt-2">
             {/* BEKLE! */}
             <h1
               className="font-black tracking-tight leading-none mb-6"
@@ -212,23 +154,66 @@ export default function KayitBasariliContent() {
             </a>
           </div>
 
-          {/* 3. Video Section */}
-          <div className="mb-3">
-            <p className="text-center text-[10px] text-white/25 uppercase tracking-[3px] mb-1">
-              BU VİDEO HAYATINIZI DEĞİŞTİREBİLİR
-            </p>
-            <p className="text-center text-[#C19D44] text-[10px] font-bold uppercase tracking-[2px] mb-3">
-              BUNU GERÇEKTEN PAS MI GEÇECEKSİNİZ!?
-            </p>
-            <div className="relative aspect-video bg-black rounded-md overflow-hidden">
-              <iframe
-                className="absolute inset-0 w-full h-full"
-                src="https://www.youtube.com/embed/cIbDH0lWMc0"
-                title="VIP Video"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
+          {/* 3. Hazırlıklı vs Hazırlıksız karşılaştırması — Ecom Degree pattern */}
+          <div className="my-10">
+            <h2 className="text-center text-white font-extrabold text-[24px] md:text-[32px] leading-tight mb-2">
+              Şu an şunu düşünüyor olabilirsin...
+            </h2>
+            <h3 className="text-center text-white font-extrabold text-[22px] md:text-[30px] leading-tight mb-8">
+              &ldquo;Tamam Baturalp... ama{" "}
+              <span className="underline decoration-[#C19D44] decoration-[3px] underline-offset-4">
+                bu neden bu kadar önemli???
+              </span>
+              &rdquo;
+            </h3>
+
+            {/* RED BOX — Hazırlıksız */}
+            <div
+              className="rounded-[12px] border-2 border-dashed border-[#e85d5d]/70 p-5 md:p-7"
+              style={{
+                background:
+                  "linear-gradient(135deg, rgba(232,93,93,0.10) 0%, rgba(232,93,93,0.04) 100%)",
+              }}
+            >
+              <h4 className="text-white font-extrabold text-[18px] md:text-[22px] leading-tight mb-5">
+                Seminere{" "}
+                <span className="text-[#e85d5d]">Tamamen Hazırlıksız</span>{" "}
+                Geldiğinde Olanlar:
+              </h4>
+              <div className="space-y-4">
+                <ConCheckItem text="Kafan karışır, nereden başlayacağını bilemezsin..." />
+                <ConCheckItem text="Tüm seminer boyunca temelleri anlamaya çalışırken, hazırlanan herkes çoktan noktaları birleştirip bir sonraki hamlesini planlıyor olur..." />
+                <ConCheckItem text="Bir not defteri dolusu dağınık fikir ve net olmayan bir aksiyon planıyla ayrılırsın..." />
+                <ConCheckItem text="Üç hafta sonra, hâlâ TEK BİR adım bile atamamış olursun..." />
+              </div>
+            </div>
+
+            {/* OR badge */}
+            <div className="flex justify-center my-5">
+              <span
+                className="inline-block px-5 py-1.5 rounded-[6px] text-black font-extrabold text-[14px] tracking-wider"
+                style={{ background: CTA_GRADIENT }}
+              >
+                YA DA...
+              </span>
+            </div>
+
+            {/* GOLD BOX — Hazırlıklı */}
+            <div
+              className="rounded-[12px] border-2 border-dashed border-[#AA813C]/70 p-5 md:p-7"
+              style={{ background: GOLD_BG_SUBTLE }}
+            >
+              <h4 className="text-white font-extrabold text-[18px] md:text-[22px] leading-tight mb-5">
+                Seminere{" "}
+                <span className="text-[#D5B356]">Hazırlıklı</span>{" "}
+                Geldiğini Düşün:
+              </h4>
+              <div className="space-y-4">
+                <ProCheckItem text="Seminerden çıkar çıkmaz HEMEN uygulamaya başlarsın." />
+                <ProCheckItem text="Diğerleri başlangıç seviyesi soruları sorarken, sen gerçekten para kazandıran soruları soruyor olursun." />
+                <ProCheckItem text="Yetişmeye çalışmıyorsun — stratejik düşünüyor, doğru hamleleri planlıyor olursun." />
+                <ProCheckItem text="Yapay zekanın nasıl çalıştığını çoktan anlamış olarak içeri girersin." />
+              </div>
             </div>
           </div>
 
@@ -577,6 +562,35 @@ function TestimonialCard({ name, role, text, initial }: { name: string; role: st
           <p className="text-white/40 text-[12px]">{role}</p>
         </div>
       </div>
+    </div>
+  );
+}
+
+function ConCheckItem({ text }: { text: string }) {
+  return (
+    <div className="flex gap-3 items-start">
+      <div className="flex-shrink-0 w-6 h-6 rounded-[4px] bg-[#e85d5d]/15 border border-[#e85d5d]/50 flex items-center justify-center mt-0.5">
+        <svg className="w-3.5 h-3.5 text-[#e85d5d]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </div>
+      <p className="text-white/80 text-[14px] md:text-[15px] leading-relaxed">{text}</p>
+    </div>
+  );
+}
+
+function ProCheckItem({ text }: { text: string }) {
+  return (
+    <div className="flex gap-3 items-start">
+      <div
+        className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5"
+        style={{ background: "linear-gradient(135deg, #C19D44 0%, #E8D48B 100%)" }}
+      >
+        <svg className="w-3.5 h-3.5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <p className="text-white/85 text-[14px] md:text-[15px] leading-relaxed">{text}</p>
     </div>
   );
 }
