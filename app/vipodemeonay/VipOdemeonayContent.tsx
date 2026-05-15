@@ -172,6 +172,29 @@ export default function VipOdemeonayContent() {
             </div>
           </div>
 
+          {/* Seminerde Görüşürüz — Baturalp video */}
+          <div
+            className="mb-8 rounded-[9px] border border-dashed border-[#AA813C]/50 p-2"
+            style={{ background: GOLD_BG_SUBTLE }}
+          >
+            <p className="text-center text-[10px] text-white/30 uppercase tracking-[3px] mb-1 pt-1">
+              Sana Özel Mesaj
+            </p>
+            <p className="text-center text-[#C19D44] text-[12px] md:text-[13px] font-bold mb-2">
+              🎥 Seminerde Görüşürüz
+            </p>
+            <div className="relative aspect-video bg-black rounded-md overflow-hidden">
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src="https://www.youtube.com/embed/cIbDH0lWMc0"
+                title="Seminerde Görüşürüz - Baturalp"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          </div>
+
           {/* 3. PRIMARY CTA — Notion Bonus Paketi */}
           <div className="rounded-[9px] border-2 border-[#C19D44] p-6 md:p-8 text-center mb-8 bg-[#141414] shadow-lg shadow-[#C19D44]/10">
             <svg
