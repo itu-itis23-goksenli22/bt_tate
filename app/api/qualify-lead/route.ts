@@ -32,17 +32,16 @@ type BudgetTier = "0_3000" | "3000_7500" | "7500_15000" | "15000_plus";
 
 const SKOOL_URL = "https://www.skool.com/aiscaleapp-9624/about";
 
-// Meta CAPI value field — higher value = Meta value-based bidding prioritizes more.
-// Unqualified tier'lar için CompleteRegistration hiç atılmıyor (value = 0 just for type completeness).
-const TIER_VALUE: Record<BudgetTier, number> = {
-  "0_3000": 0,
-  "3000_7500": 0,
-  "7500_15000": 10,
-  "15000_plus": 15,
-};
-
 // Hangi tier'lar qualified (Zoom + event fire) hangileri unqualified (sadece Skool)
 const QUALIFIED_TIERS: BudgetTier[] = ["7500_15000", "15000_plus"];
+
+// Meta CAPI value field — eski random tiny value pattern. 0.01-0.99 TRY arasında.
+// Bu, Meta'nın value+currency yapısal şartını karşılar ama gerçek revenue değil,
+// optimization'ı bias'lamaz. Tier ayrımı value yerine `budget_tier` custom_data'da
+// taşınır — value bidding yapmıyoruz, lead-gen optimization yapıyoruz.
+function randomEventValue(): number {
+  return parseFloat((Math.random() * 0.98 + 0.01).toFixed(2));
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -137,11 +136,13 @@ export async function POST(request: NextRequest) {
         tier: budgetTier,
         qualified: false,
         eventId,
-        eventValue: 0,
         redirectUrl: SKOOL_URL,
         zoomJoinUrl: null,
       });
     }
+
+    // Qualified tier'lar için random small event value — eski pattern
+    const eventValue = randomEventValue();
 
     // 3. Qualified tier (7.5-15k veya 15k+) → Zoom registration
     let zoomJoinUrl: string | null = null;
@@ -199,7 +200,7 @@ export async function POST(request: NextRequest) {
       customData: {
         content_name: isEticaret ? "E-Ticaret Webinar Kayıt" : "Webinar Kayıt",
         status: "completed",
-        value: TIER_VALUE[budgetTier],
+        value: eventValue,
         currency: "TRY",
         budget_tier: budgetTier,
       },
@@ -207,7 +208,7 @@ export async function POST(request: NextRequest) {
 
     // 6. Lead CAPI event — qualified tier'lar için Meta "Maximize leads"
     // optimization'ına farklı bir event sinyali. CompleteRegistration ile
-    // ayrı eventId kullanır.
+    // ayrı eventId kullanır. Aynı random small value.
     sendCAPIEvent({
       eventName: "Lead",
       eventId: leadEventId,
@@ -216,7 +217,7 @@ export async function POST(request: NextRequest) {
       customData: {
         content_name: isEticaret ? "E-Ticaret Webinar Kayıt" : "Webinar Kayıt",
         content_category: "webinar",
-        value: TIER_VALUE[budgetTier],
+        value: eventValue,
         currency: "TRY",
         budget_tier: budgetTier,
       },
@@ -228,7 +229,7 @@ export async function POST(request: NextRequest) {
       qualified: true,
       eventId,
       leadEventId,
-      eventValue: TIER_VALUE[budgetTier],
+      eventValue,
       redirectUrl: null, // frontend kayitbasarili'ye redirect kendisi yapar
       zoomJoinUrl,
     });

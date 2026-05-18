@@ -128,14 +128,15 @@ export default function RegistrationModal({
       }
 
       // Qualified tier (7.5-15k veya 15k+) → browser-side dedup events
-      const tierValue = data.eventValue ?? (budgetTier === "15000_plus" ? 15 : 10);
+      // Value server'dan random small value (0.01-0.99 TRY) — eski pattern
+      const eventValue = data.eventValue ?? 0.5;
 
       // CompleteRegistration — server'la aynı eventId, dedup
       trackCompleteRegistration(
         {
           content_name: "Webinar Kayıt",
           status: "completed",
-          value: tierValue,
+          value: eventValue,
           currency: "TRY",
         },
         data.eventId
@@ -146,7 +147,7 @@ export default function RegistrationModal({
         {
           content_name: "Webinar Kayıt",
           content_category: "webinar",
-          value: tierValue,
+          value: eventValue,
           currency: "TRY",
         },
         data.leadEventId
