@@ -169,32 +169,24 @@ export async function POST(request: NextRequest) {
       fbc: fbc || undefined,
       fbp: fbp || undefined,
     };
-    sendCAPIEvent({
-      eventName: 'CompleteRegistration',
-      eventId,
-      sourceUrl: referer,
-      userData: sharedUserData,
-      customData: {
-        content_name: contentName,
-        status: 'completed',
-        value: eventValue,
-        currency: 'TRY',
-      },
-    }).catch(err => console.warn('⚠️ CAPI non-critical error:', err));
+    // CompleteRegistration event — ARTIK SADECE BUDGET QUALIFICATION SONRASI ATILIR
+    // (Mayıs 2026). Form submit edildiğinde değil, kullanıcı "10.000 TL+ bütçem var"
+    // butonuna tıkladığında /api/fire-complete-registration endpoint'i bunu fire eder.
+    //
+    // Niye böyle: Meta'nın CompleteRegistration audience'ını sadece "alma niyeti olan"
+    // kalifiye lead'lerle besliyoruz. Lookalike + reklam optimizasyonu kalitesi
+    // 5-10x artıyor. Bütçesi olmayanlar Skool topluluğuna yönlenir, CompleteRegistration
+    // sinyalini kirletmez.
 
-    // 4b. Also send a Lead event — required for Meta's "Maximize leads" optimization
-    sendCAPIEvent({
-      eventName: 'Lead',
-      eventId: leadEventId,
-      sourceUrl: referer,
-      userData: sharedUserData,
-      customData: {
-        content_name: contentName,
-        content_category: 'webinar',
-        value: eventValue,
-        currency: 'TRY',
-      },
-    }).catch(err => console.warn('⚠️ CAPI Lead non-critical error:', err));
+    // 4b. Lead event — DEVRE DIŞI (Mayıs 2026)
+    // Subscribe ($9.90) artık ana proxy event. Lead şimdilik kapatıldı.
+    // sendCAPIEvent({
+    //   eventName: 'Lead',
+    //   eventId: leadEventId,
+    //   sourceUrl: referer,
+    //   userData: sharedUserData,
+    //   customData: { content_name: contentName, content_category: 'webinar', value: eventValue, currency: 'TRY' },
+    // }).catch(err => console.warn('⚠️ CAPI Lead non-critical error:', err));
 
     // 5. Send YouTube engagement email (aiscale only, NOT eticaret) — non-blocking
     const isEticaret = webinarId === '86257770515';

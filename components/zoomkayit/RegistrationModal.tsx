@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { setAdvancedMatching, trackCompleteRegistration, trackLead } from "@/lib/meta-pixel";
+import { setAdvancedMatching, trackCompleteRegistration } from "@/lib/meta-pixel";
 
 function getCookie(name: string): string | undefined {
   if (typeof document === "undefined") return undefined;
@@ -47,10 +47,18 @@ export default function RegistrationModal({
 }: RegistrationModalProps) {
   const [formData, setFormData] = useState({ name: "", email: "" });
   const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
+    "idle" | "loading" | "budget-question" | "success" | "error"
   >("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [dateString, setDateString] = useState("");
+  // Form submit'ten sonra eventId + eventValue saklarız, budget question
+  // sonrası CompleteRegistration fire ederken kullanırız.
+  const [registrationData, setRegistrationData] = useState<{
+    eventId: string;
+    eventValue: number;
+    firstName: string;
+    lastName: string;
+  } | null>(null);
 
   useEffect(() => {
     setDateString(getEventDateString());
@@ -96,29 +104,21 @@ export default function RegistrationModal({
       const data = await res.json();
 
       if (res.ok) {
-        // "Kaydınız Tamamlandı" modal'ı gösterMİYORuz — direkt /kayitbasarili'ye redirect.
-        // status "loading"de kaldığı için kullanıcı submit butonundaki spinner'ı görmeye
-        // devam eder, sonra anında upsell sayfasına geçer.
+        // Kayıt server'a kaydedildi (Zoom + email).
+        // CompleteRegistration event'i HENÜZ ATILMAYACAK — kullanıcı bütçe
+        // sorusuna "Evet" derse fire edilir (kalifiye lead), "Hayır" derse hiç
+        // fire edilmez (Skool'a yönlenir). Bu sayede Meta CompleteRegistration
+        // audience'ı sadece $10k+ niyetli kullanıcılarla beslenir.
         //
-        // Tracking event'leri (fbq) browser'da fire-and-forget — 200ms delay
-        // sendBeacon flush'ı için yeterli. setAdvancedMatching localStorage'a yazar,
-        // anında çalışır.
-        trackCompleteRegistration({
-          content_name: "Webinar Kayıt",
-          status: "completed",
-          value: data.eventValue,
-          currency: "TRY",
-        }, data.eventId);
-        trackLead({
-          content_name: "Webinar Kayıt",
-          content_category: "webinar",
-          value: data.eventValue,
-          currency: "TRY",
-        }, data.leadEventId);
+        // Advanced matching her durumda set edilir (gelecek event'ler için).
         setAdvancedMatching({ em: formData.email, fn: firstName, ln: lastName });
-        setTimeout(() => {
-          window.location.href = `/kayitbasarili?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`;
-        }, 200);
+        setRegistrationData({
+          eventId: data.eventId,
+          eventValue: data.eventValue,
+          firstName,
+          lastName,
+        });
+        setStatus("budget-question");
       } else {
         setStatus("error");
         setErrorMsg(data.error || "Bir hata oluştu. Lütfen tekrar deneyin.");
@@ -127,6 +127,53 @@ export default function RegistrationModal({
       setStatus("error");
       setErrorMsg("Bağlantı hatası. Lütfen tekrar deneyin.");
     }
+  };
+
+  // Budget question — "Evet, 10k+ bütçem var" → kalifiye lead
+  const handleQualified = async () => {
+    if (!registrationData) return;
+    setStatus("loading");
+
+    // 1. Server-side CompleteRegistration fire et (CAPI)
+    fetch("/api/fire-complete-registration", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        eventId: registrationData.eventId,
+        email: formData.email,
+        firstName: registrationData.firstName,
+        lastName: registrationData.lastName,
+        value: registrationData.eventValue,
+        sourceUrl: typeof window !== "undefined" ? window.location.href : "",
+        contentName: "Webinar Kayıt",
+        fbc: getCookie("_fbc"),
+        fbp: getCookie("_fbp"),
+      }),
+    }).catch(() => {
+      // Non-blocking — redirect yine de devam etsin
+    });
+
+    // 2. Browser-side trackCompleteRegistration (dedup için aynı eventId)
+    trackCompleteRegistration(
+      {
+        content_name: "Webinar Kayıt",
+        status: "completed",
+        value: registrationData.eventValue,
+        currency: "TRY",
+      },
+      registrationData.eventId
+    );
+
+    // 3. fbq flush'ı için 200ms bekle, sonra kayitbasarili'ye yönlendir
+    setTimeout(() => {
+      window.location.href = `/kayitbasarili?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`;
+    }, 200);
+  };
+
+  // "Hayır, henüz yok" → unqualified, Skool topluluğuna yönlendir.
+  // CompleteRegistration event'i fire ETME — Meta audience'ı temiz kalır.
+  const handleNotQualified = () => {
+    window.location.href = "https://www.skool.com/aiscaleapp-9624/about";
   };
 
   if (!isOpen) return null;
@@ -153,7 +200,53 @@ export default function RegistrationModal({
         </button>
 
         <div className="p-6 md:p-8">
-          {status === "success" ? (
+          {status === "budget-question" ? (
+            <div className="text-center py-4">
+              {/* Kayıt onaylandı tick */}
+              <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg
+                  className="w-6 h-6 text-green-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+              <p className="text-white/60 text-sm mb-1">Kaydın alındı ✓</p>
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
+                Son bir soru:
+              </h3>
+              <p className="text-white/80 text-lg md:text-xl mb-8 leading-snug">
+                <span className="text-gold font-bold">10.000 TL</span> üstü
+                yatırım bütçen var mı?
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                <button
+                  onClick={handleQualified}
+                  className="flex-1 px-6 py-4 bg-gold text-black font-extrabold rounded-lg hover:brightness-110 transition-all cursor-pointer text-base shadow-lg shadow-gold/20"
+                >
+                  ✓ Evet, bütçem var
+                </button>
+                <button
+                  onClick={handleNotQualified}
+                  className="flex-1 px-6 py-4 bg-[#2a2a2a] text-white/70 font-semibold rounded-lg hover:bg-[#333] transition-all cursor-pointer text-base border border-white/10"
+                >
+                  Hayır, henüz yok
+                </button>
+              </div>
+
+              <p className="text-white/30 text-xs mt-6 leading-relaxed">
+                Cevabın seminer içeriğini sana göre kişiselleştirmemizi sağlar.
+              </p>
+            </div>
+          ) : status === "success" ? (
             <div className="text-center py-8">
               <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg
