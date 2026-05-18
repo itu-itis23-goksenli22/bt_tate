@@ -46,19 +46,12 @@ export default function RegistrationModal({
   onClose,
 }: RegistrationModalProps) {
   const [formData, setFormData] = useState({ name: "", email: "" });
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "budget-question" | "success" | "error"
-  >("idle");
+  // Budget tier — kullanıcı form içinde 3 seçenekten birini seçer.
+  // Submit budget tier doluyken yapılır → /api/qualify-lead tek call'da hepsini hallediyor.
+  const [budgetTier, setBudgetTier] = useState<"low" | "mid" | "high" | null>(null);
+  const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [dateString, setDateString] = useState("");
-  // Form submit'ten sonra eventId + eventValue saklarız, budget question
-  // sonrası CompleteRegistration fire ederken kullanırız.
-  const [registrationData, setRegistrationData] = useState<{
-    eventId: string;
-    eventValue: number;
-    firstName: string;
-    lastName: string;
-  } | null>(null);
 
   useEffect(() => {
     setDateString(getEventDateString());
@@ -78,72 +71,34 @@ export default function RegistrationModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.email.trim()) return;
+    if (!budgetTier) {
+      setErrorMsg("Lütfen yatırım bütçeni seç.");
+      return;
+    }
 
     setStatus("loading");
     setErrorMsg("");
 
-    try {
-      // PHASE 1 — Lead Supabase'e kaydedilir (Zoom YOK, event YOK).
-      // Sonraki adımda bütçe tier'ına göre /api/qualify-lead çağrılır:
-      //   - low (0-3k)   → Zoom yok, event yok, Skool'a redirect
-      //   - mid (3-10k)  → Zoom + email + CompleteRegistration (value: 5)
-      //   - high (10k+)  → Zoom + email + CompleteRegistration (value: 15)
-      const nameParts = formData.name.trim().split(" ");
-      const firstName = nameParts[0] || formData.name;
-      const lastName = nameParts.slice(1).join(" ") || "-";
+    const nameParts = formData.name.trim().split(" ");
+    const firstName = nameParts[0] || formData.name;
+    const lastName = nameParts.slice(1).join(" ") || "-";
 
-      const res = await fetch("/api/save-lead", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: formData.email,
-          firstName,
-          lastName,
-          phone: "",
-        }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        // Advanced matching her durumda set edilir (gelecek event'ler için).
-        setAdvancedMatching({ em: formData.email, fn: firstName, ln: lastName });
-        setRegistrationData({
-          eventId: data.eventId,
-          eventValue: data.eventValue,
-          firstName,
-          lastName,
-        });
-        setStatus("budget-question");
-      } else {
-        setStatus("error");
-        setErrorMsg(data.error || "Bir hata oluştu. Lütfen tekrar deneyin.");
-      }
-    } catch {
-      setStatus("error");
-      setErrorMsg("Bağlantı hatası. Lütfen tekrar deneyin.");
-    }
-  };
-
-  // PHASE 2 — Bütçe tier handler. Tier'a göre /api/qualify-lead çağrılır,
-  // server tarafı Zoom + CompleteRegistration karar verir.
-  //
-  //   low (0-3k)    → Zoom oluşmaz, event yok, Skool'a redirect
-  //   mid (3-10k)   → Zoom + email + CompleteRegistration (value: 5) → /kayitbasarili
-  //   high (10k+)   → Zoom + email + CompleteRegistration (value: 15) → /kayitbasarili
-  const handleTier = async (budgetTier: "low" | "mid" | "high") => {
-    if (!registrationData) return;
-    setStatus("loading");
+    // Advanced matching — gelecek event'ler için
+    setAdvancedMatching({ em: formData.email, fn: firstName, ln: lastName });
 
     try {
+      // Tek-fazlı: /api/qualify-lead her şeyi tek call'da yapar
+      //   - Supabase'e kayıt (her tier için)
+      //   - Low tier  → Skool'a yönlendir, Zoom yok, event yok
+      //   - Mid tier  → Zoom + email + CompleteRegistration (value: 5)
+      //   - High tier → Zoom + email + CompleteRegistration (value: 15)
       const res = await fetch("/api/qualify-lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          eventId: registrationData.eventId,
           email: formData.email,
-          firstName: registrationData.firstName,
-          lastName: registrationData.lastName,
+          firstName,
+          lastName,
           phone: "",
           budgetTier,
           sourceUrl: typeof window !== "undefined" ? window.location.href : "",
@@ -154,7 +109,13 @@ export default function RegistrationModal({
 
       const data = await res.json();
 
-      // Low tier → server "redirectUrl: Skool" döner
+      if (!res.ok) {
+        setStatus("error");
+        setErrorMsg(data.error || "Bir hata oluştu. Lütfen tekrar deneyin.");
+        return;
+      }
+
+      // Low tier → server redirectUrl Skool döner, direkt git
       if (budgetTier === "low") {
         const skoolUrl =
           data?.redirectUrl || "https://www.skool.com/aiscaleapp-9624/about";
@@ -171,7 +132,7 @@ export default function RegistrationModal({
           value: tierValue,
           currency: "TRY",
         },
-        registrationData.eventId
+        data.eventId
       );
 
       // fbq flush için 200ms bekle, sonra kayitbasarili'ye yönlendir
@@ -180,12 +141,8 @@ export default function RegistrationModal({
       }, 200);
     } catch (err) {
       console.warn("qualify-lead failed:", err);
-      // Hata olsa bile kullanıcıyı tier'a göre yönlendir (UX bozulmasın)
-      if (budgetTier === "low") {
-        window.location.href = "https://www.skool.com/aiscaleapp-9624/about";
-      } else {
-        window.location.href = `/kayitbasarili?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`;
-      }
+      setStatus("error");
+      setErrorMsg("Bağlantı hatası. Lütfen tekrar deneyin.");
     }
   };
 
@@ -213,191 +170,160 @@ export default function RegistrationModal({
         </button>
 
         <div className="p-6 md:p-8">
-          {status === "budget-question" ? (
-            <div className="text-center py-4">
-              {/* Kayıt alındı tick */}
-              <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                <svg
-                  className="w-6 h-6 text-green-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              </div>
-              <p className="text-white/60 text-sm mb-1">Bilgilerin kaydedildi ✓</p>
-              <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
-                Son bir soru:
-              </h3>
-              <p className="text-white/80 text-base md:text-lg mb-6 leading-snug">
-                Yatırım bütçen ne aralıkta?
-              </p>
+          <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-1">
+            &ldquo;Evet, Yerimi Ayırt&rdquo;
+          </h2>
+          <p className="text-xl md:text-2xl font-bold text-white text-center mb-6">
+            Bu ÜCRETSİZ Webinar İçin!
+          </p>
 
-              <div className="flex flex-col gap-2.5 max-w-md mx-auto">
+          {/* Date box */}
+          <div className="border-2 border-dashed border-gold/50 bg-gold/10 rounded-xl p-4 text-center mb-6">
+            <p className="text-gold font-semibold text-base md:text-lg">
+              {dateString || "Pazar - Saat 20:00 (GMT+3)"}
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="block text-white text-sm font-medium mb-2">
+                Ad Soyad
+              </label>
+              <input
+                type="text"
+                placeholder="Adınız Soyadınız"
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, name: e.target.value }))
+                }
+                required
+                className="w-full px-4 py-3.5 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors text-base"
+              />
+            </div>
+
+            <div>
+              <label className="block text-white text-sm font-medium mb-2">
+                E-posta
+              </label>
+              <input
+                type="email"
+                placeholder="email@adresiniz.com"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    email: e.target.value,
+                  }))
+                }
+                required
+                className="w-full px-4 py-3.5 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors text-base"
+              />
+            </div>
+
+            {/* Budget tier — kullanıcı 3 seçenekten birini seçmek zorunda.
+                Seçim Meta CompleteRegistration value-based bidding sinyalini
+                kalibre eder + low tier Zoom + event yok (Skool'a gider). */}
+            <div>
+              <label className="block text-white text-sm font-medium mb-2">
+                Yatırım bütçen ne aralıkta?
+              </label>
+              <div className="grid grid-cols-1 gap-2">
                 <button
-                  onClick={() => handleTier("high")}
-                  className="px-6 py-4 bg-gold text-black font-extrabold rounded-lg hover:brightness-110 transition-all cursor-pointer text-base shadow-lg shadow-gold/20"
+                  type="button"
+                  onClick={() => setBudgetTier("high")}
+                  className={`px-4 py-3 rounded-xl text-left transition-all cursor-pointer text-sm md:text-base font-semibold ${
+                    budgetTier === "high"
+                      ? "bg-gold/20 border-2 border-gold text-gold"
+                      : "bg-white/5 border-2 border-white/15 text-white/80 hover:border-gold/40"
+                  }`}
                 >
+                  <span className="inline-block w-4 h-4 rounded-full border-2 mr-2 align-middle border-current">
+                    {budgetTier === "high" && (
+                      <span className="block w-2 h-2 m-[2px] rounded-full bg-gold" />
+                    )}
+                  </span>
                   10.000 TL üstü
                 </button>
                 <button
-                  onClick={() => handleTier("mid")}
-                  className="px-6 py-4 bg-[#2a2a2a] text-white font-semibold rounded-lg hover:bg-[#333] transition-all cursor-pointer text-base border border-gold/30"
+                  type="button"
+                  onClick={() => setBudgetTier("mid")}
+                  className={`px-4 py-3 rounded-xl text-left transition-all cursor-pointer text-sm md:text-base font-semibold ${
+                    budgetTier === "mid"
+                      ? "bg-gold/20 border-2 border-gold text-gold"
+                      : "bg-white/5 border-2 border-white/15 text-white/80 hover:border-gold/40"
+                  }`}
                 >
+                  <span className="inline-block w-4 h-4 rounded-full border-2 mr-2 align-middle border-current">
+                    {budgetTier === "mid" && (
+                      <span className="block w-2 h-2 m-[2px] rounded-full bg-gold" />
+                    )}
+                  </span>
                   3.000 — 10.000 TL arası
                 </button>
                 <button
-                  onClick={() => handleTier("low")}
-                  className="px-6 py-3 bg-transparent text-white/50 font-medium rounded-lg hover:bg-white/5 hover:text-white/70 transition-all cursor-pointer text-sm border border-white/10"
+                  type="button"
+                  onClick={() => setBudgetTier("low")}
+                  className={`px-4 py-3 rounded-xl text-left transition-all cursor-pointer text-sm md:text-base font-semibold ${
+                    budgetTier === "low"
+                      ? "bg-gold/20 border-2 border-gold text-gold"
+                      : "bg-white/5 border-2 border-white/15 text-white/80 hover:border-gold/40"
+                  }`}
                 >
+                  <span className="inline-block w-4 h-4 rounded-full border-2 mr-2 align-middle border-current">
+                    {budgetTier === "low" && (
+                      <span className="block w-2 h-2 m-[2px] rounded-full bg-gold" />
+                    )}
+                  </span>
                   0 — 3.000 TL arası
                 </button>
               </div>
-
-              <p className="text-white/30 text-xs mt-5 leading-relaxed max-w-sm mx-auto">
-                Cevabın seminer içeriğini sana göre kişiselleştirmemizi sağlar.
-              </p>
             </div>
-          ) : status === "success" ? (
-            <div className="text-center py-8">
-              <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg
-                  className="w-8 h-8 text-green-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-2">
-                Kaydınız Tamamlandı!
-              </h3>
-              <p className="text-white/70 mb-2">
-                Zoom webinar davetiyesi{" "}
-                <strong className="text-gold">{formData.email}</strong> adresine
-                gönderildi.
-              </p>
-              <p className="text-white/50 text-sm">
-                {dateString ? `${dateString} - Görüşmek üzere!` : "Görüşmek üzere!"}
-              </p>
-              <button
-                onClick={onClose}
-                className="mt-6 px-8 py-3 bg-gold text-black font-bold rounded-lg hover:brightness-110 transition-all cursor-pointer"
-              >
-                Tamam
-              </button>
-            </div>
-          ) : (
-            <>
-              <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-1">
-                &ldquo;Evet, Yerimi Ayırt&rdquo;
-              </h2>
-              <p className="text-xl md:text-2xl font-bold text-white text-center mb-6">
-                Bu ÜCRETSİZ Webinar İçin!
-              </p>
 
-              {/* Date box */}
-              <div className="border-2 border-dashed border-gold/50 bg-gold/10 rounded-xl p-4 text-center mb-8">
-                <p className="text-gold font-semibold text-base md:text-lg">
-                  {dateString || "Pazar - Saat 20:00 (GMT+3)"}
-                </p>
-              </div>
+            {errorMsg && (
+              <p className="text-danger text-sm text-center">{errorMsg}</p>
+            )}
 
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div>
-                  <label className="block text-white text-sm font-medium mb-2">
-                    Ad Soyad
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Adınız Soyadınız"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, name: e.target.value }))
-                    }
-                    required
-                    className="w-full px-4 py-3.5 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors text-base"
-                  />
-                </div>
+            <button
+              type="submit"
+              disabled={status === "loading" || !budgetTier}
+              className="zk-btn-cta w-full py-4 md:py-5 bg-gradient-to-r from-gold-dark via-gold to-gold-light text-black font-bold text-xl md:text-2xl rounded-xl hover:brightness-110 transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+            >
+              {status === "loading" ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg
+                    className="animate-spin h-5 w-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                    />
+                  </svg>
+                  Kaydediliyor...
+                </span>
+              ) : (
+                "Yerimi Ayırt"
+              )}
+            </button>
+          </form>
 
-                <div>
-                  <label className="block text-white text-sm font-medium mb-2">
-                    E-posta
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="email@adresiniz.com"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        email: e.target.value,
-                      }))
-                    }
-                    required
-                    className="w-full px-4 py-3.5 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors text-base"
-                  />
-                </div>
-
-                {errorMsg && (
-                  <p className="text-danger text-sm text-center">{errorMsg}</p>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={status === "loading"}
-                  className="zk-btn-cta w-full py-4 md:py-5 bg-gradient-to-r from-gold-dark via-gold to-gold-light text-black font-bold text-xl md:text-2xl rounded-xl hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                >
-                  {status === "loading" ? (
-                    <span className="flex items-center justify-center gap-2">
-                      <svg
-                        className="animate-spin h-5 w-5"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        />
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                        />
-                      </svg>
-                      Kaydediliyor...
-                    </span>
-                  ) : (
-                    "Yerimi Ayırt"
-                  )}
-                </button>
-              </form>
-
-              <p className="text-white/30 text-[10px] leading-relaxed text-center mt-6">
-                Bilgilerinizi göndererek, AI Scale&apos;in size e-posta yoluyla
-                etkinlik hatırlatmaları ve bilgilendirme mesajları göndermesine
-                onay vermiş olursunuz. Gizlilik Politikamız ve Kullanım
-                Koşullarımız geçerlidir. İstediğiniz zaman abonelikten
-                çıkabilirsiniz.
-              </p>
-            </>
-          )}
+          <p className="text-white/30 text-[10px] leading-relaxed text-center mt-6">
+            Bilgilerinizi göndererek, AI Scale&apos;in size e-posta yoluyla
+            etkinlik hatırlatmaları ve bilgilendirme mesajları göndermesine
+            onay vermiş olursunuz. Gizlilik Politikamız ve Kullanım
+            Koşullarımız geçerlidir. İstediğiniz zaman abonelikten
+            çıkabilirsiniz.
+          </p>
         </div>
       </div>
     </div>

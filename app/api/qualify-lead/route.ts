@@ -1,17 +1,19 @@
-// Qualify Lead — Phase 2 of two-phase registration flow.
+// Qualify Lead — Tek fazlı kayıt + bütçe qualification + tier-aware processing.
 //
-// /api/save-lead form'da kaydedildikten sonra kullanıcı bütçe tier'ını seçer:
-//   - "low"  (0-3.000 TL)     → Zoom YOK, event YOK, Skool'a yönlendir
-//   - "mid"  (3.000-10.000 TL) → Zoom + email + CompleteRegistration (value: 5)
-//   - "high" (10.000+ TL)      → Zoom + email + CompleteRegistration (value: 15)
+// Modal form submit'inde kullanıcı bütçe tier'ını seçmiş olur. Bu endpoint
+// tier'a göre Zoom + CompleteRegistration + email işlemlerini yapar:
+//   - "low"  (0-3.000 TL)     → Sadece Supabase kayıt, Zoom YOK, event YOK
+//                                → Skool'a yönlendir
+//   - "mid"  (3.000-10.000 TL) → Supabase + Zoom + email + CompleteRegistration (value: 5)
+//   - "high" (10.000+ TL)      → Supabase + Zoom + email + CompleteRegistration (value: 15)
 //
-// Bu sayede Meta'nın CompleteRegistration audience'ı SADECE yüksek niyetli
-// kullanıcılarla beslenir → Lookalike + reklam optimizasyonu çok daha precise.
-// Düşük bütçe kullanıcılar Skool topluluğuna gider (ücretsiz değer), audience
-// sinyalini kirletmez.
+// Her tier'da Supabase'e kaydedilir (full funnel görünürlük). Sadece mid+high
+// tier'ları Meta'ya CompleteRegistration sinyali gönderir — audience sadece
+// niyetli alıcılarla beslenir, Lookalike + reklam optimizasyonu 5-10x daha precise.
 
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import crypto from "crypto";
 import { sendCAPIEvent } from "@/lib/meta-capi";
 import { sendWebinarYoutubeEmail } from "@/lib/purchase-emails";
 import { getZoomAccessToken, registerToZoomWebinar } from "@/lib/zoom";
@@ -37,7 +39,6 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const {
-      eventId,
       email,
       firstName,
       lastName,
@@ -48,7 +49,6 @@ export async function POST(request: NextRequest) {
       fbc,
       fbp,
     } = body as {
-      eventId?: string;
       email?: string;
       firstName?: string;
       lastName?: string;
@@ -60,9 +60,9 @@ export async function POST(request: NextRequest) {
       fbp?: string;
     };
 
-    if (!email || !budgetTier) {
+    if (!email || !budgetTier || !firstName) {
       return NextResponse.json(
-        { error: "email and budgetTier required" },
+        { error: "email, firstName and budgetTier required" },
         { status: 400 }
       );
     }
@@ -74,19 +74,45 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 1. Her durumda Supabase'i güncelle (tier kaydet)
+    const eventId = crypto.randomUUID();
+    const fullName = `${firstName} ${lastName || ""}`.trim();
+
+    // 1. Supabase upsert — every lead saved regardless of tier
     try {
-      await supabase
+      const { data: existing } = await supabase
         .from("email_subscribers")
-        .update({
-          budget_tier: budgetTier,
-          webinar_link_sent: budgetTier !== "low",
-          webinar_link_sent_at:
-            budgetTier !== "low" ? new Date().toISOString() : null,
-        })
-        .eq("email", email);
+        .select("id")
+        .eq("email", email)
+        .single();
+
+      if (existing) {
+        await supabase
+          .from("email_subscribers")
+          .update({
+            name: fullName,
+            phone: phone || null,
+            budget_tier: budgetTier,
+            webinar_link_sent: budgetTier !== "low",
+            webinar_link_sent_at:
+              budgetTier !== "low" ? new Date().toISOString() : null,
+          })
+          .eq("email", email);
+      } else {
+        await supabase
+          .from("email_subscribers")
+          .insert({
+            email,
+            name: fullName,
+            phone: phone || null,
+            source: "yerimi_ayirt",
+            budget_tier: budgetTier,
+            webinar_link_sent: budgetTier !== "low",
+            webinar_link_sent_at:
+              budgetTier !== "low" ? new Date().toISOString() : null,
+          });
+      }
     } catch (dbError) {
-      console.warn("⚠️ Supabase update (non-critical):", dbError);
+      console.warn("⚠️ Supabase save (non-critical):", dbError);
     }
 
     // 2. Low tier → Skool, hiç event atma, Zoom oluşturma
@@ -94,6 +120,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         success: true,
         tier: "low",
+        eventId,
+        eventValue: 0,
         redirectUrl: SKOOL_URL,
         zoomJoinUrl: null,
       });
@@ -138,7 +166,7 @@ export async function POST(request: NextRequest) {
 
     sendCAPIEvent({
       eventName: "CompleteRegistration",
-      eventId: eventId || crypto.randomUUID(),
+      eventId,
       sourceUrl: referer,
       userData: {
         email,
@@ -162,6 +190,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       tier: budgetTier,
+      eventId,
+      eventValue: TIER_VALUE[budgetTier],
       redirectUrl: null, // frontend kayitbasarili'ye redirect kendisi yapar
       zoomJoinUrl,
     });
