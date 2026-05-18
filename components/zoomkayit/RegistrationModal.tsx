@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { setAdvancedMatching, trackCompleteRegistration } from "@/lib/meta-pixel";
+import { setAdvancedMatching, trackCompleteRegistration, trackLead } from "@/lib/meta-pixel";
 
 function getCookie(name: string): string | undefined {
   if (typeof document === "undefined") return undefined;
@@ -46,9 +46,13 @@ export default function RegistrationModal({
   onClose,
 }: RegistrationModalProps) {
   const [formData, setFormData] = useState({ name: "", email: "" });
-  // Budget tier — kullanıcı form içinde 3 seçenekten birini seçer.
-  // Submit budget tier doluyken yapılır → /api/qualify-lead tek call'da hepsini hallediyor.
-  const [budgetTier, setBudgetTier] = useState<"low" | "mid" | "high" | null>(null);
+  // Budget tier — kullanıcı form içinde 4 seçenekten birini seçer:
+  //   "0_3000"      → 0-3.000 TL    → unqualified, Skool
+  //   "3000_7500"   → 3-7.500 TL    → unqualified, Skool
+  //   "7500_15000"  → 7.5-15k TL    → qualified, Zoom + CompleteRegistration + Lead (value: 10)
+  //   "15000_plus"  → 15k+ TL       → qualified, Zoom + CompleteRegistration + Lead (value: 15)
+  type BudgetTier = "0_3000" | "3000_7500" | "7500_15000" | "15000_plus";
+  const [budgetTier, setBudgetTier] = useState<BudgetTier | null>(null);
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [dateString, setDateString] = useState("");
@@ -115,16 +119,18 @@ export default function RegistrationModal({
         return;
       }
 
-      // Low tier → server redirectUrl Skool döner, direkt git
-      if (budgetTier === "low") {
+      // Unqualified tier (0-3k veya 3-7.5k) → server redirectUrl Skool döner
+      if (data.qualified === false) {
         const skoolUrl =
           data?.redirectUrl || "https://www.skool.com/aiscaleapp-9624/about";
         window.location.href = skoolUrl;
         return;
       }
 
-      // Mid/High tier → browser-side trackCompleteRegistration (dedup için aynı eventId)
-      const tierValue = budgetTier === "high" ? 15 : 5;
+      // Qualified tier (7.5-15k veya 15k+) → browser-side dedup events
+      const tierValue = data.eventValue ?? (budgetTier === "15000_plus" ? 15 : 10);
+
+      // CompleteRegistration — server'la aynı eventId, dedup
       trackCompleteRegistration(
         {
           content_name: "Webinar Kayıt",
@@ -133,6 +139,17 @@ export default function RegistrationModal({
           currency: "TRY",
         },
         data.eventId
+      );
+
+      // Lead — Meta "Maximize leads" optimization için, ayrı eventId
+      trackLead(
+        {
+          content_name: "Webinar Kayıt",
+          content_category: "webinar",
+          value: tierValue,
+          currency: "TRY",
+        },
+        data.leadEventId
       );
 
       // fbq flush için 200ms bekle, sonra kayitbasarili'ye yönlendir
@@ -220,62 +237,41 @@ export default function RegistrationModal({
               />
             </div>
 
-            {/* Budget tier — kullanıcı 3 seçenekten birini seçmek zorunda.
-                Seçim Meta CompleteRegistration value-based bidding sinyalini
-                kalibre eder + low tier Zoom + event yok (Skool'a gider). */}
+            {/* Budget tier — kullanıcı 4 seçenekten birini seçer.
+                qualified tiers (7.5-15k, 15k+) → Zoom + CompleteRegistration + Lead
+                unqualified tiers (0-3k, 3-7.5k)   → Skool'a redirect, event yok */}
             <div>
               <label className="block text-white text-sm font-medium mb-2">
                 Yatırım bütçen ne aralıkta?
               </label>
               <div className="grid grid-cols-1 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setBudgetTier("high")}
-                  className={`px-4 py-3 rounded-xl text-left transition-all cursor-pointer text-sm md:text-base font-semibold ${
-                    budgetTier === "high"
-                      ? "bg-gold/20 border-2 border-gold text-gold"
-                      : "bg-white/5 border-2 border-white/15 text-white/80 hover:border-gold/40"
-                  }`}
-                >
-                  <span className="inline-block w-4 h-4 rounded-full border-2 mr-2 align-middle border-current">
-                    {budgetTier === "high" && (
-                      <span className="block w-2 h-2 m-[2px] rounded-full bg-gold" />
-                    )}
-                  </span>
-                  10.000 TL üstü
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setBudgetTier("mid")}
-                  className={`px-4 py-3 rounded-xl text-left transition-all cursor-pointer text-sm md:text-base font-semibold ${
-                    budgetTier === "mid"
-                      ? "bg-gold/20 border-2 border-gold text-gold"
-                      : "bg-white/5 border-2 border-white/15 text-white/80 hover:border-gold/40"
-                  }`}
-                >
-                  <span className="inline-block w-4 h-4 rounded-full border-2 mr-2 align-middle border-current">
-                    {budgetTier === "mid" && (
-                      <span className="block w-2 h-2 m-[2px] rounded-full bg-gold" />
-                    )}
-                  </span>
-                  3.000 — 10.000 TL arası
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setBudgetTier("low")}
-                  className={`px-4 py-3 rounded-xl text-left transition-all cursor-pointer text-sm md:text-base font-semibold ${
-                    budgetTier === "low"
-                      ? "bg-gold/20 border-2 border-gold text-gold"
-                      : "bg-white/5 border-2 border-white/15 text-white/80 hover:border-gold/40"
-                  }`}
-                >
-                  <span className="inline-block w-4 h-4 rounded-full border-2 mr-2 align-middle border-current">
-                    {budgetTier === "low" && (
-                      <span className="block w-2 h-2 m-[2px] rounded-full bg-gold" />
-                    )}
-                  </span>
-                  0 — 3.000 TL arası
-                </button>
+                {(
+                  [
+                    { value: "15000_plus", label: "15.000 TL üstü" },
+                    { value: "7500_15000", label: "7.500 — 15.000 TL arası" },
+                    { value: "3000_7500", label: "3.000 — 7.500 TL arası" },
+                    { value: "0_3000", label: "0 — 3.000 TL arası" },
+                  ] as { value: BudgetTier; label: string }[]
+                ).map((tier) => (
+                  <button
+                    key={tier.value}
+                    type="button"
+                    onClick={() => setBudgetTier(tier.value)}
+                    data-no-meta-autotrack
+                    className={`px-4 py-3 rounded-xl text-left transition-all cursor-pointer text-sm md:text-base font-semibold ${
+                      budgetTier === tier.value
+                        ? "bg-gold/20 border-2 border-gold text-gold"
+                        : "bg-white/5 border-2 border-white/15 text-white/80 hover:border-gold/40"
+                    }`}
+                  >
+                    <span className="inline-block w-4 h-4 rounded-full border-2 mr-2 align-middle border-current">
+                      {budgetTier === tier.value && (
+                        <span className="block w-2 h-2 m-[2px] rounded-full bg-gold" />
+                      )}
+                    </span>
+                    {tier.label}
+                  </button>
+                ))}
               </div>
             </div>
 

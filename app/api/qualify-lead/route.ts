@@ -23,17 +23,26 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-type BudgetTier = "low" | "mid" | "high";
+// 4 bütçe tier'ı — Baturalp'in WhatsApp talebine göre:
+//   0-3.000 TL   → unqualified, Skool
+//   3-7.500 TL   → unqualified, Skool
+//   7.5-15k TL   → qualified, Zoom + CompleteRegistration + Lead
+//   15k+ TL      → qualified, Zoom + CompleteRegistration + Lead
+type BudgetTier = "0_3000" | "3000_7500" | "7500_15000" | "15000_plus";
 
 const SKOOL_URL = "https://www.skool.com/aiscaleapp-9624/about";
 
 // Meta CAPI value field — higher value = Meta value-based bidding prioritizes more.
-// mid: 5, high: 15. Düşük tier için CompleteRegistration hiç atılmıyor.
+// Unqualified tier'lar için CompleteRegistration hiç atılmıyor (value = 0 just for type completeness).
 const TIER_VALUE: Record<BudgetTier, number> = {
-  low: 0,
-  mid: 5,
-  high: 15,
+  "0_3000": 0,
+  "3000_7500": 0,
+  "7500_15000": 10,
+  "15000_plus": 15,
 };
+
+// Hangi tier'lar qualified (Zoom + event fire) hangileri unqualified (sadece Skool)
+const QUALIFIED_TIERS: BudgetTier[] = ["7500_15000", "15000_plus"];
 
 export async function POST(request: NextRequest) {
   try {
@@ -67,14 +76,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!["low", "mid", "high"].includes(budgetTier)) {
+    const validTiers: BudgetTier[] = [
+      "0_3000",
+      "3000_7500",
+      "7500_15000",
+      "15000_plus",
+    ];
+    if (!validTiers.includes(budgetTier)) {
       return NextResponse.json(
         { error: "invalid budgetTier" },
         { status: 400 }
       );
     }
 
+    const isQualified = QUALIFIED_TIERS.includes(budgetTier);
     const eventId = crypto.randomUUID();
+    const leadEventId = crypto.randomUUID();
     const fullName = `${firstName} ${lastName || ""}`.trim();
 
     // 1. Supabase upsert — every lead saved regardless of tier
@@ -92,9 +109,8 @@ export async function POST(request: NextRequest) {
             name: fullName,
             phone: phone || null,
             budget_tier: budgetTier,
-            webinar_link_sent: budgetTier !== "low",
-            webinar_link_sent_at:
-              budgetTier !== "low" ? new Date().toISOString() : null,
+            webinar_link_sent: isQualified,
+            webinar_link_sent_at: isQualified ? new Date().toISOString() : null,
           })
           .eq("email", email);
       } else {
@@ -106,20 +122,20 @@ export async function POST(request: NextRequest) {
             phone: phone || null,
             source: "yerimi_ayirt",
             budget_tier: budgetTier,
-            webinar_link_sent: budgetTier !== "low",
-            webinar_link_sent_at:
-              budgetTier !== "low" ? new Date().toISOString() : null,
+            webinar_link_sent: isQualified,
+            webinar_link_sent_at: isQualified ? new Date().toISOString() : null,
           });
       }
     } catch (dbError) {
       console.warn("⚠️ Supabase save (non-critical):", dbError);
     }
 
-    // 2. Low tier → Skool, hiç event atma, Zoom oluşturma
-    if (budgetTier === "low") {
+    // 2. Unqualified tier (0-3k veya 3-7.5k) → Skool, hiç event atma, Zoom oluşturma
+    if (!isQualified) {
       return NextResponse.json({
         success: true,
-        tier: "low",
+        tier: budgetTier,
+        qualified: false,
         eventId,
         eventValue: 0,
         redirectUrl: SKOOL_URL,
@@ -127,7 +143,7 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // 3. Mid + High tier → Zoom registration
+    // 3. Qualified tier (7.5-15k veya 15k+) → Zoom registration
     let zoomJoinUrl: string | null = null;
     try {
       const accessToken = await getZoomAccessToken();
@@ -164,20 +180,22 @@ export async function POST(request: NextRequest) {
       "";
     const userAgent = request.headers.get("user-agent") || "";
 
+    const sharedUserData = {
+      email,
+      firstName: firstName || "",
+      lastName: lastName || "",
+      phone: phone || undefined,
+      clientIpAddress: clientIp,
+      clientUserAgent: userAgent,
+      fbc: fbc || undefined,
+      fbp: fbp || undefined,
+    };
+
     sendCAPIEvent({
       eventName: "CompleteRegistration",
       eventId,
       sourceUrl: referer,
-      userData: {
-        email,
-        firstName: firstName || "",
-        lastName: lastName || "",
-        phone: phone || undefined,
-        clientIpAddress: clientIp,
-        clientUserAgent: userAgent,
-        fbc: fbc || undefined,
-        fbp: fbp || undefined,
-      },
+      userData: sharedUserData,
       customData: {
         content_name: isEticaret ? "E-Ticaret Webinar Kayıt" : "Webinar Kayıt",
         status: "completed",
@@ -187,10 +205,29 @@ export async function POST(request: NextRequest) {
       },
     }).catch((err) => console.warn("⚠️ CAPI CompleteRegistration error:", err));
 
+    // 6. Lead CAPI event — qualified tier'lar için Meta "Maximize leads"
+    // optimization'ına farklı bir event sinyali. CompleteRegistration ile
+    // ayrı eventId kullanır.
+    sendCAPIEvent({
+      eventName: "Lead",
+      eventId: leadEventId,
+      sourceUrl: referer,
+      userData: sharedUserData,
+      customData: {
+        content_name: isEticaret ? "E-Ticaret Webinar Kayıt" : "Webinar Kayıt",
+        content_category: "webinar",
+        value: TIER_VALUE[budgetTier],
+        currency: "TRY",
+        budget_tier: budgetTier,
+      },
+    }).catch((err) => console.warn("⚠️ CAPI Lead error:", err));
+
     return NextResponse.json({
       success: true,
       tier: budgetTier,
+      qualified: true,
       eventId,
+      leadEventId,
       eventValue: TIER_VALUE[budgetTier],
       redirectUrl: null, // frontend kayitbasarili'ye redirect kendisi yapar
       zoomJoinUrl,
