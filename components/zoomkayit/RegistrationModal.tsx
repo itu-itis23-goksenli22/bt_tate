@@ -12,6 +12,11 @@ function getCookie(name: string): string | undefined {
 interface RegistrationModalProps {
   isOpen: boolean;
   onClose: () => void;
+  // eventType: hangi Meta event'i fire edilsin?
+  //   "CR"   → CompleteRegistration (varsayılan, ana sayfa)
+  //   "Lead" → Lead (yeni VIP Mastermind sayfası)
+  // Sayfa türüne göre audience ayrımı için kullanılır.
+  eventType?: "CR" | "Lead";
 }
 
 function getEventDateString(): string {
@@ -44,6 +49,7 @@ function getEventDateString(): string {
 export default function RegistrationModal({
   isOpen,
   onClose,
+  eventType = "CR",
 }: RegistrationModalProps) {
   const [formData, setFormData] = useState({ name: "", email: "" });
   // Budget tier — kullanıcı form içinde 4 seçenekten birini seçer:
@@ -105,6 +111,7 @@ export default function RegistrationModal({
           lastName,
           phone: "",
           budgetTier,
+          eventType, // "CR" veya "Lead" — sayfa türüne göre
           sourceUrl: typeof window !== "undefined" ? window.location.href : "",
           fbc: getCookie("_fbc"),
           fbp: getCookie("_fbp"),
@@ -127,31 +134,32 @@ export default function RegistrationModal({
         return;
       }
 
-      // Qualified tier (7.5-15k veya 15k+) → browser-side dedup events
-      // Value server'dan random small value (0.01-0.99 TRY) — eski pattern
+      // Qualified tier → browser-side dedup event (server'la aynı eventId).
+      // Sayfa türüne göre SADECE BİR event fire edilir — full audience ayrımı.
       const eventValue = data.eventValue ?? 0.5;
+      const fireLead = data.eventType === "Lead" || eventType === "Lead";
 
-      // CompleteRegistration — server'la aynı eventId, dedup
-      trackCompleteRegistration(
-        {
-          content_name: "Webinar Kayıt",
-          status: "completed",
-          value: eventValue,
-          currency: "TRY",
-        },
-        data.eventId
-      );
-
-      // Lead — Meta "Maximize leads" optimization için, ayrı eventId
-      trackLead(
-        {
-          content_name: "Webinar Kayıt",
-          content_category: "webinar",
-          value: eventValue,
-          currency: "TRY",
-        },
-        data.leadEventId
-      );
+      if (fireLead) {
+        trackLead(
+          {
+            content_name: "Webinar Kayıt",
+            content_category: "webinar",
+            value: eventValue,
+            currency: "TRY",
+          },
+          data.eventId
+        );
+      } else {
+        trackCompleteRegistration(
+          {
+            content_name: "Webinar Kayıt",
+            status: "completed",
+            value: eventValue,
+            currency: "TRY",
+          },
+          data.eventId
+        );
+      }
 
       // fbq flush için 200ms bekle, sonra kayitbasarili'ye yönlendir
       setTimeout(() => {

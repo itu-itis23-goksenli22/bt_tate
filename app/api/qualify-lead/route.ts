@@ -56,6 +56,7 @@ export async function POST(request: NextRequest) {
       sourceUrl,
       fbc,
       fbp,
+      eventType: rawEventType,
     } = body as {
       email?: string;
       firstName?: string;
@@ -66,7 +67,17 @@ export async function POST(request: NextRequest) {
       sourceUrl?: string;
       fbc?: string;
       fbp?: string;
+      eventType?: "CR" | "Lead";
     };
+
+    // eventType: hangi Meta event'i fire edilecek?
+    //   "CR"   → CompleteRegistration (varsayılan, /free-webinar/ana sayfa)
+    //   "Lead" → Lead (yeni VIP sayfası /vip-mastermind)
+    // Full audience ayrımı için sayfalar farklı event fire eder.
+    const eventType: "CR" | "Lead" =
+      rawEventType === "Lead" ? "Lead" : "CR";
+    const eventName =
+      eventType === "Lead" ? "Lead" : "CompleteRegistration";
 
     if (!email || !budgetTier || !firstName) {
       return NextResponse.json(
@@ -192,43 +203,37 @@ export async function POST(request: NextRequest) {
       fbp: fbp || undefined,
     };
 
+    // SADECE eventType'a göre tek event fire edilir (full audience ayrımı):
+    //   /ana sayfa → "CR" → CompleteRegistration
+    //   /vip-mastermind → "Lead" → Lead
+    // Aynı sayfadan hem CR hem Lead atılmaz — Meta için iki ayrı audience olur.
+    const isLeadEvent = eventType === "Lead";
+    const firedEventId = isLeadEvent ? leadEventId : eventId;
     sendCAPIEvent({
-      eventName: "CompleteRegistration",
-      eventId,
+      eventName,
+      eventId: firedEventId,
       sourceUrl: referer,
       userData: sharedUserData,
       customData: {
         content_name: isEticaret ? "E-Ticaret Webinar Kayıt" : "Webinar Kayıt",
-        status: "completed",
+        ...(isLeadEvent
+          ? { content_category: "webinar" }
+          : { status: "completed" }),
         value: eventValue,
         currency: "TRY",
         budget_tier: budgetTier,
       },
-    }).catch((err) => console.warn("⚠️ CAPI CompleteRegistration error:", err));
-
-    // 6. Lead CAPI event — qualified tier'lar için Meta "Maximize leads"
-    // optimization'ına farklı bir event sinyali. CompleteRegistration ile
-    // ayrı eventId kullanır. Aynı random small value.
-    sendCAPIEvent({
-      eventName: "Lead",
-      eventId: leadEventId,
-      sourceUrl: referer,
-      userData: sharedUserData,
-      customData: {
-        content_name: isEticaret ? "E-Ticaret Webinar Kayıt" : "Webinar Kayıt",
-        content_category: "webinar",
-        value: eventValue,
-        currency: "TRY",
-        budget_tier: budgetTier,
-      },
-    }).catch((err) => console.warn("⚠️ CAPI Lead error:", err));
+    }).catch((err) =>
+      console.warn(`⚠️ CAPI ${eventName} error:`, err)
+    );
 
     return NextResponse.json({
       success: true,
       tier: budgetTier,
       qualified: true,
-      eventId,
-      leadEventId,
+      eventType,
+      eventName,
+      eventId: firedEventId,
       eventValue,
       redirectUrl: null, // frontend kayitbasarili'ye redirect kendisi yapar
       zoomJoinUrl,

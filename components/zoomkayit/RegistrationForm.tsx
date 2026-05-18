@@ -3,7 +3,14 @@
 import { useState } from "react";
 import RegistrationModal from "./RegistrationModal";
 
-export default function RegistrationForm() {
+interface RegistrationFormProps {
+  // Sayfa türüne göre Meta event'i:
+  //   "CR"   → CompleteRegistration (ana sayfa)
+  //   "Lead" → Lead (/vip-mastermind)
+  eventType?: "CR" | "Lead";
+}
+
+export default function RegistrationForm({ eventType = "CR" }: RegistrationFormProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -36,6 +43,7 @@ export default function RegistrationForm() {
       <RegistrationModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        eventType={eventType}
       />
     </>
   );
