@@ -83,12 +83,16 @@ export default function RegistrationModal({
     setErrorMsg("");
 
     try {
-      // Use existing bt_tate zoom-register API
+      // PHASE 1 — Lead Supabase'e kaydedilir (Zoom YOK, event YOK).
+      // Sonraki adımda bütçe tier'ına göre /api/qualify-lead çağrılır:
+      //   - low (0-3k)   → Zoom yok, event yok, Skool'a redirect
+      //   - mid (3-10k)  → Zoom + email + CompleteRegistration (value: 5)
+      //   - high (10k+)  → Zoom + email + CompleteRegistration (value: 15)
       const nameParts = formData.name.trim().split(" ");
       const firstName = nameParts[0] || formData.name;
       const lastName = nameParts.slice(1).join(" ") || "-";
 
-      const res = await fetch("/api/zoom-register", {
+      const res = await fetch("/api/save-lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -96,20 +100,12 @@ export default function RegistrationModal({
           firstName,
           lastName,
           phone: "",
-          fbc: getCookie("_fbc"),
-          fbp: getCookie("_fbp"),
         }),
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        // Kayıt server'a kaydedildi (Zoom + email).
-        // CompleteRegistration event'i HENÜZ ATILMAYACAK — kullanıcı bütçe
-        // sorusuna "Evet" derse fire edilir (kalifiye lead), "Hayır" derse hiç
-        // fire edilmez (Skool'a yönlenir). Bu sayede Meta CompleteRegistration
-        // audience'ı sadece $10k+ niyetli kullanıcılarla beslenir.
-        //
         // Advanced matching her durumda set edilir (gelecek event'ler için).
         setAdvancedMatching({ em: formData.email, fn: firstName, ln: lastName });
         setRegistrationData({
@@ -129,51 +125,68 @@ export default function RegistrationModal({
     }
   };
 
-  // Budget question — "Evet, 10k+ bütçem var" → kalifiye lead
-  const handleQualified = async () => {
+  // PHASE 2 — Bütçe tier handler. Tier'a göre /api/qualify-lead çağrılır,
+  // server tarafı Zoom + CompleteRegistration karar verir.
+  //
+  //   low (0-3k)    → Zoom oluşmaz, event yok, Skool'a redirect
+  //   mid (3-10k)   → Zoom + email + CompleteRegistration (value: 5) → /kayitbasarili
+  //   high (10k+)   → Zoom + email + CompleteRegistration (value: 15) → /kayitbasarili
+  const handleTier = async (budgetTier: "low" | "mid" | "high") => {
     if (!registrationData) return;
     setStatus("loading");
 
-    // 1. Server-side CompleteRegistration fire et (CAPI)
-    fetch("/api/fire-complete-registration", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        eventId: registrationData.eventId,
-        email: formData.email,
-        firstName: registrationData.firstName,
-        lastName: registrationData.lastName,
-        value: registrationData.eventValue,
-        sourceUrl: typeof window !== "undefined" ? window.location.href : "",
-        contentName: "Webinar Kayıt",
-        fbc: getCookie("_fbc"),
-        fbp: getCookie("_fbp"),
-      }),
-    }).catch(() => {
-      // Non-blocking — redirect yine de devam etsin
-    });
+    try {
+      const res = await fetch("/api/qualify-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          eventId: registrationData.eventId,
+          email: formData.email,
+          firstName: registrationData.firstName,
+          lastName: registrationData.lastName,
+          phone: "",
+          budgetTier,
+          sourceUrl: typeof window !== "undefined" ? window.location.href : "",
+          fbc: getCookie("_fbc"),
+          fbp: getCookie("_fbp"),
+        }),
+      });
 
-    // 2. Browser-side trackCompleteRegistration (dedup için aynı eventId)
-    trackCompleteRegistration(
-      {
-        content_name: "Webinar Kayıt",
-        status: "completed",
-        value: registrationData.eventValue,
-        currency: "TRY",
-      },
-      registrationData.eventId
-    );
+      const data = await res.json();
 
-    // 3. fbq flush'ı için 200ms bekle, sonra kayitbasarili'ye yönlendir
-    setTimeout(() => {
-      window.location.href = `/kayitbasarili?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`;
-    }, 200);
-  };
+      // Low tier → server "redirectUrl: Skool" döner
+      if (budgetTier === "low") {
+        const skoolUrl =
+          data?.redirectUrl || "https://www.skool.com/aiscaleapp-9624/about";
+        window.location.href = skoolUrl;
+        return;
+      }
 
-  // "Hayır, henüz yok" → unqualified, Skool topluluğuna yönlendir.
-  // CompleteRegistration event'i fire ETME — Meta audience'ı temiz kalır.
-  const handleNotQualified = () => {
-    window.location.href = "https://www.skool.com/aiscaleapp-9624/about";
+      // Mid/High tier → browser-side trackCompleteRegistration (dedup için aynı eventId)
+      const tierValue = budgetTier === "high" ? 15 : 5;
+      trackCompleteRegistration(
+        {
+          content_name: "Webinar Kayıt",
+          status: "completed",
+          value: tierValue,
+          currency: "TRY",
+        },
+        registrationData.eventId
+      );
+
+      // fbq flush için 200ms bekle, sonra kayitbasarili'ye yönlendir
+      setTimeout(() => {
+        window.location.href = `/kayitbasarili?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`;
+      }, 200);
+    } catch (err) {
+      console.warn("qualify-lead failed:", err);
+      // Hata olsa bile kullanıcıyı tier'a göre yönlendir (UX bozulmasın)
+      if (budgetTier === "low") {
+        window.location.href = "https://www.skool.com/aiscaleapp-9624/about";
+      } else {
+        window.location.href = `/kayitbasarili?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`;
+      }
+    }
   };
 
   if (!isOpen) return null;
@@ -202,7 +215,7 @@ export default function RegistrationModal({
         <div className="p-6 md:p-8">
           {status === "budget-question" ? (
             <div className="text-center py-4">
-              {/* Kayıt onaylandı tick */}
+              {/* Kayıt alındı tick */}
               <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
                 <svg
                   className="w-6 h-6 text-green-500"
@@ -218,31 +231,36 @@ export default function RegistrationModal({
                   />
                 </svg>
               </div>
-              <p className="text-white/60 text-sm mb-1">Kaydın alındı ✓</p>
+              <p className="text-white/60 text-sm mb-1">Bilgilerin kaydedildi ✓</p>
               <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
                 Son bir soru:
               </h3>
-              <p className="text-white/80 text-lg md:text-xl mb-8 leading-snug">
-                <span className="text-gold font-bold">10.000 TL</span> üstü
-                yatırım bütçen var mı?
+              <p className="text-white/80 text-base md:text-lg mb-6 leading-snug">
+                Yatırım bütçen ne aralıkta?
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <div className="flex flex-col gap-2.5 max-w-md mx-auto">
                 <button
-                  onClick={handleQualified}
-                  className="flex-1 px-6 py-4 bg-gold text-black font-extrabold rounded-lg hover:brightness-110 transition-all cursor-pointer text-base shadow-lg shadow-gold/20"
+                  onClick={() => handleTier("high")}
+                  className="px-6 py-4 bg-gold text-black font-extrabold rounded-lg hover:brightness-110 transition-all cursor-pointer text-base shadow-lg shadow-gold/20"
                 >
-                  ✓ Evet, bütçem var
+                  10.000 TL üstü
                 </button>
                 <button
-                  onClick={handleNotQualified}
-                  className="flex-1 px-6 py-4 bg-[#2a2a2a] text-white/70 font-semibold rounded-lg hover:bg-[#333] transition-all cursor-pointer text-base border border-white/10"
+                  onClick={() => handleTier("mid")}
+                  className="px-6 py-4 bg-[#2a2a2a] text-white font-semibold rounded-lg hover:bg-[#333] transition-all cursor-pointer text-base border border-gold/30"
                 >
-                  Hayır, henüz yok
+                  3.000 — 10.000 TL arası
+                </button>
+                <button
+                  onClick={() => handleTier("low")}
+                  className="px-6 py-3 bg-transparent text-white/50 font-medium rounded-lg hover:bg-white/5 hover:text-white/70 transition-all cursor-pointer text-sm border border-white/10"
+                >
+                  0 — 3.000 TL arası
                 </button>
               </div>
 
-              <p className="text-white/30 text-xs mt-6 leading-relaxed">
+              <p className="text-white/30 text-xs mt-5 leading-relaxed max-w-sm mx-auto">
                 Cevabın seminer içeriğini sana göre kişiselleştirmemizi sağlar.
               </p>
             </div>

@@ -39,13 +39,13 @@ export default function WebinarFormSection() {
           value: data.eventValue,
           currency: "TRY",
         }, data.eventId);
-        // Fire Lead event (separate eventId) for Meta's "Maximize leads" optimization
-        trackLead({
-          content_name: "Webinar Kayıt",
-          content_category: "webinar",
-          value: data.eventValue,
-          currency: "TRY",
-        }, data.leadEventId);
+        // Lead event browser-side — DEVRE DIŞI (Mayıs 2026)
+        // trackLead({
+        //   content_name: "Webinar Kayıt",
+        //   content_category: "webinar",
+        //   value: data.eventValue,
+        //   currency: "TRY",
+        // }, data.leadEventId);
         // Advanced Matching — send user data to Meta Pixel (after track call)
         setAdvancedMatching({ em: email, fn: firstName, ln: lastName });
         setResult({ success: true, message: data.message, joinUrl: data.joinUrl, eventId: data.eventId, eventValue: data.eventValue });

@@ -169,9 +169,12 @@ export async function POST(request: NextRequest) {
       fbc: fbc || undefined,
       fbp: fbp || undefined,
     };
-    // CompleteRegistration event — ARTIK SADECE BUDGET QUALIFICATION SONRASI ATILIR
-    // (Mayıs 2026). Form submit edildiğinde değil, kullanıcı "10.000 TL+ bütçem var"
-    // butonuna tıkladığında /api/fire-complete-registration endpoint'i bunu fire eder.
+    // CompleteRegistration event — bu eski endpoint'te ATILMAZ (Mayıs 2026).
+    // Yeni 2-fazlı akış: /api/save-lead (Supabase only) → kullanıcı bütçe tier
+    // seçer → /api/qualify-lead (Zoom + CompleteRegistration tier'a göre).
+    // Bu /api/zoom-register endpoint'i sadece legacy form'lar için duruyor
+    // (eticaret variant, webinar form section). Onlar da yakında yeni akışa
+    // geçecek.
     //
     // Niye böyle: Meta'nın CompleteRegistration audience'ını sadece "alma niyeti olan"
     // kalifiye lead'lerle besliyoruz. Lookalike + reklam optimizasyonu kalitesi
