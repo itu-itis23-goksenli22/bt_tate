@@ -4,9 +4,9 @@ import { useState } from "react";
 
 const faqs = [
   {
-    question: "Bu webinar gerçekten ücretsiz mi?",
+    question: "Bu webinar kimler için uygun?",
     answer:
-      "Evet, %100 ücretsizdir. Herhangi bir ücret talep edilmez. Kayıt olun ve canlı olarak katılın.",
+      "Yapay zeka ile aylık 10.000$+ kazandıran bir sistem kurmak isteyen, ciddi şekilde online iş kuracak girişimciler için tasarlandı. Hiçbir teknik bilgi gerekmiyor, sıfırdan başlayanlar da takip edebilir.",
   },
   {
     question: "Teknik bilgi veya deneyim gerekiyor mu?",

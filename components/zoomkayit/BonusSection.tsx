@@ -42,7 +42,7 @@ export default function BonusSection() {
           $500 Değerinde Bonus Paket
         </p>
         <p className="text-white/50 mb-12">
-          Ücretsiz kayıt olun ve aşağıdaki bonusların tamamını alın
+          Kayıt olun ve aşağıdaki bonusların tamamını alın
         </p>
 
         <div className="space-y-4">

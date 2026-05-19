@@ -24,18 +24,16 @@ export default function HeroSection() {
       <div className="max-w-4xl mx-auto text-center">
         <div className="inline-block mb-4">
           <span className="text-gold text-lg md:text-xl font-semibold tracking-wide uppercase">
-            %100 Ücretsiz Canlı Etkinlik
+            Sınırlı Kontenjan Canlı Etkinlik
           </span>
         </div>
 
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white">
-          Yapay Zeka ile{" "}
-          <span className="zk-text-gold-gradient">Online Para Kazanmanın</span>{" "}
-          Kanıtlanmış Sistemini Öğrenin...{" "}
+          <span className="zk-text-gold-gradient">Aylık 10.000$</span>{" "}
+          Kazandıran{" "}
           <em className="not-italic zk-text-gold-gradient">
-            İlk 10,000$&apos;ınızı
-          </em>{" "}
-          Kazanın
+            Yapay Zeka Sistemi
+          </em>
         </h1>
 
         <p className="text-white/70 text-base md:text-lg max-w-2xl mx-auto mb-8">

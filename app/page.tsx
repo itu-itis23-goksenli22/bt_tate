@@ -5,13 +5,13 @@ import CountdownTimer from "@/components/zoomkayit/CountdownTimer";
 import RegistrationForm from "@/components/zoomkayit/RegistrationForm";
 
 export const metadata: Metadata = {
-  title: "AI Scale | Ücretsiz AI Webinarı - Yapay Zeka ile İlk 10,000$ Kazanın",
+  title: "AI Scale | Aylık 10.000$ Kazandıran Yapay Zeka Sistemi",
   description:
-    "Her gün 20:00'da canlı ücretsiz AI webinarına katılın. Yapay zeka ile online para kazanmanın kanıtlanmış yollarını öğrenin. Sınırlı kontenjan!",
+    "Her gün 20:00'da canlı AI webinarına katılın. Yapay zeka ile aylık 10.000$+ kazandıran kanıtlanmış sistem. Sınırlı kontenjan!",
   openGraph: {
-    title: "AI Scale | Ücretsiz AI Webinarı",
+    title: "AI Scale | Aylık 10.000$ AI Sistemi",
     description:
-      "Yapay Zeka ile İlk 10,000$ Kazanın - Ücretsiz Canlı Etkinlik",
+      "Aylık 10.000$ Kazandıran Yapay Zeka Sistemi - Canlı Etkinlik",
     type: "website",
   },
 };
@@ -82,7 +82,7 @@ export default function HomePage() {
             <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            %100 Ücretsiz
+            Sınırlı Kontenjan
           </div>
         </div>
       </div>

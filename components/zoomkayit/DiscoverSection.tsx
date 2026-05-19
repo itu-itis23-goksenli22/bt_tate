@@ -38,7 +38,7 @@ export default function DiscoverSection() {
     <section className="py-16 md:py-24 px-4 border-t border-white/5">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-gold text-2xl md:text-3xl font-semibold mb-12 text-center md:text-left">
-          Bu %100 Ücretsiz Webinarda Keşfedecekleriniz...
+          Bu Webinarda Keşfedecekleriniz...
         </h2>
 
         <div className="grid md:grid-cols-2 gap-8 items-start">
