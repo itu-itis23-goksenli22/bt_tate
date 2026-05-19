@@ -300,7 +300,7 @@ export default function KayitBasariliContent() {
             </p>
             <p className="mt-4">
               <a href={thankYouUrl} className="text-white/30 text-[12px] underline italic hover:text-white/40 transition-colors">
-                Hayır, ücretsiz webinara devam edeceğim
+                Hayır, webinara devam edeceğim
               </a>
             </p>
           </div>

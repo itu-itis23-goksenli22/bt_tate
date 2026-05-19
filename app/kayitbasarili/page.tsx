@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import KayitBasariliContent from "./KayitBasariliContent";
 
 export const metadata: Metadata = {
-  title: "Kayıt Başarılı - Ücretsiz AI Semineri | AI Scale",
+  title: "Kayıt Başarılı - AI Semineri | AI Scale",
   description:
     "Webinar kaydınız başarıyla tamamlandı. Bonus paketinizi hemen indirin!",
   robots: { index: false, follow: false },
