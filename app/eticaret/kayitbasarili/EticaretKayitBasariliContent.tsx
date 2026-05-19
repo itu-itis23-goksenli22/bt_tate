@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { setAdvancedMatching } from "@/lib/meta-pixel";
 
-const CHECKOUT_URL = "https://buy.stripe.com/cNi8wQ4mcb1HcZb71u3wQ0s";
+const CHECKOUT_URL = "https://buy.stripe.com/5kQcN68Cs7Pvf7j2Le3wQ0r";
 
 const CTA_GRADIENT = "linear-gradient(271.63deg, #C19D44 -20%, #E8D48B 20%, #FDF3AD 50%, #E8D48B 80%, #C19D44 120%)";
 const GREEN_GRADIENT = "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)";

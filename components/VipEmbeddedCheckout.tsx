@@ -18,7 +18,7 @@ import {
 } from "@stripe/react-stripe-js";
 
 const FALLBACK_CHECKOUT_URL =
-  "https://buy.stripe.com/cNi8wQ4mcb1HcZb71u3wQ0s";
+  "https://buy.stripe.com/5kQcN68Cs7Pvf7j2Le3wQ0r";
 const GREEN_GRADIENT =
   "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)";
 
