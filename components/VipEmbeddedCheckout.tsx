@@ -1,6 +1,6 @@
 "use client";
 
-// VIP $9.90 Embedded Stripe Checkout — eager-mount versiyonu
+// VIP $19.90 Embedded Stripe Checkout — eager-mount versiyonu
 //
 // Sayfa açılır açılmaz Stripe Checkout Session yaratır ve iframe'i mount eder.
 // Kullanıcı butona tıklamak zorunda değil — form direkt orada görünür (Ecom

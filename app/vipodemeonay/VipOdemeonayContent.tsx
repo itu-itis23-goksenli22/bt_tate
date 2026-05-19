@@ -2,7 +2,7 @@
 
 // VIP Ödeme Onay Sayfası
 //
-// $9.90 VIP upsell satın alımından sonra Stripe Checkout buraya redirect eder
+// $19.90 VIP upsell satın alımından sonra Stripe Checkout buraya redirect eder
 // (Stripe Payment Link success_url = https://www.aiscaleapp.com/vipodemeonay).
 //
 // İçerik tesekkurler sayfasıyla benzer yapıda ama VIP tonlamasıyla:
@@ -281,7 +281,7 @@ export default function VipOdemeonayContent() {
                   Senin Yatırımın:
                 </span>
                 <span className="text-white text-[14px] font-bold">
-                  Sadece $9.90
+                  Sadece $19.90
                 </span>
               </div>
             </div>

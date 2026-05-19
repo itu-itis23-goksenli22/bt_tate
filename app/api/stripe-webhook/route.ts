@@ -67,19 +67,19 @@ export async function POST(request: NextRequest) {
 
       // Meta CAPI event'i:
       //  • 15.000 TL kurs    → "Purchase"
-      //  • $9.90 VIP upsell  → "Purchase"
+      //  • $19.90 VIP upsell  → "Purchase"
       //
       // Her iki satış da artık standard "Purchase" event'i olarak fire edilir.
-      // (Önceden $9.90 "Subscribe" olarak gönderiliyordu; user kararıyla
-      // Purchase'a çevrildi. Custom Conversion ile $9.90 satışları URL filtresi
+      // (Önceden $19.90 "Subscribe" olarak gönderiliyordu; user kararıyla
+      // Purchase'a çevrildi. Custom Conversion ile $19.90 satışları URL filtresi
       // — "odemeonay" + currency=USD — üzerinden izole edilebilir.)
       const nameParts = customerName.split(" ");
       const ccyLower = (session.currency || "try").toLowerCase();
       const amountForCheck = amountTotal ?? 0;
-      const isVipUpsell = ccyLower === "usd" && amountForCheck === 990;
+      const isVipUpsell = ccyLower === "usd" && amountForCheck === 1990;
 
       const eventName = "Purchase";
-      // eventId prefix'i $9.90 ve 15k TL satışlarını dashboard'da ayırt etmek
+      // eventId prefix'i $19.90 ve 15k TL satışlarını dashboard'da ayırt etmek
       // için farklı tutulur. session.id zaten globally unique olduğu için
       // dedup açısından collision riski yok.
       const eventIdPrefix = isVipUpsell ? "purchase_vip" : "purchase";
@@ -103,13 +103,13 @@ export async function POST(request: NextRequest) {
       );
 
       // Send purchase confirmation email (non-blocking)
-      // $9.90 USD = 990 cents → VIP upsell mail
+      // $19.90 USD = 1990 cents → VIP upsell mail
       // 15.000 TL = 1.500.000 kuruş → Course welcome mail
       if (email) {
         const amount = amountTotal ?? 0;
         const ccy = (session.currency || "try").toLowerCase();
 
-        if (ccy === "usd" && amount === 990) {
+        if (ccy === "usd" && amount === 1990) {
           sendVipUpsellEmail(email)
             .then(() => console.log(`📧 VIP upsell email sent to ${email}`))
             .catch((err) => console.warn("⚠️ VIP email failed:", err));

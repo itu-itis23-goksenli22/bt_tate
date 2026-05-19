@@ -182,7 +182,7 @@ export async function POST(request: NextRequest) {
     // sinyalini kirletmez.
 
     // 4b. Lead event — DEVRE DIŞI (Mayıs 2026)
-    // Subscribe ($9.90) artık ana proxy event. Lead şimdilik kapatıldı.
+    // Purchase ($19.90) artık ana proxy event. Lead şimdilik kapatıldı.
     // sendCAPIEvent({
     //   eventName: 'Lead',
     //   eventId: leadEventId,

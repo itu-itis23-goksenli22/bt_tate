@@ -82,6 +82,22 @@ export default function KayitBasariliContent() {
 
       <main className="min-h-screen bg-[#0c0c0c] text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
         <div className="max-w-[680px] mx-auto px-4 py-8">
+          {/* 0. Webinar Video — kayıt sonrası teaser/intro */}
+          <div className="max-w-2xl mx-auto mb-8">
+            <div
+              className="relative w-full overflow-hidden rounded-xl border border-white/10"
+              style={{ paddingBottom: "56.25%" }}
+            >
+              <iframe
+                className="absolute top-0 left-0 w-full h-full"
+                src="https://www.youtube.com/embed/qQbl1YPaI7k"
+                title="AI Scale Webinar"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+
           {/* 1. BEKLE! Hero — VIP paketi tarif eden urgency bloğu */}
           <div className="text-center mb-8 mt-2">
             {/* BEKLE! */}
@@ -113,14 +129,14 @@ export default function KayitBasariliContent() {
               olarak açtık.
             </p>
 
-            {/* Highlight: $9.90 */}
+            {/* Highlight: $19.90 */}
             <p className="text-white text-[24px] md:text-[34px] font-extrabold leading-tight mb-8 max-w-2xl mx-auto">
               Ve seminere başlamadan, sana bunu{" "}
               <span
                 className="inline-block px-3 py-1 rounded-[6px] text-black mx-1 align-middle"
                 style={{ background: CTA_GRADIENT }}
               >
-                SADECE $9.90
+                SADECE $19.90
               </span>{" "}
               karşılığında veriyoruz.
             </p>
@@ -274,7 +290,7 @@ export default function KayitBasariliContent() {
               <a href="#final-vip-cta" onClick={scrollToFinalCTA}>
                 <button className="text-black font-bold text-[14px] px-6 py-2.5 rounded-md hover:brightness-110 transition-all cursor-pointer"
                   style={{ background: CTA_GRADIENT }}>
-                  Tüm bunlar sadece $9.90 — Hemen Hazırlanmaya Başla →
+                  Tüm bunlar sadece $19.90 — Hemen Hazırlanmaya Başla →
                 </button>
               </a>
             </div>
@@ -357,7 +373,7 @@ export default function KayitBasariliContent() {
               style={{ background: GOLD_BG_SUBTLE }}>
               <h3 className="text-[22px] md:text-[28px] font-extrabold text-center mb-6">
                 $2,000+ Değer{" "}
-                <span className="text-[#D5B356] italic underline">Sadece $9.90</span>
+                <span className="text-[#D5B356] italic underline">Sadece $19.90</span>
               </h3>
               <div className="border-t border-[#AA813C]/30 mb-5" />
               <div className="space-y-3">
@@ -373,7 +389,7 @@ export default function KayitBasariliContent() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-[#D5B356] font-bold text-[15px]">Sizin Tek Seferlik Yatırımınız:</span>
-                  <span className="text-[#D5B356] font-extrabold text-[20px]">Sadece $9.90</span>
+                  <span className="text-[#D5B356] font-extrabold text-[20px]">Sadece $19.90</span>
                 </div>
               </div>
             </div>
