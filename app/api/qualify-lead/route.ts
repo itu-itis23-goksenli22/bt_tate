@@ -163,24 +163,30 @@ export async function POST(request: NextRequest) {
     //   /ana sayfa → "CR" → CompleteRegistration
     //   /vip-mastermind → "Lead" → Lead
     // Aynı sayfadan hem CR hem Lead atılmaz — Meta için iki ayrı audience olur.
+    //
+    // ÖNEMLİ: await ediyoruz çünkü Vercel serverless function NextResponse
+    // döndüğü anda runtime'ı freeze edebilir. Fire-and-forget pattern fetch'i
+    // tamamlanmadan kestiriyordu, Meta event'e ulaşmıyordu.
     const isLeadEvent = eventType === "Lead";
     const firedEventId = isLeadEvent ? leadEventId : eventId;
-    sendCAPIEvent({
-      eventName,
-      eventId: firedEventId,
-      sourceUrl: referer,
-      userData: sharedUserData,
-      customData: {
-        content_name: isEticaret ? "E-Ticaret Webinar Kayıt" : "Webinar Kayıt",
-        ...(isLeadEvent
-          ? { content_category: "webinar" }
-          : { status: "completed" }),
-        value: eventValue,
-        currency: "TRY",
-      },
-    }).catch((err) =>
-      console.warn(`⚠️ CAPI ${eventName} error:`, err)
-    );
+    try {
+      await sendCAPIEvent({
+        eventName,
+        eventId: firedEventId,
+        sourceUrl: referer,
+        userData: sharedUserData,
+        customData: {
+          content_name: isEticaret ? "E-Ticaret Webinar Kayıt" : "Webinar Kayıt",
+          ...(isLeadEvent
+            ? { content_category: "webinar" }
+            : { status: "completed" }),
+          value: eventValue,
+          currency: "TRY",
+        },
+      });
+    } catch (err) {
+      console.warn(`⚠️ CAPI ${eventName} error:`, err);
+    }
 
     return NextResponse.json({
       success: true,
