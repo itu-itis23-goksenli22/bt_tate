@@ -52,13 +52,8 @@ export default function RegistrationModal({
   eventType = "CR",
 }: RegistrationModalProps) {
   const [formData, setFormData] = useState({ name: "", email: "" });
-  // Budget tier — kullanıcı form içinde 4 seçenekten birini seçer:
-  //   "0_3000"      → 0-3.000 TL    → unqualified, Skool
-  //   "3000_7500"   → 3-7.500 TL    → unqualified, Skool
-  //   "7500_15000"  → 7.5-15k TL    → qualified, Zoom + CompleteRegistration + Lead (value: 10)
-  //   "15000_plus"  → 15k+ TL       → qualified, Zoom + CompleteRegistration + Lead (value: 15)
-  type BudgetTier = "0_3000" | "3000_7500" | "7500_15000" | "15000_plus";
-  const [budgetTier, setBudgetTier] = useState<BudgetTier | null>(null);
+  // Budget tier qualification kaldırıldı — herkes "Yerimi Ayırt" ile Zoom'a
+  // kaydolur ve sayfaya göre tek bir CAPI event fire eder (CR veya Lead).
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [dateString, setDateString] = useState("");
@@ -81,10 +76,6 @@ export default function RegistrationModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.email.trim()) return;
-    if (!budgetTier) {
-      setErrorMsg("Lütfen yatırım bütçeni seç.");
-      return;
-    }
 
     setStatus("loading");
     setErrorMsg("");
@@ -97,11 +88,13 @@ export default function RegistrationModal({
     setAdvancedMatching({ em: formData.email, fn: firstName, ln: lastName });
 
     try {
-      // Tek-fazlı: /api/qualify-lead her şeyi tek call'da yapar
-      //   - Supabase'e kayıt (her tier için)
-      //   - Low tier  → Skool'a yönlendir, Zoom yok, event yok
-      //   - Mid tier  → Zoom + email + CompleteRegistration (value: 5)
-      //   - High tier → Zoom + email + CompleteRegistration (value: 15)
+      // Tek-fazlı: /api/qualify-lead her kayıt için
+      //   - Supabase'e kayıt
+      //   - Zoom webinar'a kayıt
+      //   - Welcome email
+      //   - Sayfa türüne göre TEK CAPI event:
+      //       ana sayfa       → CompleteRegistration
+      //       vip-mastermind  → Lead
       const res = await fetch("/api/qualify-lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -110,7 +103,6 @@ export default function RegistrationModal({
           firstName,
           lastName,
           phone: "",
-          budgetTier,
           eventType, // "CR" veya "Lead" — sayfa türüne göre
           sourceUrl: typeof window !== "undefined" ? window.location.href : "",
           fbc: getCookie("_fbc"),
@@ -126,15 +118,7 @@ export default function RegistrationModal({
         return;
       }
 
-      // Unqualified tier (0-3k veya 3-7.5k) → server redirectUrl Skool döner
-      if (data.qualified === false) {
-        const skoolUrl =
-          data?.redirectUrl || "https://www.skool.com/aiscaleapp-9624/about";
-        window.location.href = skoolUrl;
-        return;
-      }
-
-      // Qualified tier → browser-side dedup event (server'la aynı eventId).
+      // Browser-side dedup event (server'la aynı eventId).
       // Sayfa türüne göre SADECE BİR event fire edilir — full audience ayrımı.
       const eventValue = data.eventValue ?? 0.5;
       const fireLead = data.eventType === "Lead" || eventType === "Lead";
@@ -246,51 +230,13 @@ export default function RegistrationModal({
               />
             </div>
 
-            {/* Budget tier — kullanıcı 4 seçenekten birini seçer.
-                qualified tiers (7.5-15k, 15k+) → Zoom + CompleteRegistration + Lead
-                unqualified tiers (0-3k, 3-7.5k)   → Skool'a redirect, event yok */}
-            <div>
-              <label className="block text-white text-sm font-medium mb-2">
-                Yatırım bütçen ne aralıkta?
-              </label>
-              <div className="grid grid-cols-1 gap-2">
-                {(
-                  [
-                    { value: "15000_plus", label: "15.000 TL üstü" },
-                    { value: "7500_15000", label: "7.500 — 15.000 TL arası" },
-                    { value: "3000_7500", label: "3.000 — 7.500 TL arası" },
-                    { value: "0_3000", label: "0 — 3.000 TL arası" },
-                  ] as { value: BudgetTier; label: string }[]
-                ).map((tier) => (
-                  <button
-                    key={tier.value}
-                    type="button"
-                    onClick={() => setBudgetTier(tier.value)}
-                    data-no-meta-autotrack
-                    className={`px-4 py-3 rounded-xl text-left transition-all cursor-pointer text-sm md:text-base font-semibold ${
-                      budgetTier === tier.value
-                        ? "bg-gold/20 border-2 border-gold text-gold"
-                        : "bg-white/5 border-2 border-white/15 text-white/80 hover:border-gold/40"
-                    }`}
-                  >
-                    <span className="inline-block w-4 h-4 rounded-full border-2 mr-2 align-middle border-current">
-                      {budgetTier === tier.value && (
-                        <span className="block w-2 h-2 m-[2px] rounded-full bg-gold" />
-                      )}
-                    </span>
-                    {tier.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
             {errorMsg && (
               <p className="text-danger text-sm text-center">{errorMsg}</p>
             )}
 
             <button
               type="submit"
-              disabled={status === "loading" || !budgetTier}
+              disabled={status === "loading"}
               className="zk-btn-cta w-full py-4 md:py-5 bg-gradient-to-r from-gold-dark via-gold to-gold-light text-black font-bold text-xl md:text-2xl rounded-xl hover:brightness-110 transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
             >
               {status === "loading" ? (

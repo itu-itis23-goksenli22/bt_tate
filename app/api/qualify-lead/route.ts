@@ -1,15 +1,15 @@
-// Qualify Lead — Tek fazlı kayıt + bütçe qualification + tier-aware processing.
+// Qualify Lead — Tek fazlı kayıt + Zoom + email + tek CAPI event.
 //
-// Modal form submit'inde kullanıcı bütçe tier'ını seçmiş olur. Bu endpoint
-// tier'a göre Zoom + CompleteRegistration + email işlemlerini yapar:
-//   - "low"  (0-3.000 TL)     → Sadece Supabase kayıt, Zoom YOK, event YOK
-//                                → Skool'a yönlendir
-//   - "mid"  (3.000-10.000 TL) → Supabase + Zoom + email + CompleteRegistration (value: 5)
-//   - "high" (10.000+ TL)      → Supabase + Zoom + email + CompleteRegistration (value: 15)
+// Modal form submit: Ad + Email → bu endpoint her kullanıcı için:
+//   1. Supabase'e kayıt
+//   2. Zoom webinar kaydı
+//   3. YouTube engagement email (sadece aiscale webinar'ı için)
+//   4. Sayfa türüne göre TEK CAPI event fire:
+//        - /ana sayfa       → CompleteRegistration
+//        - /vip-mastermind  → Lead
 //
-// Her tier'da Supabase'e kaydedilir (full funnel görünürlük). Sadece mid+high
-// tier'ları Meta'ya CompleteRegistration sinyali gönderir — audience sadece
-// niyetli alıcılarla beslenir, Lookalike + reklam optimizasyonu 5-10x daha precise.
+// Önceki "budget tier" qualification filtresi kaldırıldı. Artık herkes
+// "Yerimi Ayırt" diyince Zoom'a kaydolur ve audience'a sinyal gider.
 
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
@@ -23,22 +23,9 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-// 4 bütçe tier'ı — Baturalp'in WhatsApp talebine göre:
-//   0-3.000 TL   → unqualified, Skool
-//   3-7.500 TL   → unqualified, Skool
-//   7.5-15k TL   → qualified, Zoom + CompleteRegistration + Lead
-//   15k+ TL      → qualified, Zoom + CompleteRegistration + Lead
-type BudgetTier = "0_3000" | "3000_7500" | "7500_15000" | "15000_plus";
-
-const SKOOL_URL = "https://www.skool.com/aiscaleapp-9624/about";
-
-// Hangi tier'lar qualified (Zoom + event fire) hangileri unqualified (sadece Skool)
-const QUALIFIED_TIERS: BudgetTier[] = ["7500_15000", "15000_plus"];
-
 // Meta CAPI value field — eski random tiny value pattern. 0.01-0.99 TRY arasında.
 // Bu, Meta'nın value+currency yapısal şartını karşılar ama gerçek revenue değil,
-// optimization'ı bias'lamaz. Tier ayrımı value yerine `budget_tier` custom_data'da
-// taşınır — value bidding yapmıyoruz, lead-gen optimization yapıyoruz.
+// optimization'ı bias'lamaz. Value bidding yapmıyoruz, lead-gen optimization yapıyoruz.
 function randomEventValue(): number {
   return parseFloat((Math.random() * 0.98 + 0.01).toFixed(2));
 }
@@ -51,7 +38,6 @@ export async function POST(request: NextRequest) {
       firstName,
       lastName,
       phone,
-      budgetTier,
       webinarId,
       sourceUrl,
       fbc,
@@ -62,7 +48,6 @@ export async function POST(request: NextRequest) {
       firstName?: string;
       lastName?: string;
       phone?: string;
-      budgetTier?: BudgetTier;
       webinarId?: string;
       sourceUrl?: string;
       fbc?: string;
@@ -71,7 +56,7 @@ export async function POST(request: NextRequest) {
     };
 
     // eventType: hangi Meta event'i fire edilecek?
-    //   "CR"   → CompleteRegistration (varsayılan, /free-webinar/ana sayfa)
+    //   "CR"   → CompleteRegistration (varsayılan, ana sayfa)
     //   "Lead" → Lead (yeni VIP sayfası /vip-mastermind)
     // Full audience ayrımı için sayfalar farklı event fire eder.
     const eventType: "CR" | "Lead" =
@@ -79,32 +64,18 @@ export async function POST(request: NextRequest) {
     const eventName =
       eventType === "Lead" ? "Lead" : "CompleteRegistration";
 
-    if (!email || !budgetTier || !firstName) {
+    if (!email || !firstName) {
       return NextResponse.json(
-        { error: "email, firstName and budgetTier required" },
+        { error: "email and firstName required" },
         { status: 400 }
       );
     }
 
-    const validTiers: BudgetTier[] = [
-      "0_3000",
-      "3000_7500",
-      "7500_15000",
-      "15000_plus",
-    ];
-    if (!validTiers.includes(budgetTier)) {
-      return NextResponse.json(
-        { error: "invalid budgetTier" },
-        { status: 400 }
-      );
-    }
-
-    const isQualified = QUALIFIED_TIERS.includes(budgetTier);
     const eventId = crypto.randomUUID();
     const leadEventId = crypto.randomUUID();
     const fullName = `${firstName} ${lastName || ""}`.trim();
 
-    // 1. Supabase upsert — every lead saved regardless of tier
+    // 1. Supabase upsert — her lead kaydedilir
     try {
       const { data: existing } = await supabase
         .from("email_subscribers")
@@ -118,9 +89,8 @@ export async function POST(request: NextRequest) {
           .update({
             name: fullName,
             phone: phone || null,
-            budget_tier: budgetTier,
-            webinar_link_sent: isQualified,
-            webinar_link_sent_at: isQualified ? new Date().toISOString() : null,
+            webinar_link_sent: true,
+            webinar_link_sent_at: new Date().toISOString(),
           })
           .eq("email", email);
       } else {
@@ -131,31 +101,17 @@ export async function POST(request: NextRequest) {
             name: fullName,
             phone: phone || null,
             source: "yerimi_ayirt",
-            budget_tier: budgetTier,
-            webinar_link_sent: isQualified,
-            webinar_link_sent_at: isQualified ? new Date().toISOString() : null,
+            webinar_link_sent: true,
+            webinar_link_sent_at: new Date().toISOString(),
           });
       }
     } catch (dbError) {
       console.warn("⚠️ Supabase save (non-critical):", dbError);
     }
 
-    // 2. Unqualified tier (0-3k veya 3-7.5k) → Skool, hiç event atma, Zoom oluşturma
-    if (!isQualified) {
-      return NextResponse.json({
-        success: true,
-        tier: budgetTier,
-        qualified: false,
-        eventId,
-        redirectUrl: SKOOL_URL,
-        zoomJoinUrl: null,
-      });
-    }
-
-    // Qualified tier'lar için random small event value — eski pattern
     const eventValue = randomEventValue();
 
-    // 3. Qualified tier (7.5-15k veya 15k+) → Zoom registration
+    // 2. Zoom registration — herkes için
     let zoomJoinUrl: string | null = null;
     try {
       const accessToken = await getZoomAccessToken();
@@ -174,7 +130,7 @@ export async function POST(request: NextRequest) {
       // yönlendireceğiz, email Zoom link'i olmadan da gönderilebilir (best effort).
     }
 
-    // 4. YouTube engagement email — sadece aiscale (eticaret webinar ID değilse)
+    // 3. YouTube engagement email — sadece aiscale (eticaret webinar ID değilse)
     const isEticaret = webinarId === "86257770515";
     if (!isEticaret) {
       sendWebinarYoutubeEmail(email, firstName || "")
@@ -183,7 +139,7 @@ export async function POST(request: NextRequest) {
         );
     }
 
-    // 5. CompleteRegistration CAPI event — tier-weighted value
+    // 4. CAPI event — sayfaya göre TEK event
     const referer = request.headers.get("referer") || sourceUrl || "https://www.aiscaleapp.com/";
     const clientIp =
       request.headers.get("x-real-ip")?.trim() ||
@@ -221,7 +177,6 @@ export async function POST(request: NextRequest) {
           : { status: "completed" }),
         value: eventValue,
         currency: "TRY",
-        budget_tier: budgetTier,
       },
     }).catch((err) =>
       console.warn(`⚠️ CAPI ${eventName} error:`, err)
@@ -229,8 +184,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      tier: budgetTier,
-      qualified: true,
       eventType,
       eventName,
       eventId: firedEventId,
