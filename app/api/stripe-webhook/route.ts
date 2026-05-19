@@ -66,26 +66,23 @@ export async function POST(request: NextRequest) {
       );
 
       // Meta CAPI event'i:
-      //  • 15.000 TL kurs → "Purchase" (15k TL kampanyalarının optimize ettiği event)
-      //  • $9.90 VIP upsell → "VIPUpsell" custom event (Purchase pool'unu kirletmez)
-      //    Amaç: $9.90 alanlardan custom audience + Lookalike çıkartmak, ama 15k TL
-      //    Purchase optimizasyonunu bozmamak.
+      //  • 15.000 TL kurs    → "Purchase"
+      //  • $9.90 VIP upsell  → "Purchase"
+      //
+      // Her iki satış da artık standard "Purchase" event'i olarak fire edilir.
+      // (Önceden $9.90 "Subscribe" olarak gönderiliyordu; user kararıyla
+      // Purchase'a çevrildi. Custom Conversion ile $9.90 satışları URL filtresi
+      // — "odemeonay" + currency=USD — üzerinden izole edilebilir.)
       const nameParts = customerName.split(" ");
       const ccyLower = (session.currency || "try").toLowerCase();
       const amountForCheck = amountTotal ?? 0;
       const isVipUpsell = ccyLower === "usd" && amountForCheck === 990;
 
-      // $9.90 VIP upsell → "Subscribe" standard event (Meta'nın hazır kategorisi).
-      // 15.000 TL kurs → "Purchase" (mevcut akış).
-      // Subscribe seçildi çünkü:
-      //   1. Meta indexing gecikmesi yok (standard event)
-      //   2. Custom Conversion dropdown'da hazır
-      //   3. Semantic uyumlu (VIP üyelik = subscription)
-      //   4. Purchase optimizasyonunu kirletmez (ayrı event türü)
-      // Custom Conversion bu Subscribe'ı URL contains "odemeonay" filtre ile
-      // izole edip sadece $9.90 satışlarını sayar.
-      const eventName = isVipUpsell ? "Subscribe" : "Purchase";
-      const eventIdPrefix = isVipUpsell ? "subscribe" : "purchase";
+      const eventName = "Purchase";
+      // eventId prefix'i $9.90 ve 15k TL satışlarını dashboard'da ayırt etmek
+      // için farklı tutulur. session.id zaten globally unique olduğu için
+      // dedup açısından collision riski yok.
+      const eventIdPrefix = isVipUpsell ? "purchase_vip" : "purchase";
 
       await sendCAPIEvent({
         eventName,
