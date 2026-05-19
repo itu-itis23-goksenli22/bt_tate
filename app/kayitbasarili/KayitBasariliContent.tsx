@@ -29,7 +29,7 @@ function getThankYouUrl(name: string, email: string) {
 
 // variant:
 //   "default" → ana sayfa (/) flow için (video yok)
-//   "vip"     → /vip-mastermind flow için (tek video, "Hızlı davranırsan..." altında)
+//   "vip"     → /vip-mastermind flow için (tek video, "Kaydını Onaylamadan Önce:" altında)
 interface KayitBasariliContentProps {
   variant?: "default" | "vip";
 }
@@ -110,6 +110,24 @@ export default function KayitBasariliContent({
               Kaydını Onaylamadan Önce:
             </p>
 
+            {/* VIP variant: webinar teaser video — sadece /vip-mastermind flow'unda görünür */}
+            {variant === "vip" && (
+              <div className="max-w-2xl mx-auto mb-8">
+                <div
+                  className="relative w-full overflow-hidden rounded-xl border border-white/10"
+                  style={{ paddingBottom: "56.25%" }}
+                >
+                  <iframe
+                    className="absolute top-0 left-0 w-full h-full"
+                    src="https://www.youtube.com/embed/qQbl1YPaI7k"
+                    title="AI Scale VIP Webinar"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+            )}
+
             {/* Ana mesaj */}
             <p className="text-white text-[22px] md:text-[30px] font-bold leading-snug mb-6 max-w-2xl mx-auto">
               <span style={{ color: "#D5B356" }} className="whitespace-nowrap">
@@ -149,24 +167,6 @@ export default function KayitBasariliContent({
             <p className="text-white/60 text-[14px] md:text-[16px] italic max-w-xl mx-auto">
               Hızlı davranırsan, sen daha seminere bile katılmadan elinde olacak.
             </p>
-
-            {/* VIP variant: webinar teaser video — sadece /vip-mastermind flow'unda görünür */}
-            {variant === "vip" && (
-              <div className="max-w-2xl mx-auto mt-8">
-                <div
-                  className="relative w-full overflow-hidden rounded-xl border border-white/10"
-                  style={{ paddingBottom: "56.25%" }}
-                >
-                  <iframe
-                    className="absolute top-0 left-0 w-full h-full"
-                    src="https://www.youtube.com/embed/qQbl1YPaI7k"
-                    title="AI Scale VIP Webinar"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
-              </div>
-            )}
           </div>
 
           {/* PRIMARY CTA — Stripe Payment Link'e redirect (eski güvenli akış).
