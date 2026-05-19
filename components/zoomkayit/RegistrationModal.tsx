@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import { setAdvancedMatching, trackCompleteRegistration, trackLead } from "@/lib/meta-pixel";
 
 function getCookie(name: string): string | undefined {
@@ -244,20 +246,22 @@ export default function RegistrationModal({
               <label className="block text-white text-sm font-medium mb-2">
                 Telefon
               </label>
-              <input
-                type="tel"
-                inputMode="tel"
-                autoComplete="tel"
-                placeholder="+90 5XX XXX XX XX"
+              {/* react-phone-number-input — ülke dropdown'ında bayrak + E.164 formatı.
+                  Default ülke TR, kullanıcı dropdown'dan başka ülke seçince otomatik
+                  ülke kodu + maskeleme uygular. Çıktı: "+905XX..." E.164 formatında. */}
+              <PhoneInput
+                international
+                defaultCountry="TR"
+                countryCallingCodeEditable={false}
+                placeholder="5XX XXX XX XX"
                 value={formData.phone}
-                onChange={(e) =>
+                onChange={(value) =>
                   setFormData((prev) => ({
                     ...prev,
-                    phone: e.target.value,
+                    phone: value || "",
                   }))
                 }
-                required
-                className="w-full px-4 py-3.5 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors text-base"
+                className="zk-phone-input flex items-center w-full px-4 py-3.5 bg-white/5 border border-white/20 rounded-xl text-white focus-within:border-gold focus-within:ring-1 focus-within:ring-gold transition-colors text-base [&_.PhoneInputInput]:bg-transparent [&_.PhoneInputInput]:border-none [&_.PhoneInputInput]:outline-none [&_.PhoneInputInput]:text-white [&_.PhoneInputInput]:placeholder-white/40 [&_.PhoneInputInput]:ml-2 [&_.PhoneInputCountryIcon]:shadow-none"
               />
             </div>
 
