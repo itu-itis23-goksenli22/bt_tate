@@ -157,9 +157,13 @@ export default function RegistrationModal({
         );
       }
 
-      // fbq flush için 200ms bekle, sonra kayitbasarili'ye yönlendir
+      // fbq flush için 200ms bekle, sonra doğru kayitbasarili'ye yönlendir:
+      //   ana sayfa (CR)  → /kayitbasarili            (video yok)
+      //   vip-mastermind (Lead) → /vip-mastermind/kayitbasarili (Hızlı davranırsan altında video)
+      const successPath =
+        eventType === "Lead" ? "/vip-mastermind/kayitbasarili" : "/kayitbasarili";
       setTimeout(() => {
-        window.location.href = `/kayitbasarili?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`;
+        window.location.href = `${successPath}?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`;
       }, 200);
     } catch (err) {
       console.warn("qualify-lead failed:", err);

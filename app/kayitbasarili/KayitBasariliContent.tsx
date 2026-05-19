@@ -27,7 +27,16 @@ function getThankYouUrl(name: string, email: string) {
   return `/kayitbasarili/tesekkurler${qs ? `?${qs}` : ""}`;
 }
 
-export default function KayitBasariliContent() {
+// variant:
+//   "default" → ana sayfa (/) flow için (video yok)
+//   "vip"     → /vip-mastermind flow için (tek video, "Hızlı davranırsan..." altında)
+interface KayitBasariliContentProps {
+  variant?: "default" | "vip";
+}
+
+export default function KayitBasariliContent({
+  variant = "default",
+}: KayitBasariliContentProps = {}) {
   const searchParams = useSearchParams();
   const name = searchParams.get("name") || "Değerli Katılımcı";
   const email = searchParams.get("email") || "";
@@ -82,22 +91,6 @@ export default function KayitBasariliContent() {
 
       <main className="min-h-screen bg-[#0c0c0c] text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
         <div className="max-w-[680px] mx-auto px-4 py-8">
-          {/* 0. Webinar Video — kayıt sonrası teaser/intro */}
-          <div className="max-w-2xl mx-auto mb-8">
-            <div
-              className="relative w-full overflow-hidden rounded-xl border border-white/10"
-              style={{ paddingBottom: "56.25%" }}
-            >
-              <iframe
-                className="absolute top-0 left-0 w-full h-full"
-                src="https://www.youtube.com/embed/qQbl1YPaI7k"
-                title="AI Scale Webinar"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          </div>
-
           {/* 1. BEKLE! Hero — VIP paketi tarif eden urgency bloğu */}
           <div className="text-center mb-8 mt-2">
             {/* BEKLE! */}
@@ -156,6 +149,24 @@ export default function KayitBasariliContent() {
             <p className="text-white/60 text-[14px] md:text-[16px] italic max-w-xl mx-auto">
               Hızlı davranırsan, sen daha seminere bile katılmadan elinde olacak.
             </p>
+
+            {/* VIP variant: webinar teaser video — sadece /vip-mastermind flow'unda görünür */}
+            {variant === "vip" && (
+              <div className="max-w-2xl mx-auto mt-8">
+                <div
+                  className="relative w-full overflow-hidden rounded-xl border border-white/10"
+                  style={{ paddingBottom: "56.25%" }}
+                >
+                  <iframe
+                    className="absolute top-0 left-0 w-full h-full"
+                    src="https://www.youtube.com/embed/qQbl1YPaI7k"
+                    title="AI Scale VIP Webinar"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+            )}
           </div>
 
           {/* PRIMARY CTA — Stripe Payment Link'e redirect (eski güvenli akış).
@@ -392,25 +403,6 @@ export default function KayitBasariliContent() {
                   <span className="text-[#D5B356] font-extrabold text-[20px]">Sadece $19.90</span>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* 11b. İkinci kısa video — VIP butonunun hemen üstünde teaser */}
-          <div className="max-w-md mx-auto mb-4 mt-2">
-            <p className="text-center text-[#D5B356] font-semibold text-[14px] mb-2">
-              ▶ Videoyu İzle
-            </p>
-            <div
-              className="relative w-full overflow-hidden rounded-lg border border-white/10"
-              style={{ paddingBottom: "56.25%" }}
-            >
-              <iframe
-                className="absolute top-0 left-0 w-full h-full"
-                src="https://www.youtube.com/embed/qQbl1YPaI7k"
-                title="AI Scale VIP Teaser"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
             </div>
           </div>
 
