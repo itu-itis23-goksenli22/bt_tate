@@ -1,4 +1,4 @@
-// Stripe Embedded Checkout — VIP $19.90 upsell için server-side session creator
+// Stripe Embedded Checkout — VIP $19.00 upsell için server-side session creator
 //
 // Frontend EmbeddedCheckoutProvider buradan clientSecret ister.
 // Stripe Embedded Checkout, sayfa içine iframe olarak gömülür → kullanıcı redirect
@@ -8,7 +8,7 @@
 //
 // Env vars:
 //   STRIPE_SECRET_KEY      → sk_live_... veya sk_test_...
-//   STRIPE_VIP_PRICE_ID    → price_xxx ($19.90 ürününün Stripe Price ID'si)
+//   STRIPE_VIP_PRICE_ID    → price_xxx ($19.00 ürününün Stripe Price ID'si)
 //
 // Yoksa 503 döner; frontend de fallback olarak eski Payment Link butonunu gösterir.
 

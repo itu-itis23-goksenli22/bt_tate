@@ -140,14 +140,14 @@ export default function KayitBasariliContent({
               olarak açtık.
             </p>
 
-            {/* Highlight: $19.90 */}
+            {/* Highlight: $19.00 */}
             <p className="text-white text-[24px] md:text-[34px] font-extrabold leading-tight mb-8 max-w-2xl mx-auto">
               Ve seminere başlamadan, sana bunu{" "}
               <span
                 className="inline-block px-3 py-1 rounded-[6px] text-black mx-1 align-middle"
                 style={{ background: CTA_GRADIENT }}
               >
-                SADECE $19.90
+                SADECE $19.00
               </span>{" "}
               karşılığında veriyoruz.
             </p>
@@ -301,7 +301,7 @@ export default function KayitBasariliContent({
               <a href="#final-vip-cta" onClick={scrollToFinalCTA}>
                 <button className="text-black font-bold text-[14px] px-6 py-2.5 rounded-md hover:brightness-110 transition-all cursor-pointer"
                   style={{ background: CTA_GRADIENT }}>
-                  Tüm bunlar sadece $19.90 — Hemen Hazırlanmaya Başla →
+                  Tüm bunlar sadece $19.00 — Hemen Hazırlanmaya Başla →
                 </button>
               </a>
             </div>
@@ -384,7 +384,7 @@ export default function KayitBasariliContent({
               style={{ background: GOLD_BG_SUBTLE }}>
               <h3 className="text-[22px] md:text-[28px] font-extrabold text-center mb-6">
                 $2,000+ Değer{" "}
-                <span className="text-[#D5B356] italic underline">Sadece $19.90</span>
+                <span className="text-[#D5B356] italic underline">Sadece $19.00</span>
               </h3>
               <div className="border-t border-[#AA813C]/30 mb-5" />
               <div className="space-y-3">
@@ -400,7 +400,7 @@ export default function KayitBasariliContent({
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-[#D5B356] font-bold text-[15px]">Sizin Tek Seferlik Yatırımınız:</span>
-                  <span className="text-[#D5B356] font-extrabold text-[20px]">Sadece $19.90</span>
+                  <span className="text-[#D5B356] font-extrabold text-[20px]">Sadece $19.00</span>
                 </div>
               </div>
             </div>
