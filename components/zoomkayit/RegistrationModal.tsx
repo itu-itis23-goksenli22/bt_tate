@@ -51,9 +51,10 @@ export default function RegistrationModal({
   onClose,
   eventType = "CR",
 }: RegistrationModalProps) {
-  const [formData, setFormData] = useState({ name: "", email: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
   // Budget tier qualification kaldırıldı — herkes "Yerimi Ayırt" ile Zoom'a
   // kaydolur ve sayfaya göre tek bir CAPI event fire eder (CR veya Lead).
+  // Telefon required — Zoom kayıt + Meta advanced matching (ph hash) için kullanılır.
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [dateString, setDateString] = useState("");
@@ -76,6 +77,10 @@ export default function RegistrationModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.email.trim()) return;
+    if (!formData.phone.trim()) {
+      setErrorMsg("Lütfen telefon numaranızı girin.");
+      return;
+    }
 
     setStatus("loading");
     setErrorMsg("");
@@ -84,15 +89,20 @@ export default function RegistrationModal({
     const firstName = nameParts[0] || formData.name;
     const lastName = nameParts.slice(1).join(" ") || "-";
 
-    // Advanced matching — gelecek event'ler için
-    setAdvancedMatching({ em: formData.email, fn: firstName, ln: lastName });
+    // Advanced matching — gelecek event'ler için (email + name + phone)
+    setAdvancedMatching({
+      em: formData.email,
+      fn: firstName,
+      ln: lastName,
+      ph: formData.phone,
+    });
 
     try {
       // Tek-fazlı: /api/qualify-lead her kayıt için
       //   - Supabase'e kayıt
-      //   - Zoom webinar'a kayıt
+      //   - Zoom webinar'a kayıt (telefon Zoom'a da gider)
       //   - Welcome email
-      //   - Sayfa türüne göre TEK CAPI event:
+      //   - Sayfa türüne göre TEK CAPI event (phone CAPI'ye hash'lenerek gönderilir):
       //       ana sayfa       → CompleteRegistration
       //       vip-mastermind  → Lead
       const res = await fetch("/api/qualify-lead", {
@@ -102,7 +112,7 @@ export default function RegistrationModal({
           email: formData.email,
           firstName,
           lastName,
-          phone: "",
+          phone: formData.phone,
           eventType, // "CR" veya "Lead" — sayfa türüne göre
           sourceUrl: typeof window !== "undefined" ? window.location.href : "",
           fbc: getCookie("_fbc"),
@@ -223,6 +233,27 @@ export default function RegistrationModal({
                   setFormData((prev) => ({
                     ...prev,
                     email: e.target.value,
+                  }))
+                }
+                required
+                className="w-full px-4 py-3.5 bg-white/5 border border-white/20 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors text-base"
+              />
+            </div>
+
+            <div>
+              <label className="block text-white text-sm font-medium mb-2">
+                Telefon
+              </label>
+              <input
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel"
+                placeholder="+90 5XX XXX XX XX"
+                value={formData.phone}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    phone: e.target.value,
                   }))
                 }
                 required
