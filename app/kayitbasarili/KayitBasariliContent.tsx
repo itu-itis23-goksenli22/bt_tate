@@ -395,6 +395,25 @@ export default function KayitBasariliContent() {
             </div>
           </div>
 
+          {/* 11b. İkinci kısa video — VIP butonunun hemen üstünde teaser */}
+          <div className="max-w-md mx-auto mb-4 mt-2">
+            <p className="text-center text-[#D5B356] font-semibold text-[14px] mb-2">
+              ▶ Videoyu İzle
+            </p>
+            <div
+              className="relative w-full overflow-hidden rounded-lg border border-white/10"
+              style={{ paddingBottom: "56.25%" }}
+            >
+              <iframe
+                className="absolute top-0 left-0 w-full h-full"
+                src="https://www.youtube.com/embed/qQbl1YPaI7k"
+                title="AI Scale VIP Teaser"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+
           {/* Secondary MAIN Checkout — Stripe Payment Link redirect (yeşil, yeni sekme) */}
           <MainCheckoutCTA />
 
