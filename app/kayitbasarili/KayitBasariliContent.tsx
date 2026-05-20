@@ -161,30 +161,46 @@ export default function KayitBasariliContent({
                 #final-vip-cta'ya scroll eder (yeşil MainCheckoutCTA). */}
             <CTABlock thankYouUrl={thankYouUrl} />
 
-            {/* Paket içeriği — checklist + dolar değerleri (paragraf yerine
-                taranabilir liste; her kalem değer atfı ile birlikte görsel) */}
+            {/* Paket içeriği — dashed altın kart, üstü çizgili fiyatlar,
+                "$2,000+ Değer · Sadece $9.90" başlık, "Sizin Tek Seferlik
+                Yatırımınız" alt satırı. (Eski yeşil ✅ ChecklistItem listesi
+                kaldırıldı, daha şık alt section'daki tasarım buraya taşındı.) */}
             <div className="max-w-xl mx-auto mb-6 text-left">
-              <ChecklistItem
-                title="Manychat DM Otomasyonu Kurulumu"
-                value="$497 değerinde"
-              />
-              <ChecklistItem
-                title="AI Destekli Shopify Mağaza Rehberi"
-                value="$597 değerinde"
-              />
-              <ChecklistItem
-                title="Milyon Dolarlık AI Automation Kiti"
-                value="$997 değerinde"
-              />
-              <ChecklistItem
-                title="Tüm Seminer Kayıtlarına Ömür Boyu Erişim"
-                value="$97 değerinde"
-              />
-              <div className="mt-3 pt-3 border-t border-white/10 flex items-baseline justify-between text-[14px] md:text-[16px]">
-                <span className="text-white/60">Toplam Değer:</span>
-                <span className="text-[#D5B356] font-extrabold text-[17px] md:text-[19px]">
-                  $2.188+
-                </span>
+              <div
+                className="rounded-[9px] border border-dashed border-[#AA813C]/60 p-5 md:p-7"
+                style={{ background: GOLD_BG_SUBTLE }}
+              >
+                <h3 className="text-[18px] md:text-[24px] font-extrabold text-center mb-5">
+                  $2,000+ Değer{" "}
+                  <span className="text-[#D5B356] italic underline">
+                    Sadece $9.90
+                  </span>
+                </h3>
+                <div className="border-t border-[#AA813C]/30 mb-4" />
+                <div className="space-y-3">
+                  <PricingRow label="Manychat Kurulum Rehberi" value="$497" />
+                  <PricingRow label="AI Shopify Kurulum Rehberi" value="$597" />
+                  <PricingRow label="Milyon Dolarlık AI Automation Kiti" value="$997" />
+                  <PricingRow label="Lifetime Replay Access" value="$97" />
+                </div>
+                <div className="border-t border-[#AA813C]/30 mt-5 pt-4">
+                  <div className="flex justify-between items-center mb-1.5">
+                    <span className="text-white/60 text-[13px] md:text-[14px] font-semibold">
+                      Toplam Değer:
+                    </span>
+                    <span className="text-white/50 text-[13px] md:text-[14px] font-bold line-through">
+                      $2,000+
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#D5B356] font-bold text-[14px] md:text-[15px]">
+                      Sizin Tek Seferlik Yatırımınız:
+                    </span>
+                    <span className="text-[#D5B356] font-extrabold text-[18px] md:text-[20px]">
+                      Sadece $9.90
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -361,33 +377,9 @@ export default function KayitBasariliContent({
             </div>
           </div>
 
-          {/* 10. Pricing Card */}
-          <div className="my-8">
-            <div className="rounded-[9px] border border-dashed border-[#AA813C]/60 p-6 md:p-8"
-              style={{ background: GOLD_BG_SUBTLE }}>
-              <h3 className="text-[22px] md:text-[28px] font-extrabold text-center mb-6">
-                $2,000+ Değer{" "}
-                <span className="text-[#D5B356] italic underline">Sadece $9.90</span>
-              </h3>
-              <div className="border-t border-[#AA813C]/30 mb-5" />
-              <div className="space-y-3">
-                <PricingRow label="Manychat Kurulum Rehberi" value="$497" />
-                <PricingRow label="AI Shopify Kurulum Rehberi" value="$597" />
-                <PricingRow label="Milyon Dolarlık AI Automation Kiti" value="$997" />
-                <PricingRow label="Lifetime Replay Access" value="$97" />
-              </div>
-              <div className="border-t border-[#AA813C]/30 mt-5 pt-5">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-white/60 text-[14px] font-semibold">Toplam Değer:</span>
-                  <span className="text-white/60 text-[14px] font-bold">$2,000+</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-[#D5B356] font-bold text-[15px]">Sizin Tek Seferlik Yatırımınız:</span>
-                  <span className="text-[#D5B356] font-extrabold text-[20px]">Sadece $9.90</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* (10. Pricing Card buradan kaldırıldı — aynı tasarım BEKLE
+              hero'sunun içine, "veriyoruz" altına taşındı; iki kez aynı
+              fiyat kartını göstermeye gerek yok.) */}
 
           {/* MAIN VIP CTA — Embedded Stripe Checkout, kompakt ticket-stub
               kupon kartı içinde. Sayfanın geri kalanı zaten BEKLE/value
@@ -644,9 +636,12 @@ function BenefitItem({ title, description }: { title: string; description: strin
 
 function PricingRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex justify-between items-center">
-      <span className="text-white/60 text-[14px]">{label}</span>
-      <span className="text-white/50 text-[14px] font-semibold">(Değer: {value})</span>
+    <div className="flex justify-between items-center gap-2">
+      <span className="text-white/75 text-[13px] md:text-[14px]">{label}</span>
+      <span className="text-white/45 text-[13px] md:text-[14px] font-semibold whitespace-nowrap">
+        (Değer:{" "}
+        <span className="line-through decoration-[1.5px]">{value}</span>)
+      </span>
     </div>
   );
 }
