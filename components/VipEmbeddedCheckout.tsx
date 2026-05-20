@@ -1,6 +1,6 @@
 "use client";
 
-// VIP $19.00 Embedded Stripe Checkout — eager-mount, sayfa içi iframe
+// VIP $9.90 Embedded Stripe Checkout — eager-mount, sayfa içi iframe
 //
 // Akış:
 //   1. Component mount olduğu anda /api/create-checkout-session POST atılır
@@ -8,7 +8,7 @@
 //   3. EmbeddedCheckoutProvider + EmbeddedCheckout iframe'i mount edilir
 //   4. Kullanıcı kartını girer, Stripe tarafında çekim olur
 //   5. checkout.session.completed webhook → /api/stripe-webhook
-//        → Meta CAPI Purchase event ($19.00) → email + Hetzner notify
+//        → Meta CAPI Purchase event ($9.90) → email + Hetzner notify
 //
 // Hata yedekleri:
 //   - NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY yoksa             → Payment Link butonu
@@ -23,7 +23,7 @@ import {
 } from "@stripe/react-stripe-js";
 
 const FALLBACK_CHECKOUT_URL =
-  "https://buy.stripe.com/5kQcN68Cs7Pvf7j2Le3wQ0r";
+  "https://buy.stripe.com/cNi8wQ4mcb1HcZb71u3wQ0s";
 const GREEN_GRADIENT =
   "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)";
 

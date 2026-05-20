@@ -10,7 +10,7 @@
 // Gerekli env vars:
 //   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY  (Vercel'de set)
 //   STRIPE_SECRET_KEY                   (Vercel'de set)
-//   STRIPE_VIP_PRICE_ID                 (yeni \$19.00 Price ID — Stripe Dashboard)
+//   STRIPE_VIP_PRICE_ID                 (yeni \$9.90 Price ID — Stripe Dashboard)
 //
 // Bunlardan biri eksikse fallback olarak Payment Link butonu görünür.
 
@@ -56,7 +56,7 @@ export default function KayitBasariliEmbedTestPage() {
           <ul className="text-white/70 text-[14px] leading-relaxed space-y-1.5">
             <li>
               ✅ <strong>Çalışıyorsa:</strong> Sayfanın altında doğrudan kart
-              giriş formu (Stripe iframe). $19.00 USD ücretiyle.
+              giriş formu (Stripe iframe). $9.90 USD ücretiyle.
             </li>
             <li>
               ⚠️ <strong>Env yoksa / hata olursa:</strong> Yeşil "VIP Üyelere

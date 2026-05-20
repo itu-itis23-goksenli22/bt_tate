@@ -86,7 +86,7 @@ export async function sendCourseWelcomeEmail(to: string) {
 }
 
 /* ─────────────────────────────────────────────────────────────────────
- * 2) VIP Upsell — $19.00 alıcıları (seminer hazırlık + topluluk teaser)
+ * 2) VIP Upsell — $9.90 alıcıları (seminer hazırlık + topluluk teaser)
  * ───────────────────────────────────────────────────────────────────── */
 function vipUpsellBody(): string {
   return `

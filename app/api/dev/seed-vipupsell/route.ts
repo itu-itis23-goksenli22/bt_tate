@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
       lastName: "Event",
     },
     customData: {
-      value: 19.0,
+      value: 9.9,
       currency: "USD",
     },
   });
