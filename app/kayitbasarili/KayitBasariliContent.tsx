@@ -199,15 +199,19 @@ export default function KayitBasariliContent({
 
           {/* (Eski PRIMARY CTA'yı $9.90 vurgusunun altına taşıdık — yukarıda.) */}
 
-          {/* Sole decline — Ecom Degree style, only one on the page */}
-          <div className="mt-2 mb-8 text-center px-2">
+          {/* Sole decline — daha belirgin buton hâli (eski underline link yerine). */}
+          <div className="mt-2 mb-8 px-2">
             <a
               href={thankYouUrl}
-              className="text-white/40 text-[13px] md:text-[15px] underline hover:text-white/60 transition-colors leading-relaxed inline-block max-w-2xl"
+              className="block max-w-2xl mx-auto rounded-[10px] bg-[#1a1a1a] border border-white/15 hover:bg-[#222] hover:border-white/25 transition-all px-5 py-4 text-center cursor-pointer"
             >
-              Hayır teşekkürler, VIP paketini almadan webinara katılacağım. Bu
-              teklifin sayfadan ayrıldığım anda sonsuza dek kaybolacağını ve bir
-              daha asla göremeyeceğimi anlıyorum.
+              <div className="text-white/80 text-[14px] md:text-[15px] font-semibold">
+                Hayır teşekkürler, VIP paketini almadan webinara katılacağım
+              </div>
+              <div className="text-white/40 text-[11px] md:text-[12px] mt-1 leading-snug">
+                Bu teklifin sayfadan ayrıldığım anda sonsuza dek kaybolacağını
+                ve bir daha asla göremeyeceğimi anlıyorum
+              </div>
             </a>
           </div>
 
@@ -307,55 +311,9 @@ export default function KayitBasariliContent({
           {/* First CTA Block */}
           <CTABlock thankYouUrl={thankYouUrl} />
 
-          {/* Seminere Hazırlık — VIP'i hazırlık olarak konumlandır */}
-          <div className="my-10 rounded-[9px] border border-dashed border-[#AA813C]/40 p-6 md:p-8"
-            style={{ background: GOLD_BG_SUBTLE }}>
-            <h2 className="text-[22px] md:text-[28px] font-extrabold text-center mb-2">
-              🎯 Seminere Tam Hazırlıklı <span className="text-[#D5B356]">Katıl</span>
-            </h2>
-            <p className="text-white/50 text-[13px] text-center mb-6 max-w-lg mx-auto">
-              VIP üyeler seminere hazırlanıp geldiği için çok daha fazla sonuç alıyor
-            </p>
-            <div className="space-y-5 max-w-lg mx-auto">
-              <PrepItem text="Seminere gelmeden Manychat ve AI Shopify rehberlerini inceleyerek temel bilgileri öğren — seminerde ileri seviye taktiklere odaklanabilirsin" />
-              <PrepItem text="Milyon dolarlık strateji kitinden başarılı iş modellerini analiz et — seminerde kendi planını oluşturmanı kolaylaştırır" />
-              <PrepItem text="VIP üyeler seminerde birebir soru-cevap hakkına sahip — sorularını şimdiden hazırla" />
-              <PrepItem text="Kayıtları sonsuza kadar izle — kaçırdığın detayları tekrar tekrar izleyerek uygulayabilirsin" />
-            </div>
-            <div className="text-center mt-6">
-              <a href="#final-vip-cta" onClick={scrollToFinalCTA}>
-                <button className="text-black font-bold text-[14px] px-6 py-2.5 rounded-md hover:brightness-110 transition-all cursor-pointer"
-                  style={{ background: CTA_GRADIENT }}>
-                  Tüm bunlar sadece $9.90 — Hemen Hazırlanmaya Başla →
-                </button>
-              </a>
-            </div>
-          </div>
-
-          {/* 6. 5X Guarantee */}
-          <div className="my-10 rounded-[9px] border border-dashed border-[#AA813C]/40 p-6 md:p-8 text-center"
-            style={{ background: GOLD_BG_SUBTLE }}>
-            <div className="inline-block mb-4">
-              <div className="w-[90px] h-[90px] mx-auto rounded-full flex items-center justify-center border-[3px] border-[#AA813C]/50"
-                style={{ background: CTA_GRADIENT }}>
-                <div className="text-center leading-tight">
-                  <div className="text-[22px] font-extrabold text-black">5X</div>
-                  <div className="text-[7px] font-bold text-black/60 uppercase tracking-wider">GUARANTEE</div>
-                  <div className="text-black/50 text-xs">✓</div>
-                </div>
-              </div>
-            </div>
-            <p className="text-white/60 text-[14px] max-w-lg mx-auto leading-relaxed">
-              Eğitimimize katılın ve VIP kaynaklarını kullanın. Eğer ödediğinizin en az 5 katı değer bulamadığınızı düşünürseniz,{" "}
-              <a href="mailto:info@aiscale.app" className="text-blue-400 underline">info@aiscale.app</a>{" "}
-              adresine yazmanız yeterli — paranızın tamamını iade ederiz, soru sormadan!
-            </p>
-            <p className="mt-4">
-              <a href={thankYouUrl} className="text-white/30 text-[12px] underline italic hover:text-white/40 transition-colors">
-                Hayır, webinara devam edeceğim
-              </a>
-            </p>
-          </div>
+          {/* (Eski "🎯 Seminere Tam Hazırlıklı Katıl" ve "5X GUARANTEE"
+              section'ları kaldırıldı — user kararı: page daha az yorucu
+              olsun.) */}
 
           {/* 7. Social Proof - Entrepreneurs */}
           <div className="text-center my-8">
