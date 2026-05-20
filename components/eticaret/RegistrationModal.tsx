@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { setAdvancedMatching, trackCompleteRegistration, trackLead } from "@/lib/meta-pixel";
+import { setAdvancedMatching, trackCompleteRegistration } from "@/lib/meta-pixel";
 
 function getCookie(name: string): string | undefined {
   if (typeof document === "undefined") return undefined;
@@ -98,20 +98,24 @@ export default function RegistrationModal({
 
       if (res.ok) {
         setStatus("success");
-        // Fire CompleteRegistration BEFORE re-init to avoid pixel reset issues
+        // FIRE TEK EVENT — sadece CompleteRegistration.
+        //
+        // Önceden hem trackCompleteRegistration HEM trackLead birlikte fire
+        // ediliyordu (her birinde ayrı eventId). Bu, Meta dashboard'larında
+        // tek form submit'in "Leads" + "Registrations completed" iki sütununu
+        // da kabartmasına neden oluyordu — özellikle aiscaleapp.com/eticaret
+        // yolundan gelen ziyaretçilerde AI Scale pixel'ine düştüğü için
+        // attribution analizi yanıltıcı oluyordu.
+        //
+        // Yeni kural: aiscale main flow ile uyumlu olarak eticaret formu da
+        // tek event üretir → CompleteRegistration. Lead event'ini sadece
+        // /vip-mastermind sayfası fire eder.
         trackCompleteRegistration({
           content_name: "E-Ticaret Webinar Kayıt",
           status: "completed",
           value: data.eventValue,
           currency: "TRY",
         }, data.eventId);
-        // Fire Lead event (separate eventId) for Meta's "Maximize leads" optimization
-        trackLead({
-          content_name: "E-Ticaret Webinar Kayıt",
-          content_category: "webinar",
-          value: data.eventValue,
-          currency: "TRY",
-        }, data.leadEventId);
         // Advanced Matching — send user data to Meta Pixel (after track call)
         setAdvancedMatching({ em: formData.email, fn: firstName, ln: lastName });
         // Redirect to success page after 1.5s
