@@ -118,15 +118,48 @@ export default function VipEmbeddedCheckout({
     const promise = getStripePromise();
     if (!promise) return <FallbackButton ctaId={ctaId} />;
     return (
-      <div id={ctaId} className="my-6 scroll-mt-24">
-        <div className="rounded-[10px] overflow-hidden bg-white shadow-lg shadow-emerald-500/20">
-          <EmbeddedCheckoutProvider
-            stripe={promise}
-            options={{ clientSecret }}
-          >
-            <EmbeddedCheckout />
-          </EmbeddedCheckoutProvider>
+      <div id={ctaId} className="my-8 scroll-mt-24">
+        {/* Trust signals — iframe'in üstünde */}
+        <div className="flex items-center justify-center gap-2 md:gap-3 mb-3 text-white/60 text-[11px] md:text-[12px]">
+          <span className="inline-flex items-center gap-1">
+            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fillRule="evenodd"
+                d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                clipRule="evenodd"
+              />
+            </svg>
+            Güvenli Ödeme
+          </span>
+          <span className="text-white/30">·</span>
+          <span>256-bit SSL</span>
+          <span className="text-white/30">·</span>
+          <span>Stripe</span>
         </div>
+
+        {/* Gold-glow card — iframe'in dış kabuğu */}
+        <div
+          className="relative rounded-2xl p-[2px] shadow-[0_0_60px_-15px_rgba(193,157,68,0.5)]"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(193,157,68,0.6) 0%, rgba(232,212,139,0.3) 50%, rgba(193,157,68,0.6) 100%)",
+          }}
+        >
+          <div className="rounded-2xl overflow-hidden bg-white">
+            <EmbeddedCheckoutProvider
+              stripe={promise}
+              options={{ clientSecret }}
+            >
+              <EmbeddedCheckout />
+            </EmbeddedCheckoutProvider>
+          </div>
+        </div>
+
+        {/* Alt güvence metni */}
+        <p className="text-center text-white/40 text-[11px] mt-3 px-2">
+          Ödeme bilgileriniz Stripe üzerinden şifrelenerek işlenir.
+          Kart bilgileriniz sunucularımıza ulaşmaz.
+        </p>
       </div>
     );
   }
@@ -136,20 +169,35 @@ export default function VipEmbeddedCheckout({
     return <FallbackButton ctaId={ctaId} />;
   }
 
-  // loading (initial) → yeşil placeholder
+  // loading (initial) → altın temalı placeholder
   return (
-    <div
-      id={ctaId}
-      className="my-6 rounded-[10px] py-10 px-6 text-center scroll-mt-24 shadow-lg shadow-emerald-500/30"
-      style={{ background: GREEN_GRADIENT }}
-    >
-      <div className="text-white font-bold text-[18px] inline-flex items-center gap-3">
-        <span className="inline-block w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-        Güvenli ödeme formu yükleniyor...
+    <div id={ctaId} className="my-8 scroll-mt-24">
+      <div className="flex items-center justify-center gap-2 md:gap-3 mb-3 text-white/40 text-[11px] md:text-[12px]">
+        <span>🔒 Güvenli Ödeme</span>
+        <span className="text-white/20">·</span>
+        <span>256-bit SSL</span>
+        <span className="text-white/20">·</span>
+        <span>Stripe</span>
       </div>
-      <p className="text-white/70 text-[13px] mt-2">
-        Bir saniye, kart bilgilerini girebilmen için form hazırlanıyor.
-      </p>
+      <div
+        className="relative rounded-2xl p-[2px] shadow-[0_0_60px_-15px_rgba(193,157,68,0.5)]"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(193,157,68,0.6) 0%, rgba(232,212,139,0.3) 50%, rgba(193,157,68,0.6) 100%)",
+        }}
+      >
+        <div className="rounded-2xl bg-[#1a1a1a] py-12 px-6 text-center">
+          <div className="inline-flex items-center gap-3 text-white font-semibold text-[16px]">
+            <span
+              className="inline-block w-5 h-5 border-2 border-[#C19D44]/30 border-t-[#C19D44] rounded-full animate-spin"
+            />
+            Güvenli ödeme formu yükleniyor...
+          </div>
+          <p className="text-white/50 text-[13px] mt-2">
+            Bir saniye, kart bilgilerini girebilmen için form hazırlanıyor.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
