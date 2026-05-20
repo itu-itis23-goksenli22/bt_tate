@@ -24,8 +24,6 @@ import {
 
 const FALLBACK_CHECKOUT_URL =
   "https://buy.stripe.com/cNi8wQ4mcb1HcZb71u3wQ0s";
-const GREEN_GRADIENT =
-  "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)";
 
 let stripePromise: Promise<StripeJs | null> | null = null;
 function getStripePromise() {
@@ -203,6 +201,8 @@ export default function VipEmbeddedCheckout({
 }
 
 function FallbackButton({ ctaId }: { ctaId: string }) {
+  // Embed başarısız olursa (env eksik, API hata, timeout) buraya düşer.
+  // Marka rengi (altın) — yeşil gradient kaldırıldı, sayfayla uyumlu.
   return (
     <div className="my-6">
       <a
@@ -210,16 +210,19 @@ function FallbackButton({ ctaId }: { ctaId: string }) {
         href={FALLBACK_CHECKOUT_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="block rounded-[10px] overflow-hidden hover:brightness-110 transition-all shadow-lg shadow-emerald-500/30 scroll-mt-24"
+        className="block rounded-[10px] overflow-hidden hover:brightness-110 transition-all shadow-[0_0_40px_-10px_rgba(193,157,68,0.55)] scroll-mt-24"
       >
         <div
           className="py-5 px-6 text-center"
-          style={{ background: GREEN_GRADIENT }}
+          style={{
+            background:
+              "linear-gradient(271.63deg, #C19D44 -20%, #E8D48B 20%, #FDF3AD 50%, #E8D48B 80%, #C19D44 120%)",
+          }}
         >
-          <div className="text-white font-extrabold text-[22px] md:text-[28px]">
+          <div className="text-black font-extrabold text-[22px] md:text-[28px]">
             VIP Üyelere Şimdi Katıl &raquo;
           </div>
-          <div className="text-white/80 text-[13px] mt-1">
+          <div className="text-black/60 text-[13px] mt-1">
             Yapay Zeka ile ilk adımını hemen at
           </div>
         </div>

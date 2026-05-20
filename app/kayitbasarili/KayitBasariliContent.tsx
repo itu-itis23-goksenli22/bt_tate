@@ -3,10 +3,15 @@
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { setAdvancedMatching } from "@/lib/meta-pixel";
-// VipEmbeddedCheckout şimdilik devre dışı — eski Stripe Payment Link redirect'ine
-// dönüldü. Component dosyası duruyor (components/VipEmbeddedCheckout.tsx), istenirse
-// tekrar import edilip aktifleştirilebilir.
+import VipEmbeddedCheckout from "@/components/VipEmbeddedCheckout";
 
+// MAIN VIP CTA artık Embedded Stripe Checkout (sayfa içi iframe).
+// Eski yeşil "VIP Üyelere Şimdi Katıl" butonu (MainCheckoutCTA fonksiyonu hâlâ
+// dosyada duruyor — geri dönmek gerekirse hazır) yerini sayfa içi ödeme formuna
+// bıraktı. id="final-vip-cta" VipEmbeddedCheckout default ctaId'sinde — sayfanın
+// üst/yan CTA butonları (scrollToFinalCTA) hâlâ buraya scroll eder.
+//
+// Fallback CHECKOUT_URL embed başarısız olursa (env yok / API hata) Payment Link.
 const CHECKOUT_URL = "https://buy.stripe.com/cNi8wQ4mcb1HcZb71u3wQ0s";
 
 const CTA_GRADIENT = "linear-gradient(271.63deg, #C19D44 -20%, #E8D48B 20%, #FDF3AD 50%, #E8D48B 80%, #C19D44 120%)";
@@ -407,8 +412,15 @@ export default function KayitBasariliContent({
             </div>
           </div>
 
-          {/* Secondary MAIN Checkout — Stripe Payment Link redirect (yeşil, yeni sekme) */}
-          <MainCheckoutCTA />
+          {/* MAIN VIP CTA — Embedded Stripe Checkout (sayfa içi iframe).
+              Tüm scrollToFinalCTA butonları buraya kaydırır (default ctaId
+              "final-vip-cta" VipEmbeddedCheckout içinde). Env / API hata
+              durumunda otomatik Payment Link fallback'ine düşer. */}
+          <VipEmbeddedCheckout
+            email={email || undefined}
+            name={name !== "Değerli Katılımcı" ? name : undefined}
+            source="aiscaleapp"
+          />
 
           {/* 12. Testimonials */}
           <div className="my-10 text-center">
