@@ -213,23 +213,10 @@ export default function KayitBasariliContent({
             </p>
           </div>
 
-          {/* (Eski PRIMARY CTA'yı $9.90 vurgusunun altına taşıdık — yukarıda.) */}
-
-          {/* Sole decline — daha belirgin buton hâli (eski underline link yerine). */}
-          <div className="mt-2 mb-8 px-2">
-            <a
-              href={thankYouUrl}
-              className="block max-w-2xl mx-auto rounded-[10px] bg-[#1a1a1a] border border-white/15 hover:bg-[#222] hover:border-white/25 transition-all px-5 py-4 text-center cursor-pointer"
-            >
-              <div className="text-white/80 text-[14px] md:text-[15px] font-semibold">
-                Hayır teşekkürler, VIP paketini almadan webinara katılacağım
-              </div>
-              <div className="text-white/40 text-[11px] md:text-[12px] mt-1 leading-snug">
-                Bu teklifin sayfadan ayrıldığım anda sonsuza dek kaybolacağını
-                ve bir daha asla göremeyeceğimi anlıyorum
-              </div>
-            </a>
-          </div>
+          {/* (Eski PRIMARY CTA'yı $9.90 vurgusunun altına taşıdık — yukarıda.
+              Bu konumda eskiden "Hayır teşekkürler" decline butonu vardı,
+              user kararı ile kaldırıldı — tek decline butonu artık testimonials
+              bitiminde "Gerçek Başarı Hikayeleri" üstünde duruyor.) */}
 
           {/* 3. Hazırlıklı vs Hazırlıksız karşılaştırması — Ecom Degree pattern */}
           <div className="my-10">
@@ -455,22 +442,8 @@ export default function KayitBasariliContent({
             </div>
           </div>
 
-          {/* Embed altı decline — yukarıdaki ile aynı tasarım, kullanıcı
-              ödeme formunu görüp vazgeçtiyse de buradan tek tıkla çıkabilsin. */}
-          <div className="mt-4 mb-10 px-2">
-            <a
-              href={thankYouUrl}
-              className="block max-w-2xl mx-auto rounded-[10px] bg-[#1a1a1a] border border-white/15 hover:bg-[#222] hover:border-white/25 transition-all px-5 py-4 text-center cursor-pointer"
-            >
-              <div className="text-white/80 text-[14px] md:text-[15px] font-semibold">
-                Hayır teşekkürler, VIP paketini almadan webinara katılacağım
-              </div>
-              <div className="text-white/40 text-[11px] md:text-[12px] mt-1 leading-snug">
-                Bu teklifin sayfadan ayrıldığım anda sonsuza dek kaybolacağını
-                ve bir daha asla göremeyeceğimi anlıyorum
-              </div>
-            </a>
-          </div>
+          {/* (Embed altındaki decline buradan kaldırıldı — testimonials
+              bitiminde "Gerçek Başarı Hikayeleri" üstüne taşındı.) */}
 
           {/* 12. Testimonials */}
           <div className="my-10 text-center">
@@ -497,6 +470,24 @@ export default function KayitBasariliContent({
             <div className="mt-8">
               <TrustpilotBadge />
             </div>
+          </div>
+
+          {/* Tek decline button — testimonials sonrasında, "Gerçek Başarı
+              Hikayeleri" üstünde. Eskiden BEKLE hero altında ve embed altında
+              olmak üzere iki yerde vardı, user kararı ile tek konuma çekildi. */}
+          <div className="mt-2 mb-10 px-2">
+            <a
+              href={thankYouUrl}
+              className="block max-w-2xl mx-auto rounded-[10px] bg-[#1a1a1a] border border-white/15 hover:bg-[#222] hover:border-white/25 transition-all px-5 py-4 text-center cursor-pointer"
+            >
+              <div className="text-white/80 text-[14px] md:text-[15px] font-semibold">
+                Hayır teşekkürler, VIP paketini almadan webinara katılacağım
+              </div>
+              <div className="text-white/40 text-[11px] md:text-[12px] mt-1 leading-snug">
+                Bu teklifin sayfadan ayrıldığım anda sonsuza dek kaybolacağını
+                ve bir daha asla göremeyeceğimi anlıyorum
+              </div>
+            </a>
           </div>
 
           {/* Başarı Hikayeleri — Gerçek Sonuçlar */}
@@ -654,7 +645,12 @@ function BenefitItem({ title, description }: { title: string; description: strin
 function PricingRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between items-center gap-2">
-      <span className="text-white/75 text-[13px] md:text-[14px]">{label}</span>
+      <span className="text-white/75 text-[13px] md:text-[14px] inline-flex items-center gap-2">
+        <span className="text-[15px] md:text-[17px] leading-none flex-shrink-0">
+          ✅
+        </span>
+        <span>{label}</span>
+      </span>
       <span className="text-white/45 text-[13px] md:text-[14px] font-semibold whitespace-nowrap">
         (Değer:{" "}
         <span className="line-through decoration-[1.5px]">{value}</span>)
