@@ -161,13 +161,32 @@ export default function KayitBasariliContent({
                 #final-vip-cta'ya scroll eder (yeşil MainCheckoutCTA). */}
             <CTABlock thankYouUrl={thankYouUrl} />
 
-            {/* Paket açıklaması — bizim gerçek içeriklerimiz */}
-            <p className="text-white/80 text-[14px] md:text-[16px] leading-relaxed max-w-xl mx-auto mb-5">
-              Manychat ile DM otomasyonu kurulumu. AI destekli Shopify mağaza
-              rehberi. Milyon dolarlık AI Automation kiti. Tüm seminer
-              kayıtlarına ömür boyu erişim. Aylarca uğraşmadan, doğru sırayla
-              uygulayacağın her şey...
-            </p>
+            {/* Paket içeriği — checklist + dolar değerleri (paragraf yerine
+                taranabilir liste; her kalem değer atfı ile birlikte görsel) */}
+            <div className="max-w-xl mx-auto mb-6 text-left">
+              <ChecklistItem
+                title="Manychat DM Otomasyonu Kurulumu"
+                value="$497 değerinde"
+              />
+              <ChecklistItem
+                title="AI Destekli Shopify Mağaza Rehberi"
+                value="$597 değerinde"
+              />
+              <ChecklistItem
+                title="Milyon Dolarlık AI Automation Kiti"
+                value="$997 değerinde"
+              />
+              <ChecklistItem
+                title="Tüm Seminer Kayıtlarına Ömür Boyu Erişim"
+                value="$97 değerinde"
+              />
+              <div className="mt-3 pt-3 border-t border-white/10 flex items-baseline justify-between text-[14px] md:text-[16px]">
+                <span className="text-white/60">Toplam Değer:</span>
+                <span className="text-[#D5B356] font-extrabold text-[17px] md:text-[19px]">
+                  $2.188+
+                </span>
+              </div>
+            </div>
 
             <p className="text-white text-[18px] md:text-[22px] font-semibold mb-3">
               Hepsi bu pakette, hepsi senin için hazır.
@@ -554,14 +573,14 @@ export default function KayitBasariliContent({
             <p className="text-[#e85d5d] text-[13px] mb-6">
               Bu sayfa kapanacak ve bu teklifi bir daha göremeyeceksiniz.
             </p>
-            {/* Final CTA — yukarıdaki asıl yeşil butona scroll eder */}
+            {/* Final CTA — yukarıdaki embed checkout'a scroll eder */}
             <a href="#final-vip-cta" onClick={scrollToFinalCTA} className="block rounded-[10px] overflow-hidden hover:brightness-105 transition-all cursor-pointer">
-              <div className="py-5 px-6" style={{ background: CTA_GRADIENT }}>
-                <div className="text-black font-extrabold text-[22px] md:text-[28px]">
-                  VIP Üyelere Şimdi Katıl &raquo;
+              <div className="py-5 px-6 text-center" style={{ background: CTA_GRADIENT }}>
+                <div className="text-black font-extrabold text-[18px] md:text-[24px] leading-tight">
+                  EVET, $9.90&apos;a VIP&apos;e Katılmak İstiyorum →
                 </div>
-                <div className="text-black/50 text-[13px] mt-1">
-                  Yapay Zeka ile ilk adımını hemen at
+                <div className="text-black/65 text-[13px] mt-2 font-semibold">
+                  Sadece $9.90 · Tek seferlik ödeme
                 </div>
               </div>
             </a>
@@ -589,11 +608,11 @@ function MainCheckoutCTA() {
         className="block rounded-[10px] overflow-hidden hover:brightness-110 transition-all shadow-lg shadow-emerald-500/30 scroll-mt-24"
       >
         <div className="py-5 px-6 text-center" style={{ background: GREEN_GRADIENT }}>
-          <div className="text-white font-extrabold text-[22px] md:text-[28px]">
-            VIP Üyelere Şimdi Katıl &raquo;
+          <div className="text-white font-extrabold text-[18px] md:text-[24px] leading-tight">
+            EVET, $9.90&apos;a VIP&apos;e Katılmak İstiyorum →
           </div>
-          <div className="text-white/80 text-[13px] mt-1">
-            Yapay Zeka ile ilk adımını hemen at
+          <div className="text-white/85 text-[13px] mt-2 font-semibold">
+            Sadece $9.90 · Tek seferlik ödeme
           </div>
         </div>
       </a>
@@ -604,14 +623,14 @@ function MainCheckoutCTA() {
 function CTABlock({ thankYouUrl: _thankYouUrl }: { thankYouUrl: string }) {
   return (
     <div className="my-6">
-      {/* Üst CTA butonları: aşağıdaki asıl VIP butonuna yönlendirir */}
+      {/* Üst CTA butonları: aşağıdaki embed checkout'a (#final-vip-cta) scroll eder */}
       <a href="#final-vip-cta" onClick={scrollToFinalCTA} className="block rounded-[10px] overflow-hidden hover:brightness-105 transition-all cursor-pointer">
         <div className="py-5 px-6 text-center" style={{ background: CTA_GRADIENT }}>
-          <div className="text-black font-extrabold text-[22px] md:text-[28px]">
-            VIP Üyelere Şimdi Katıl &raquo;
+          <div className="text-black font-extrabold text-[18px] md:text-[24px] leading-tight">
+            EVET, $9.90&apos;a VIP&apos;e Katılmak İstiyorum →
           </div>
-          <div className="text-black/50 text-[13px] mt-1">
-            Yapay Zeka ile ilk adımını hemen at
+          <div className="text-black/65 text-[13px] mt-2 font-semibold">
+            Sadece $9.90 · Tek seferlik ödeme
           </div>
         </div>
       </a>
@@ -628,6 +647,22 @@ function NoThankYouButton({ href }: { href: string }) {
           &quot;Özel VIP Deneyimini&quot; kaçırmayı tercih ediyorum
         </div>
       </a>
+    </div>
+  );
+}
+
+function ChecklistItem({ title, value }: { title: string; value: string }) {
+  return (
+    <div className="flex items-baseline gap-3 py-2 border-b border-white/10 last:border-0">
+      <span className="text-[#22c55e] text-[18px] md:text-[20px] flex-shrink-0 leading-none">
+        ✅
+      </span>
+      <span className="flex-1 text-white text-[14px] md:text-[16px] font-semibold leading-snug">
+        {title}
+      </span>
+      <span className="text-[#D5B356] text-[13px] md:text-[14px] font-bold whitespace-nowrap">
+        {value}
+      </span>
     </div>
   );
 }
