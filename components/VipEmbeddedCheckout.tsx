@@ -1,14 +1,19 @@
 "use client";
 
-// VIP $19.00 Embedded Stripe Checkout — eager-mount versiyonu
+// VIP $19.00 Embedded Stripe Checkout — eager-mount, sayfa içi iframe
 //
-// Sayfa açılır açılmaz Stripe Checkout Session yaratır ve iframe'i mount eder.
-// Kullanıcı butona tıklamak zorunda değil — form direkt orada görünür (Ecom
-// Degree pattern). Webhook (/api/stripe-webhook) checkout.session.completed
-// alır ve VIPUpsell custom event'i Meta'ya gönderir.
+// Akış:
+//   1. Component mount olduğu anda /api/create-checkout-session POST atılır
+//   2. Backend Stripe checkout session yaratıp clientSecret döner
+//   3. EmbeddedCheckoutProvider + EmbeddedCheckout iframe'i mount edilir
+//   4. Kullanıcı kartını girer, Stripe tarafında çekim olur
+//   5. checkout.session.completed webhook → /api/stripe-webhook
+//        → Meta CAPI Purchase event ($19.00) → email + Hetzner notify
 //
-// Production-safe: API 503/500 dönerse veya pk yoksa eski yeşil Payment Link
-// butonu fallback olarak gösterilir.
+// Hata yedekleri:
+//   - NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY yoksa             → Payment Link butonu
+//   - /api/create-checkout-session 4xx/5xx                 → Payment Link butonu
+//   - 12 sn içinde clientSecret gelmezse (timeout)         → Payment Link butonu
 
 import { useEffect, useRef, useState } from "react";
 import { loadStripe, type Stripe as StripeJs } from "@stripe/stripe-js";
@@ -35,17 +40,25 @@ interface Props {
   email?: string;
   name?: string;
   source?: "aiscaleapp" | "dijitalakademi";
+  /**
+   * DOM id used for the wrapper element. Other CTAs on the page can
+   * scroll to this via `#<ctaId>`. Default `final-vip-cta` (matches the
+   * existing /kayitbasarili layout). Override (e.g. `embed-test-cta`)
+   * when rendering on a separate test page to avoid id collisions.
+   */
+  ctaId?: string;
 }
 
 export default function VipEmbeddedCheckout({
   email,
   name,
   source = "aiscaleapp",
+  ctaId = "final-vip-cta",
 }: Props) {
   // Durum makinesi:
-  //   'loading'  → /api/create-checkout-session POST atılıyor (initial state)
+  //   'loading'  → /api/create-checkout-session POST atılıyor (initial)
   //   'ready'    → clientSecret geldi, EmbeddedCheckout mount edilir
-  //   'fallback' → API 503/500 veya pk yok veya timeout → eski Payment Link butonu
+  //   'fallback' → API hata / pk yok / timeout → Payment Link butonu
   const hasPublishableKey = Boolean(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
   );
@@ -55,53 +68,13 @@ export default function VipEmbeddedCheckout({
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const startedRef = useRef(false);
 
-  // DEBUG — console.warn çünkü next.config.js prod'da console.log siliyor
-  // eslint-disable-next-line no-console
-  console.warn("[VipEmbed] render", {
-    state,
-    hasPublishableKey,
-    pkPrefix:
-      (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "").slice(0, 12),
-    hasClientSecret: Boolean(clientSecret),
-  });
-
-  // GÖRSEL DEBUG — kırmızı çerçeveli debug paneli (geçici, sorun bulunca silinecek)
-  const DebugBanner = (
-    <div
-      style={{
-        background: "#ff3b3b",
-        color: "white",
-        padding: "12px",
-        margin: "8px 0",
-        border: "3px solid yellow",
-        fontWeight: "bold",
-        fontSize: "14px",
-        textAlign: "center",
-        zIndex: 9999,
-        position: "relative",
-      }}
-    >
-      🔍 EMBED DEBUG → state: <code>{state}</code> | hasPK:{" "}
-      {String(hasPublishableKey)} | hasCS:{" "}
-      {String(Boolean(clientSecret))} | pkPrefix:{" "}
-      <code>
-        {(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "(none)").slice(
-          0,
-          12
-        )}
-      </code>
-    </div>
-  );
-
   useEffect(() => {
     if (!hasPublishableKey) return;
     if (startedRef.current) return;
     startedRef.current = true;
 
-    // Timeout — 12 saniyede session gelmezse fallback'a düş
+    // 12 sn timeout — session gelmezse fallback
     const timeoutId = setTimeout(() => {
-      if (!startedRef.current) return;
-      console.warn("Stripe session fetch timed out, falling back");
       setState((prev) => (prev === "loading" ? "fallback" : prev));
     }, 12000);
 
@@ -140,70 +113,52 @@ export default function VipEmbeddedCheckout({
     return () => clearTimeout(timeoutId);
   }, [hasPublishableKey, email, name, source]);
 
-  // Durum: ready → Stripe iframe mount et
+  // ready → Stripe iframe mount
   if (state === "ready" && clientSecret) {
     const promise = getStripePromise();
-    if (!promise) {
-      return (
-        <>
-          {DebugBanner}
-          <FallbackButton />
-        </>
-      );
-    }
+    if (!promise) return <FallbackButton ctaId={ctaId} />;
     return (
-      <>
-        {DebugBanner}
-        <div id="final-vip-cta" className="my-6 scroll-mt-24">
-          <div className="rounded-[10px] overflow-hidden bg-white shadow-lg shadow-emerald-500/20">
-            <EmbeddedCheckoutProvider
-              stripe={promise}
-              options={{ clientSecret }}
-            >
-              <EmbeddedCheckout />
-            </EmbeddedCheckoutProvider>
-          </div>
+      <div id={ctaId} className="my-6 scroll-mt-24">
+        <div className="rounded-[10px] overflow-hidden bg-white shadow-lg shadow-emerald-500/20">
+          <EmbeddedCheckoutProvider
+            stripe={promise}
+            options={{ clientSecret }}
+          >
+            <EmbeddedCheckout />
+          </EmbeddedCheckoutProvider>
         </div>
-      </>
-    );
-  }
-
-  // Durum: fallback → eski yeşil Payment Link butonu (yeni sekmede)
-  if (state === "fallback") {
-    return (
-      <>
-        {DebugBanner}
-        <FallbackButton />
-      </>
-    );
-  }
-
-  // Durum: loading (initial) — yeşil placeholder
-  return (
-    <>
-      {DebugBanner}
-      <div
-        id="final-vip-cta"
-        className="my-6 rounded-[10px] py-10 px-6 text-center scroll-mt-24 shadow-lg shadow-emerald-500/30"
-        style={{ background: GREEN_GRADIENT }}
-      >
-        <div className="text-white font-bold text-[18px] inline-flex items-center gap-3">
-          <span className="inline-block w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-          Güvenli ödeme formu yükleniyor...
-        </div>
-        <p className="text-white/70 text-[13px] mt-2">
-          Bir saniye, kart bilgilerini girebilmen için form hazırlanıyor.
-        </p>
       </div>
-    </>
+    );
+  }
+
+  // fallback → Payment Link butonu (yeni sekme)
+  if (state === "fallback") {
+    return <FallbackButton ctaId={ctaId} />;
+  }
+
+  // loading (initial) → yeşil placeholder
+  return (
+    <div
+      id={ctaId}
+      className="my-6 rounded-[10px] py-10 px-6 text-center scroll-mt-24 shadow-lg shadow-emerald-500/30"
+      style={{ background: GREEN_GRADIENT }}
+    >
+      <div className="text-white font-bold text-[18px] inline-flex items-center gap-3">
+        <span className="inline-block w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+        Güvenli ödeme formu yükleniyor...
+      </div>
+      <p className="text-white/70 text-[13px] mt-2">
+        Bir saniye, kart bilgilerini girebilmen için form hazırlanıyor.
+      </p>
+    </div>
   );
 }
 
-function FallbackButton() {
+function FallbackButton({ ctaId }: { ctaId: string }) {
   return (
     <div className="my-6">
       <a
-        id="final-vip-cta"
+        id={ctaId}
         href={FALLBACK_CHECKOUT_URL}
         target="_blank"
         rel="noopener noreferrer"
