@@ -329,8 +329,8 @@ export default function KayitBasariliContent({
             </p>
           </div>
 
-          {/* 8. Second CTA Block */}
-          <CTABlock thankYouUrl={thankYouUrl} />
+          {/* (Eski 8. Second CTA Block kaldırıldı — bir önceki CTABlock'a
+              çok yakındı, duplikasyon hissi veriyordu.) */}
 
           {/* 9. VIP Member Benefits */}
           <div className="my-10 rounded-[9px] border border-dashed border-[#AA813C]/40 p-6 md:p-10"
