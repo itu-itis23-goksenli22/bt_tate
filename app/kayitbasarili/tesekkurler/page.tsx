@@ -5,7 +5,7 @@ import TesekkurlerContent from "./TesekkurlerContent";
 export const metadata: Metadata = {
   title: "Kayıt Onayı - Ücretsiz AI Semineri | AI Scale",
   description:
-    "Webinar kaydınız onaylandı. Eğitim detaylarınızı kontrol edin!",
+    "Seminer kaydınız onaylandı. Eğitim detaylarınızı kontrol edin!",
   robots: { index: false, follow: false },
 };
 

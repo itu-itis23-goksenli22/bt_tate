@@ -115,25 +115,23 @@ export default function KayitBasariliContent({
               Kaydını Onaylamadan Önce:
             </p>
 
-            {/* Webinar teaser video — SADECE VIP variant'ta (vip-mastermind
-                flow). Default /kayitbasarili (ana sayfa flow) için video yok —
-                user kararı. */}
-            {variant === "vip" && (
-              <div className="max-w-2xl mx-auto mb-8">
-                <div
-                  className="relative w-full overflow-hidden rounded-xl border border-white/10"
-                  style={{ paddingBottom: "56.25%" }}
-                >
-                  <iframe
-                    className="absolute top-0 left-0 w-full h-full"
-                    src="https://www.youtube.com/embed/qQbl1YPaI7k"
-                    title="AI Scale Webinar"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
+            {/* Seminer teaser video — her iki variant'ta (default + vip)
+                göründüğü pozisyon. vip-mastermind/kayitbasarili ile aynı
+                yer ve görsel. */}
+            <div className="max-w-2xl mx-auto mb-8">
+              <div
+                className="relative w-full overflow-hidden rounded-xl border border-white/10"
+                style={{ paddingBottom: "56.25%" }}
+              >
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full"
+                  src="https://www.youtube.com/embed/qQbl1YPaI7k"
+                  title="AI Scale Seminer"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
               </div>
-            )}
+            </div>
 
             {/* Ana mesaj */}
             <p className="text-white text-[22px] md:text-[30px] font-bold leading-snug mb-6 max-w-2xl mx-auto">
@@ -483,7 +481,7 @@ export default function KayitBasariliContent({
               className="block max-w-2xl mx-auto rounded-[10px] bg-[#1a1a1a] border border-white/15 hover:bg-[#222] hover:border-white/25 transition-all px-5 py-4 text-center cursor-pointer"
             >
               <div className="text-white/80 text-[14px] md:text-[15px] font-semibold">
-                Hayır teşekkürler, VIP paketini almadan webinara katılacağım
+                Hayır teşekkürler, VIP paketini almadan seminere katılacağım
               </div>
               <div className="text-white/40 text-[11px] md:text-[12px] mt-1 leading-snug">
                 Bu teklifin sayfadan ayrıldığım anda sonsuza dek kaybolacağını

@@ -36,7 +36,7 @@ export default function BonusSection() {
     <section className="py-16 md:py-24 px-4 bg-gradient-to-b from-transparent via-gold/[0.03] to-transparent">
       <div className="max-w-4xl mx-auto text-center">
         <h2 className="text-2xl md:text-4xl font-bold text-white mb-3">
-          Webinara Katılanlara Özel
+          Seminere Katılanlara Özel
         </h2>
         <p className="text-gold text-3xl md:text-5xl font-bold mb-4">
           $500 Değerinde Bonus Paket

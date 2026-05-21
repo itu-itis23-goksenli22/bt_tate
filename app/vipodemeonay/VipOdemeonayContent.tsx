@@ -69,7 +69,7 @@ export default function VipOdemeonayContent() {
     setWebinarFull(`${day}.${month} ${dayNames[eventDate.getDay()]} 20:00`);
 
     const dateStr = `${year}${month}${day}`;
-    const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent("VIP Webinar - AI Scale - Yapay Zeka ile Para Kazan")}&dates=${dateStr}T200000/${dateStr}T210000&ctz=Europe/Istanbul&details=${encodeURIComponent("VIP Webinar — Canli AI Eğitim\nKatilim linkin email adresine gonderildi.")}&location=${encodeURIComponent("Zoom (Link email ile gonderildi)")}`;
+    const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent("VIP Seminer - AI Scale - Yapay Zeka ile Para Kazan")}&dates=${dateStr}T200000/${dateStr}T210000&ctz=Europe/Istanbul&details=${encodeURIComponent("VIP Seminer — Canli Yapay Zeka Eğitim\nKatilim linkin email adresine gonderildi.")}&location=${encodeURIComponent("Zoom (Link email ile gonderildi)")}`;
     setCalendarUrl(gcalUrl);
 
     if (email) {
@@ -129,7 +129,7 @@ export default function VipOdemeonayContent() {
         {/* 1. Gold Banner */}
         <div className="bg-[#C19D44] text-center py-3 px-4">
           <p className="text-black font-semibold text-[14px] md:text-[16px]">
-            🎉 VIP Üyeliğin Aktif — Webinar: {webinarFull || "..."}
+            🎉 VIP Üyeliğin Aktif — Seminer: {webinarFull || "..."}
           </p>
         </div>
 
@@ -149,8 +149,10 @@ export default function VipOdemeonayContent() {
             <p className="text-white text-[18px] md:text-[22px] font-bold mt-2">
               VIP Üyeliğin Onaylandı 🔒
             </p>
-            <p className="text-white/60 text-[14px] md:text-[15px] mt-2 max-w-md mx-auto">
-              Artık <span className="text-[#D5B356] font-semibold">$2.000+ değerindeki</span> tüm VIP paketine erişimin var.
+            <p className="text-white/65 text-[14px] md:text-[15px] mt-2 max-w-md mx-auto leading-relaxed">
+              VIP üyelik seni{" "}
+              <span className="text-[#D5B356] font-semibold">seminere hazırlayacak</span>
+              {" "}— mutlaka katıl, ayrıcalığını kullan.
             </p>
             {/* Gold line decoration */}
             <div className="flex justify-center mt-3">
@@ -234,58 +236,35 @@ export default function VipOdemeonayContent() {
             </div>
           </div>
 
-          {/* 4. VIP Avantajları Listesi */}
+          {/* 4. Startup Kurma Video Bölümü — VIP avantajları listesi yerine
+              embedded YouTube videosu. Az önce VIP paketine erişen kullanıcı
+              için bonus eğitim: "yapay zeka ile nasıl startup kurulur". */}
           <div
-            className="rounded-[9px] border border-dashed border-[#AA813C]/40 p-6 md:p-8 mb-8"
+            className="rounded-[9px] border border-dashed border-[#AA813C]/40 p-5 md:p-7 mb-8"
             style={{ background: GOLD_BG_SUBTLE }}
           >
-            <h2 className="text-[20px] md:text-[24px] font-extrabold text-center mb-1">
-              VIP Üye Olarak <span className="text-[#D5B356]">Neler</span>
+            <p className="text-[10px] text-white/30 uppercase tracking-[3px] mb-2 text-center">
+              Bonus Eğitim
+            </p>
+            <h2 className="text-[#C19D44] text-[20px] md:text-[24px] font-extrabold text-center mb-3">
+              Yapay Zeka ile Nasıl Startup Kurulur?
             </h2>
-            <h2 className="text-[20px] md:text-[24px] font-extrabold text-center mb-6">
-              Kazandın
-            </h2>
-
-            <div className="space-y-5">
-              <BenefitItem
-                title="Manychat Kurulum Rehberi"
-                value="$497"
-                description="Instagram & Messenger otomasyonlarını adım adım kur — müşterilerine 7/24 otomatik yanıt ver, satışlarını artır."
+            <p className="text-white/65 text-[14px] md:text-[15px] mb-5 leading-relaxed max-w-md mx-auto text-center">
+              Az önce VIP butonuna tıkladın — harika! Bonus olarak, yapay zeka
+              ile sıfırdan startup kurmanın haritasını aşağıdaki videoda
+              anlattım. Seminerden önce mutlaka izle.
+            </p>
+            <div
+              className="relative w-full overflow-hidden rounded-lg border border-white/10"
+              style={{ paddingBottom: "56.25%" }}
+            >
+              <iframe
+                className="absolute top-0 left-0 w-full h-full"
+                src="https://www.youtube.com/embed/BUZh9EfaSyk"
+                title="Yapay Zeka ile Nasıl Startup Kurulur — Baturalp Tunalı"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
               />
-              <BenefitItem
-                title="AI Shopify Kurulum Rehberi"
-                value="$597"
-                description="Yapay zeka destekli araçlarla Shopify mağazanı sıfırdan kur — ürün araştırmasından tasarıma her adım detaylı."
-              />
-              <BenefitItem
-                title="Milyon Dolarlık AI Automation Kiti"
-                value="$997"
-                description="Yılların deneme-yanılmasını atla. Halihazırda milyonlar kazandıran işleri inceleyerek aynı stratejileri kendine uygula."
-              />
-              <BenefitItem
-                title="Lifetime Replay Access"
-                value="$97"
-                description="Etkinliğin bir dakikasını kaçırsan veya tekrar izlemek istersen — kayıtlara SONSUZA KADAR erişim hakkın var."
-              />
-            </div>
-
-            <div className="border-t border-[#AA813C]/30 mt-6 pt-5">
-              <div className="flex justify-between items-center">
-                <span className="text-white/60 text-[14px] font-semibold">
-                  Toplam Değer:
-                </span>
-                <span className="text-[#D5B356] text-[18px] font-extrabold">
-                  $2.188+
-                </span>
-              </div>
-              <div className="flex justify-between items-center mt-1">
-                <span className="text-white text-[14px] font-semibold">
-                  Senin Yatırımın:
-                </span>
-                <span className="text-white text-[14px] font-bold">
-                  Sadece $9.90
-                </span>
-              </div>
             </div>
           </div>
 

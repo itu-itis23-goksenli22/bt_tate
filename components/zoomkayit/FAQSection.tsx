@@ -4,19 +4,19 @@ import { useState } from "react";
 
 const faqs = [
   {
-    question: "Bu webinar gerçekten ücretsiz mi?",
+    question: "Bu seminer gerçekten ücretsiz mi?",
     answer:
       "Evet, %100 ücretsizdir. Herhangi bir ücret talep edilmez. Kayıt olun ve canlı olarak katılın.",
   },
   {
     question: "Teknik bilgi veya deneyim gerekiyor mu?",
     answer:
-      "Hayır, hiçbir teknik bilgi veya önceki deneyim gerekmiyor. Webinar sıfırdan başlayanlar için tasarlanmıştır. Adım adım her şeyi gösteriyoruz.",
+      "Hayır, hiçbir teknik bilgi veya önceki deneyim gerekmiyor. Seminer sıfırdan başlayanlar için tasarlanmıştır. Adım adım her şeyi gösteriyoruz.",
   },
   {
-    question: "Webinara nasıl katılırım?",
+    question: "Seminere nasıl katılırım?",
     answer:
-      "Kayıt olduktan sonra Zoom webinar davetiyesi e-posta adresinize otomatik olarak gönderilecek. Pazar günü 20:00'da linke tıklayarak katılabilirsiniz.",
+      "Kayıt olduktan sonra Zoom seminer davetiyesi e-posta adresinize otomatik olarak gönderilecek. Etkinlik günü 20:00'da linke tıklayarak katılabilirsiniz.",
   },
   {
     question: "Kayıt olduktan sonra ne olacak?",
@@ -24,14 +24,14 @@ const faqs = [
       "E-postanıza Zoom davetiyesi ve hatırlatma mesajları gönderilecek. Ayrıca bonus paketinize nasıl erişeceğiniz hakkında bilgi alacaksınız.",
   },
   {
-    question: "Webinarı kaçırırsam tekrar izleyebilir miyim?",
+    question: "Semineri kaçırırsam tekrar izleyebilir miyim?",
     answer:
-      "Webinar canlı olarak düzenleniyor ve tekrar gösterimi sınırlıdır. En iyi deneyim için canlı katılmanızı öneririz, böylece sorularınızı da sorabilirsiniz.",
+      "Seminer canlı olarak düzenleniyor ve tekrar gösterimi sınırlıdır. En iyi deneyim için canlı katılmanızı öneririz, böylece sorularınızı da sorabilirsiniz.",
   },
   {
     question: "Bu bir satış sunumu mu?",
     answer:
-      "Webinar boyunca gerçek değer ve uygulanabilir stratejiler paylaşıyoruz. Etkinlik sonunda daha ileri düzey eğitim programımızdan bahsediyoruz, ancak bu tamamen opsiyoneldir.",
+      "Seminer boyunca gerçek değer ve uygulanabilir stratejiler paylaşıyoruz. Etkinlik sonunda daha ileri düzey eğitim programımızdan bahsediyoruz, ancak bu tamamen opsiyoneldir.",
   },
 ];
 

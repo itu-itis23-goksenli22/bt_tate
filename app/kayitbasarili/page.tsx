@@ -5,7 +5,7 @@ import KayitBasariliContent from "./KayitBasariliContent";
 export const metadata: Metadata = {
   title: "Kayıt Başarılı - Ücretsiz AI Semineri | AI Scale",
   description:
-    "Webinar kaydınız başarıyla tamamlandı. Bonus paketinizi hemen indirin!",
+    "Seminer kaydınız başarıyla tamamlandı. Bonus paketinizi hemen indirin!",
   robots: { index: false, follow: false },
 };
 
