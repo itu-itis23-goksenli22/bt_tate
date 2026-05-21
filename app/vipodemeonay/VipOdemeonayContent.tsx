@@ -189,14 +189,9 @@ export default function VipOdemeonayContent() {
                 d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"
               />
             </svg>
-            <h2 className="text-[22px] md:text-[28px] font-extrabold text-white mb-2">
+            <h2 className="text-[22px] md:text-[28px] font-extrabold text-white mb-5">
               Yapay Zeka Başlangıç Paketin Hazır
             </h2>
-            <p className="text-white/60 text-[14px] md:text-[15px] mb-5 leading-relaxed max-w-md mx-auto">
-              VIP'in tüm bonus içerikleri — Manychat kurulum rehberi, yapay
-              zeka Shopify rehberi, milyon dolarlık Automation Kit ve daha
-              fazlası — aşağıdaki linkte seni bekliyor.
-            </p>
             <a href={NOTION_URL} target="_blank" rel="noopener noreferrer">
               <button
                 className="text-black font-extrabold text-[16px] md:text-[18px] px-10 py-4 rounded-lg hover:brightness-110 transition-all w-full cursor-pointer"
