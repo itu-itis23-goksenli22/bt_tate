@@ -32,6 +32,7 @@ export default function VipOdemeonayContent() {
   const [webinarDate, setWebinarDate] = useState("");
   const [webinarDay, setWebinarDay] = useState("");
   const [webinarFull, setWebinarFull] = useState("");
+  const [registrationDate, setRegistrationDate] = useState("");
   const [calendarUrl, setCalendarUrl] = useState("");
   const [countdown, setCountdown] = useState({
     hours: "00",
@@ -67,6 +68,12 @@ export default function VipOdemeonayContent() {
     setWebinarDate(`${day}.${month}.${year}`);
     setWebinarDay(dayNames[eventDate.getDay()]);
     setWebinarFull(`${day}.${month} ${dayNames[eventDate.getDay()]} 20:00`);
+
+    // Kayıt tarihi (bugünün tarihi)
+    const tDay = String(turkey.getDate()).padStart(2, "0");
+    const tMonth = String(turkey.getMonth() + 1).padStart(2, "0");
+    const tYear = turkey.getFullYear();
+    setRegistrationDate(`${tDay}.${tMonth}.${tYear}`);
 
     const dateStr = `${year}${month}${day}`;
     const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent("VIP Seminer - AI Scale - Yapay Zeka ile Para Kazan")}&dates=${dateStr}T200000/${dateStr}T210000&ctz=Europe/Istanbul&details=${encodeURIComponent("VIP Seminer — Canli Yapay Zeka Eğitim\nKatilim linkin email adresine gonderildi.")}&location=${encodeURIComponent("Zoom (Link email ile gonderildi)")}`;
@@ -274,6 +281,50 @@ export default function VipOdemeonayContent() {
             <h2 className="text-[22px] md:text-[28px] font-extrabold leading-tight">
               Seminere <span className="text-[#D5B356]">Mutlaka</span> Katıl
             </h2>
+          </div>
+
+          {/* Adım 3 destek kartı — tesekkurler sayfasındaki "Katılım Linkiniz
+              E-posta Adresinize Gönderildi" pattern'i. Zoom link bilgisi +
+              spam folder reminder + kayıt tarihi. */}
+          <div
+            className="mb-8 rounded-[9px] border-2 border-[#C19D44] p-5 md:p-6"
+            style={{ background: GOLD_BG_SUBTLE }}
+          >
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <svg
+                className="w-6 h-6 text-[#C19D44] flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+              <h3 className="text-[18px] md:text-[20px] font-bold text-[#C19D44]">
+                Katılım Linkiniz E-posta Adresinize Gönderildi!
+              </h3>
+            </div>
+            <p className="text-white/70 text-[14px] md:text-[15px] text-center leading-relaxed">
+              E-posta adresinize bir{" "}
+              <strong className="text-white">Zoom katılım linki</strong>{" "}
+              gönderdik.{" "}
+              <strong className="text-white">
+                {webinarDate} {webinarDay} saat 20:00&apos;da
+              </strong>{" "}
+              e-postanızdaki linke tıklayın, Zoom açılacak ve canlı seminere
+              katılacaksınız. E-postayı bulamıyorsanız{" "}
+              <strong className="text-white">spam/gereksiz</strong>{" "}
+              klasörünü de kontrol edin.
+            </p>
+            {registrationDate && (
+              <p className="text-white/40 text-[12px] text-center mt-3">
+                Kayıt tarihiniz: {registrationDate}
+              </p>
+            )}
           </div>
 
           {/* 6. Countdown Timer */}
