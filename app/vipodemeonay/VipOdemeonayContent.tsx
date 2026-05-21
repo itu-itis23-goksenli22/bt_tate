@@ -156,6 +156,9 @@ export default function VipOdemeonayContent() {
             <p className="text-white text-[18px] md:text-[22px] font-bold mt-2">
               VIP Üyeliğin Onaylandı 🔒
             </p>
+            <p className="text-[#C19D44] text-[13px] md:text-[14px] font-semibold mt-3 tracking-wide">
+              ↓ Aşağıdaki adımları sırayla takip et ↓
+            </p>
             {/* Gold line decoration */}
             <div className="flex justify-center mt-3">
               <svg width="200" height="12" viewBox="0 0 200 12">

@@ -105,6 +105,9 @@ export default function TesekkurlerContent() {
             <p className="text-white text-[16px] md:text-[20px] font-semibold mt-2">
               AI Scale Semineri İçin Yeriniz Ayrıldı 🔒
             </p>
+            <p className="text-[#C19D44] text-[13px] md:text-[14px] font-semibold mt-3 tracking-wide">
+              ↓ Aşağıdaki adımları sırayla takip et ↓
+            </p>
             {/* Gold line decoration */}
             <div className="flex justify-center mt-3">
               <svg width="200" height="12" viewBox="0 0 200 12">
