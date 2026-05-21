@@ -286,11 +286,14 @@ export default function VipOdemeonayContent() {
               Seminere <span className="text-[#D5B356]">Mutlaka</span> Katıl
             </h2>
             <p className="text-white/80 text-[14px] md:text-[15px] leading-relaxed max-w-lg mx-auto mb-5">
-              VIP üye olarak seminerde <strong className="text-white">birebir
-              soru-cevap hakkın</strong>, <strong className="text-white">özel
-              bonus ipuçları</strong> ve <strong className="text-white">yalnız
-              VIP'lere açılan özel oturum</strong> seni bekliyor. Bu fırsatları
-              sadece canlı katılanlar yakalar.
+              VIP üye olarak{" "}
+              <strong className="text-white">
+                yalnız VIP'lere özel seminere hazırlık paketi
+              </strong>{" "}
+              ve{" "}
+              <strong className="text-white">özel bonus ipuçları</strong>{" "}
+              seni bekliyor. Bu fırsatları sadece canlı katılanlar
+              yakalar.
             </p>
             <p className="text-[#C19D44] text-[14px] md:text-[15px] font-bold">
               Bu ayrıcalığı kaçırma — bedeli ödedin, değerini al.
