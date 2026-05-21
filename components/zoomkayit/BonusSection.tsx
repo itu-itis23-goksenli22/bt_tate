@@ -1,6 +1,6 @@
 const bonuses = [
   {
-    title: "AI Araçları Başlangıç Kiti + Dizini",
+    title: "Yapay Zeka Araçları Başlangıç Kiti + Dizini",
     value: "$150",
     description:
       "Claude Code, ChatGPT, Cursor, N8N, Midjourney — hangi araç ne işe yarar, hangi iş için hangisini kullanmalısınız. Tüm araçların kategorize edilmiş dizini.",

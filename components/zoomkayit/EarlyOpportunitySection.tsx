@@ -85,7 +85,7 @@ export default function EarlyOpportunitySection() {
             Her bir nokta ≈ 3.2 milyon kişi
           </h3>
           <p className="text-center text-[12px] md:text-[14px] text-[#555] mb-5">
-            2.500 nokta = 8.1 milyar insan. Renk = en ileri AI etkileşimi, Şubat 2026.
+            2.500 nokta = 8.1 milyar insan. Renk = en ileri yapay zeka etkileşimi, Şubat 2026.
           </p>
           <div
             ref={chartRef}
@@ -96,7 +96,7 @@ export default function EarlyOpportunitySection() {
             <div className="flex items-center gap-2">
               <span className="inline-block w-3.5 h-3.5 bg-[#d8d6cf] flex-shrink-0" />
               <span>
-                AI hiç kullanmamış · <strong>~6.8B</strong> (%84)
+                Yapay zeka hiç kullanmamış · <strong>~6.8B</strong> (%84)
               </span>
             </div>
             <div className="flex items-center gap-2">
@@ -125,7 +125,7 @@ export default function EarlyOpportunitySection() {
           <p>
             Yukarıdaki görsel{" "}
             <strong className="text-white">
-              2026 itibarıyla dünyanın AI kullanım durumunu
+              2026 itibarıyla dünyanın yapay zeka kullanım durumunu
             </strong>{" "}
             gösteriyor.
           </p>
@@ -133,7 +133,7 @@ export default function EarlyOpportunitySection() {
             Dünyanın %16'sı ChatGPT'nin ücretsiz versiyonunu kullanmış.
           </p>
           <p>
-            %0.3'ü Claude veya benzer ücretli bir AI aracı kullanmış.
+            %0.3'ü Claude veya benzer ücretli bir yapay zeka aracı kullanmış.
           </p>
           <p>
             Ve dünyanın yalnızca <strong className="text-white">%0.04'ü</strong>{" "}
@@ -157,8 +157,8 @@ export default function EarlyOpportunitySection() {
           </p>
           <p className="text-gold font-semibold text-center text-[16px] md:text-[18px] pt-4">
             {dayName ? `${dayName} gecesi` : "Bu gece"} canlı yayında, bu erken
-            avantajı nasıl kullanacağını ve bir hafta içinde AI ile gelir
-            üretmeye nasıl başlayacağını göstereceğiz.
+            avantajı nasıl kullanacağını ve bir hafta içinde yapay zeka ile
+            gelir üretmeye nasıl başlayacağını göstereceğiz.
           </p>
         </div>
       </div>

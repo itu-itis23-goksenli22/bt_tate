@@ -2,9 +2,9 @@ import Image from "next/image";
 
 const discoveries = [
   {
-    title: "AI Marketing Otomasyonunu Müşteriye Satmak",
+    title: "Yapay Zeka Marketing Otomasyonunu Müşteriye Satmak",
     description:
-      "İşletmelere AI destekli pazarlama otomasyon sistemleri nasıl satılır, nasıl fiyatlandırılır ve nasıl 1.000$+ paketler hâlinde teslim edilir — sıfırdan A'dan Z'ye.",
+      "İşletmelere yapay zeka destekli pazarlama otomasyon sistemleri nasıl satılır, nasıl fiyatlandırılır ve nasıl 1.000$+ paketler hâlinde teslim edilir — sıfırdan A'dan Z'ye.",
   },
   {
     title: "Claude Code ile Kodsuz App Geliştirme",
