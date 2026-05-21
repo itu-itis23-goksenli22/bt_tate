@@ -23,19 +23,19 @@ export default function HeroSection() {
       {/* Main headline */}
       <div className="max-w-4xl mx-auto text-center">
         <div className="inline-block mb-4">
-          <span className="text-gold text-lg md:text-xl font-semibold tracking-wide uppercase">
+          <span className="text-gold text-base md:text-xl font-semibold tracking-wide uppercase">
             Sınırlı Kontenjan Canlı Etkinlik
           </span>
         </div>
 
-        <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white">
+        <h1 className="text-[34px] md:text-5xl lg:text-6xl font-bold leading-[1.15] mb-6 text-white">
           On Yılın{" "}
           <span className="zk-text-gold-gradient">En Büyük Fırsatı</span>{" "}
           Şu An Yaşanıyor —{" "}
           <em className="not-italic">Çoğu Kişinin Haberi Yok…</em>
         </h1>
 
-        <p className="text-white/70 text-base md:text-lg max-w-2xl mx-auto mb-2">
+        <p className="text-white/75 text-[17px] md:text-lg leading-relaxed max-w-2xl mx-auto mb-2">
           Pazar gecesi canlı yayında, AI ile basit işler yaparak nasıl tam
           zamanlı gelir kurabileceğini adım adım göstereceğim. Aşağıdan
           yerini ayır.
