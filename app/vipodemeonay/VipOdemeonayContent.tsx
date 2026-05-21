@@ -231,36 +231,44 @@ export default function VipOdemeonayContent() {
             </div>
           </div>
 
-          {/* 4. Startup Kurma Video Bölümü — VIP avantajları listesi yerine
-              embedded YouTube videosu. Az önce VIP paketine erişen kullanıcı
-              için bonus eğitim: "yapay zeka ile nasıl startup kurulur". */}
+          {/* 4. Startup Kurma Bonus Eğitim — YouTube playlist link butonu
+              (embed yerine). Tıklayan kullanıcı yeni sekmede playlist'i
+              açıyor, böylece tüm video serisine tek seferde erişebilsin. */}
           <div
-            className="rounded-[9px] border border-dashed border-[#AA813C]/40 p-5 md:p-7 mb-8"
+            className="rounded-[9px] border border-dashed border-[#AA813C]/40 p-6 md:p-8 mb-8 text-center"
             style={{ background: GOLD_BG_SUBTLE }}
           >
-            <p className="text-[10px] text-white/30 uppercase tracking-[3px] mb-2 text-center">
+            <p className="text-[10px] text-white/30 uppercase tracking-[3px] mb-2">
               Bonus Eğitim
             </p>
-            <h2 className="text-[#C19D44] text-[20px] md:text-[24px] font-extrabold text-center mb-3">
+            <h2 className="text-[#C19D44] text-[22px] md:text-[26px] font-extrabold mb-3">
               Yapay Zeka ile Nasıl Startup Kurulur?
             </h2>
-            <p className="text-white/65 text-[14px] md:text-[15px] mb-5 leading-relaxed max-w-md mx-auto text-center">
-              Az önce VIP butonuna tıkladın — harika! Bonus olarak, yapay zeka
-              ile sıfırdan startup kurmanın haritasını aşağıdaki videoda
-              anlattım. Seminerden önce mutlaka izle.
+            <p className="text-white/65 text-[14px] md:text-[15px] mb-6 leading-relaxed max-w-md mx-auto">
+              Az önce VIP butonuna tıkladın — harika! Bonus olarak, yapay
+              zeka ile sıfırdan startup kurmanın tam video serisi seni
+              bekliyor. Seminerden önce mutlaka izle.
             </p>
-            <div
-              className="relative w-full overflow-hidden rounded-lg border border-white/10"
-              style={{ paddingBottom: "56.25%" }}
+            <a
+              href="https://youtube.com/playlist?list=PLTxbxLRP7FbhMK-Dh_uWaJrYOLnaJUzyU&si=G1fqnnetUAQGuOLR"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <iframe
-                className="absolute top-0 left-0 w-full h-full"
-                src="https://www.youtube.com/embed/BUZh9EfaSyk"
-                title="Yapay Zeka ile Nasıl Startup Kurulur — Baturalp Tunalı"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
+              <button
+                className="text-black font-extrabold text-[15px] md:text-[17px] px-8 py-3.5 rounded-lg hover:brightness-110 transition-all w-full cursor-pointer inline-flex items-center justify-center gap-2"
+                style={{ background: CTA_GRADIENT }}
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="#FF0000"
+                  viewBox="0 0 24 24"
+                  aria-hidden
+                >
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                </svg>
+                Video Serisini Aç →
+              </button>
+            </a>
           </div>
 
           {/* 5. Seminere Mutlaka Katıl — Ayrıcalık vurgusu */}
