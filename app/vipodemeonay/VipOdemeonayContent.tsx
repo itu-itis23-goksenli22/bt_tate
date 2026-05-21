@@ -245,9 +245,8 @@ export default function VipOdemeonayContent() {
               Yapay Zeka ile Nasıl Startup Kurulur?
             </h2>
             <p className="text-white/65 text-[14px] md:text-[15px] mb-6 leading-relaxed max-w-md mx-auto">
-              Az önce VIP butonuna tıkladın — harika! Bonus olarak, yapay
-              zeka ile sıfırdan startup kurmanın tam video serisi seni
-              bekliyor. Seminerden önce mutlaka izle.
+              Yapay zeka ile sıfırdan startup kurmanın tam video serisi —
+              seminerden önce mutlaka izle.
             </p>
             <a
               href="https://youtube.com/playlist?list=PLTxbxLRP7FbhMK-Dh_uWaJrYOLnaJUzyU&si=G1fqnnetUAQGuOLR"
