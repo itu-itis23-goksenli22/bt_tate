@@ -1,6 +1,6 @@
 export default function HeroSection() {
   return (
-    <section className="relative pt-6 pb-8 px-4">
+    <section className="relative pt-6 pb-2 px-4">
       {/* Trustpilot-style badge */}
       <div className="flex items-center justify-center gap-3 mb-8">
         <div className="flex items-center gap-1 bg-[#00B67A] px-3 py-1 rounded">
@@ -35,7 +35,7 @@ export default function HeroSection() {
           <em className="not-italic">Çoğu Kişinin Haberi Yok…</em>
         </h1>
 
-        <p className="text-white/70 text-base md:text-lg max-w-2xl mx-auto mb-8">
+        <p className="text-white/70 text-base md:text-lg max-w-2xl mx-auto mb-2">
           Pazar gecesi canlı yayında, AI ile basit işler yaparak nasıl tam
           zamanlı gelir kurabileceğini adım adım göstereceğim. Aşağıdan
           yerini ayır.
