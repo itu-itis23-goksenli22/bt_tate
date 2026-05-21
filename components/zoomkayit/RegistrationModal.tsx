@@ -200,7 +200,7 @@ export default function RegistrationModal({
             &ldquo;Evet, Yerimi Ayırt&rdquo;
           </h2>
           <p className="text-xl md:text-2xl font-bold text-white text-center mb-6">
-            Bu Webinar İçin!
+            Bu ÜCRETSİZ Webinar İçin!
           </p>
 
           {/* Date box */}

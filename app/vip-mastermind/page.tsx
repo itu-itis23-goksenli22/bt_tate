@@ -19,13 +19,13 @@ import CountdownTimer from "@/components/zoomkayit/CountdownTimer";
 import RegistrationForm from "@/components/zoomkayit/RegistrationForm";
 
 export const metadata: Metadata = {
-  title: "AI Scale | On Yılın En Büyük Fırsatı Şu An Yaşanıyor",
+  title: "AI Scale | Ücretsiz AI Webinarı — On Yılın En Büyük Fırsatı",
   description:
-    "Her gün 20:00'da canlı AI webinarına katılın. AI ile basit işler yaparak tam zamanlı gelir kuran sistemi öğrenin. Çoğu kişinin haberi bile yok — sınırlı kontenjan.",
+    "Her gün 20:00'da canlı %100 ücretsiz AI webinarına katılın. AI ile basit işler yaparak tam zamanlı gelir kuran sistemi öğrenin. Çoğu kişinin haberi bile yok — sınırlı kontenjan.",
   openGraph: {
-    title: "AI Scale | On Yılın En Büyük Fırsatı",
+    title: "AI Scale | Ücretsiz AI Webinarı",
     description:
-      "AI ile tam zamanlı gelir kurmanın haritası — canlı webinar.",
+      "AI ile tam zamanlı gelir kurmanın haritası — %100 ücretsiz canlı webinar.",
     type: "website",
   },
 };
@@ -86,7 +86,7 @@ export default function VipMastermindPage() {
             <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            Sınırlı Kontenjan
+            %100 Ücretsiz
           </div>
         </div>
       </div>

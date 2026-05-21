@@ -24,7 +24,7 @@ export default function HeroSection() {
       <div className="max-w-4xl mx-auto text-center">
         <div className="inline-block mb-4">
           <span className="text-gold text-base md:text-xl font-semibold tracking-wide uppercase">
-            Sınırlı Kontenjan Canlı Etkinlik
+            %100 Ücretsiz Canlı Etkinlik
           </span>
         </div>
 

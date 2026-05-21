@@ -5,13 +5,13 @@ import CountdownTimer from "@/components/zoomkayit/CountdownTimer";
 import RegistrationForm from "@/components/zoomkayit/RegistrationForm";
 
 export const metadata: Metadata = {
-  title: "AI Scale | On Yılın En Büyük Fırsatı Şu An Yaşanıyor",
+  title: "AI Scale | Ücretsiz AI Webinarı — On Yılın En Büyük Fırsatı",
   description:
-    "Her gün 20:00'da canlı AI webinarına katılın. AI ile basit işler yaparak tam zamanlı gelir kuran sistemi öğrenin. Çoğu kişinin haberi bile yok — sınırlı kontenjan.",
+    "Her gün 20:00'da canlı %100 ücretsiz AI webinarına katılın. AI ile basit işler yaparak tam zamanlı gelir kuran sistemi öğrenin. Çoğu kişinin haberi bile yok — sınırlı kontenjan.",
   openGraph: {
-    title: "AI Scale | On Yılın En Büyük Fırsatı",
+    title: "AI Scale | Ücretsiz AI Webinarı",
     description:
-      "AI ile tam zamanlı gelir kurmanın haritası — canlı webinar.",
+      "AI ile tam zamanlı gelir kurmanın haritası — %100 ücretsiz canlı webinar.",
     type: "website",
   },
 };
@@ -38,19 +38,6 @@ export default function HomePage() {
       {/* Hero + Registration Section */}
       <div className="bg-gradient-to-b from-black via-[#0a0a0a] to-black">
         <HeroSection />
-
-        {/* YouTube Video Embed */}
-        <div className="max-w-2xl mx-auto px-4 mb-8">
-          <div className="relative w-full overflow-hidden rounded-xl border border-white/10" style={{ paddingBottom: "56.25%" }}>
-            <iframe
-              className="absolute top-0 left-0 w-full h-full"
-              src="https://www.youtube.com/embed/qQbl1YPaI7k"
-              title="AI Scale Webinar"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        </div>
 
         <CountdownTimer />
 
@@ -85,7 +72,7 @@ export default function HomePage() {
             <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            Sınırlı Kontenjan
+            %100 Ücretsiz
           </div>
         </div>
       </div>

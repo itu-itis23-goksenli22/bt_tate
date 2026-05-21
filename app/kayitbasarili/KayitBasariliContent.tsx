@@ -115,23 +115,23 @@ export default function KayitBasariliContent({
               Kaydını Onaylamadan Önce:
             </p>
 
-            {/* VIP variant: webinar teaser video — sadece /vip-mastermind flow'unda görünür */}
-            {variant === "vip" && (
-              <div className="max-w-2xl mx-auto mb-8">
-                <div
-                  className="relative w-full overflow-hidden rounded-xl border border-white/10"
-                  style={{ paddingBottom: "56.25%" }}
-                >
-                  <iframe
-                    className="absolute top-0 left-0 w-full h-full"
-                    src="https://www.youtube.com/embed/qQbl1YPaI7k"
-                    title="AI Scale VIP Webinar"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
+            {/* Webinar teaser video — her iki variant'ta (default + vip) görünür.
+                Ana sayfanın hero'sundan kaldırılıp buraya alındı — kullanıcı
+                kayıt sonrası ilk göreceği şey video, sonra BEKLE upsell akışı. */}
+            <div className="max-w-2xl mx-auto mb-8">
+              <div
+                className="relative w-full overflow-hidden rounded-xl border border-white/10"
+                style={{ paddingBottom: "56.25%" }}
+              >
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full"
+                  src="https://www.youtube.com/embed/qQbl1YPaI7k"
+                  title="AI Scale Webinar"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
               </div>
-            )}
+            </div>
 
             {/* Ana mesaj */}
             <p className="text-white text-[22px] md:text-[30px] font-bold leading-snug mb-6 max-w-2xl mx-auto">
