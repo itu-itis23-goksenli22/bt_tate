@@ -114,33 +114,51 @@ export default function TesekkurlerContent() {
             </div>
           </div>
 
-          {/* Email Notification Banner - gold bordered card */}
-          <div className="mb-8 rounded-[9px] border-2 border-[#C19D44] p-5 md:p-6"
+          {/* Email Notification Banner — başlığa "Seminere Mutlaka Katıl"
+              vurgusu eklendi. */}
+          <div className="mb-6 rounded-[9px] border-2 border-[#C19D44] p-5 md:p-6 text-center"
             style={{ background: GOLD_BG_SUBTLE }}>
+            <h2 className="text-[22px] md:text-[28px] font-extrabold leading-tight mb-4">
+              Seminere <span className="text-[#D5B356]">Mutlaka</span> Katıl
+            </h2>
+            <div className="border-t border-[#C19D44]/30 my-4" />
             <div className="flex items-center justify-center gap-2 mb-3">
               <svg className="w-6 h-6 text-[#C19D44] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
-              <h2 className="text-[18px] md:text-[20px] font-bold text-[#C19D44]">
-                Katılım Linkiniz E-posta Adresinize Gönderildi!
-              </h2>
+              <h3 className="text-[16px] md:text-[18px] font-bold text-[#C19D44]">
+                Katılım Linkiniz E-posta Adresine Gönderildi
+              </h3>
             </div>
-            <p className="text-white/70 text-[14px] md:text-[15px] text-center leading-relaxed">
-              E-posta adresinize bir <strong className="text-white">Zoom katılım linki</strong> gönderdik.{" "}
+            <p className="text-white/70 text-[14px] md:text-[15px] leading-relaxed">
+              E-posta adresine bir <strong className="text-white">Zoom katılım linki</strong> gönderdik.{" "}
               <strong className="text-white">{webinarDate} {webinarDay} saat 20:00{"'"}da</strong>{" "}
-              e-postanızdaki linke tıklayın, Zoom açılacak ve canlı seminere katılacaksınız.
-              E-postayı bulamıyorsanız <strong className="text-white">spam/gereksiz</strong> klasörünü de kontrol edin.
+              e-postandaki linke tıkla, Zoom açılacak ve canlı seminere katılacaksın.
+              E-postayı bulamazsan <strong className="text-white">spam/gereksiz</strong> klasörünü de kontrol et.
             </p>
             {registrationDate && (
-              <p className="text-white/40 text-[12px] text-center mt-3">
-                Kayıt tarihiniz: {registrationDate}
+              <p className="text-white/40 text-[12px] mt-3">
+                Kayıt tarihin: {registrationDate}
               </p>
             )}
           </div>
 
-          {/* 3. Video */}
-          <div className="mb-8 rounded-[9px] border border-dashed border-[#AA813C]/50 p-2"
+          {/* Adım akış oku */}
+          <div className="flex justify-center -mt-2 mb-2">
+            <svg className="w-6 h-6 text-[#C19D44]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+
+          {/* ADIM 1 — Sana Özel Mesaj video (Baturalp) */}
+          <div className="mb-6 rounded-[9px] border border-dashed border-[#AA813C]/50 p-5 md:p-6"
             style={{ background: GOLD_BG_SUBTLE }}>
+            <p className="text-[#C19D44] text-[11px] md:text-[12px] font-extrabold tracking-[4px] uppercase mb-3 text-center">
+              Adım 1
+            </p>
+            <p className="text-[#C19D44] text-[18px] md:text-[20px] font-extrabold mb-4 text-center">
+              🎥 Seminerde Görüşürüz
+            </p>
             <div className="relative aspect-video bg-black rounded-md overflow-hidden">
               <iframe
                 className="absolute inset-0 w-full h-full"
@@ -151,6 +169,57 @@ export default function TesekkurlerContent() {
                 allowFullScreen
               />
             </div>
+          </div>
+
+          {/* Adım akış oku */}
+          <div className="flex justify-center -mt-2 mb-2">
+            <svg className="w-6 h-6 text-[#C19D44]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+
+          {/* ADIM 2 — Seminer Öncesi Bonus Eğitim (yeşil "Tıkla, izle" buton) */}
+          <div
+            className="rounded-[9px] border-2 border-[#00b09b]/60 p-6 md:p-8 mb-6 text-center"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(0,176,155,0.10) 0%, rgba(150,201,61,0.06) 100%)",
+            }}
+          >
+            <p className="text-[#96c93d] text-[11px] md:text-[12px] font-extrabold tracking-[4px] uppercase mb-3">
+              Adım 2
+            </p>
+            <h2 className="text-white text-[22px] md:text-[26px] font-extrabold mb-3">
+              Seminer Öncesi İzlemen Gereken Bonus Eğitim
+            </h2>
+            <p className="text-white/65 text-[14px] md:text-[15px] mb-6 leading-relaxed max-w-md mx-auto">
+              Yapay zeka ile sıfırdan startup kurmanın tam video serisi.
+            </p>
+            <a
+              href="https://youtube.com/playlist?list=PLTxbxLRP7FbhMK-Dh_uWaJrYOLnaJUzyU&si=G1fqnnetUAQGuOLR"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <button
+                className="text-white font-extrabold text-[16px] md:text-[18px] px-10 py-4 rounded-lg hover:brightness-110 transition-all w-full cursor-pointer inline-flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/30"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)",
+                }}
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+                Tıkla, izle
+              </button>
+            </a>
+          </div>
+
+          {/* Adım akış oku */}
+          <div className="flex justify-center -mt-2 mb-2">
+            <svg className="w-6 h-6 text-[#C19D44]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
           </div>
 
           {/* 4. Countdown Timer */}
