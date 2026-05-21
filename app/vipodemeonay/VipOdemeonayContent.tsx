@@ -156,11 +156,6 @@ export default function VipOdemeonayContent() {
             <p className="text-white text-[18px] md:text-[22px] font-bold mt-2">
               VIP Üyeliğin Onaylandı 🔒
             </p>
-            <p className="text-white/65 text-[14px] md:text-[15px] mt-2 max-w-md mx-auto leading-relaxed">
-              VIP üyelik seni{" "}
-              <span className="text-[#D5B356] font-semibold">seminere hazırlayacak</span>
-              {" "}— mutlaka katıl, ayrıcalığını kullan.
-            </p>
             {/* Gold line decoration */}
             <div className="flex justify-center mt-3">
               <svg width="200" height="12" viewBox="0 0 200 12">

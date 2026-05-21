@@ -86,56 +86,90 @@ export async function sendCourseWelcomeEmail(to: string) {
 }
 
 /* ─────────────────────────────────────────────────────────────────────
- * 2) VIP Upsell — $9.90 alıcıları (seminer hazırlık + topluluk teaser)
+ * 2) VIP Upsell — $9.90 alıcıları (yeni versiyon — /vipodemeonay
+ *    sayfasındaki paket/seminer akışıyla birebir uyumlu).
+ *    İçerik 3 kart: (1) Yapay Zeka Başlangıç Paketi'ne eriş,
+ *    (2) Bonus Eğitim Video Serisi, (3) Seminere mutlaka katıl.
  * ───────────────────────────────────────────────────────────────────── */
+const BONUS_PLAYLIST =
+  "https://youtube.com/playlist?list=PLTxbxLRP7FbhMK-Dh_uWaJrYOLnaJUzyU&si=G1fqnnetUAQGuOLR";
+
 function vipUpsellBody(): string {
   return `
-    <p>Selam,</p>
-    <p>VIP üyeliğin için teşekkürler! Harika bir karar verdin, aramıza hoş geldin. 🎉</p>
-    <p>
-      Sana, seminerden mümkün olan en yüksek faydayı alabilmen için özel olarak hazırladığımız
-      <strong>Yapay Zeka Başlangıç Paketi Notion şablonunu</strong> gönderiyoruz.
+    <p style="font-size:16px;margin:0 0 14px 0;">Selam,</p>
+    <p style="margin:0 0 14px 0;">
+      <strong>VIP üyeliğin onaylandı 🔒</strong> — aramıza hoş geldin!
+      Aşağıda VIP üyeliğinle birlikte gelen 3 şeye buradan ulaşabilirsin.
     </p>
-    <div style="background:#f0f9ff;border-left:4px solid #2563eb;padding:14px 16px;margin:20px 0;border-radius:4px;">
-      <p style="margin:0 0 6px 0;"><strong>🎯 Bu pakete neden ihtiyacın var?</strong></p>
-      <p style="margin:0;">
-        Seminer öncesinde bu rehberleri inceleyerek temel bilgileri öğrenirsin —
-        böylece seminerde ileri seviye taktiklere odaklanabilirsin.
-        Hazırlanmış olarak gelen üyeler kat kat daha fazla sonuç alıyor.
+
+    <!-- 1) Yapay Zeka Başlangıç Paketi -->
+    <div style="border:2px solid #C19D44;border-radius:9px;padding:20px;margin:20px 0;background:#fffaf0;">
+      <p style="margin:0 0 6px 0;color:#AA813C;font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;">
+        1 — Bunlara Eriş
       </p>
-    </div>
-    <p><strong>📦 İçeride neler var?</strong></p>
-    <ul style="padding-left:20px;margin:12px 0;">
-      <li><strong>Manychat Kurulum Rehberi ve Otomasyonlar</strong> — sistemlerini hemen kurabilirsin</li>
-      <li><strong>7 Günlük Hızlandırılmış Program</strong> — ilk haftadan ivme yakala</li>
-      <li><strong>Kanıtlanmış Mesajlaşma Çerçeveleri</strong> & <strong>Yapay Zeka Araçları Dizini</strong></li>
-      <li><strong>Pazar Analitiği Raporu, HOOK Rehberi</strong> ve <strong>Reklam Yönetimi/Büyütme</strong> PDF'leri</li>
-    </ul>
-    <p style="margin:24px 0;">
+      <p style="margin:0 0 10px 0;font-size:19px;font-weight:800;color:#1a1a1a;">
+        📦 Yapay Zeka Başlangıç Paketi
+      </p>
+      <p style="margin:0 0 14px 0;color:#444;">
+        Manychat kurulum rehberi, 7 günlük hızlandırılmış program, mesajlaşma
+        çerçeveleri, HOOK rehberi, reklam yönetimi PDF'leri ve daha fazlası —
+        hepsi tek Notion sayfasında.
+      </p>
       <a href="${NOTION_LINK}"
-         style="display:inline-block;background:#1a1a1a;color:#ffffff;padding:14px 22px;border-radius:8px;text-decoration:none;font-weight:600;">
-        👉 Yapay Zeka Başlangıç Paketi'ne Buradan Eriş
+         style="display:inline-block;background:#C19D44;color:#1a1a1a;padding:13px 22px;border-radius:8px;text-decoration:none;font-weight:700;">
+        👉 Paketi Aç
       </a>
-    </p>
-    <p style="color:#555;font-size:13px;">
-      (Açılan sayfada sağ üstteki <strong>"Duplicate"</strong> / <strong>"Çoğalt"</strong> butonuna basarak
-      şablonu kendi Notion alanına kopyalayabilirsin.)
-    </p>
-    <div style="background:#ecfdf5;border-left:4px solid #10b981;padding:14px 16px;margin:24px 0;border-radius:4px;">
-      <p style="margin:0 0 6px 0;"><strong>🚀 Sonraki Adım</strong></p>
-      <p style="margin:0;">
-        Seminere mutlaka katıl ve <strong>baştan sona izle</strong> — diğer katılımcılardan
-        bir adım önde başlayacaksın. Bu paketi önceden incelediğin için seminerde paylaşılan
-        ileri seviye stratejileri ve sürpriz fırsatları çok daha hızlı uygulamaya
-        dökebileceksin. Seminerin sonuna kadar kalanlar her zaman en çok kazananlar oluyor.
+      <p style="margin:10px 0 0 0;color:#777;font-size:12px;">
+        Sağ üstteki <strong>"Duplicate"</strong> / <strong>"Çoğalt"</strong>
+        butonuyla kendi Notion alanına kopyalayabilirsin.
       </p>
     </div>
-    <p>
+
+    <!-- 2) Bonus Eğitim Video Serisi -->
+    <div style="border:2px solid #00b09b;border-radius:9px;padding:20px;margin:20px 0;background:#f0fdf9;">
+      <p style="margin:0 0 6px 0;color:#00876d;font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;">
+        2 — Seminer Öncesi İzle
+      </p>
+      <p style="margin:0 0 10px 0;font-size:19px;font-weight:800;color:#1a1a1a;">
+        🎥 Bonus Eğitim Video Serisi
+      </p>
+      <p style="margin:0 0 14px 0;color:#444;">
+        Yapay zeka ile sıfırdan startup kurmanın tam video serisi. Semineri
+        en yüksek faydayla geçirmek için önceden bu seriyi izlemen bekleniyor.
+      </p>
+      <a href="${BONUS_PLAYLIST}"
+         style="display:inline-block;background:#00b09b;background-image:linear-gradient(135deg,#00b09b 0%,#96c93d 100%);color:#ffffff;padding:13px 22px;border-radius:8px;text-decoration:none;font-weight:700;">
+        ▶ Tıkla, İzle
+      </a>
+    </div>
+
+    <!-- 3) Seminere Mutlaka Katıl -->
+    <div style="border:2px solid #C19D44;border-radius:9px;padding:20px;margin:20px 0;background:#fffaf0;">
+      <p style="margin:0 0 6px 0;color:#AA813C;font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;">
+        3 — Unutma
+      </p>
+      <p style="margin:0 0 10px 0;font-size:19px;font-weight:800;color:#1a1a1a;">
+        📅 Seminere Mutlaka Katıl
+      </p>
+      <p style="margin:0 0 6px 0;color:#444;">
+        Seminer linkin sana ayrı bir mailde gönderildi. Zoom üzerinden canlı
+        yayın — saat geldiğinde tek tıkla katılacaksın.
+      </p>
+      <div style="background:#fff8e1;border-left:4px solid #f5b400;padding:12px 14px;margin:14px 0 0 0;border-radius:4px;">
+        <p style="margin:0;color:#5a4a00;font-size:13px;">
+          <strong>İpucu:</strong> Seminere baştan sona katılan üyeler her zaman
+          en çok kazananlar oluyor — başta paylaşılan kurulumları kaçırma,
+          sonda da sürpriz fırsatlar var.
+        </p>
+      </div>
+    </div>
+
+    <p style="margin:24px 0 14px 0;">
       Aklına takılan bir şey olursa
-      <a href="mailto:info@aiscale.app" style="color:#2563eb;">info@aiscale.app</a>
+      <a href="mailto:info@aiscale.app" style="color:#AA813C;">info@aiscale.app</a>
       adresinden ulaşabilirsin.
     </p>
-    <p>Başarılar ve bol otomasyonlu günler!<br /><strong>AI Scale Ekibi</strong></p>
+    <p style="margin:0;">Seminerde görüşürüz!<br /><strong>AI Scale Ekibi</strong></p>
   `;
 }
 
@@ -143,7 +177,7 @@ export async function sendVipUpsellEmail(to: string) {
   const { data, error } = await resend.emails.send({
     from: FROM,
     to: [to],
-    subject: '🎁 Seminere Hazırlık Paketin Hazır! "Yapay Zeka Başlangıç Paketi" 🚀',
+    subject: "🔒 VIP Üyeliğin Hazır — Paketin, Bonus Eğitim ve Seminer Bilgileri",
     html: shell(vipUpsellBody()),
   });
   if (error) throw error;
