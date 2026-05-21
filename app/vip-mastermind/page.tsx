@@ -30,9 +30,6 @@ export const metadata: Metadata = {
   },
 };
 
-const ThisSundayTeachSection = dynamic(
-  () => import("@/components/zoomkayit/ThisSundayTeachSection")
-);
 const EarlyOpportunitySection = dynamic(
   () => import("@/components/zoomkayit/EarlyOpportunitySection")
 );
@@ -93,9 +90,6 @@ export default function VipMastermindPage() {
           </div>
         </div>
       </div>
-
-      {/* This Sunday I'll Teach — talep argumentation + LIVE WEBINAR */}
-      <ThisSundayTeachSection />
 
       {/* For Once In Your Life You Are Early — chart + Facebook analogy */}
       <EarlyOpportunitySection />
