@@ -19,13 +19,13 @@ import CountdownTimer from "@/components/zoomkayit/CountdownTimer";
 import RegistrationForm from "@/components/zoomkayit/RegistrationForm";
 
 export const metadata: Metadata = {
-  title: "AI Scale | Aylık 10.000$ Kazandıran Yapay Zeka Sistemi",
+  title: "AI Scale | On Yılın En Büyük Fırsatı Şu An Yaşanıyor",
   description:
-    "Her gün 20:00'da canlı AI webinarına katılın. Yapay zeka ile aylık 10.000$+ kazandıran kanıtlanmış sistem. Sınırlı kontenjan!",
+    "Her gün 20:00'da canlı AI webinarına katılın. AI ile basit işler yaparak tam zamanlı gelir kuran sistemi öğrenin. Çoğu kişinin haberi bile yok — sınırlı kontenjan.",
   openGraph: {
-    title: "AI Scale | Aylık 10.000$ AI Sistemi",
+    title: "AI Scale | On Yılın En Büyük Fırsatı",
     description:
-      "Aylık 10.000$ Kazandıran Yapay Zeka Sistemi - Canlı Etkinlik",
+      "AI ile tam zamanlı gelir kurmanın haritası — canlı webinar.",
     type: "website",
   },
 };

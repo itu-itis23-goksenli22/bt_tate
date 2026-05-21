@@ -29,16 +29,16 @@ export default function HeroSection() {
         </div>
 
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white">
-          <span className="zk-text-gold-gradient">Aylık 10.000$</span>{" "}
-          Kazandıran{" "}
-          <em className="not-italic zk-text-gold-gradient">
-            Yapay Zeka Sistemi
-          </em>
+          On Yılın{" "}
+          <span className="zk-text-gold-gradient">En Büyük Fırsatı</span>{" "}
+          Şu An Yaşanıyor —{" "}
+          <em className="not-italic">Çoğu Kişinin Haberi Yok…</em>
         </h1>
 
         <p className="text-white/70 text-base md:text-lg max-w-2xl mx-auto mb-8">
-          Stok yok. Depo yok. Teknik bilgi gerekmiyor. Sadece siz, yapay zeka
-          ve kanıtlanmış bir sistem.
+          Pazar gecesi canlı yayında, AI ile basit işler yaparak nasıl tam
+          zamanlı gelir kurabileceğini adım adım göstereceğim. Aşağıdan
+          yerini ayır.
         </p>
       </div>
     </section>
