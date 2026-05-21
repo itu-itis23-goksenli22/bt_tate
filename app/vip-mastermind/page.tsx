@@ -91,9 +91,6 @@ export default function VipMastermindPage() {
         </div>
       </div>
 
-      {/* For Once In Your Life You Are Early — chart + Facebook analogy */}
-      <EarlyOpportunitySection />
-
       {/* Discover Section */}
       <DiscoverSection />
 
@@ -117,6 +114,9 @@ export default function VipMastermindPage() {
 
       {/* FAQ Section */}
       <FAQSection />
+
+      {/* For Once In Your Life You Are Early — sayfanın en altı, footer üstü */}
+      <EarlyOpportunitySection />
 
       {/* Footer */}
       <Footer />

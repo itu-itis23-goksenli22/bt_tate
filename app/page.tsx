@@ -90,9 +90,6 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* For Once In Your Life You Are Early — chart + Facebook analogy */}
-      <EarlyOpportunitySection />
-
       {/* Discover Section */}
       <DiscoverSection />
 
@@ -116,6 +113,10 @@ export default function HomePage() {
 
       {/* FAQ Section */}
       <FAQSection />
+
+      {/* For Once In Your Life You Are Early — chart + Facebook analogy
+          (sayfanın en altında, footer'dan hemen önce — final FOMO push) */}
+      <EarlyOpportunitySection />
 
       {/* Footer */}
       <Footer />
