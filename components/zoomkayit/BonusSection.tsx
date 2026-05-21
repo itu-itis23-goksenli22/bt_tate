@@ -1,33 +1,33 @@
 const bonuses = [
   {
-    title: "AI Araçları Başlangıç Kiti",
+    title: "AI Araçları Başlangıç Kiti + Dizini",
     value: "$150",
     description:
-      "ChatGPT, Midjourney ve diğer AI araçlarını en verimli şekilde kullanmanız için hazırlanmış kapsamlı rehber.",
+      "Claude Code, ChatGPT, Cursor, N8N, Midjourney — hangi araç ne işe yarar, hangi iş için hangisini kullanmalısınız. Tüm araçların kategorize edilmiş dizini.",
   },
   {
-    title: "Freelance Hızlı Başlangıç Şablonları",
-    value: "$100",
-    description:
-      "Upwork ve Fiverr profilleriniz için hazır şablonlar, teklif yazma rehberi ve ilk müşteri bulma stratejileri.",
-  },
-  {
-    title: "E-Ticaret Ürün Araştırma Rehberi",
+    title: "Manychat DM Otomasyon Şablonu",
     value: "$120",
     description:
-      "Kazandıran ürünleri bulmak için AI destekli araştırma yöntemleri ve Shopify mağaza kurulum rehberi.",
+      "%64 click-through ile çalışan gerçek funnel'ı (197 sent / 95.4% open / 26 yanıt) hazır import edilebilir Manychat şablonu olarak indirin.",
   },
   {
-    title: "Sosyal Medya İçerik Takvimi",
+    title: "N8N Workflow Paketi (3 Hazır JSON)",
+    value: "$100",
+    description:
+      "YouTube Shorts Otomasyonu, LinkedIn Agent ve 360 N8N Automation — üç tam workflow, JSON olarak indir, kendi N8N'inde anında çalıştır.",
+  },
+  {
+    title: "Hook Rehberi + Mesajlaşma Çerçeveleri PDF",
     value: "$80",
     description:
-      "30 günlük hazır içerik planı, viral içerik formülleri ve AI ile içerik üretme workflow'u.",
+      "200'den fazla test edilmiş hook formülü, kanıtlanmış mesajlaşma çerçeveleri ve kendi içeriğine uyarlama şablonları — niye işliyor sebepleriyle birlikte.",
   },
   {
-    title: "Özel Discord Topluluğu Erişimi",
+    title: "Sıfırdan Reklam Yönetim Rehberi PDF",
     value: "$50",
     description:
-      "Diğer katılımcılarla networking yapın, sorularınızı sorun ve birlikte büyüyün.",
+      "Reklamlarınızı sıfırdan kurun, ölçeklenebilir akışa çevirin ve büyütün — 1.4 MB tam rehber, adım adım uygulanabilir.",
   },
 ];
 

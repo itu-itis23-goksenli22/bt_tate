@@ -2,34 +2,34 @@ import Image from "next/image";
 
 const discoveries = [
   {
-    title: "AI Otomasyonu ile Gelir Üretin",
+    title: "AI Marketing Otomasyonunu Müşteriye Satmak",
     description:
-      "ChatGPT ve Midjourney gibi araçlarla otomatik gelir sistemleri kurmayı öğrenin... Teknik bilgiye gerek kalmadan, sıfırdan başlayarak.",
+      "İşletmelere AI destekli pazarlama otomasyon sistemleri nasıl satılır, nasıl fiyatlandırılır ve nasıl 1.000$+ paketler hâlinde teslim edilir — sıfırdan A'dan Z'ye.",
   },
   {
-    title: "Freelance Stratejiler ile Hızlı Kazanç",
+    title: "Claude Code ile Kodsuz App Geliştirme",
     description:
-      "Upwork ve Fiverr gibi platformlarda yapay zeka destekli hizmetler sunarak ilk müşterilerinizi nasıl bulacağınızı keşfedin.",
+      "Tek satır kod yazmadan Claude Code ile gerçek müşteri uygulamaları çıkarın — danışmanlık paketinizin içinde ya da bağımsız ürün olarak satın.",
   },
   {
-    title: "E-Ticaret Sırlarını Açığa Çıkarın",
+    title: "Manychat DM Otomasyon Sistemi",
     description:
-      "Shopify ve Etsy üzerinde yapay zekanın gücüyle ürün bulma, listeleme ve satış yapma stratejilerini öğrenin.",
+      "Instagram DM'lerini 7/24 otomatik yöneten, kalifiye randevuları takvime düşüren funnel'ı adım adım kurun — gerçek %64 click-through örneğiyle.",
   },
   {
-    title: "Sosyal Medyada Patlama Yapın",
+    title: "N8N Workflow ile Otomatik Gelir Akışı",
     description:
-      "Instagram, TikTok ve YouTube'da yapay zeka ile içerik üretip organik büyüme sağlamanın formülünü öğrenin.",
+      "YouTube Shorts otomasyonu, LinkedIn agent, kalori sayacı app gibi hazır workflow'larla servisleştirilebilir gelir kaynakları üretin.",
   },
   {
-    title: "Copywriting Temelleri ile Satışlarınızı Katlayın",
+    title: "Hook + Mesajlaşma Çerçeveleri",
     description:
-      "AI destekli copywriting ile satış yapan metinler yazmanın ve dönüşüm oranlarınızı artırmanın yollarını keşfedin.",
+      "200'den fazla test edilmiş hook formülü ve kanıtlanmış mesajlaşma çerçeveleriyle her platformda etkileşim ve dönüşüm katlayın.",
   },
   {
-    title: "İlk 1,000$ Yol Haritanızı Alın",
+    title: "Sıfırdan Ölçeklenebilir Reklam Akışı",
     description:
-      "ARTIK: Adım adım ilk 1,000$'ınızı kazanacağınız net bir yol haritası ile webinardan ayrılın... ve nasıl 10,000$'a ölçekleyeceğinizi görün!",
+      "Sıfır bütçeden başlayıp tutarlı kalifiye lead üreten reklam sistemine geçişin tam rehberi — kendi pazarlamanız ya da müşterileriniz için.",
   },
 ];
 
