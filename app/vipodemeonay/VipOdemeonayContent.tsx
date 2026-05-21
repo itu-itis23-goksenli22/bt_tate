@@ -185,7 +185,6 @@ export default function VipOdemeonayContent() {
             <p className="text-white/70 text-[14px] md:text-[15px] leading-relaxed max-w-md mx-auto">
               VIP paketin{" "}
               <strong className="text-white">e-posta adresine gönderildi</strong>.
-              Gelen kutunu kontrol et — paketi açan dosya orada seni bekliyor.
             </p>
             <p className="text-white/40 text-[12px] mt-3 italic">
               Gelen kutunda göremezsen <strong>Spam / Promosyon</strong> klasörlerine de bakmayı unutma.
@@ -261,7 +260,21 @@ export default function VipOdemeonayContent() {
             </a>
           </div>
 
-          {/* (Eski "Seminere Mutlaka Katıl" section kaldırıldı — user kararı. */}
+          {/* ADIM 3 — Seminere Mutlaka Katıl (sadece heading, body yok) */}
+          <div
+            className="rounded-[9px] border-2 border-[#C19D44]/60 p-6 md:p-8 mb-6 text-center"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(193,157,68,0.18) 0%, rgba(193,157,68,0.06) 100%)",
+            }}
+          >
+            <p className="text-[#C19D44] text-[11px] md:text-[12px] font-extrabold tracking-[4px] uppercase mb-3">
+              Adım 3
+            </p>
+            <h2 className="text-[22px] md:text-[28px] font-extrabold leading-tight">
+              Seminere <span className="text-[#D5B356]">Mutlaka</span> Katıl
+            </h2>
+          </div>
 
           {/* 6. Countdown Timer */}
           <div className="text-center mb-8">
