@@ -66,7 +66,7 @@ export default function EarlyOpportunitySection() {
         {/* Başlık */}
         <h2 className="text-white text-[28px] md:text-[44px] font-extrabold leading-tight text-center mb-6">
           Hayatında Bir Kez Gerçekten{" "}
-          <span className="text-[#ff6b1f]">Erken</span> Davranıyorsun…
+          <span className="text-gold">Erken</span> Davranıyorsun…
         </h2>
 
         <p className="text-white/70 text-[15px] md:text-[17px] leading-relaxed text-center max-w-2xl mx-auto mb-12">
@@ -79,7 +79,7 @@ export default function EarlyOpportunitySection() {
         {/* Chart card */}
         <div className="bg-[#f5f3ee] text-[#1a1a1a] rounded-2xl p-5 md:p-8 mb-12">
           <h3
-            className="text-center text-[20px] md:text-[26px] font-bold mb-1"
+            className="text-center text-[20px] md:text-[26px] font-bold mb-1 text-[#1a1a1a]"
             style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
           >
             Her bir nokta ≈ 3.2 milyon kişi
@@ -92,7 +92,7 @@ export default function EarlyOpportunitySection() {
             className="grid gap-[1.5px] mb-5"
             style={{ gridTemplateColumns: "repeat(50, minmax(0, 1fr))" }}
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4 text-[12px] md:text-[13px]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4 text-[12px] md:text-[13px] text-[#1a1a1a]">
             <div className="flex items-center gap-2">
               <span className="inline-block w-3.5 h-3.5 bg-[#d8d6cf] flex-shrink-0" />
               <span>
