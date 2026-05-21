@@ -172,43 +172,7 @@ export default function VipOdemeonayContent() {
             </div>
           </div>
 
-          {/* Sana Özel Mesaj — YouTube link bloğu (iframe yerine clickable card) */}
-          <div
-            className="mb-8 rounded-[9px] border border-dashed border-[#AA813C]/50 p-6 md:p-7 text-center"
-            style={{ background: GOLD_BG_SUBTLE }}
-          >
-            <p className="text-[10px] text-white/30 uppercase tracking-[3px] mb-2">
-              Sana Özel Mesaj
-            </p>
-            <p className="text-[#C19D44] text-[18px] md:text-[20px] font-extrabold mb-2">
-              🎥 Seminerde Görüşürüz
-            </p>
-            <p className="text-white/60 text-[14px] md:text-[15px] mb-5 leading-relaxed max-w-md mx-auto">
-              Sana özel video mesajımı aşağıdaki linkten izleyebilirsin.
-            </p>
-            <a
-              href="https://youtu.be/cIbDH0lWMc0"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <button
-                className="text-black font-extrabold text-[15px] md:text-[16px] px-8 py-3.5 rounded-lg hover:brightness-110 transition-all w-full cursor-pointer inline-flex items-center justify-center gap-2"
-                style={{ background: CTA_GRADIENT }}
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="#FF0000"
-                  viewBox="0 0 24 24"
-                  aria-hidden
-                >
-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-                </svg>
-                Videoyu YouTube'da Aç →
-              </button>
-            </a>
-          </div>
-
-          {/* 3. PRIMARY CTA — Notion Bonus Paketi */}
+          {/* 3a. PRIMARY CTA — Notion Bonus Paketi (üst sıra, en başta) */}
           <div className="rounded-[9px] border-2 border-[#C19D44] p-6 md:p-8 text-center mb-8 bg-[#141414] shadow-lg shadow-[#C19D44]/10">
             <svg
               className="w-12 h-12 mx-auto mb-3 text-[#C19D44]"
@@ -227,9 +191,9 @@ export default function VipOdemeonayContent() {
               Yapay Zeka Başlangıç Paketin Hazır
             </h2>
             <p className="text-white/60 text-[14px] md:text-[15px] mb-5 leading-relaxed max-w-md mx-auto">
-              VIP'in tüm bonus içerikleri — Manychat kurulum rehberi, AI
-              Shopify rehberi, milyon dolarlık Automation Kit ve daha fazlası —
-              aşağıdaki linkte seni bekliyor.
+              VIP'in tüm bonus içerikleri — Manychat kurulum rehberi, yapay
+              zeka Shopify rehberi, milyon dolarlık Automation Kit ve daha
+              fazlası — aşağıdaki linkte seni bekliyor.
             </p>
             <a href={NOTION_URL} target="_blank" rel="noopener noreferrer">
               <button
@@ -243,6 +207,31 @@ export default function VipOdemeonayContent() {
               Linki kaybetme — bu sayfayı ileride tekrar açabilmen için
               e-postanı kontrol etmeyi unutma.
             </p>
+          </div>
+
+          {/* 3b. Sana Özel Mesaj — Embedded YouTube iframe (buton yerine) */}
+          <div
+            className="mb-8 rounded-[9px] border border-dashed border-[#AA813C]/50 p-5 md:p-6"
+            style={{ background: GOLD_BG_SUBTLE }}
+          >
+            <p className="text-[10px] text-white/30 uppercase tracking-[3px] mb-2 text-center">
+              Sana Özel Mesaj
+            </p>
+            <p className="text-[#C19D44] text-[18px] md:text-[20px] font-extrabold mb-4 text-center">
+              🎥 Seminerde Görüşürüz
+            </p>
+            <div
+              className="relative w-full overflow-hidden rounded-lg border border-white/10"
+              style={{ paddingBottom: "56.25%" }}
+            >
+              <iframe
+                className="absolute top-0 left-0 w-full h-full"
+                src="https://www.youtube.com/embed/cIbDH0lWMc0"
+                title="Seminerde Görüşürüz — Baturalp"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
           </div>
 
           {/* 4. VIP Avantajları Listesi */}
