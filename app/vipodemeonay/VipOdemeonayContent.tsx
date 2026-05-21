@@ -174,41 +174,28 @@ export default function VipOdemeonayContent() {
             </div>
           </div>
 
-          {/* 3a. PRIMARY CTA — Notion Bonus Paketi (üst sıra, en başta) */}
-          <div className="rounded-[9px] border-2 border-[#C19D44] p-6 md:p-8 text-center mb-8 bg-[#141414] shadow-lg shadow-[#C19D44]/10">
-            <svg
-              className="w-12 h-12 mx-auto mb-3 text-[#C19D44]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"
-              />
-            </svg>
-            <h2 className="text-[22px] md:text-[28px] font-extrabold text-white mb-5">
-              Yapay Zeka Başlangıç Paketin Hazır
+          {/* ADIM 1 — VIP Paketine Eriş (mail bilgilendirme, buton yok) */}
+          <div className="rounded-[9px] border-2 border-[#C19D44] p-6 md:p-8 text-center mb-6 bg-[#141414] shadow-lg shadow-[#C19D44]/10">
+            <p className="text-[#C19D44] text-[11px] md:text-[12px] font-extrabold tracking-[4px] uppercase mb-3">
+              Adım 1
+            </p>
+            <h2 className="text-[22px] md:text-[28px] font-extrabold text-white mb-3">
+              VIP Paketine Eriş
             </h2>
-            <a href={NOTION_URL} target="_blank" rel="noopener noreferrer">
-              <button
-                className="text-black font-extrabold text-[16px] md:text-[18px] px-10 py-4 rounded-lg hover:brightness-110 transition-all w-full cursor-pointer"
-                style={{ background: CTA_GRADIENT }}
-              >
-                VIP Paketime Eriş →
-              </button>
-            </a>
+            <p className="text-white/70 text-[14px] md:text-[15px] leading-relaxed max-w-md mx-auto">
+              VIP paketin{" "}
+              <strong className="text-white">e-posta adresine gönderildi</strong>.
+              Gelen kutunu kontrol et — paketi açan dosya orada seni bekliyor.
+            </p>
             <p className="text-white/40 text-[12px] mt-3 italic">
-              Linki kaybetme — bu sayfayı ileride tekrar açabilmen için
-              e-postanı kontrol etmeyi unutma.
+              Gelen kutunda göremezsen <strong>Spam / Promosyon</strong> klasörlerine de bakmayı unutma.
             </p>
           </div>
 
-          {/* 3b. Sana Özel Mesaj — Embedded YouTube iframe (buton yerine) */}
+          {/* "Seminerde Görüşürüz" Baturalp video bölümü — Adım 1 ile Adım 2
+              arasında, kişisel hoşgeldin mesajı. */}
           <div
-            className="mb-8 rounded-[9px] border border-dashed border-[#AA813C]/50 p-5 md:p-6"
+            className="mb-6 rounded-[9px] border border-dashed border-[#AA813C]/50 p-5 md:p-6"
             style={{ background: GOLD_BG_SUBTLE }}
           >
             <p className="text-[10px] text-white/30 uppercase tracking-[3px] mb-2 text-center">
@@ -231,22 +218,23 @@ export default function VipOdemeonayContent() {
             </div>
           </div>
 
-          {/* 4. Startup Kurma Bonus Eğitim — YouTube playlist link butonu
-              (embed yerine). Tıklayan kullanıcı yeni sekmede playlist'i
-              açıyor, böylece tüm video serisine tek seferde erişebilsin. */}
+          {/* ADIM 2 — Seminer öncesi bonus eğitim, YouTube playlist link
+              (yeşil "Tıkla, izle" butonu). */}
           <div
-            className="rounded-[9px] border border-dashed border-[#AA813C]/40 p-6 md:p-8 mb-8 text-center"
-            style={{ background: GOLD_BG_SUBTLE }}
+            className="rounded-[9px] border-2 border-[#00b09b]/60 p-6 md:p-8 mb-6 text-center"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(0,176,155,0.10) 0%, rgba(150,201,61,0.06) 100%)",
+            }}
           >
-            <p className="text-[10px] text-white/30 uppercase tracking-[3px] mb-2">
-              Bonus Eğitim
+            <p className="text-[#96c93d] text-[11px] md:text-[12px] font-extrabold tracking-[4px] uppercase mb-3">
+              Adım 2
             </p>
-            <h2 className="text-[#C19D44] text-[22px] md:text-[26px] font-extrabold mb-3">
-              Yapay Zeka ile Nasıl Startup Kurulur?
+            <h2 className="text-white text-[22px] md:text-[26px] font-extrabold mb-3">
+              Seminer Öncesi İzlemen Gereken Bonus Eğitim
             </h2>
             <p className="text-white/65 text-[14px] md:text-[15px] mb-6 leading-relaxed max-w-md mx-auto">
-              Yapay zeka ile sıfırdan startup kurmanın tam video serisi —
-              seminerden önce mutlaka izle.
+              Yapay zeka ile sıfırdan startup kurmanın tam video serisi.
             </p>
             <a
               href="https://youtube.com/playlist?list=PLTxbxLRP7FbhMK-Dh_uWaJrYOLnaJUzyU&si=G1fqnnetUAQGuOLR"
@@ -254,50 +242,26 @@ export default function VipOdemeonayContent() {
               rel="noopener noreferrer"
             >
               <button
-                className="text-black font-extrabold text-[15px] md:text-[17px] px-8 py-3.5 rounded-lg hover:brightness-110 transition-all w-full cursor-pointer inline-flex items-center justify-center gap-2"
-                style={{ background: CTA_GRADIENT }}
+                className="text-white font-extrabold text-[16px] md:text-[18px] px-10 py-4 rounded-lg hover:brightness-110 transition-all w-full cursor-pointer inline-flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/30"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)",
+                }}
               >
                 <svg
                   className="w-5 h-5"
-                  fill="#FF0000"
+                  fill="currentColor"
                   viewBox="0 0 24 24"
                   aria-hidden
                 >
-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                  <path d="M8 5v14l11-7z" />
                 </svg>
-                Video Serisini Aç →
+                Tıkla, izle
               </button>
             </a>
           </div>
 
-          {/* 5. Seminere Mutlaka Katıl — Ayrıcalık vurgusu */}
-          <div
-            className="rounded-[9px] border-2 border-[#C19D44]/60 p-6 md:p-8 mb-8 text-center"
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(193,157,68,0.18) 0%, rgba(193,157,68,0.06) 100%)",
-            }}
-          >
-            <p className="text-[#C19D44] text-[12px] font-extrabold tracking-widest uppercase mb-2">
-              ⚠️ Önemli — Sadece VIP Üyelere
-            </p>
-            <h2 className="text-[22px] md:text-[28px] font-extrabold leading-tight mb-3">
-              Seminere <span className="text-[#D5B356]">Mutlaka</span> Katıl
-            </h2>
-            <p className="text-white/80 text-[14px] md:text-[15px] leading-relaxed max-w-lg mx-auto mb-5">
-              VIP üye olarak{" "}
-              <strong className="text-white">
-                yalnız VIP'lere özel seminere hazırlık paketi
-              </strong>{" "}
-              ve{" "}
-              <strong className="text-white">özel bonus ipuçları</strong>{" "}
-              seni bekliyor. Bu fırsatları sadece canlı katılanlar
-              yakalar.
-            </p>
-            <p className="text-[#C19D44] text-[14px] md:text-[15px] font-bold">
-              Bu ayrıcalığı kaçırma — bedeli ödedin, değerini al.
-            </p>
-          </div>
+          {/* (Eski "Seminere Mutlaka Katıl" section kaldırıldı — user kararı. */}
 
           {/* 6. Countdown Timer */}
           <div className="text-center mb-8">
