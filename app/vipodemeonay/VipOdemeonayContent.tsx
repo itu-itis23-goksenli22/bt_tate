@@ -198,6 +198,13 @@ export default function VipOdemeonayContent() {
             </p>
           </div>
 
+          {/* Adım akış oku */}
+          <div className="flex justify-center -mt-2 mb-2">
+            <svg className="w-6 h-6 text-[#C19D44]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+
           {/* "Seminerde Görüşürüz" Baturalp video bölümü — Adım 1 ile Adım 2
               arasında, kişisel hoşgeldin mesajı. */}
           <div
@@ -222,6 +229,13 @@ export default function VipOdemeonayContent() {
                 allowFullScreen
               />
             </div>
+          </div>
+
+          {/* Adım akış oku */}
+          <div className="flex justify-center -mt-2 mb-2">
+            <svg className="w-6 h-6 text-[#C19D44]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
           </div>
 
           {/* ADIM 2 — Seminer öncesi bonus eğitim, YouTube playlist link
@@ -267,9 +281,18 @@ export default function VipOdemeonayContent() {
             </a>
           </div>
 
-          {/* ADIM 3 — Seminere Mutlaka Katıl (sadece heading, body yok) */}
+          {/* Adım akış oku */}
+          <div className="flex justify-center -mt-2 mb-2">
+            <svg className="w-6 h-6 text-[#C19D44]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+
+          {/* ADIM 3 — Seminere Mutlaka Katıl + Zoom linki bilgi alt
+              bloğu. İki kart birleşti: heading + altın çizgi + e-posta
+              notification body. */}
           <div
-            className="rounded-[9px] border-2 border-[#C19D44]/60 p-6 md:p-8 mb-6 text-center"
+            className="rounded-[9px] border-2 border-[#C19D44]/70 p-6 md:p-8 mb-6 text-center"
             style={{
               background:
                 "linear-gradient(135deg, rgba(193,157,68,0.18) 0%, rgba(193,157,68,0.06) 100%)",
@@ -278,18 +301,14 @@ export default function VipOdemeonayContent() {
             <p className="text-[#C19D44] text-[11px] md:text-[12px] font-extrabold tracking-[4px] uppercase mb-3">
               Adım 3
             </p>
-            <h2 className="text-[22px] md:text-[28px] font-extrabold leading-tight">
+            <h2 className="text-[22px] md:text-[28px] font-extrabold leading-tight mb-5">
               Seminere <span className="text-[#D5B356]">Mutlaka</span> Katıl
             </h2>
-          </div>
 
-          {/* Adım 3 destek kartı — tesekkurler sayfasındaki "Katılım Linkiniz
-              E-posta Adresinize Gönderildi" pattern'i. Zoom link bilgisi +
-              spam folder reminder + kayıt tarihi. */}
-          <div
-            className="mb-8 rounded-[9px] border-2 border-[#C19D44] p-5 md:p-6"
-            style={{ background: GOLD_BG_SUBTLE }}
-          >
+            {/* Ayraç */}
+            <div className="border-t border-[#C19D44]/30 my-5" />
+
+            {/* Email notification içeriği */}
             <div className="flex items-center justify-center gap-2 mb-3">
               <svg
                 className="w-6 h-6 text-[#C19D44] flex-shrink-0"
@@ -304,25 +323,25 @@ export default function VipOdemeonayContent() {
                   d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                 />
               </svg>
-              <h3 className="text-[18px] md:text-[20px] font-bold text-[#C19D44]">
-                Katılım Linkiniz E-posta Adresinize Gönderildi!
+              <h3 className="text-[16px] md:text-[18px] font-bold text-[#C19D44]">
+                Katılım Linkiniz E-posta Adresine Gönderildi
               </h3>
             </div>
             <p className="text-white/70 text-[14px] md:text-[15px] text-center leading-relaxed">
-              E-posta adresinize bir{" "}
+              E-posta adresine bir{" "}
               <strong className="text-white">Zoom katılım linki</strong>{" "}
               gönderdik.{" "}
               <strong className="text-white">
                 {webinarDate} {webinarDay} saat 20:00&apos;da
               </strong>{" "}
-              e-postanızdaki linke tıklayın, Zoom açılacak ve canlı seminere
-              katılacaksınız. E-postayı bulamıyorsanız{" "}
+              e-postandaki linke tıkla, Zoom açılacak ve canlı seminere
+              katılacaksın. E-postayı bulamazsan{" "}
               <strong className="text-white">spam/gereksiz</strong>{" "}
-              klasörünü de kontrol edin.
+              klasörünü de kontrol et.
             </p>
             {registrationDate && (
               <p className="text-white/40 text-[12px] text-center mt-3">
-                Kayıt tarihiniz: {registrationDate}
+                Kayıt tarihin: {registrationDate}
               </p>
             )}
           </div>
