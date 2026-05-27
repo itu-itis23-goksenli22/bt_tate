@@ -18,15 +18,31 @@ const KATIL_WEBINAR_ID = "81068711863";
 const KATIL_SUCCESS_PATH = "/katil/kayitbasarili";
 const KATIL_CONTENT_NAME = "Katil Funnel Webinar";
 const KATIL_FIXED_DATE = "Cumartesi, 6 Haziran - Saat 20:00 (GMT+3)";
+const KATIL_CTA_TEXT = "ÜCRETSİZ YERİMİ AYIRT";
+
+// /katil headline blok'u — main funnel'dan farklı, "startup" odaklı angle
+const KATIL_HEADLINE = (
+  <>
+    <span className="zk-text-gold-gradient">Yapay Zeka</span> ile Sıfırdan
+    Gelir Getiren Bir{" "}
+    <em className="not-italic zk-text-gold-gradient">Startup</em> Kur
+  </>
+);
+const KATIL_SUBHEADLINE = (
+  <>
+    Kod bilmeden, teknik ekip kurmadan ve büyük sermaye olmadan AI destekli
+    bir gelir sistemi oluşturmanın yol haritasını canlı gösteriyorum.
+  </>
+);
 
 export const metadata: Metadata = {
-  title: "AI Scale | Ücretsiz Yapay Zeka Semineri — Aylık 10.000$ Sistem",
+  title: "AI Scale | Sıfırdan Gelir Getiren Bir Startup Kur — Yapay Zeka Semineri",
   description:
-    "6 Haziran Cumartesi 20:00'da canlı %100 ücretsiz yapay zeka seminerine katılın. Yapay zeka ile aylık 10.000$+ kazandıran kanıtlanmış sistem. Sınırlı kontenjan.",
+    "Kod bilmeden, teknik ekip kurmadan ve büyük sermaye olmadan AI destekli bir gelir sistemi kurmanın yol haritasını canlı seminerle gösteriyoruz. 6 Haziran Cumartesi 20:00.",
   openGraph: {
-    title: "AI Scale | Ücretsiz Yapay Zeka Semineri",
+    title: "AI Scale | Sıfırdan Gelir Getiren Bir Startup Kur",
     description:
-      "Aylık 10.000$ Kazandıran Yapay Zeka Sistemi — %100 ücretsiz canlı etkinlik.",
+      "Yapay Zeka ile Sıfırdan Gelir Getiren Bir Startup Kur — %100 ücretsiz canlı etkinlik.",
     type: "website",
   },
 };
@@ -52,7 +68,7 @@ export default function KatilPage() {
     <main className="min-h-screen bg-black text-white font-display">
       {/* Hero + Registration Section */}
       <div className="bg-gradient-to-b from-black via-[#0a0a0a] to-black">
-        <HeroSection />
+        <HeroSection headline={KATIL_HEADLINE} subheadline={KATIL_SUBHEADLINE} />
 
         <CountdownTimer />
 
@@ -66,6 +82,7 @@ export default function KatilPage() {
           successPath={KATIL_SUCCESS_PATH}
           contentName={KATIL_CONTENT_NAME}
           fixedDateString={KATIL_FIXED_DATE}
+          ctaText={KATIL_CTA_TEXT}
         />
 
         {/* Webinar info badges */}
@@ -119,6 +136,7 @@ export default function KatilPage() {
             successPath={KATIL_SUCCESS_PATH}
             contentName={KATIL_CONTENT_NAME}
             fixedDateString={KATIL_FIXED_DATE}
+            ctaText={KATIL_CTA_TEXT}
           />
         </div>
       </section>

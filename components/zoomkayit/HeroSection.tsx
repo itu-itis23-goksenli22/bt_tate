@@ -1,4 +1,32 @@
-export default function HeroSection() {
+import type { ReactNode } from "react";
+
+interface HeroSectionProps {
+  // Variant'lar için opsiyonel override'lar. Belirtilmezse main funnel
+  // metinleri kullanılır.
+  eyebrow?: ReactNode;
+  headline?: ReactNode;
+  subheadline?: ReactNode;
+}
+
+const DEFAULT_EYEBROW = "%100 Ücretsiz Canlı Etkinlik";
+const DEFAULT_HEADLINE = (
+  <>
+    <span className="zk-text-gold-gradient">Aylık 10.000$</span> Kazandıran{" "}
+    <em className="not-italic zk-text-gold-gradient">Yapay Zeka Sistemi</em>
+  </>
+);
+const DEFAULT_SUBHEADLINE = (
+  <>
+    Stok yok. Depo yok. Teknik bilgi gerekmiyor. Sadece siz, yapay zeka ve
+    kanıtlanmış bir sistem.
+  </>
+);
+
+export default function HeroSection({
+  eyebrow,
+  headline,
+  subheadline,
+}: HeroSectionProps = {}) {
   return (
     <section className="relative pt-6 pb-2 px-4">
       {/* Trustpilot-style badge */}
@@ -24,21 +52,16 @@ export default function HeroSection() {
       <div className="max-w-4xl mx-auto text-center">
         <div className="inline-block mb-4">
           <span className="text-gold text-base md:text-xl font-semibold tracking-wide uppercase">
-            %100 Ücretsiz Canlı Etkinlik
+            {eyebrow ?? DEFAULT_EYEBROW}
           </span>
         </div>
 
         <h1 className="text-[34px] md:text-5xl lg:text-6xl font-bold leading-[1.15] mb-6 text-white">
-          <span className="zk-text-gold-gradient">Aylık 10.000$</span>{" "}
-          Kazandıran{" "}
-          <em className="not-italic zk-text-gold-gradient">
-            Yapay Zeka Sistemi
-          </em>
+          {headline ?? DEFAULT_HEADLINE}
         </h1>
 
         <p className="text-white/75 text-[17px] md:text-lg leading-relaxed max-w-2xl mx-auto mb-2">
-          Stok yok. Depo yok. Teknik bilgi gerekmiyor. Sadece siz, yapay zeka
-          ve kanıtlanmış bir sistem.
+          {subheadline ?? DEFAULT_SUBHEADLINE}
         </p>
       </div>
     </section>
