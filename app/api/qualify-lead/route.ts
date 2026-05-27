@@ -43,6 +43,7 @@ export async function POST(request: NextRequest) {
       fbc,
       fbp,
       eventType: rawEventType,
+      contentName: bodyContentName,
     } = body as {
       email?: string;
       firstName?: string;
@@ -53,6 +54,9 @@ export async function POST(request: NextRequest) {
       fbc?: string;
       fbp?: string;
       eventType?: "CR" | "Lead";
+      // Variant override — /katil gibi paralel funnel'lar Meta dashboard'da
+      // ayırt edilebilmek için custom content_name gönderir.
+      contentName?: string;
     };
 
     // eventType: hangi Meta event'i fire edilecek?
@@ -176,7 +180,10 @@ export async function POST(request: NextRequest) {
         sourceUrl: referer,
         userData: sharedUserData,
         customData: {
-          content_name: isEticaret ? "E-Ticaret Webinar Kayıt" : "Webinar Kayıt",
+          // Variant override > eticaret detection > default
+          content_name:
+            bodyContentName ||
+            (isEticaret ? "E-Ticaret Webinar Kayıt" : "Webinar Kayıt"),
           ...(isLeadEvent
             ? { content_category: "webinar" }
             : { status: "completed" }),

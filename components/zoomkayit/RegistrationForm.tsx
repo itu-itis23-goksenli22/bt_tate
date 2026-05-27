@@ -8,9 +8,21 @@ interface RegistrationFormProps {
   //   "CR"   → CompleteRegistration (ana sayfa)
   //   "Lead" → Lead (/vip-mastermind)
   eventType?: "CR" | "Lead";
+  // VARIANT override'ları (/katil gibi paralel funnel'lar için).
+  // Belirtilmezse main funnel default'ları kullanılır.
+  webinarId?: string;
+  successPath?: string;
+  contentName?: string;
+  fixedDateString?: string;
 }
 
-export default function RegistrationForm({ eventType = "CR" }: RegistrationFormProps) {
+export default function RegistrationForm({
+  eventType = "CR",
+  webinarId,
+  successPath,
+  contentName,
+  fixedDateString,
+}: RegistrationFormProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -44,6 +56,10 @@ export default function RegistrationForm({ eventType = "CR" }: RegistrationFormP
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         eventType={eventType}
+        webinarId={webinarId}
+        successPath={successPath}
+        contentName={contentName}
+        fixedDateString={fixedDateString}
       />
     </>
   );

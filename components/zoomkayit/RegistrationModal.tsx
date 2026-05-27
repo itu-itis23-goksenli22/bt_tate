@@ -19,6 +19,15 @@ interface RegistrationModalProps {
   //   "Lead" → Lead (yeni VIP Mastermind sayfası)
   // Sayfa türüne göre audience ayrımı için kullanılır.
   eventType?: "CR" | "Lead";
+  // VARIANT override'ları — /katil gibi paralel funnel'lar için.
+  // Belirtilmezse main funnel default'ları kullanılır (ZOOM_WEBINAR_ID env
+  // var'ı + /kayitbasarili redirect + "Webinar Kayıt" content_name).
+  webinarId?: string;
+  successPath?: string;
+  contentName?: string;
+  // Sabit webinar tarihi (variant'lar için, örn. "6 Haziran 2026 20:00").
+  // Belirtilmezse "next 20:00 today/tomorrow" hesabı kullanılır.
+  fixedDateString?: string;
 }
 
 function getEventDateString(): string {
@@ -52,6 +61,10 @@ export default function RegistrationModal({
   isOpen,
   onClose,
   eventType = "CR",
+  webinarId,
+  successPath,
+  contentName,
+  fixedDateString,
 }: RegistrationModalProps) {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
   // Budget tier qualification kaldırıldı — herkes "Yerimi Ayırt" ile Zoom'a
@@ -62,8 +75,9 @@ export default function RegistrationModal({
   const [dateString, setDateString] = useState("");
 
   useEffect(() => {
-    setDateString(getEventDateString());
-  }, []);
+    // fixedDateString verilmişse onu kullan, yoksa default "next 20:00" hesabı
+    setDateString(fixedDateString || getEventDateString());
+  }, [fixedDateString]);
 
   useEffect(() => {
     if (isOpen) {
@@ -116,6 +130,11 @@ export default function RegistrationModal({
           lastName,
           phone: formData.phone,
           eventType, // "CR" veya "Lead" — sayfa türüne göre
+          // Variant override'lar — /katil gibi paralel funnel'lar için.
+          // undefined olarak gönderilirse API default ZOOM_WEBINAR_ID +
+          // default content_name kullanır.
+          webinarId,
+          contentName,
           sourceUrl: typeof window !== "undefined" ? window.location.href : "",
           fbc: getCookie("_fbc"),
           fbp: getCookie("_fbp"),
@@ -158,12 +177,15 @@ export default function RegistrationModal({
       }
 
       // fbq flush için 200ms bekle, sonra doğru kayitbasarili'ye yönlendir:
-      //   ana sayfa (CR)  → /kayitbasarili            (video yok)
-      //   vip-mastermind (Lead) → /vip-mastermind/kayitbasarili (Hızlı davranırsan altında video)
-      const successPath =
-        eventType === "Lead" ? "/vip-mastermind/kayitbasarili" : "/kayitbasarili";
+      //   ana sayfa (CR)        → /kayitbasarili
+      //   vip-mastermind (Lead) → /vip-mastermind/kayitbasarili
+      //   /katil variant        → /katil/kayitbasarili (successPath prop ile)
+      // successPath prop verilmişse onu kullan, yoksa eventType'a göre default.
+      const computedSuccessPath =
+        successPath ||
+        (eventType === "Lead" ? "/vip-mastermind/kayitbasarili" : "/kayitbasarili");
       setTimeout(() => {
-        window.location.href = `${successPath}?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`;
+        window.location.href = `${computedSuccessPath}?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`;
       }, 200);
     } catch (err) {
       console.warn("qualify-lead failed:", err);
