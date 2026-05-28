@@ -139,7 +139,7 @@ export async function POST(request: NextRequest) {
     // /katil variant — sabit 6 Haziran 2026 etkinliği. Mailde tarih
     // bloğu gözüksün diye eventDateString geçilir. Diğer durumlarda
     // (ana funnel auto-webinar) tarih bloğu mailde gizli kalır.
-    const isKatil = webinarId === "81068711863";
+    const isKatil = webinarId === "81497341331";
     const katilEventDate = "6 Haziran 2026 Cumartesi · 20:00 (TR)";
     if (!isEticaret) {
       sendWebinarYoutubeEmail(

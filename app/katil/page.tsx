@@ -1,6 +1,6 @@
 // /katil — Paralel funnel variant'ı.
 // Ana funnel ile aynı sayfa yapısı, ama:
-//   - Farklı webinar (6 Haziran 2026, 20:00 — Zoom ID 81068711863)
+//   - Farklı webinar (6 Haziran 2026, 20:00 — Zoom ID 81497341331)
 //   - Form redirect → /katil/kayitbasarili
 //   - Meta CAPI content_name → "Katil Funnel Webinar" (analytics ayrımı)
 //   - Aynı pixel, aynı Stripe ürünü, aynı CompleteRegistration / Purchase
@@ -14,7 +14,7 @@ import CountdownTimer from "@/components/zoomkayit/CountdownTimer";
 import RegistrationForm from "@/components/zoomkayit/RegistrationForm";
 
 // /katil variant config — TEK YERDEN değiştirilebilir.
-const KATIL_WEBINAR_ID = "81068711863";
+const KATIL_WEBINAR_ID = "81497341331";
 const KATIL_SUCCESS_PATH = "/katil/kayitbasarili";
 const KATIL_CONTENT_NAME = "Katil Funnel Webinar";
 const KATIL_FIXED_DATE = "Cumartesi, 6 Haziran - Saat 20:00 (GMT+3)";
