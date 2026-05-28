@@ -78,6 +78,7 @@ export default function KatilPage() {
         </p>
 
         <RegistrationForm
+          eventType="Lead"
           webinarId={KATIL_WEBINAR_ID}
           successPath={KATIL_SUCCESS_PATH}
           contentName={KATIL_CONTENT_NAME}
@@ -132,6 +133,7 @@ export default function KatilPage() {
           </h2>
           <CountdownTimer />
           <RegistrationForm
+            eventType="Lead"
             webinarId={KATIL_WEBINAR_ID}
             successPath={KATIL_SUCCESS_PATH}
             contentName={KATIL_CONTENT_NAME}
