@@ -434,6 +434,10 @@ export default function KayitBasariliContent({
                   email={email || undefined}
                   name={name !== "Değerli Katılımcı" ? name : undefined}
                   source="aiscaleapp"
+                  // Funnel tracking — iframe görününce InitiateCheckout,
+                  // iframe'e ilk dokununca AddToCart fire eder. Browser
+                  // pixel + CAPI dedup ile.
+                  funnelTag="Katil Funnel Checkout"
                 />
               </div>
             </div>

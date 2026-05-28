@@ -71,25 +71,31 @@ export const trackViewContent = (data?: {
   trackEvent("ViewContent", data, eventId);
 };
 
-export const trackAddToCart = (data?: {
-  content_name?: string;
-  content_ids?: string[];
-  content_type?: string;
-  value?: number;
-  currency?: string;
-}) => {
-  trackEvent("AddToCart", data);
+export const trackAddToCart = (
+  data?: {
+    content_name?: string;
+    content_ids?: string[];
+    content_type?: string;
+    value?: number;
+    currency?: string;
+  },
+  eventId?: string
+) => {
+  trackEvent("AddToCart", data, eventId);
 };
 
-export const trackInitiateCheckout = (data?: {
-  content_name?: string;
-  content_category?: string;
-  content_ids?: string[];
-  value?: number;
-  currency?: string;
-  num_items?: number;
-}) => {
-  trackEvent("InitiateCheckout", data);
+export const trackInitiateCheckout = (
+  data?: {
+    content_name?: string;
+    content_category?: string;
+    content_ids?: string[];
+    value?: number;
+    currency?: string;
+    num_items?: number;
+  },
+  eventId?: string
+) => {
+  trackEvent("InitiateCheckout", data, eventId);
 };
 
 export const trackPurchase = (data: {

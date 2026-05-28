@@ -21,6 +21,65 @@ import {
   EmbeddedCheckoutProvider,
   EmbeddedCheckout,
 } from "@stripe/react-stripe-js";
+import {
+  trackAddToCart,
+  trackInitiateCheckout,
+} from "@/lib/meta-pixel";
+
+function getCookie(name: string): string | undefined {
+  if (typeof document === "undefined") return undefined;
+  const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+  return match ? decodeURIComponent(match[2]) : undefined;
+}
+
+// Browser pixel + CAPI server-side dedup edilmiş event fire helper.
+// Stripe iframe sandboxed olduğu için iframe ETRAFINDAKİ etkileşimleri
+// yakalıyoruz: ekrana giriş (IntersectionObserver) + ilk tıklama
+// (pointerdown). Browser pixel hemen, CAPI fetch arkada.
+async function fireFunnelEvent(
+  eventName: "AddToCart" | "InitiateCheckout",
+  contentName: string,
+  value: number
+) {
+  const eventId =
+    typeof crypto !== "undefined" && crypto.randomUUID
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+  const customData = {
+    content_name: contentName,
+    content_category: "checkout",
+    value,
+    currency: "USD",
+  };
+
+  // 1) Browser pixel — dedup için aynı eventId
+  if (eventName === "AddToCart") {
+    trackAddToCart(customData, eventId);
+  } else {
+    trackInitiateCheckout(customData, eventId);
+  }
+
+  // 2) CAPI server-side
+  try {
+    await fetch("/api/meta-capi", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        eventName,
+        eventId,
+        sourceUrl:
+          typeof window !== "undefined" ? window.location.href : "",
+        customData,
+        fbc: getCookie("_fbc"),
+        fbp: getCookie("_fbp"),
+      }),
+      keepalive: true,
+    });
+  } catch (err) {
+    console.warn(`CAPI ${eventName} failed:`, err);
+  }
+}
 
 const FALLBACK_CHECKOUT_URL =
   "https://buy.stripe.com/cNi8wQ4mcb1HcZb71u3wQ0s";
@@ -45,6 +104,19 @@ interface Props {
    * when rendering on a separate test page to avoid id collisions.
    */
   ctaId?: string;
+  /**
+   * Variant funnel'lar için (örn. /katil/kayitbasarili) Meta'ya
+   * InitiateCheckout + AddToCart event'leri gönderir. Belirtilmezse
+   * (main funnel) hiç fire etmez — eski davranış birebir korunur.
+   *
+   * - InitiateCheckout: iframe ekrana %50 girdiğinde (IntersectionObserver)
+   * - AddToCart: iframe wrapper'ına ilk pointerdown'da (kullanıcı
+   *   ödeme formuna dokunduğunda)
+   *
+   * Her ikisi de browser pixel + CAPI server-side dedup edilmiş eventId
+   * ile gönderilir. content_name = funnelTag, value = 9.9, currency = USD.
+   */
+  funnelTag?: string;
 }
 
 export default function VipEmbeddedCheckout({
@@ -52,6 +124,7 @@ export default function VipEmbeddedCheckout({
   name,
   source = "aiscaleapp",
   ctaId = "final-vip-cta",
+  funnelTag,
 }: Props) {
   // Durum makinesi:
   //   'loading'  → /api/create-checkout-session POST atılıyor (initial)
@@ -116,7 +189,7 @@ export default function VipEmbeddedCheckout({
     const promise = getStripePromise();
     if (!promise) return <FallbackButton ctaId={ctaId} />;
     return (
-      <div id={ctaId} className="my-8 scroll-mt-24">
+      <ReadyWrapper ctaId={ctaId} funnelTag={funnelTag}>
         {/* Trust signals — iframe'in üstünde */}
         <div className="flex items-center justify-center gap-2 md:gap-3 mb-3 text-white/60 text-[11px] md:text-[12px]">
           <span className="inline-flex items-center gap-1">
@@ -158,7 +231,7 @@ export default function VipEmbeddedCheckout({
           Ödeme bilgileriniz Stripe üzerinden şifrelenerek işlenir.
           Kart bilgileriniz sunucularımıza ulaşmaz.
         </p>
-      </div>
+      </ReadyWrapper>
     );
   }
 
@@ -196,6 +269,82 @@ export default function VipEmbeddedCheckout({
           </p>
         </div>
       </div>
+    </div>
+  );
+}
+
+/**
+ * ReadyWrapper — Stripe iframe'i mount edildikten sonra etrafına sarılır.
+ *
+ * funnelTag verildiğinde (örn. /katil/kayitbasarili) 2 funnel event'i fire eder:
+ *
+ *   1. InitiateCheckout — Wrapper div ekrana %50 girdiğinde
+ *      (IntersectionObserver). Anlam: "Kullanıcı checkout formuna baktı."
+ *
+ *   2. AddToCart — Wrapper div'e ilk pointerdown geldiğinde. Anlam:
+ *      "Kullanıcı ödeme formuna dokundu (kart girmek istedi)."
+ *      Stripe iframe sandbox olduğu için içine giremiyoruz, ama parent
+ *      div pointerdown'ı yakalayabiliyoruz — kullanıcı iframe'e tıklayınca
+ *      önce parent capture'da event görünür, sonra iframe'e devredilir.
+ *
+ * Her ikisi de browser pixel + CAPI server-side dedup edilmiş eventId
+ * ile gönderilir.
+ *
+ * funnelTag belirtilmezse (main funnel) hiçbir event fire etmez — eski
+ * davranış birebir korunur.
+ */
+function ReadyWrapper({
+  ctaId,
+  funnelTag,
+  children,
+}: {
+  ctaId: string;
+  funnelTag?: string;
+  children: React.ReactNode;
+}) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const initiateFired = useRef(false);
+  const addToCartFired = useRef(false);
+
+  useEffect(() => {
+    if (!funnelTag) return;
+    const el = wrapperRef.current;
+    if (!el) return;
+
+    // InitiateCheckout — IntersectionObserver, %50 görünür olunca tek sefer fire
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && !initiateFired.current) {
+            initiateFired.current = true;
+            fireFunnelEvent("InitiateCheckout", funnelTag, 9.9);
+            observer.disconnect();
+          }
+        }
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(el);
+
+    // AddToCart — wrapper'a ilk pointerdown'da fire (kullanıcı iframe'e
+    // tıkladığında parent'ta yakalanır)
+    const onPointerDown = () => {
+      if (addToCartFired.current) return;
+      addToCartFired.current = true;
+      fireFunnelEvent("AddToCart", funnelTag, 9.9);
+      el.removeEventListener("pointerdown", onPointerDown);
+    };
+    el.addEventListener("pointerdown", onPointerDown);
+
+    return () => {
+      observer.disconnect();
+      el.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, [funnelTag]);
+
+  return (
+    <div ref={wrapperRef} id={ctaId} className="my-8 scroll-mt-24">
+      {children}
     </div>
   );
 }
