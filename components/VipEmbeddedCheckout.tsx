@@ -34,8 +34,8 @@ function getCookie(name: string): string | undefined {
 
 // Browser pixel + CAPI server-side dedup edilmiş event fire helper.
 // Stripe iframe sandboxed olduğu için iframe ETRAFINDAKİ etkileşimleri
-// yakalıyoruz: ekrana giriş (IntersectionObserver) + ilk tıklama
-// (pointerdown). Browser pixel hemen, CAPI fetch arkada.
+// yakalıyoruz: ekrana giriş (IntersectionObserver) + iframe focus +
+// pointerdown. Browser pixel hemen, CAPI fetch arkada.
 async function fireFunnelEvent(
   eventName: "AddToCart" | "InitiateCheckout",
   contentName: string,
@@ -54,6 +54,15 @@ async function fireFunnelEvent(
   };
 
   // 1) Browser pixel — dedup için aynı eventId
+  // fbq yüklü değilse warning yaz (debugging için)
+  if (typeof window !== "undefined") {
+    if (typeof window.fbq !== "function") {
+      console.warn(
+        `[funnel] window.fbq YÜKLÜ DEĞİL — ${eventName} browser pixel atılamadı. CAPI server-side yine de gönderilecek.`
+      );
+    }
+  }
+
   if (eventName === "AddToCart") {
     trackAddToCart(customData, eventId);
   } else {
@@ -62,7 +71,7 @@ async function fireFunnelEvent(
 
   // 2) CAPI server-side
   try {
-    await fetch("/api/meta-capi", {
+    const res = await fetch("/api/meta-capi", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -76,8 +85,15 @@ async function fireFunnelEvent(
       }),
       keepalive: true,
     });
+    if (!res.ok) {
+      console.warn(
+        `[funnel] CAPI ${eventName} HTTP ${res.status}`
+      );
+    } else {
+      console.log(`[funnel] CAPI ${eventName} sent → ${eventId}`);
+    }
   } catch (err) {
-    console.warn(`CAPI ${eventName} failed:`, err);
+    console.warn(`[funnel] CAPI ${eventName} fetch failed:`, err);
   }
 }
 
@@ -311,34 +327,61 @@ function ReadyWrapper({
     const el = wrapperRef.current;
     if (!el) return;
 
-    // InitiateCheckout — IntersectionObserver, %50 görünür olunca tek sefer fire
+    // InitiateCheckout — IntersectionObserver, %15 görünür olunca tek sefer
+    // fire eder. (%50'den indirildi — wrapper iframe + trust signals
+    // toplam ~700px yüksek, %50 ekran küçükse hiç tetiklenmiyordu.)
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting && !initiateFired.current) {
             initiateFired.current = true;
+            console.log("[funnel] InitiateCheckout fired:", funnelTag);
             fireFunnelEvent("InitiateCheckout", funnelTag, 9.9);
             observer.disconnect();
           }
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.15 }
     );
     observer.observe(el);
 
-    // AddToCart — wrapper'a ilk pointerdown'da fire (kullanıcı iframe'e
-    // tıkladığında parent'ta yakalanır)
-    const onPointerDown = () => {
+    // AddToCart yakalama — iki güvenilir yöntem birleşik:
+    //
+    // (A) Wrapper'a pointerdown — iframe'in BORDER + DIŞ alanı + trust
+    //     signals + alt metin etrafına dokunulduğunda yakalanır. Iframe
+    //     içine tıklarsa CROSS-ORIGIN olduğu için pointer event'i parent'a
+    //     bubble ETMEZ, bu yüzden tek başına yetersiz.
+    //
+    // (B) window.blur — kullanıcı iframe'e tıkladığında veya tab'ladığında
+    //     parent window odak kaybeder. document.activeElement IFRAME ise
+    //     kullanıcı Stripe formuyla etkileşime girdi demektir. Cross-origin
+    //     iframe interaction'ı yakalamak için bu en güvenilir yol.
+    const fireAddToCartOnce = (trigger: string) => {
       if (addToCartFired.current) return;
       addToCartFired.current = true;
+      console.log("[funnel] AddToCart fired:", funnelTag, "via", trigger);
       fireFunnelEvent("AddToCart", funnelTag, 9.9);
-      el.removeEventListener("pointerdown", onPointerDown);
     };
+
+    const onPointerDown = () => fireAddToCartOnce("pointerdown");
+    const onBlur = () => {
+      // Iframe focus aldıysa AddToCart fire et. Mikrotask delay,
+      // document.activeElement'in iframe'e set olmasını bekle.
+      setTimeout(() => {
+        const active = document.activeElement;
+        if (active && active.tagName === "IFRAME" && el.contains(active)) {
+          fireAddToCartOnce("iframe-focus");
+        }
+      }, 0);
+    };
+
     el.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("blur", onBlur);
 
     return () => {
       observer.disconnect();
       el.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("blur", onBlur);
     };
   }, [funnelTag]);
 
