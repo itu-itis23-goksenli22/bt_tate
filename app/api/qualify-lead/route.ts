@@ -136,11 +136,19 @@ export async function POST(request: NextRequest) {
 
     // 3. YouTube engagement email — sadece aiscale (eticaret webinar ID değilse)
     const isEticaret = webinarId === "86257770515";
+    // /katil variant — sabit 6 Haziran 2026 etkinliği. Mailde tarih
+    // bloğu gözüksün diye eventDateString geçilir. Diğer durumlarda
+    // (ana funnel auto-webinar) tarih bloğu mailde gizli kalır.
+    const isKatil = webinarId === "81068711863";
+    const katilEventDate = "6 Haziran 2026 Cumartesi · 20:00 (TR)";
     if (!isEticaret) {
-      sendWebinarYoutubeEmail(email, firstName || "")
-        .catch((err) =>
-          console.warn("⚠️ YouTube email failed:", err?.message || err)
-        );
+      sendWebinarYoutubeEmail(
+        email,
+        firstName || "",
+        isKatil ? katilEventDate : undefined
+      ).catch((err) =>
+        console.warn("⚠️ YouTube email failed:", err?.message || err)
+      );
     }
 
     // 4. CAPI event — sayfaya göre TEK event

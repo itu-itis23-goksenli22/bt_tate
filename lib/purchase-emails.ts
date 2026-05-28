@@ -190,14 +190,33 @@ export async function sendVipUpsellEmail(to: string) {
  * ───────────────────────────────────────────────────────────────────── */
 const YOUTUBE_CHANNEL = "https://www.youtube.com/@baturalp.tunali";
 
-function webinarWelcomeBody(firstName: string): string {
+function webinarWelcomeBody(firstName: string, eventDateString?: string): string {
   const safeName = firstName ? firstName.replace(/[<>]/g, "") : "";
+  // Tarih sabit etkinlik için (örn. /katil — 6 Haziran 2026); ana funnel
+  // (her gün 20:00 auto-webinar) için eventDateString geçilmez ve bu blok
+  // gizlenir.
+  const dateBlock = eventDateString
+    ? `
+    <div style="background:#fffbeb;border:2px solid #C19D44;padding:18px 20px;margin:20px 0;border-radius:8px;text-align:center;">
+      <p style="margin:0 0 6px 0;color:#AA813C;font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;">
+        📅 Seminer Tarihi
+      </p>
+      <p style="margin:0;color:#1a1a1a;font-size:20px;font-weight:800;">
+        ${eventDateString}
+      </p>
+      <p style="margin:8px 0 0 0;color:#666;font-size:13px;">
+        Zoom katılım linkin ayrı bir mailde gönderildi.
+      </p>
+    </div>`
+    : "";
+
   return `
     <p>Selam${safeName ? ` ${safeName}` : ""},</p>
     <p>
       AI Scale ücretsiz seminerine kaydolduğun için teşekkürler! 🎉
       Aramızda görüşene kadar sana faydalı olabilecek bir şey paylaşmak istedik.
     </p>
+    ${dateBlock}
     <div style="background:#f0f9ff;border-left:4px solid #2563eb;padding:14px 16px;margin:20px 0;border-radius:4px;">
       <p style="margin:0 0 6px 0;"><strong>🎬 Seminere Kadar Bunu İzle</strong></p>
       <p style="margin:0;">
@@ -230,12 +249,24 @@ function webinarWelcomeBody(firstName: string): string {
   `;
 }
 
-export async function sendWebinarYoutubeEmail(to: string, firstName?: string) {
+export async function sendWebinarYoutubeEmail(
+  to: string,
+  firstName?: string,
+  // Sabit tarihli etkinlik (örn. /katil) için "6 Haziran 2026 Cumartesi
+  // 20:00 (TR)" gibi string. Belirtilmezse mailde tarih bloğu gizlenir
+  // (ana funnel her gün auto-webinar yaptığı için tarih sabit değil).
+  eventDateString?: string
+) {
+  // Subject de tarihliyse netleşsin
+  const subject = eventDateString
+    ? `🎬 Seminerine Hazırlık — ${eventDateString}`
+    : "🎬 Seminere Kadar — Sana Özel Yapay Zeka Videoları";
+
   const { data, error } = await resend.emails.send({
     from: FROM,
     to: [to],
-    subject: "🎬 Seminere Kadar — Sana Özel Yapay Zeka Videoları",
-    html: shell(webinarWelcomeBody(firstName || "")),
+    subject,
+    html: shell(webinarWelcomeBody(firstName || "", eventDateString)),
   });
   if (error) throw error;
   return data;
