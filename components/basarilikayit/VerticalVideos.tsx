@@ -1,15 +1,7 @@
 const VIDEOS = [
   {
-    id: "U17038k3dZs",
-    title: "Başarı Hikayesi 1",
-  },
-  {
     id: "nWvImM9U2NQ",
-    title: "Başarı Hikayesi 2",
-  },
-  {
-    id: "24sobDc1m-8",
-    title: "Başarı Hikayesi 3",
+    title: "Başarı Hikayesi — Yapay Zeka",
   },
 ];
 
@@ -22,22 +14,13 @@ export default function VerticalVideos() {
           <span className="text-gold">Başarı Hikayeleri</span>
         </h2>
 
-        {/* Desktop: grid, Mobile: horizontal scroll */}
-        <div
-          className="
-            flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4
-            md:grid md:grid-cols-2 md:overflow-visible md:snap-none md:pb-0
-            lg:grid-cols-3
-            [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]
-          "
-        >
+        {/* Tek video kaldı — merkezde, makul genişlikte gösteriliyor.
+            Eski 3 video grid layout'u yerine flex justify-center kullanıyoruz. */}
+        <div className="flex justify-center">
           {VIDEOS.map((video) => (
             <div
               key={video.id}
-              className="
-                snap-center shrink-0 w-[70vw] sm:w-[55vw]
-                md:w-auto md:shrink
-              "
+              className="w-full max-w-[320px] md:max-w-[360px]"
             >
               <div
                 className="relative w-full overflow-hidden rounded-xl border border-white/10 bg-black"
