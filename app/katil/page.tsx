@@ -70,7 +70,10 @@ export default function KatilPage() {
       <div className="bg-gradient-to-b from-black via-[#0a0a0a] to-black">
         <HeroSection headline={KATIL_HEADLINE} subheadline={KATIL_SUBHEADLINE} />
 
-        <CountdownTimer />
+        <CountdownTimer
+          targetDate={{ year: 2026, month: 6, day: 6 }}
+          headlineText="6 Haziran Cumartesi 20:00'da Canlı Seminer Başlıyor..."
+        />
 
         {/* Register CTA text */}
         <p className="text-center text-gold font-semibold text-sm md:text-base mb-4 px-4">
@@ -131,7 +134,10 @@ export default function KatilPage() {
               Siz de Yerinizi Alın.
             </span>
           </h2>
-          <CountdownTimer />
+          <CountdownTimer
+            targetDate={{ year: 2026, month: 6, day: 6 }}
+            headlineText="6 Haziran Cumartesi 20:00'da Canlı Seminer Başlıyor..."
+          />
           <RegistrationForm
             eventType="Lead"
             webinarId={KATIL_WEBINAR_ID}

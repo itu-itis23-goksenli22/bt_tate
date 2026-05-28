@@ -61,15 +61,11 @@ export default function KayitBasariliContent({
     // Note: CompleteRegistration is already fired in RegistrationModal with
     // proper eventId for dedup. Do NOT fire again here to avoid duplicates.
 
-    // Countdown timer
+    // Countdown timer — /katil için 6 Haziran 2026 20:00 (TR) sabit hedef
     const updateCountdown = () => {
       const nowMs = Date.now();
       const turkeyNow = new Date(new Date(nowMs).toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
-      const target = new Date(turkeyNow);
-      if (turkeyNow.getHours() >= 20) {
-        target.setDate(target.getDate() + 1);
-      }
-      target.setHours(20, 0, 0, 0);
+      const target = new Date(2026, 6 - 1, 6, 20, 0, 0, 0);
 
       const diff = target.getTime() - turkeyNow.getTime();
       if (diff <= 0) return;

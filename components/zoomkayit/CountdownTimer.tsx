@@ -41,7 +41,40 @@ function getNextWebinar(): { targetLocal: Date; dayName: string } {
   return { targetLocal, dayName };
 }
 
-export default function CountdownTimer() {
+// Variant'lar için sabit hedef tarih hesabı (TR saatinde 20:00'a göre).
+// /katil gibi tek seferlik etkinlikler için tarih + saat sabitlenir.
+function getFixedWebinar(
+  year: number,
+  month: number, // 1-12
+  day: number,
+  hour: number = 20
+): { targetLocal: Date; dayName: string } {
+  const now = new Date();
+  const turkeyOffset = 3 * 60;
+  const localOffset = now.getTimezoneOffset();
+
+  const targetTurkey = new Date(year, month - 1, day, hour, 0, 0, 0);
+  const dayName = TURKEY_DAYS[targetTurkey.getDay()];
+  const targetLocal = new Date(
+    targetTurkey.getTime() - (turkeyOffset + localOffset) * 60000
+  );
+  return { targetLocal, dayName };
+}
+
+interface CountdownTimerProps {
+  // Variant'lar için sabit hedef tarih. Belirtilmezse "next 20:00" hesabı
+  // çalışır (main funnel). Format: { year, month (1-12), day }.
+  // Örn: /katil için { year: 2026, month: 6, day: 6 }.
+  targetDate?: { year: number; month: number; day: number };
+  // Sabit tarihte gösterilecek üst metin. Belirtilmezse "{dayName} 20:00'da
+  // Canlı Webinar Başlıyor..." kullanılır.
+  headlineText?: string;
+}
+
+export default function CountdownTimer({
+  targetDate,
+  headlineText,
+}: CountdownTimerProps = {}) {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -56,7 +89,10 @@ export default function CountdownTimer() {
 
     function updateTimer() {
       const now = new Date().getTime();
-      const { targetLocal, dayName: day } = getNextWebinar();
+      // targetDate verilmişse sabit tarihe say, yoksa "next 20:00"
+      const { targetLocal, dayName: day } = targetDate
+        ? getFixedWebinar(targetDate.year, targetDate.month, targetDate.day)
+        : getNextWebinar();
       const distance = targetLocal.getTime() - now;
 
       setDayName(day);
@@ -90,9 +126,11 @@ export default function CountdownTimer() {
   return (
     <div className="text-center mb-6">
       <p className="text-gold font-semibold text-lg mb-4">
-        {mounted && dayName
-          ? `${dayName} 20:00'da Canlı Webinar Başlıyor...`
-          : "20:00'da Canlı Webinar Başlıyor..."}
+        {headlineText
+          ? headlineText
+          : mounted && dayName
+            ? `${dayName} 20:00'da Canlı Webinar Başlıyor...`
+            : "20:00'da Canlı Webinar Başlıyor..."}
       </p>
       <div className="flex items-center justify-center gap-2 md:gap-3">
         {(mounted ? units : labels.map((l) => ({ value: "--", label: l }))).map(
