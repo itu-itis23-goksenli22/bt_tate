@@ -499,13 +499,13 @@ export default function KayitBasariliContent({
             <p className="text-white/40 text-[14px] text-center mb-6">
               AI Scale topluluğundan gerçek sonuçlar
             </p>
-            <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 md:grid md:grid-cols-3 md:overflow-visible md:snap-none md:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            {/* Tek video — EFSANELER + EMRE kaldırıldı, sadece "Yapay zekây"
+                korundu. Merkez hizalı flex layout. */}
+            <div className="flex justify-center">
               {[
-                { id: "U17038k3dZs", title: "Başarı Hikayesi 1" },
-                { id: "nWvImM9U2NQ", title: "Başarı Hikayesi 2" },
-                { id: "24sobDc1m-8", title: "Başarı Hikayesi 3" },
+                { id: "nWvImM9U2NQ", title: "Başarı Hikayesi — Yapay Zeka" },
               ].map((video) => (
-                <div key={video.id} className="snap-center shrink-0 w-[70vw] sm:w-[55vw] md:w-auto md:shrink">
+                <div key={video.id} className="w-full max-w-[320px] md:max-w-[360px]">
                   <div className="relative w-full overflow-hidden rounded-xl border border-white/10 bg-black" style={{ paddingBottom: "177.78%" }}>
                     <iframe
                       className="absolute inset-0 w-full h-full"
