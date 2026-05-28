@@ -30,7 +30,15 @@ const bonuses = [
   "AI Ajans Kurulum Rehberi",
 ];
 
-export default function ValueStack() {
+interface ValueStackProps {
+  priceFormatted?: string;
+  strikethroughPrice?: string;
+}
+
+export default function ValueStack({
+  priceFormatted = "15,000",
+  strikethroughPrice = "42,000",
+}: ValueStackProps = {}) {
   return (
     <div className="flex flex-col items-center">
       {/* Product mockup images */}
@@ -66,11 +74,11 @@ export default function ValueStack() {
       <div className="text-center mb-8">
         <div className="inline-block bg-danger/90 rounded-lg px-6 py-2 mb-2">
           <span className="text-white font-bold text-3xl md:text-5xl line-through decoration-2">
-            ₺42,000
+            ₺{strikethroughPrice}
           </span>
         </div>
         <h3 className="text-white font-bold text-3xl md:text-4xl mt-2">
-          SADECE <span className="text-gold">₺15,000!</span>
+          SADECE <span className="text-gold">₺{priceFormatted}!</span>
         </h3>
       </div>
 

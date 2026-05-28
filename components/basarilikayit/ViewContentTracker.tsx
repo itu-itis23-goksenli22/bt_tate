@@ -9,13 +9,24 @@ function getCookie(name: string): string | undefined {
   return match ? decodeURIComponent(match[2]) : undefined;
 }
 
-export default function ViewContentTracker() {
+interface ViewContentTrackerProps {
+  // Variant'lar için opsiyonel override'lar (default = /firsat sayfası
+  // değerleri). /sonfirsat için value=29900 ve content_name="Sonfirsat
+  // Sayfası" geçilir.
+  value?: number;
+  contentName?: string;
+}
+
+export default function ViewContentTracker({
+  value = 15000,
+  contentName = "Firsat Sayfası",
+}: ViewContentTrackerProps = {}) {
   useEffect(() => {
     const eventId = crypto.randomUUID();
     const customData = {
-      content_name: "Firsat Sayfası",
+      content_name: contentName,
       content_category: "Sales Page",
-      value: 15000,
+      value,
       currency: "TRY",
     };
     // Browser pixel with eventId for dedup — wait for fbp cookie to avoid race condition
@@ -45,7 +56,7 @@ export default function ViewContentTracker() {
       }).catch(() => {});
     };
     setTimeout(fireEvents, 500);
-  }, []);
+  }, [value, contentName]);
 
   return null;
 }

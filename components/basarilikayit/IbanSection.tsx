@@ -2,7 +2,13 @@
 
 import { useState } from "react";
 
-export default function IbanSection() {
+interface IbanSectionProps {
+  priceFormatted?: string;
+}
+
+export default function IbanSection({
+  priceFormatted = "15,000",
+}: IbanSectionProps = {}) {
   const [copied, setCopied] = useState(false);
 
   const copyIban = () => {
@@ -81,7 +87,7 @@ export default function IbanSection() {
                 Tutar:
               </span>
               <span className="text-gold font-bold text-sm md:text-base">
-                ₺15,000
+                ₺{priceFormatted}
               </span>
             </div>
           </div>

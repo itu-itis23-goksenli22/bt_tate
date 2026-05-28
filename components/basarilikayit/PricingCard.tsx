@@ -4,7 +4,19 @@ import { useState } from "react";
 import { BASARILIKAYIT_CHECKOUT_MASTERCLASS } from "@/lib/constants";
 import PaymentLogos from "./PaymentLogos";
 
-export default function PricingCard() {
+interface PricingCardProps {
+  // Variant'lar için opsiyonel prop'lar. Belirtilmezse /firsat default'ları
+  // kullanılır (15,000 TL + masterclass Stripe link).
+  priceFormatted?: string; // örn. "29,900"
+  checkoutUrl?: string;
+  strikethroughPrice?: string; // üstü çizili "normal fiyat" (default 42,000)
+}
+
+export default function PricingCard({
+  priceFormatted = "15,000",
+  checkoutUrl = BASARILIKAYIT_CHECKOUT_MASTERCLASS,
+  strikethroughPrice = "42,000",
+}: PricingCardProps = {}) {
   const [copied, setCopied] = useState(false);
 
   const copyIban = () => {
@@ -30,20 +42,20 @@ export default function PricingCard() {
         {/* Crossed out price */}
         <div className="mb-4">
           <span className="text-white/40 text-xs block mb-0.5">Normal Fiyat</span>
-          <span className="text-white/50 font-bold text-2xl line-through decoration-red-500 decoration-2">₺42,000</span>
+          <span className="text-white/50 font-bold text-2xl line-through decoration-red-500 decoration-2">₺{strikethroughPrice}</span>
         </div>
 
         {/* CTA Button with price inside */}
         <div className="relative mb-6">
           <a
-            href={BASARILIKAYIT_CHECKOUT_MASTERCLASS}
+            href={checkoutUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="block"
           >
             <div className="btn-gold-solid w-full text-center py-5 px-4">
               <span className="block text-xs font-medium opacity-80 mb-1">🔥 Bu Linke Özel Fiyat</span>
-              <span className="block text-2xl md:text-3xl font-extrabold">HEMEN KATIL — ₺15,000</span>
+              <span className="block text-2xl md:text-3xl font-extrabold">HEMEN KATIL — ₺{priceFormatted}</span>
             </div>
           </a>
           {/* Animated click hint below button */}
@@ -136,7 +148,7 @@ export default function PricingCard() {
             </button>
           </div>
           <p className="text-white/50 text-xs mb-1">
-            Baturalp Tunalı &middot; <span className="text-gold font-semibold">₺15,000</span>
+            Baturalp Tunalı &middot; <span className="text-gold font-semibold">₺{priceFormatted}</span>
           </p>
           <p className="text-white/40 text-[11px] mb-3">
             Açıklamaya adınızı ve telefon numaranızı yazın.
