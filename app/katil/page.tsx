@@ -20,29 +20,36 @@ const KATIL_CONTENT_NAME = "Katil Funnel Webinar";
 const KATIL_FIXED_DATE = "Cumartesi, 6 Haziran - Saat 20:00 (GMT+3)";
 const KATIL_CTA_TEXT = "ÜCRETSİZ YERİMİ AYIRT";
 
-// /katil headline blok'u — main funnel'dan farklı, "startup" odaklı angle
+// /katil headline blok'u — 3 farklı audience'a aynı anda hitap eden
+// "founder / agency / business owner" angle'ı. Michael Supina feedback'i
+// sonrası genişletildi: artık sadece "ilk gelir" odaklı değil, business
+// owner ve agency hedefini de kapsıyor.
 const KATIL_HEADLINE = (
   <>
-    <span className="zk-text-gold-gradient">Yapay Zeka</span> ile Sıfırdan
-    Gelir Getiren Bir{" "}
-    <em className="not-italic zk-text-gold-gradient">Startup</em> Kur
+    Kod Bilmeden{" "}
+    <span className="zk-text-gold-gradient">Yapay Zeka</span> ile Gelir
+    Getiren Bir Startup Kur, İşletmelere Sistem Sat ya da{" "}
+    <em className="not-italic zk-text-gold-gradient">İşini 10X Büyüt</em>
   </>
 );
 const KATIL_SUBHEADLINE = (
   <>
-    Kod bilmeden, teknik ekip kurmadan ve büyük sermaye olmadan AI destekli
-    bir gelir sistemi oluşturmanın yol haritasını canlı gösteriyorum.
+    Teknik ekip ve büyük sermaye olmadan, fikrini 30 günde yayında çalışan
+    bir yazılıma çevir — ister kendi startup&apos;ın olarak büyüt, ister
+    işletmelere sistem satıp gelir elde et, ister kendi işine entegre edip
+    rakiplerini geç.
   </>
 );
 
 export const metadata: Metadata = {
-  title: "AI Scale | Sıfırdan Gelir Getiren Bir Startup Kur — Yapay Zeka Semineri",
+  title:
+    "AI Scale | Yapay Zeka ile Startup Kur, Sistem Sat veya İşini 10X Büyüt",
   description:
-    "Kod bilmeden, teknik ekip kurmadan ve büyük sermaye olmadan AI destekli bir gelir sistemi kurmanın yol haritasını canlı seminerle gösteriyoruz. 6 Haziran Cumartesi 20:00.",
+    "Kod bilmeden, teknik ekip ve büyük sermaye olmadan fikrini 30 günde yayında çalışan bir yazılıma çevir. Startup kur, işletmelere sistem sat, ya da kendi işini 10X büyüt. 6 Haziran Cumartesi 20:00.",
   openGraph: {
-    title: "AI Scale | Sıfırdan Gelir Getiren Bir Startup Kur",
+    title: "AI Scale | Yapay Zeka ile Startup Kur veya İşini 10X Büyüt",
     description:
-      "Yapay Zeka ile Sıfırdan Gelir Getiren Bir Startup Kur — %100 ücretsiz canlı etkinlik.",
+      "Kod bilmeden, teknik ekip olmadan — fikrini 30 günde yayında çalışan yazılıma çevir. %100 ücretsiz canlı etkinlik.",
     type: "website",
   },
 };
