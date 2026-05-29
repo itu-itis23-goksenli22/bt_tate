@@ -125,7 +125,7 @@ export default function CountdownTimer({
 
   return (
     <div className="text-center mb-6">
-      <p className="text-gold font-semibold text-lg mb-4">
+      <p className="text-gold font-bold text-xl md:text-3xl leading-tight mb-4 px-4">
         {headlineText
           ? headlineText
           : mounted && dayName
