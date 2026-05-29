@@ -39,7 +39,8 @@ function getCookie(name: string): string | undefined {
 async function fireFunnelEvent(
   eventName: "AddToCart" | "InitiateCheckout",
   contentName: string,
-  value: number
+  value: number,
+  currency: string
 ) {
   const eventId =
     typeof crypto !== "undefined" && crypto.randomUUID
@@ -50,7 +51,7 @@ async function fireFunnelEvent(
     content_name: contentName,
     content_category: "checkout",
     value,
-    currency: "USD",
+    currency,
   };
 
   // 1) Browser pixel — dedup için aynı eventId
@@ -125,15 +126,35 @@ interface Props {
    * InitiateCheckout + AddToCart event'leri gönderir. Belirtilmezse
    * (main funnel) hiç fire etmez — eski davranış birebir korunur.
    *
-   * - InitiateCheckout: iframe ekrana %50 girdiğinde (IntersectionObserver)
-   * - AddToCart: iframe wrapper'ına ilk pointerdown'da (kullanıcı
-   *   ödeme formuna dokunduğunda)
+   * - InitiateCheckout: iframe ekrana %15 girdiğinde (IntersectionObserver)
+   * - AddToCart: iframe wrapper'ına ilk pointerdown'da veya
+   *   iframe focus aldığında (cross-origin için window.blur fallback)
    *
    * Her ikisi de browser pixel + CAPI server-side dedup edilmiş eventId
-   * ile gönderilir. content_name = funnelTag, value = 9.9, currency = USD.
+   * ile gönderilir. content_name = funnelTag.
    */
   funnelTag?: string;
+  /**
+   * Hangi Stripe ürünü kullanılacak. Belirtilmezse "vip" ($9.90 USD).
+   * "sonfirsat" → ₺29.900 TRY community paketi.
+   * Server tarafında STRIPE_VIP_PRICE_ID veya STRIPE_SONFIRSAT_PRICE_ID
+   * env var'ından okunur. funnel event'lerinin value parametresi de
+   * variant'a göre değişir.
+   */
+  priceVariant?: "vip" | "sonfirsat";
+  /**
+   * Stripe Embedded yüklenmezse gösterilecek fallback URL. Belirtilmezse
+   * default $9.90 Payment Link kullanılır. /sonfirsat için kendi 29.900
+   * TL Payment Link URL'i geçilmeli.
+   */
+  fallbackUrl?: string;
 }
+
+// Variant başına funnel event value'su (browser pixel + CAPI customData)
+const VARIANT_VALUES: Record<"vip" | "sonfirsat", { value: number; currency: string }> = {
+  vip: { value: 9.9, currency: "USD" },
+  sonfirsat: { value: 29900, currency: "TRY" },
+};
 
 export default function VipEmbeddedCheckout({
   email,
@@ -141,6 +162,8 @@ export default function VipEmbeddedCheckout({
   source = "aiscaleapp",
   ctaId = "final-vip-cta",
   funnelTag,
+  priceVariant = "vip",
+  fallbackUrl,
 }: Props) {
   // Durum makinesi:
   //   'loading'  → /api/create-checkout-session POST atılıyor (initial)
@@ -170,7 +193,12 @@ export default function VipEmbeddedCheckout({
         const res = await fetch("/api/create-checkout-session", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, name, source }),
+          body: JSON.stringify({
+            email,
+            name,
+            source,
+            variant: priceVariant,
+          }),
         });
 
         if (!res.ok) {
@@ -198,14 +226,19 @@ export default function VipEmbeddedCheckout({
     })();
 
     return () => clearTimeout(timeoutId);
-  }, [hasPublishableKey, email, name, source]);
+  }, [hasPublishableKey, email, name, source, priceVariant]);
 
   // ready → Stripe iframe mount
   if (state === "ready" && clientSecret) {
     const promise = getStripePromise();
-    if (!promise) return <FallbackButton ctaId={ctaId} />;
+    if (!promise) return <FallbackButton ctaId={ctaId} fallbackUrl={fallbackUrl} />;
     return (
-      <ReadyWrapper ctaId={ctaId} funnelTag={funnelTag}>
+      <ReadyWrapper
+        ctaId={ctaId}
+        funnelTag={funnelTag}
+        eventValue={VARIANT_VALUES[priceVariant].value}
+        eventCurrency={VARIANT_VALUES[priceVariant].currency}
+      >
         {/* Trust signals — iframe'in üstünde */}
         <div className="flex items-center justify-center gap-2 md:gap-3 mb-3 text-white/60 text-[11px] md:text-[12px]">
           <span className="inline-flex items-center gap-1">
@@ -253,7 +286,7 @@ export default function VipEmbeddedCheckout({
 
   // fallback → Payment Link butonu (yeni sekme)
   if (state === "fallback") {
-    return <FallbackButton ctaId={ctaId} />;
+    return <FallbackButton ctaId={ctaId} fallbackUrl={fallbackUrl} />;
   }
 
   // loading (initial) → altın temalı placeholder
@@ -312,10 +345,14 @@ export default function VipEmbeddedCheckout({
 function ReadyWrapper({
   ctaId,
   funnelTag,
+  eventValue,
+  eventCurrency,
   children,
 }: {
   ctaId: string;
   funnelTag?: string;
+  eventValue: number;
+  eventCurrency: string;
   children: React.ReactNode;
 }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -336,7 +373,7 @@ function ReadyWrapper({
           if (entry.isIntersecting && !initiateFired.current) {
             initiateFired.current = true;
             console.log("[funnel] InitiateCheckout fired:", funnelTag);
-            fireFunnelEvent("InitiateCheckout", funnelTag, 9.9);
+            fireFunnelEvent("InitiateCheckout", funnelTag, eventValue, eventCurrency);
             observer.disconnect();
           }
         }
@@ -360,7 +397,7 @@ function ReadyWrapper({
       if (addToCartFired.current) return;
       addToCartFired.current = true;
       console.log("[funnel] AddToCart fired:", funnelTag, "via", trigger);
-      fireFunnelEvent("AddToCart", funnelTag, 9.9);
+      fireFunnelEvent("AddToCart", funnelTag, eventValue, eventCurrency);
     };
 
     const onPointerDown = () => fireAddToCartOnce("pointerdown");
@@ -383,7 +420,7 @@ function ReadyWrapper({
       el.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener("blur", onBlur);
     };
-  }, [funnelTag]);
+  }, [funnelTag, eventValue, eventCurrency]);
 
   return (
     <div ref={wrapperRef} id={ctaId} className="my-8 scroll-mt-24">
@@ -392,14 +429,20 @@ function ReadyWrapper({
   );
 }
 
-function FallbackButton({ ctaId }: { ctaId: string }) {
+function FallbackButton({
+  ctaId,
+  fallbackUrl,
+}: {
+  ctaId: string;
+  fallbackUrl?: string;
+}) {
   // Embed başarısız olursa (env eksik, API hata, timeout) buraya düşer.
   // Marka rengi (altın) — yeşil gradient kaldırıldı, sayfayla uyumlu.
   return (
     <div className="my-6">
       <a
         id={ctaId}
-        href={FALLBACK_CHECKOUT_URL}
+        href={fallbackUrl || FALLBACK_CHECKOUT_URL}
         target="_blank"
         rel="noopener noreferrer"
         className="block rounded-[10px] overflow-hidden hover:brightness-110 transition-all shadow-[0_0_40px_-10px_rgba(193,157,68,0.55)] scroll-mt-24"

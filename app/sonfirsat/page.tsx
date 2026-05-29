@@ -1,26 +1,48 @@
 // /sonfirsat — /firsat'in 29.900 TL fiyat versiyonu.
-// /firsat ile birebir aynı yapı; sadece:
-//   - PricingCard + ValueStack + IbanSection: priceFormatted="29,900"
-//   - ViewContentTracker: value=29900, contentName="Sonfirsat Sayfası"
-//   - Stripe Payment Link: TODO — kullanıcı 29.900 TL ürün için yeni link
-//     oluşturduğunda SONFIRSAT_CHECKOUT_URL constant'ı güncellenecek.
-//     Şu an eski 15.000 link bırakılıyor (asla canlıda kalmasın!).
+//
+// Farkları:
+//   - Fiyat: ₺29.900 (üstü çizili "normal fiyat" ₺59.800)
+//   - Paket içeriği: Claude Code + N8N vurgulu (eski "AI Scale App
+//     eğitim programı" kaldırıldı, yerine "Claude Code Masterclass"
+//     ve "N8N otomasyon stack'i" geldi)
+//   - Stripe: EMBEDDED Checkout (sayfa içi iframe) — /katil/kayitbasarili
+//     ile aynı VipEmbeddedCheckout component'ini priceVariant="sonfirsat"
+//     ile kullanıyor. Backend STRIPE_SONFIRSAT_PRICE_ID env var'ını
+//     okuyor (price_1Tc8wpIWawaEi3elIg14ABZX).
+//   - ViewContent value=29900, content_name="Sonfirsat Sayfası"
+//   - Tüm CTA butonları artık #sonfirsat-checkout anchor'ına scroll
+//     ediyor (eski Payment Link yeni sekme açma davranışı kaldırıldı)
+//
+// Fallback URL: Embedded başarısız olursa (env eksik, API hata) eski
+// Payment Link butonu gösterilir: SONFIRSAT_FALLBACK_URL.
 
 import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 import HeaderBar from "@/components/basarilikayit/HeaderBar";
 import PricingCard from "@/components/basarilikayit/PricingCard";
 import ValueStack from "@/components/basarilikayit/ValueStack";
-import { BASARILIKAYIT_CHECKOUT_MASTERCLASS } from "@/lib/constants";
+import VipEmbeddedCheckout from "@/components/VipEmbeddedCheckout";
 
-// TODO(stripe): Kullanıcı 29.900 TL Stripe Payment Link'ini oluşturduğunda
-// bu constant'ı yeni URL ile değiştir. Şu an placeholder olarak eski
-// 15.000 TL link'i kullanılıyor.
+// /sonfirsat config — tek yerden değiştirilebilir
 const SONFIRSAT_PRICE_FORMATTED = "29,900";
-const SONFIRSAT_STRIKETHROUGH = "59,800"; // 2x indirim algısı için
-const SONFIRSAT_CHECKOUT_URL = BASARILIKAYIT_CHECKOUT_MASTERCLASS; // TODO: değişecek
+const SONFIRSAT_STRIKETHROUGH = "59,800";
 const SONFIRSAT_VIEWCONTENT_VALUE = 29900;
 const SONFIRSAT_CONTENT_NAME = "Sonfirsat Sayfası";
+const SONFIRSAT_FUNNEL_TAG = "Sonfirsat Checkout";
+// Embedded başarısız olursa açılacak Payment Link (29.900 TL ürün)
+const SONFIRSAT_FALLBACK_URL =
+  "https://buy.stripe.com/4gM6oI2e4c5L5wJdpS3wQ0v";
+// PricingCard'daki butona ve mid-page/pre-FAQ CTA'larına verilecek
+// anchor — embedded checkout section'ına scroll eder
+const SONFIRSAT_CHECKOUT_ANCHOR = "#sonfirsat-checkout";
+
+// Paket içeriği — Claude Code + N8N vurgulu, "eğitim programı" lafı yok
+const SONFIRSAT_PACKAGE_ITEMS = [
+  "<strong class='text-white'>Claude Code Masterclass</strong> + canlı topluluk erişimi",
+  "<strong class='text-white'>N8N otomasyon stack'i</strong> + canlı mentörlük",
+  "API entegrasyon toolkit'i + Ads stratejisi + Setter sistemi",
+  "Tüm bonuslar + AI ajans kurulum kiti",
+];
 
 export const metadata: Metadata = {
   title: "AI Scale App Community - Son Fırsat | ₺29,900",
@@ -110,11 +132,13 @@ export default function SonfirsatPage() {
 
         <div className="relative z-10 max-w-6xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-start">
-            {/* Left: Pricing Card */}
+            {/* Left: Pricing Card — buton artık embedded checkout'a
+                scroll eder (yeni sekme yerine) */}
             <PricingCard
               priceFormatted={SONFIRSAT_PRICE_FORMATTED}
-              checkoutUrl={SONFIRSAT_CHECKOUT_URL}
+              checkoutUrl={SONFIRSAT_CHECKOUT_ANCHOR}
               strikethroughPrice={SONFIRSAT_STRIKETHROUGH}
+              packageItems={SONFIRSAT_PACKAGE_ITEMS}
             />
             {/* Right: Value Stack */}
             <ValueStack
@@ -125,15 +149,36 @@ export default function SonfirsatPage() {
         </div>
       </section>
 
+      {/* Embedded Stripe Checkout — sayfa içi inline form
+          /katil/kayitbasarili ile aynı pattern */}
+      <section className="py-10 md:py-14 bg-primary px-4">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-6">
+            <h2 className="text-white text-2xl md:text-3xl font-bold mb-2">
+              Hemen <span className="text-gold">Katıl</span>
+            </h2>
+            <p className="text-white/60 text-sm md:text-base">
+              Ödeme formu sayfanın içinde — yönlendirme yok, hızlı ve güvenli.
+            </p>
+          </div>
+
+          <VipEmbeddedCheckout
+            ctaId="sonfirsat-checkout"
+            source="aiscaleapp"
+            priceVariant="sonfirsat"
+            fallbackUrl={SONFIRSAT_FALLBACK_URL}
+            funnelTag={SONFIRSAT_FUNNEL_TAG}
+          />
+        </div>
+      </section>
+
       {/* Vertical Video Testimonials */}
       <VerticalVideos />
 
-      {/* Mid-page CTA */}
+      {/* Mid-page CTA — artık embedded checkout'a scroll eder */}
       <section className="py-1 md:py-2 bg-primary text-center px-4">
         <a
-          href={SONFIRSAT_CHECKOUT_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+          href={SONFIRSAT_CHECKOUT_ANCHOR}
           className="inline-block animate-pulse-gold rounded-full"
         >
           <div className="relative text-lg md:text-xl font-bold px-10 md:px-16 py-4 md:py-5 bg-gradient-to-r from-yellow-500 via-gold to-yellow-500 text-black rounded-full shadow-[0_0_20px_rgba(251,191,36,0.4)] hover:shadow-[0_0_30px_rgba(251,191,36,0.6)] transition-shadow duration-300">
@@ -145,12 +190,10 @@ export default function SonfirsatPage() {
       <CampusSection />
       <ReviewsSection />
 
-      {/* Pre-FAQ CTA */}
+      {/* Pre-FAQ CTA — artık embedded checkout'a scroll eder */}
       <section className="py-1 md:py-2 bg-primary text-center px-4">
         <a
-          href={SONFIRSAT_CHECKOUT_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+          href={SONFIRSAT_CHECKOUT_ANCHOR}
           className="inline-block animate-pulse-gold rounded-full"
         >
           <div className="relative text-lg md:text-xl font-bold px-10 md:px-16 py-4 md:py-5 bg-gradient-to-r from-yellow-500 via-gold to-yellow-500 text-black rounded-full shadow-[0_0_20px_rgba(251,191,36,0.4)] hover:shadow-[0_0_30px_rgba(251,191,36,0.6)] transition-shadow duration-300">

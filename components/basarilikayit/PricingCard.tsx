@@ -6,16 +6,25 @@ import PaymentLogos from "./PaymentLogos";
 
 interface PricingCardProps {
   // Variant'lar için opsiyonel prop'lar. Belirtilmezse /firsat default'ları
-  // kullanılır (15,000 TL + masterclass Stripe link).
+  // kullanılır (15,000 TL + masterclass Stripe link + eski paket).
   priceFormatted?: string; // örn. "29,900"
   checkoutUrl?: string;
   strikethroughPrice?: string; // üstü çizili "normal fiyat" (default 42,000)
+  packageItems?: string[]; // paket içeriği maddeleri
 }
+
+const DEFAULT_PACKAGE_ITEMS = [
+  "AI Scale App eğitim programı + topluluk erişimi",
+  "AI Scale Masterclass + canlı mentörlük",
+  "N8N & API toolkit + Ads stratejisi + Setter eğitimi",
+  "Tüm bonuslar + kaynak kiti",
+];
 
 export default function PricingCard({
   priceFormatted = "15,000",
   checkoutUrl = BASARILIKAYIT_CHECKOUT_MASTERCLASS,
   strikethroughPrice = "42,000",
+  packageItems = DEFAULT_PACKAGE_ITEMS,
 }: PricingCardProps = {}) {
   const [copied, setCopied] = useState(false);
 
@@ -47,10 +56,15 @@ export default function PricingCard({
 
         {/* CTA Button with price inside */}
         <div className="relative mb-6">
+          {/* checkoutUrl "#" ile başlıyorsa (anchor) yeni sekme açma —
+              aynı sayfada embedded checkout'a scroll eder.
+              Aksi takdirde external Payment Link → target="_blank". */}
           <a
             href={checkoutUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            {...(!checkoutUrl.startsWith("#") && {
+              target: "_blank",
+              rel: "noopener noreferrer",
+            })}
             className="block"
           >
             <div className="btn-gold-solid w-full text-center py-5 px-4">
@@ -89,30 +103,15 @@ export default function PricingCard({
           PAKET İÇERİĞİ
         </p>
         <div className="space-y-2 text-left">
-          <div className="flex items-start gap-2">
-            <span className="text-gold text-sm flex-shrink-0">✦</span>
-            <p className="text-white/70 text-xs leading-relaxed">
-              AI Scale App eğitim programı + topluluk erişimi
-            </p>
-          </div>
-          <div className="flex items-start gap-2">
-            <span className="text-gold text-sm flex-shrink-0">✦</span>
-            <p className="text-white/70 text-xs leading-relaxed">
-              AI Scale Masterclass + canlı mentörlük
-            </p>
-          </div>
-          <div className="flex items-start gap-2">
-            <span className="text-gold text-sm flex-shrink-0">✦</span>
-            <p className="text-white/70 text-xs leading-relaxed">
-              N8N & API toolkit + Ads stratejisi + Setter eğitimi
-            </p>
-          </div>
-          <div className="flex items-start gap-2">
-            <span className="text-gold text-sm flex-shrink-0">✦</span>
-            <p className="text-white/70 text-xs leading-relaxed">
-              Tüm bonuslar + kaynak kiti
-            </p>
-          </div>
+          {packageItems.map((item, i) => (
+            <div key={i} className="flex items-start gap-2">
+              <span className="text-gold text-sm flex-shrink-0">✦</span>
+              <p
+                className="text-white/70 text-xs leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: item }}
+              />
+            </div>
+          ))}
         </div>
       </div>
 
