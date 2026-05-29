@@ -21,10 +21,7 @@ import {
   EmbeddedCheckoutProvider,
   EmbeddedCheckout,
 } from "@stripe/react-stripe-js";
-import {
-  trackAddToCart,
-  trackInitiateCheckout,
-} from "@/lib/meta-pixel";
+import { trackInitiateCheckout } from "@/lib/meta-pixel";
 
 function getCookie(name: string): string | undefined {
   if (typeof document === "undefined") return undefined;
@@ -34,10 +31,10 @@ function getCookie(name: string): string | undefined {
 
 // Browser pixel + CAPI server-side dedup edilmiş event fire helper.
 // Stripe iframe sandboxed olduğu için iframe ETRAFINDAKİ etkileşimleri
-// yakalıyoruz: ekrana giriş (IntersectionObserver) + iframe focus +
-// pointerdown. Browser pixel hemen, CAPI fetch arkada.
+// yakalıyoruz: iframe focus (window.blur) + pointerdown. Browser pixel
+// hemen, CAPI fetch arkada.
 async function fireFunnelEvent(
-  eventName: "AddToCart" | "InitiateCheckout",
+  eventName: "InitiateCheckout",
   contentName: string,
   value: number,
   currency: string
@@ -64,11 +61,7 @@ async function fireFunnelEvent(
     }
   }
 
-  if (eventName === "AddToCart") {
-    trackAddToCart(customData, eventId);
-  } else {
-    trackInitiateCheckout(customData, eventId);
-  }
+  trackInitiateCheckout(customData, eventId);
 
   // 2) CAPI server-side
   try {
@@ -122,16 +115,22 @@ interface Props {
    */
   ctaId?: string;
   /**
-   * Variant funnel'lar için (örn. /katil/kayitbasarili) Meta'ya
-   * InitiateCheckout + AddToCart event'leri gönderir. Belirtilmezse
-   * (main funnel) hiç fire etmez — eski davranış birebir korunur.
+   * Variant funnel'lar için (örn. /katil/kayitbasarili, /sonfirsat)
+   * Meta'ya InitiateCheckout event'i gönderir. Belirtilmezse (main
+   * funnel) hiç fire etmez — eski davranış birebir korunur.
    *
-   * - InitiateCheckout: iframe ekrana %15 girdiğinde (IntersectionObserver)
-   * - AddToCart: iframe wrapper'ına ilk pointerdown'da veya
-   *   iframe focus aldığında (cross-origin için window.blur fallback)
+   * Fire tetikleyici: kullanıcı Stripe iframe'e DOKUNDUĞUNDA
+   * (bilgi girmeye başladığında):
+   *   - wrapper div'ine pointerdown, VEYA
+   *   - window.blur + document.activeElement === IFRAME
+   *     (cross-origin iframe focus tek güvenilir tetik)
    *
-   * Her ikisi de browser pixel + CAPI server-side dedup edilmiş eventId
-   * ile gönderilir. content_name = funnelTag.
+   * Browser pixel + CAPI server-side dedup edilmiş eventId ile
+   * gönderilir. content_name = funnelTag.
+   *
+   * Not: Önceden AddToCart de fire ediyordu (aynı tetikleyici ile);
+   * funnel telemetri'sini sadeleştirmek için kaldırıldı —
+   * InitiateCheckout = "user started filling form" semantiği yeterli.
    */
   funnelTag?: string;
   /**
@@ -325,22 +324,33 @@ export default function VipEmbeddedCheckout({
 /**
  * ReadyWrapper — Stripe iframe'i mount edildikten sonra etrafına sarılır.
  *
- * funnelTag verildiğinde (örn. /katil/kayitbasarili) 2 funnel event'i fire eder:
+ * funnelTag verildiğinde TEK funnel event'i fire eder:
  *
- *   1. InitiateCheckout — Wrapper div ekrana %50 girdiğinde
- *      (IntersectionObserver). Anlam: "Kullanıcı checkout formuna baktı."
+ *   InitiateCheckout — kullanıcı iframe ile etkileşime girdiğinde.
+ *   Anlam: "Kullanıcı bilgilerini girmeye başladı / ödeme yapma niyeti
+ *   gösterdi."
  *
- *   2. AddToCart — Wrapper div'e ilk pointerdown geldiğinde. Anlam:
- *      "Kullanıcı ödeme formuna dokundu (kart girmek istedi)."
- *      Stripe iframe sandbox olduğu için içine giremiyoruz, ama parent
- *      div pointerdown'ı yakalayabiliyoruz — kullanıcı iframe'e tıklayınca
- *      önce parent capture'da event görünür, sonra iframe'e devredilir.
+ *   Tetikleyici 2 güvenilir yöntemin birleşimi:
  *
- * Her ikisi de browser pixel + CAPI server-side dedup edilmiş eventId
- * ile gönderilir.
+ *   (A) Wrapper'a pointerdown — iframe'in BORDER + DIŞ alanı + trust
+ *       signals + alt metin etrafına dokunulduğunda yakalanır. Iframe
+ *       İÇİNE tıklarsa CROSS-ORIGIN olduğu için pointer event'i parent'a
+ *       bubble ETMEZ, bu yüzden tek başına yetersiz.
+ *
+ *   (B) window.blur — kullanıcı iframe'e tıkladığında veya tab'ladığında
+ *       parent window odak kaybeder. document.activeElement IFRAME ise
+ *       kullanıcı Stripe formuyla etkileşime girdi demektir. Cross-origin
+ *       iframe interaction'ı yakalamak için bu en güvenilir yol.
+ *
+ * Browser pixel + CAPI server-side dedup edilmiş eventId ile gönderilir.
  *
  * funnelTag belirtilmezse (main funnel) hiçbir event fire etmez — eski
  * davranış birebir korunur.
+ *
+ * Not: Daha önce IntersectionObserver ile "iframe görünür oldu →
+ * InitiateCheckout" + pointer/focus ile AddToCart fire ediyordu.
+ * Sadelik için tek event'e indirildi: InitiateCheckout = "kullanıcı
+ * bilgi girmeye başladı".
  */
 function ReadyWrapper({
   ctaId,
@@ -356,58 +366,28 @@ function ReadyWrapper({
   children: React.ReactNode;
 }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const initiateFired = useRef(false);
-  const addToCartFired = useRef(false);
+  const fired = useRef(false);
 
   useEffect(() => {
     if (!funnelTag) return;
     const el = wrapperRef.current;
     if (!el) return;
 
-    // InitiateCheckout — IntersectionObserver, %15 görünür olunca tek sefer
-    // fire eder. (%50'den indirildi — wrapper iframe + trust signals
-    // toplam ~700px yüksek, %50 ekran küçükse hiç tetiklenmiyordu.)
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting && !initiateFired.current) {
-            initiateFired.current = true;
-            console.log("[funnel] InitiateCheckout fired:", funnelTag);
-            fireFunnelEvent("InitiateCheckout", funnelTag, eventValue, eventCurrency);
-            observer.disconnect();
-          }
-        }
-      },
-      { threshold: 0.15 }
-    );
-    observer.observe(el);
-
-    // AddToCart yakalama — iki güvenilir yöntem birleşik:
-    //
-    // (A) Wrapper'a pointerdown — iframe'in BORDER + DIŞ alanı + trust
-    //     signals + alt metin etrafına dokunulduğunda yakalanır. Iframe
-    //     içine tıklarsa CROSS-ORIGIN olduğu için pointer event'i parent'a
-    //     bubble ETMEZ, bu yüzden tek başına yetersiz.
-    //
-    // (B) window.blur — kullanıcı iframe'e tıkladığında veya tab'ladığında
-    //     parent window odak kaybeder. document.activeElement IFRAME ise
-    //     kullanıcı Stripe formuyla etkileşime girdi demektir. Cross-origin
-    //     iframe interaction'ı yakalamak için bu en güvenilir yol.
-    const fireAddToCartOnce = (trigger: string) => {
-      if (addToCartFired.current) return;
-      addToCartFired.current = true;
-      console.log("[funnel] AddToCart fired:", funnelTag, "via", trigger);
-      fireFunnelEvent("AddToCart", funnelTag, eventValue, eventCurrency);
+    const fireOnce = (trigger: string) => {
+      if (fired.current) return;
+      fired.current = true;
+      console.log("[funnel] InitiateCheckout fired:", funnelTag, "via", trigger);
+      fireFunnelEvent("InitiateCheckout", funnelTag, eventValue, eventCurrency);
     };
 
-    const onPointerDown = () => fireAddToCartOnce("pointerdown");
+    const onPointerDown = () => fireOnce("pointerdown");
     const onBlur = () => {
-      // Iframe focus aldıysa AddToCart fire et. Mikrotask delay,
+      // Iframe focus aldıysa fire et. Mikrotask delay,
       // document.activeElement'in iframe'e set olmasını bekle.
       setTimeout(() => {
         const active = document.activeElement;
         if (active && active.tagName === "IFRAME" && el.contains(active)) {
-          fireAddToCartOnce("iframe-focus");
+          fireOnce("iframe-focus");
         }
       }, 0);
     };
@@ -416,7 +396,6 @@ function ReadyWrapper({
     window.addEventListener("blur", onBlur);
 
     return () => {
-      observer.disconnect();
       el.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener("blur", onBlur);
     };
