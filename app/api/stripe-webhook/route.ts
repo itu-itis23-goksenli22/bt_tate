@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { sendCAPIEvent } from "@/lib/meta-capi";
-import { sendCourseWelcomeEmail, sendVipUpsellEmail } from "@/lib/purchase-emails";
+import {
+  sendCourseWelcomeEmail,
+  sendVipUpsellEmail,
+  sendSonfirsatWelcomeEmail,
+} from "@/lib/purchase-emails";
 
 const stripe = new Stripe("sk_placeholder");
 
@@ -76,13 +80,36 @@ export async function POST(request: NextRequest) {
       const nameParts = customerName.split(" ");
       const ccyLower = (session.currency || "try").toLowerCase();
       const amountForCheck = amountTotal ?? 0;
-      const isVipUpsell = ccyLower === "usd" && amountForCheck === 990;
+      // Metadata.variant create-checkout-session tarafından set ediliyor;
+      // bu en güvenilir tanıma yöntemi. Fallback olarak amount+currency
+      // kontrolü de var (eski webhook'lar veya legacy Payment Link'ler için).
+      const metadataVariant = (session.metadata as Record<string, string>)
+        ?.variant || "";
+      const isVipUpsell =
+        metadataVariant === "vip" ||
+        (ccyLower === "usd" && amountForCheck === 990);
+      const isSonfirsat =
+        metadataVariant === "sonfirsat" ||
+        // 29.900 TL = 2.990.000 kuruş (legacy Payment Link fallback)
+        (ccyLower === "try" && amountForCheck === 2990000);
 
       const eventName = "Purchase";
-      // eventId prefix'i $9.90 ve 15k TL satışlarını dashboard'da ayırt etmek
-      // için farklı tutulur. session.id zaten globally unique olduğu için
-      // dedup açısından collision riski yok.
-      const eventIdPrefix = isVipUpsell ? "purchase_vip" : "purchase";
+      // eventId prefix'i farklı satış tiplerini Meta dashboard'da ayırt
+      // etmek için kullanılıyor (custom conversions filter'ı için).
+      // session.id zaten globally unique olduğu için dedup collision yok.
+      const eventIdPrefix = isSonfirsat
+        ? "purchase_sonfirsat"
+        : isVipUpsell
+          ? "purchase_vip"
+          : "purchase";
+
+      // content_name de variant'a göre değişiyor — Meta CAPI customData'da
+      // bu sayede /sonfirsat satışları diğer satışlardan ayrılabilir.
+      const purchaseContentName = isSonfirsat
+        ? "Sonfirsat Purchase"
+        : isVipUpsell
+          ? "VIP Purchase"
+          : "Course Purchase";
 
       await sendCAPIEvent({
         eventName,
@@ -96,29 +123,39 @@ export async function POST(request: NextRequest) {
         customData: {
           value,
           currency,
+          content_name: purchaseContentName,
         },
       });
       console.log(
-        `✅ Meta CAPI ${eventName} sent for ${email || "unknown"} → ${isDijital ? "Dijital Akademi" : "AI Scale"} pixel (${value} ${currency})`
+        `✅ Meta CAPI ${eventName} (${purchaseContentName}) sent for ${email || "unknown"} → ${isDijital ? "Dijital Akademi" : "AI Scale"} pixel (${value} ${currency})`
       );
 
       // Send purchase confirmation email (non-blocking)
-      // $9.90 USD = 990 cents → VIP upsell mail
-      // 15.000 TL = 1.500.000 kuruş → Course welcome mail
+      // Routing — metadata.variant primary, amount+currency fallback:
+      //   $9.90 USD  / variant=vip       → VIP upsell mail
+      //   15.000 TL  / variant=undefined → Course welcome mail
+      //   29.900 TL  / variant=sonfirsat → Sonfirsat welcome mail
       if (email) {
-        const amount = amountTotal ?? 0;
-        const ccy = (session.currency || "try").toLowerCase();
-
-        if (ccy === "usd" && amount === 990) {
+        if (isSonfirsat) {
+          sendSonfirsatWelcomeEmail(email)
+            .then(() =>
+              console.log(`📧 Sonfirsat welcome email sent to ${email}`)
+            )
+            .catch((err) =>
+              console.warn("⚠️ Sonfirsat email failed:", err)
+            );
+        } else if (isVipUpsell) {
           sendVipUpsellEmail(email)
             .then(() => console.log(`📧 VIP upsell email sent to ${email}`))
             .catch((err) => console.warn("⚠️ VIP email failed:", err));
-        } else if (ccy === "try" && amount === 1500000) {
+        } else if (ccyLower === "try" && amountForCheck === 1500000) {
           sendCourseWelcomeEmail(email)
             .then(() => console.log(`📧 Course welcome email sent to ${email}`))
             .catch((err) => console.warn("⚠️ Welcome email failed:", err));
         } else {
-          console.log(`ℹ️ No email rule for amount=${amount} ${ccy} — skipped`);
+          console.log(
+            `ℹ️ No email rule for amount=${amountForCheck} ${ccyLower} variant=${metadataVariant} — skipped`
+          );
         }
       }
 

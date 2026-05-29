@@ -6,6 +6,11 @@ const FROM = "AI Scale <info@aiscale.app>";
 const NOTION_LINK =
   "https://www.notion.so/Yapay-Zeka-Ba-lang-Paketi-2aea3d46179c81f28341ea38e05b15f8?source=copy_link";
 
+// /sonfirsat 29.900 TL paketi için Skool/community giriş linki.
+// Şimdilik NOTION_LINK'in aynısı; gerçek topluluk linki gelince
+// güncellenecek (kullanıcı sonra söyleyecek).
+const SONFIRSAT_COMMUNITY_LINK = NOTION_LINK;
+
 /**
  * Wraps body HTML in a clean responsive email shell.
  */
@@ -80,6 +85,76 @@ export async function sendCourseWelcomeEmail(to: string) {
     to: [to],
     subject: '🎁 Aramıza Hoş Geldin! İşte Sana Özel "Yapay Zeka Başlangıç Paketi" Hediyen 🚀',
     html: shell(courseWelcomeBody()),
+  });
+  if (error) throw error;
+  return data;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+ * 1b) Sonfirsat Welcome — ₺29.900 community paketi alıcıları
+ *     Claude Code + N8N temalı, /sonfirsat sayfasındaki paket içeriği
+ *     ile bire bir uyumlu.
+ * ───────────────────────────────────────────────────────────────────── */
+function sonfirsatWelcomeBody(): string {
+  return `
+    <p>Selam,</p>
+    <p>
+      AI Scale Community'e katıldığın için harika bir karar verdin —
+      aramıza hoş geldin! 🎉
+    </p>
+    <p>
+      Topluluğa ve eğitim içeriklerine erişimini hemen aktifleştirdik.
+      Hazırladığımız <strong>Claude Code Masterclass</strong>,
+      <strong>N8N otomasyon stack'i</strong> ve API entegrasyon
+      toolkit'i ile sıfırdan AI ajansı kurma yolculuğun başlıyor.
+    </p>
+
+    <p><strong>📦 Paketinde Neler Var?</strong></p>
+    <ul style="padding-left:20px;margin:12px 0;">
+      <li><strong>Claude Code Masterclass</strong> + canlı topluluk
+        erişimi — sıfırdan kod yazarak yapay zeka ajansı kurmanın
+        tam yol haritası.</li>
+      <li><strong>N8N otomasyon stack'i</strong> + canlı mentörlük —
+        kod yazmadan müşterilere otomasyon satabileceğin pratik
+        sistemler.</li>
+      <li><strong>API entegrasyon toolkit'i</strong> + Ads stratejisi +
+        Setter sistemi — gelir kanallarını sağlamlaştır.</li>
+      <li>Tüm bonuslar + <strong>AI ajans kurulum kiti</strong> —
+        şablonlar, scriptler, mesajlaşma çerçeveleri.</li>
+    </ul>
+
+    <p style="margin:24px 0;">
+      <a href="${SONFIRSAT_COMMUNITY_LINK}"
+         style="display:inline-block;background:#1a1a1a;color:#ffffff;padding:14px 22px;border-radius:8px;text-decoration:none;font-weight:600;">
+        👉 Topluluğa ve Eğitim İçeriklerine Eriş
+      </a>
+    </p>
+
+    <div style="background:#fff8e1;border-left:4px solid #f5b400;padding:14px 16px;margin:24px 0;border-radius:4px;">
+      <p style="margin:0 0 6px 0;"><strong>⚠️ Önemli Not:</strong></p>
+      <p style="margin:0;">
+        Tüm eğitim içeriklerine ve canlı topluluk oturumlarına
+        erişebilmek için yukarıdaki butona tıkla. Aklında soru olursa
+        topluluk içindeki kanallardan direkt ekiple iletişime
+        geçebilirsin.
+      </p>
+    </div>
+
+    <p>
+      İlk adımı atmak için Claude Code modülünden başlamanı öneriyoruz —
+      ilk 7 günde uygulanabilir bir proje çıkarmış olacaksın.
+    </p>
+    <p>Başarılar ve bol otomasyonlu günler!<br /><strong>AI Scale Ekibi</strong></p>
+  `;
+}
+
+export async function sendSonfirsatWelcomeEmail(to: string) {
+  const { data, error } = await resend.emails.send({
+    from: FROM,
+    to: [to],
+    subject:
+      "🚀 AI Scale Community'e Hoş Geldin — Claude Code & N8N Erişimin Aktif",
+    html: shell(sonfirsatWelcomeBody()),
   });
   if (error) throw error;
   return data;
