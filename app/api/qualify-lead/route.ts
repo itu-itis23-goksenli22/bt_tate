@@ -97,6 +97,7 @@ export async function POST(request: NextRequest) {
             webinar_link_sent_at: new Date().toISOString(),
           })
           .eq("email", email);
+        console.log(`✅ Supabase: subscriber UPDATED for ${email}`);
       } else {
         await supabase
           .from("email_subscribers")
@@ -108,6 +109,7 @@ export async function POST(request: NextRequest) {
             webinar_link_sent: true,
             webinar_link_sent_at: new Date().toISOString(),
           });
+        console.log(`✅ Supabase: subscriber INSERTED for ${email}`);
       }
     } catch (dbError) {
       console.warn("⚠️ Supabase save (non-critical):", dbError);
