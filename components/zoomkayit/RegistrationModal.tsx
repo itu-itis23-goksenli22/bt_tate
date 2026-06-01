@@ -67,9 +67,13 @@ export default function RegistrationModal({
   fixedDateString,
 }: RegistrationModalProps) {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
-  // Budget tier qualification kaldırıldı — herkes "Yerimi Ayırt" ile Zoom'a
-  // kaydolur ve sayfaya göre tek bir CAPI event fire eder (CR veya Lead).
-  // Telefon required — Zoom kayıt + Meta advanced matching (ph hash) için kullanılır.
+  // Telefon artık ZORUNLU DEĞİL — bonus hediye checkbox'ına tıklayan
+  // kullanıcılar için açılır ve required olur. Aksi takdirde gizli kalır
+  // ve boş string olarak Zoom'a/CAPI'ye gider (Zoom phone field optional,
+  // Meta CAPI advanced matching da phone'u optional kabul eder).
+  // Karar: people don't want to give phone — checkbox = opt-in, daha
+  // yüksek conversion + telefon veren kullanıcılar daha kaliteli lead.
+  const [wantsBonus, setWantsBonus] = useState(false);
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [dateString, setDateString] = useState("");
@@ -93,8 +97,10 @@ export default function RegistrationModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.email.trim()) return;
-    if (!formData.phone.trim()) {
-      setErrorMsg("Lütfen telefon numaranızı girin.");
+    // Telefon sadece "VIP hediye + özel teklifler" checkbox'ı işaretliyse
+    // zorunlu. Aksi takdirde boş geçebilir.
+    if (wantsBonus && !formData.phone.trim()) {
+      setErrorMsg("Bonus hediye için lütfen telefon numaranızı girin.");
       return;
     }
 
@@ -105,12 +111,14 @@ export default function RegistrationModal({
     const firstName = nameParts[0] || formData.name;
     const lastName = nameParts.slice(1).join(" ") || "-";
 
-    // Advanced matching — gelecek event'ler için (email + name + phone)
+    // Advanced matching — gelecek event'ler için (email + name + phone).
+    // Phone boşsa ph parametresi gönderilmez (Meta'nın hash mekanizması
+    // optional field'ları normal şekilde atlar).
     setAdvancedMatching({
       em: formData.email,
       fn: firstName,
       ln: lastName,
-      ph: formData.phone,
+      ...(formData.phone ? { ph: formData.phone } : {}),
     });
 
     try {
@@ -268,28 +276,61 @@ export default function RegistrationModal({
               />
             </div>
 
-            <div>
-              <label className="block text-white text-sm font-medium mb-2">
-                Telefon
-              </label>
-              {/* react-phone-number-input — ülke dropdown'ında bayrak + E.164 formatı.
-                  Default ülke TR, kullanıcı dropdown'dan başka ülke seçince otomatik
-                  ülke kodu + maskeleme uygular. Çıktı: "+905XX..." E.164 formatında. */}
-              <PhoneInput
-                international
-                defaultCountry="TR"
-                countryCallingCodeEditable={false}
-                placeholder="5XX XXX XX XX"
-                value={formData.phone}
-                onChange={(value) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    phone: value || "",
-                  }))
-                }
-                className="zk-phone-input flex items-center w-full px-4 py-3.5 bg-white/5 border border-white/20 rounded-xl text-white focus-within:border-gold focus-within:ring-1 focus-within:ring-gold transition-colors text-base [&_.PhoneInputInput]:bg-transparent [&_.PhoneInputInput]:border-none [&_.PhoneInputInput]:outline-none [&_.PhoneInputInput]:text-white [&_.PhoneInputInput]:placeholder-white/40 [&_.PhoneInputInput]:ml-2 [&_.PhoneInputCountryIcon]:shadow-none"
+            {/* Bonus hediye checkbox — kullanıcı işaretlemediği sürece
+                telefon istemiyoruz. İşaretlerse telefon alanı açılır ve
+                zorunlu olur. Default unchecked → daha az sürtünme,
+                conversion artar. SMS dili yok, "VIP hediye + özel
+                teklifler" angle'ı. */}
+            <label className="flex items-start gap-3 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={wantsBonus}
+                onChange={(e) => {
+                  setWantsBonus(e.target.checked);
+                  // Checkbox kapatılırsa telefon alanını da temizle ki
+                  // kullanıcı yanlışlıkla göndermesin
+                  if (!e.target.checked) {
+                    setFormData((prev) => ({ ...prev, phone: "" }));
+                  }
+                }}
+                className="mt-0.5 w-5 h-5 rounded border-2 border-gold/60 bg-white/5 text-gold focus:ring-2 focus:ring-gold/40 cursor-pointer accent-gold flex-shrink-0"
               />
-            </div>
+              <span className="text-white text-sm leading-snug">
+                🎁 <strong>Bedava VIP Hediye</strong> ve sadece üyelere özel
+                tekliflerden haberdar olmak istiyorum
+              </span>
+            </label>
+
+            {/* Telefon alanı — yalnızca checkbox işaretliyse görünür */}
+            {wantsBonus && (
+              <div>
+                <label className="block text-white text-sm font-medium mb-2">
+                  Telefon
+                </label>
+                {/* react-phone-number-input — ülke dropdown'ında bayrak + E.164 formatı.
+                    Default ülke TR, kullanıcı dropdown'dan başka ülke seçince otomatik
+                    ülke kodu + maskeleme uygular. Çıktı: "+905XX..." E.164 formatında. */}
+                <PhoneInput
+                  international
+                  defaultCountry="TR"
+                  countryCallingCodeEditable={false}
+                  placeholder="5XX XXX XX XX"
+                  value={formData.phone}
+                  onChange={(value) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      phone: value || "",
+                    }))
+                  }
+                  className="zk-phone-input flex items-center w-full px-4 py-3.5 bg-white/5 border border-white/20 rounded-xl text-white focus-within:border-gold focus-within:ring-1 focus-within:ring-gold transition-colors text-base [&_.PhoneInputInput]:bg-transparent [&_.PhoneInputInput]:border-none [&_.PhoneInputInput]:outline-none [&_.PhoneInputInput]:text-white [&_.PhoneInputInput]:placeholder-white/40 [&_.PhoneInputInput]:ml-2 [&_.PhoneInputCountryIcon]:shadow-none"
+                />
+                <p className="text-white/40 text-[11px] mt-2 leading-relaxed">
+                  Numaranı yalnızca VIP hediyeyi ve sınırlı sayıdaki özel
+                  teklifleri göndermek için kullanacağız. İstediğin zaman
+                  ayrılabilirsin.
+                </p>
+              </div>
+            )}
 
             {errorMsg && (
               <p className="text-danger text-sm text-center">{errorMsg}</p>
