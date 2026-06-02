@@ -44,6 +44,45 @@ const SONFIRSAT_PACKAGE_ITEMS = [
   "Tüm bonuslar + AI ajans kurulum kiti",
 ];
 
+// ValueStack için /sonfirsat-özel feature listesi — "Eğitim Programı" yok
+const SONFIRSAT_MAIN_FEATURES = [
+  { name: "Claude Code Masterclass (9 Modül)", value: "₺8,000" },
+  { name: "N8N & API Entegrasyon Toolkit", value: "₺5,000" },
+  { name: "AI Otomasyon Sistemleri", value: "₺4,000" },
+  { name: "B2B Satış Stratejileri", value: "₺3,500" },
+  { name: "Canlı Topluluk & Mentörlük", value: "₺6,000" },
+  { name: "Ads Stratejisi & Setter Sistemi", value: "₺3,500" },
+];
+
+// 3 üst kart — sol "Claude Code Masterclass" (eski "AI Otomasyon Eğitim
+// Programı" yerine), orta highlight community, sağ "N8N & API"
+const SONFIRSAT_TOP_CARDS = [
+  {
+    icon: "🤖",
+    titleLines: ["Claude Code", "Masterclass"],
+    sub: "9 Modül",
+  },
+  {
+    icon: "🚀",
+    titleLines: ["AI SCALE", "APP", "COMMUNITY"],
+    highlight: true,
+    blackText: true,
+  },
+  {
+    icon: "⚙️",
+    titleLines: ["N8N &", "API", "Toolkit"],
+    sub: "Sınırsız",
+  },
+];
+
+// "Başarı Hikayeleri" video grid — /katil/kayitbasarili'deki 4 video
+const SONFIRSAT_VIDEOS = [
+  { id: "nWvImM9U2NQ", title: "Başarı Hikayesi — Yapay Zeka" },
+  { id: "sVSMnqWUvec", title: "Başarı Hikayesi 2" },
+  { id: "A_wuadae_3o", title: "Başarı Hikayesi 3" },
+  { id: "NPNH0P4ZRT4", title: "Başarı Hikayesi 4" },
+];
+
 export const metadata: Metadata = {
   title: "AI Scale App Community - Son Fırsat | ₺29,900",
   description:
@@ -144,6 +183,8 @@ export default function SonfirsatPage() {
             <ValueStack
               priceFormatted={SONFIRSAT_PRICE_FORMATTED}
               strikethroughPrice={SONFIRSAT_STRIKETHROUGH}
+              mainFeatures={SONFIRSAT_MAIN_FEATURES}
+              topCards={SONFIRSAT_TOP_CARDS}
             />
           </div>
         </div>
@@ -172,8 +213,8 @@ export default function SonfirsatPage() {
         </div>
       </section>
 
-      {/* Vertical Video Testimonials */}
-      <VerticalVideos />
+      {/* Vertical Video Testimonials — /katil/kayitbasarili'deki 4 video grid */}
+      <VerticalVideos videos={SONFIRSAT_VIDEOS} />
 
       {/* Mid-page CTA — artık embedded checkout'a scroll eder */}
       <section className="py-1 md:py-2 bg-primary text-center px-4">

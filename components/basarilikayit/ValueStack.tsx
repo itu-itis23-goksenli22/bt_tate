@@ -1,12 +1,37 @@
 "use client";
 
-const mainFeatures = [
+interface MainFeature {
+  name: string;
+  value: string;
+}
+
+interface TopCard {
+  icon: string;
+  // Title satır satır (manuel break) — örn. ["AI Otomasyon", "Eğitim", "Programı"]
+  titleLines: string[];
+  sub?: string; // örn. "9 Modül"
+  highlight?: boolean; // true → gold card (orta kart)
+  blackText?: boolean; // highlight kartında siyah metin
+}
+
+const DEFAULT_MAIN_FEATURES: MainFeature[] = [
   { name: "AI Otomasyon Eğitim Programı (9 Modül)", value: "₺8,000" },
   { name: "N8N & API Entegrasyon Toolkit", value: "₺5,000" },
   { name: "Claude Code Masterclass", value: "₺4,000" },
   { name: "B2B Satış Stratejileri Eğitimi", value: "₺3,500" },
   { name: "Canlı Topluluk & Mentörlük", value: "₺6,000" },
   { name: "Ads Stratejisi Eğitimi", value: "₺3,500" },
+];
+
+const DEFAULT_TOP_CARDS: TopCard[] = [
+  { icon: "🤖", titleLines: ["AI Otomasyon", "Eğitim", "Programı"], sub: "9 Modül" },
+  {
+    icon: "🚀",
+    titleLines: ["AI SCALE", "APP", "COMMUNITY"],
+    highlight: true,
+    blackText: true,
+  },
+  { icon: "⚙️", titleLines: ["N8N &", "API", "Toolkit"], sub: "Sınırsız" },
 ];
 
 const campuses = [
@@ -33,31 +58,67 @@ const bonuses = [
 interface ValueStackProps {
   priceFormatted?: string;
   strikethroughPrice?: string;
+  // Variant'lar için opsiyonel — default firsat content'i korunur
+  mainFeatures?: MainFeature[];
+  topCards?: TopCard[];
 }
 
 export default function ValueStack({
   priceFormatted = "15,000",
   strikethroughPrice = "42,000",
+  mainFeatures = DEFAULT_MAIN_FEATURES,
+  topCards = DEFAULT_TOP_CARDS,
 }: ValueStackProps = {}) {
   return (
     <div className="flex flex-col items-center">
       {/* Product mockup images */}
       <div className="relative w-full max-w-md mx-auto mb-6">
         <div className="grid grid-cols-3 gap-2 mb-4">
-          <div className="bg-gradient-to-br from-blue-900 to-blue-950 rounded-lg p-3 text-center border border-blue-700/30">
-            <div className="text-gold text-[10px] font-bold mb-1">🤖</div>
-            <p className="text-white text-[9px] font-bold leading-tight">AI Otomasyon<br/>Eğitim<br/>Programı</p>
-            <p className="text-gold text-[8px] mt-1">9 Modül</p>
-          </div>
-          <div className="bg-gradient-to-br from-gold-dark to-gold rounded-lg p-3 text-center border border-gold/30 transform scale-105">
-            <div className="text-black text-[10px] font-bold mb-1">🚀</div>
-            <p className="text-black text-[9px] font-bold leading-tight">AI SCALE<br/>APP<br/>COMMUNITY</p>
-          </div>
-          <div className="bg-gradient-to-br from-blue-900 to-blue-950 rounded-lg p-3 text-center border border-blue-700/30">
-            <div className="text-gold text-[10px] font-bold mb-1">⚙️</div>
-            <p className="text-white text-[9px] font-bold leading-tight">N8N &<br/>API<br/>Toolkit</p>
-            <p className="text-gold text-[8px] mt-1">Sınırsız</p>
-          </div>
+          {topCards.map((card, i) => (
+            <div
+              key={i}
+              className={
+                card.highlight
+                  ? "bg-gradient-to-br from-gold-dark to-gold rounded-lg p-3 text-center border border-gold/30 transform scale-105"
+                  : "bg-gradient-to-br from-blue-900 to-blue-950 rounded-lg p-3 text-center border border-blue-700/30"
+              }
+            >
+              <div
+                className={
+                  card.blackText
+                    ? "text-black text-[10px] font-bold mb-1"
+                    : "text-gold text-[10px] font-bold mb-1"
+                }
+              >
+                {card.icon}
+              </div>
+              <p
+                className={
+                  card.blackText
+                    ? "text-black text-[9px] font-bold leading-tight"
+                    : "text-white text-[9px] font-bold leading-tight"
+                }
+              >
+                {card.titleLines.map((line, j) => (
+                  <span key={j}>
+                    {line}
+                    {j < card.titleLines.length - 1 && <br />}
+                  </span>
+                ))}
+              </p>
+              {card.sub && (
+                <p
+                  className={
+                    card.blackText
+                      ? "text-black/80 text-[8px] mt-1"
+                      : "text-gold text-[8px] mt-1"
+                  }
+                >
+                  {card.sub}
+                </p>
+              )}
+            </div>
+          ))}
         </div>
         <div className="grid grid-cols-3 gap-2">
           <div className="bg-gradient-to-br from-blue-900 to-blue-950 rounded-lg p-2 text-center border border-blue-700/30">
