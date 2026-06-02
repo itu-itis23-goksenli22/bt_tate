@@ -133,7 +133,7 @@ export default function KayitBasariliContent({
             {/* Ana mesaj */}
             <p className="text-white text-[22px] md:text-[30px] font-bold leading-snug mb-6 max-w-2xl mx-auto">
               <span style={{ color: "#D5B356" }} className="whitespace-nowrap">
-                $2.000+ değerindeki VIP paketi
+                $1.500+ değerindeki VIP paketi
               </span>
               ,{" "}
               <span className="underline decoration-[#C19D44] decoration-2 underline-offset-4">
@@ -168,7 +168,7 @@ export default function KayitBasariliContent({
                 style={{ background: GOLD_BG_SUBTLE }}
               >
                 <h3 className="text-[18px] md:text-[24px] font-extrabold text-center mb-5">
-                  $2,000+ Değer{" "}
+                  $1,500+ Değer{" "}
                   <span className="text-[#D5B356] italic underline">
                     Sadece $9.90
                   </span>
@@ -176,7 +176,6 @@ export default function KayitBasariliContent({
                 <div className="border-t border-[#AA813C]/30 mb-4" />
                 <div className="space-y-3">
                   <PricingRow label="Manychat Kurulum Rehberi" value="$497" />
-                  <PricingRow label="AI Shopify Kurulum Rehberi" value="$597" />
                   <PricingRow label="Milyon Dolarlık AI Automation Kiti" value="$997" />
                   <PricingRow label="Lifetime Replay Access" value="$97" />
                 </div>
@@ -186,7 +185,7 @@ export default function KayitBasariliContent({
                       Toplam Değer:
                     </span>
                     <span className="text-white/50 text-[13px] md:text-[14px] font-bold line-through">
-                      $2,000+
+                      $1,500+
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
@@ -345,10 +344,6 @@ export default function KayitBasariliContent({
               <BenefitItem
                 title="Manychat Kurulum Rehberi ($497 Değerinde)"
                 description="Instagram ve Messenger otomasyonlarınızı profesyonelce kurmanız için adım adım rehber. Müşterilerinize otomatik yanıt verin, satışlarınızı artırın."
-              />
-              <BenefitItem
-                title="AI Shopify Kurulum Rehberi ($597 Değerinde)"
-                description="Yapay zeka destekli araçlarla Shopify mağazanızı sıfırdan kurun. Ürün araştırmasından mağaza tasarımına kadar her adım detaylı anlatılıyor."
               />
               <BenefitItem
                 title="Milyon Dolarlık AI Automation Kiti ($997 Değerinde)"
