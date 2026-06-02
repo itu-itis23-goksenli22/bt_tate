@@ -16,6 +16,73 @@ interface Campus {
 
 const campuses: Campus[] = [
   {
+    name: "Claude Code Masterclass",
+    icon: "💻",
+    color: "from-purple-500/20 to-pink-500/20",
+    modules: [
+      {
+        title: "1. GİRİŞ: CLAUDE CODE & AI GELİŞTİRİCİ DEVRİMİ",
+        lessons: [
+          "Claude Code Nedir, Diğer AI Araçlarından Farkı",
+          "Yapay Zeka ile Yazılım Geliştirme: Yeni Dünya Düzeni",
+          "Geleneksel Geliştirici vs AI Geliştirici Modeli",
+          "Hangi Projelerde Claude Code Avantajı?",
+          "Tek Kişilik AI Ajans Vizyonu",
+        ],
+      },
+      {
+        title: "2. KURULUM & ORTAM HAZIRLIĞI",
+        lessons: [
+          "Claude Code Hesabı Açma ve Lisans",
+          "CLI Kurulumu (Mac, Windows, Linux)",
+          "VS Code & Cursor Entegrasyonu",
+          "API Key Yönetimi ve Güvenlik",
+          "İlk Komut: Sıfırdan Proje Başlatma",
+        ],
+      },
+      {
+        title: "3. PROMPT MÜHENDİSLİĞİ",
+        lessons: [
+          "Etkili Prompt Yazımı: Ne, Nasıl, Niçin",
+          "System Prompts ve Roller",
+          "Tool Use & Function Calling",
+          "Context Window Yönetimi",
+          "Karmaşık Görevleri Adımlara Bölme",
+        ],
+      },
+      {
+        title: "4. PRATİK: SIFIRDAN UYGULAMA GELİŞTİRME",
+        lessons: [
+          "Fikirden Spec'e: AI ile Ürün Tanımı",
+          "Frontend Kurulumu (React + Next.js)",
+          "Backend & API (Node, Python, Vercel Functions)",
+          "Veritabanı Tasarımı (Supabase, Postgres)",
+          "Auth, Session ve Güvenlik",
+        ],
+      },
+      {
+        title: "5. ENTEGRASYONLAR & PRODUCTION",
+        lessons: [
+          "Stripe Ödeme Entegrasyonu",
+          "Resend / SendGrid Email Otomasyonu",
+          "Vercel Deploy & CI/CD",
+          "N8N Webhook Bağlantıları",
+          "Loglama, Monitoring, Hata Yönetimi",
+        ],
+      },
+      {
+        title: "6. AI AJANS KURULUMU & GELİR MODELİ",
+        lessons: [
+          "İlk Müşteriyi Bulma Stratejileri",
+          "Fiyatlandırma: Saatlik vs Proje vs Recurring",
+          "Müşteri Süreç Yönetimi",
+          "Sözleşme, Faturalama, Tahsilat",
+          "Tek Geliştirici Ajansı 10X'leme",
+        ],
+      },
+    ],
+  },
+  {
     name: "N8N ile Yapay Zeka",
     icon: "🤖",
     color: "from-blue-500/20 to-cyan-500/20",
