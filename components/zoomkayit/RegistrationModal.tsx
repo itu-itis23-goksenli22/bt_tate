@@ -100,7 +100,7 @@ export default function RegistrationModal({
     // Telefon sadece "VIP hediye + özel teklifler" checkbox'ı işaretliyse
     // zorunlu. Aksi takdirde boş geçebilir.
     if (wantsBonus && !formData.phone.trim()) {
-      setErrorMsg("Bonus hediye için lütfen telefon numaranızı girin.");
+      setErrorMsg("Özel teklifler için lütfen telefon numaranızı girin.");
       return;
     }
 
@@ -296,8 +296,8 @@ export default function RegistrationModal({
                 className="mt-0.5 w-5 h-5 rounded border-2 border-gold/60 bg-white/5 text-gold focus:ring-2 focus:ring-gold/40 cursor-pointer accent-gold flex-shrink-0"
               />
               <span className="text-white text-sm leading-snug">
-                🎁 <strong>Bedava VIP Hediye</strong> ve sadece üyelere özel
-                tekliflerden haberdar olmak istiyorum
+                🎁 Sadece üyelere <strong>özel tekliflerden</strong> haberdar
+                olmak istiyorum
               </span>
             </label>
 
@@ -325,8 +325,8 @@ export default function RegistrationModal({
                   className="zk-phone-input flex items-center w-full px-4 py-3.5 bg-white/5 border border-white/20 rounded-xl text-white focus-within:border-gold focus-within:ring-1 focus-within:ring-gold transition-colors text-base [&_.PhoneInputInput]:bg-transparent [&_.PhoneInputInput]:border-none [&_.PhoneInputInput]:outline-none [&_.PhoneInputInput]:text-white [&_.PhoneInputInput]:placeholder-white/40 [&_.PhoneInputInput]:ml-2 [&_.PhoneInputCountryIcon]:shadow-none"
                 />
                 <p className="text-white/40 text-[11px] mt-2 leading-relaxed">
-                  Numaranı yalnızca VIP hediyeyi ve sınırlı sayıdaki özel
-                  teklifleri göndermek için kullanacağız. İstediğin zaman
+                  Numaranı yalnızca üyelere özel sınırlı teklifleri
+                  göndermek için kullanacağız. İstediğin zaman
                   ayrılabilirsin.
                 </p>
               </div>
