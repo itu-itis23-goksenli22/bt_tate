@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import MetaPixel from "@/components/MetaPixel";
 
@@ -90,6 +91,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <MetaPixel />
         {children}
+        {/* Vercel Analytics — sayfa görüntüleme, ülke, cihaz, referrer
+            verileri Vercel Dashboard → Analytics sekmesinde görünür.
+            Auto-tracking; tek setup. PII toplamaz, GDPR-compliant. */}
+        <Analytics />
       </body>
     </html>
   );
