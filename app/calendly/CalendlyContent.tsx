@@ -34,6 +34,33 @@ export default function CalendlyContent() {
         padding: "48px 16px",
       }}
     >
+      {/* Üst SCARCITY banner — kıtlık baskısı, sayfanın en üstünde */}
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "720px",
+          borderRadius: "12px",
+          background: "linear-gradient(90deg, #7f1d1d, #b91c1c, #7f1d1d)",
+          padding: "12px 16px",
+          marginBottom: "16px",
+          textAlign: "center",
+          border: "1px solid rgba(255,255,255,0.1)",
+        }}
+      >
+        <p
+          style={{
+            color: "#ffffff",
+            fontSize: "13px",
+            fontWeight: 700,
+            letterSpacing: "0.5px",
+          }}
+        >
+          ⚠️ DİKKAT: Strateji görüşmesi kontenjanı{" "}
+          <span style={{ color: "#fde047" }}>günde 5 kişiyle</span> sınırlı.
+          Boş slotlar saatler içinde doluyor.
+        </p>
+      </div>
+
       {/* Üst Tebrikler kartı */}
       <div
         style={{
@@ -214,6 +241,179 @@ export default function CalendlyContent() {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Karşılaştırma kartı — "görüşme almazsan ne olur" loss aversion */}
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "720px",
+          borderRadius: "16px",
+          background: "rgba(20, 20, 20, 0.6)",
+          border: "1px solid rgba(255,255,255,0.08)",
+          padding: "24px 20px",
+          marginBottom: "24px",
+        }}
+      >
+        <h2
+          style={{
+            fontSize: "18px",
+            fontWeight: 700,
+            color: "#ffffff",
+            textAlign: "center",
+            marginBottom: "18px",
+          }}
+        >
+          Görüşmeli vs Görüşmesiz:{" "}
+          <span style={{ color: GOLD }}>Aradaki Fark</span>
+        </h2>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "12px",
+          }}
+        >
+          {/* Görüşmesiz — kırmızı kötü senaryo */}
+          <div
+            style={{
+              borderRadius: "10px",
+              border: "1px solid rgba(239, 68, 68, 0.3)",
+              background: "rgba(127, 29, 29, 0.15)",
+              padding: "16px",
+            }}
+          >
+            <div
+              style={{
+                color: "#ef4444",
+                fontSize: "12px",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "1px",
+                marginBottom: "10px",
+              }}
+            >
+              ✗ Görüşme Almazsan
+            </div>
+            <ul
+              style={{
+                listStyle: "none",
+                padding: 0,
+                margin: 0,
+                color: "rgba(255,255,255,0.7)",
+                fontSize: "13px",
+                lineHeight: 1.7,
+              }}
+            >
+              <li>• Eğitimleri tek başına izlersin</li>
+              <li>• Nereden başlayacağını bilemezsin</li>
+              <li>• İlk 90 günde momentum yakalayamazsın</li>
+              <li>• Çoğu üyenin yaptığı hataları tekrar edersin</li>
+              <li>• %80 ihtimalle eğitimi yarıda bırakırsın</li>
+            </ul>
+          </div>
+
+          {/* Görüşmeli — yeşil iyi senaryo */}
+          <div
+            style={{
+              borderRadius: "10px",
+              border: `1px solid ${GOLD_BG} 0.4)`,
+              background: `${GOLD_BG} 0.08)`,
+              padding: "16px",
+            }}
+          >
+            <div
+              style={{
+                color: GOLD,
+                fontSize: "12px",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "1px",
+                marginBottom: "10px",
+              }}
+            >
+              ✓ Görüşme Alırsan
+            </div>
+            <ul
+              style={{
+                listStyle: "none",
+                padding: 0,
+                margin: 0,
+                color: "rgba(255,255,255,0.85)",
+                fontSize: "13px",
+                lineHeight: 1.7,
+              }}
+            >
+              <li>
+                <strong style={{ color: "#fff" }}>Senin için</strong> doğru
+                rotayı net görürsün
+              </li>
+              <li>
+                İlk haftada{" "}
+                <strong style={{ color: "#fff" }}>uygulanabilir</strong>{" "}
+                bir plana sahipsin
+              </li>
+              <li>
+                Hangi araçları{" "}
+                <strong style={{ color: "#fff" }}>hangi sırayla</strong>{" "}
+                kullanacağını öğrenirsin
+              </li>
+              <li>
+                Ekibin <strong style={{ color: "#fff" }}>seni
+                tanır</strong>, soru sorduğunda hızlı destek
+              </li>
+              <li>
+                %80 üye{" "}
+                <strong style={{ color: "#fff" }}>30 günde</strong> ilk
+                gelirini görür
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <p
+          style={{
+            color: "rgba(255,255,255,0.5)",
+            fontSize: "12px",
+            textAlign: "center",
+            marginTop: "16px",
+            fontStyle: "italic",
+          }}
+        >
+          Sadece 30 dakika — sonrası tamamen senin elinde.
+        </p>
+      </div>
+
+      {/* Güçlü CTA üst metni — Calendly'den hemen önce */}
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "720px",
+          textAlign: "center",
+          marginBottom: "12px",
+          padding: "0 12px",
+        }}
+      >
+        <p
+          style={{
+            color: "#ffffff",
+            fontSize: "20px",
+            fontWeight: 700,
+            marginBottom: "4px",
+          }}
+        >
+          ↓ Aşağıdan{" "}
+          <span style={{ color: GOLD }}>Görüşme Saatini Şimdi Seç</span> ↓
+        </p>
+        <p
+          style={{
+            color: "rgba(255,255,255,0.55)",
+            fontSize: "13px",
+          }}
+        >
+          Tek tıklamayla onaylanır · 30 dakika sürer · %100 ücretsiz
+        </p>
       </div>
 
       {/* Calendly Embed — inline widget */}
