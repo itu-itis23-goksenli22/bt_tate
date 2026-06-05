@@ -46,27 +46,26 @@ export default function CalendlyContent() {
         <h1
           style={{
             color: "#ffffff",
-            fontSize: "34px",
+            fontSize: "32px",
             fontWeight: 800,
-            marginBottom: "12px",
-            lineHeight: 1.2,
+            marginBottom: "14px",
+            lineHeight: 1.25,
           }}
         >
-          📅{" "}
-          <span style={{ color: GOLD }}>Onboarding Saatini Seç</span>
+          Kaydını Tamamlamak İçin{" "}
+          <span style={{ color: GOLD }}>Takvimden Görüşme Al</span>
         </h1>
         <p
           style={{
             color: "rgba(255,255,255,0.8)",
-            fontSize: "16px",
+            fontSize: "17px",
             lineHeight: 1.6,
-            maxWidth: "520px",
+            maxWidth: "480px",
             margin: "0 auto",
           }}
         >
-          <strong style={{ color: "#fff" }}>120 günlük planlaman hazır.</strong>{" "}
-          30 dakikalık onboarding görüşmesinde ekibim seni tanır, planını
-          birlikte yürürlüğe sokarız.
+          Aşağıdaki butona tıkla, takvimden sana uygun bir saat seç.
+          Görüşmeni alınca kaydın tamamlanmış olur.
         </p>
       </div>
 
@@ -92,7 +91,7 @@ export default function CalendlyContent() {
           lineHeight: 1.3,
         }}
       >
-        📅 Görüşme Saatini Seç →
+        📅 Takvimi Aç ve Görüşme Al →
       </a>
       <p
         style={{
@@ -102,7 +101,7 @@ export default function CalendlyContent() {
           marginBottom: "16px",
         }}
       >
-        Linke tıkla · Tarih + saat seç · Anında onaylanır
+        Tıkla → Takvim açılır → Uygun saati seç → Kaydın tamamlanır
       </p>
 
       {/* 3. WHATSAPP BUTONU — alternatif iletişim */}
