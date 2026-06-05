@@ -77,6 +77,47 @@ export default function KatilPage() {
       <div className="bg-gradient-to-b from-black via-[#0a0a0a] to-black">
         <HeroSection headline={KATIL_HEADLINE} subheadline={KATIL_SUBHEADLINE} />
 
+        {/* El yazısı tarzı dikkat çekici tarih badge —
+            kırmızı italic Caveat font + kırmızı oval SVG çerçeve.
+            "Sunday, June 7, 8PM EST" görsel referansından esinlenildi. */}
+        <div className="relative flex justify-center pt-2 pb-4 px-4">
+          <div className="relative inline-block">
+            <p
+              className="text-[#ef4444] italic text-3xl md:text-5xl leading-none px-6 md:px-10 py-2 md:py-3 whitespace-nowrap"
+              style={{ fontFamily: "'Caveat', cursive", fontWeight: 700 }}
+            >
+              6 Haziran Cumartesi · 20:00 (TR)
+            </p>
+            {/* El çizimi oval — SVG, transform rotate ile hafif eğri */}
+            <svg
+              className="absolute inset-0 w-full h-full pointer-events-none"
+              viewBox="0 0 400 80"
+              preserveAspectRatio="none"
+              aria-hidden
+            >
+              <ellipse
+                cx="200"
+                cy="40"
+                rx="190"
+                ry="34"
+                fill="none"
+                stroke="#ef4444"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeDasharray="0"
+                transform="rotate(-1.5 200 40)"
+                style={{ filter: "url(#wiggle)" }}
+              />
+              <defs>
+                <filter id="wiggle">
+                  <feTurbulence baseFrequency="0.02" numOctaves="2" />
+                  <feDisplacementMap in="SourceGraphic" scale="2" />
+                </filter>
+              </defs>
+            </svg>
+          </div>
+        </div>
+
         <CountdownTimer
           targetDate={{ year: 2026, month: 6, day: 6 }}
           headlineText="6 Haziran Cumartesi 20:00'da Canlı Seminer Başlıyor..."

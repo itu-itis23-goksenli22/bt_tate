@@ -93,6 +93,85 @@ export default function KayitBasariliContent({
 
       <main className="min-h-screen bg-[#0c0c0c] text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
         <div className="max-w-[680px] mx-auto px-4 py-8">
+          {/* Zoom bildirim önizlemesi — kayıt başarılı olduğunda kullanıcıya
+              "şimdi e-postana şu mail gelecek" diyerek beklenti netleştirir.
+              herlastcall.com/natural-born-yapper-c referans alındı,
+              Türkçeleştirildi. /katil için 6 Haziran webinarına uyarlandı. */}
+          <div className="text-center mb-8">
+            <h2 className="font-extrabold text-white text-[22px] md:text-[30px] leading-tight mb-1">
+              Şimdi Sana{" "}
+              <span className="inline-flex items-center gap-1.5 align-middle">
+                <span className="inline-block w-7 h-7 md:w-9 md:h-9 rounded-md bg-[#2D8CFF] flex items-center justify-center align-middle">
+                  <svg className="w-4 h-4 md:w-5 md:h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M14 8.59l4.7-3.13A1 1 0 0120 6.3v11.4a1 1 0 01-1.3.85L14 15.4V8.6zM3 6h9a2 2 0 012 2v8a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2z" />
+                  </svg>
+                </span>
+                <span className="text-[#2D8CFF]">Zoom</span>
+              </span>{" "}
+              Bildirim E-postası{" "}
+              <span className="underline decoration-[#e85d5d] decoration-[3px] underline-offset-4 text-[#e85d5d]">
+                Gelecek.
+              </span>
+            </h2>
+            <p className="text-white/60 text-[13px] md:text-[15px] mb-5">
+              E-postanı kontrol et — birkaç dakika içinde bu mail düşecek.
+            </p>
+
+            {/* Mock e-posta kartı — beyaz arka plan, hafif rotate, gerçekçi */}
+            <div className="max-w-md mx-auto">
+              <div
+                className="bg-[#f7f5ef] rounded-2xl shadow-2xl text-left p-5 md:p-6"
+                style={{
+                  transform: "rotate(-1.5deg)",
+                  fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                }}
+              >
+                <p className="text-[#1a1a1a] text-[14px] md:text-[15px] mb-3">
+                  Merhaba <span className="bg-gray-300 text-transparent rounded px-1.5 select-none">[isminiz]</span>,
+                </p>
+                <p className="text-[#1a1a1a] text-[14px] md:text-[15px] mb-4">
+                  Aşağıdaki toplantıya katılmak için davet edildiniz.
+                </p>
+
+                <div className="space-y-2 text-[13px] md:text-[14px] mb-4">
+                  <div className="flex gap-3">
+                    <span className="text-[#888] font-medium min-w-[55px]">Konu</span>
+                    <span className="text-[#1a1a1a] font-semibold">
+                      Yapay Zeka Servet Transferi: Canlı Seminer
+                    </span>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="text-[#888] font-medium min-w-[55px]">Sunucu</span>
+                    <span className="text-[#1a1a1a] font-semibold">
+                      Baturalp Tunalı
+                    </span>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="text-[#888] font-medium min-w-[55px]">Zaman</span>
+                    <span className="text-[#1a1a1a] font-semibold">
+                      6 Haziran 2026 Cumartesi · 20:00 (TR)
+                    </span>
+                  </div>
+                </div>
+
+                <p className="text-[#1a1a1a] text-[13px] md:text-[14px] mb-4">
+                  Seminere katılmak için aşağıdaki butona tıklayın.
+                </p>
+
+                <button
+                  type="button"
+                  className="block w-full py-3 px-6 bg-[#2D8CFF] text-white font-bold text-[15px] md:text-[16px] rounded-lg cursor-default"
+                  tabIndex={-1}
+                >
+                  Toplantıya Katıl
+                </button>
+              </div>
+              <p className="text-white/40 text-[11px] mt-4 italic">
+                ↑ Önizleme — gerçek e-postan birkaç dakika içinde gelecek.
+              </p>
+            </div>
+          </div>
+
           {/* 1. BEKLE! Hero — VIP paketi tarif eden urgency bloğu */}
           <div className="text-center mb-8 mt-2">
             {/* BEKLE! */}
