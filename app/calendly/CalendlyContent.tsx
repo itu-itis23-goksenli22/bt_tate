@@ -4,85 +4,38 @@
 //
 // Bağlam: Müşteri 29.900 paketi satın aldı → bu sayfaya gelir →
 // Calendly üzerinden onboarding görüşmesi (30 dk) rezerve eder.
-// Sales/upsell sayfası DEĞİL — paid customer için onboarding flow.
 //
-// Sayfa düzeni:
-//   1. Başlık + alt bilgi
-//   2. Calendly inline widget (widget.js + manuel init useEffect)
-//   3. Onboarding'de neler olacak (4 madde)
-//   4. WhatsApp fallback (sorular için)
+// CALENDLY EMBED YAKLAŞIMI (tested working):
+// 1. JSX'te <div class="calendly-inline-widget" data-url="..." style="...">
+//    boş bir div (Calendly snippet'inin birebir aynısı)
+// 2. useEffect içinde script'i dynamic olarak document.body'ye ekle
+//    → div mount edildikten SONRA script yüklenir
+//    → widget.js auto-scan div'i bulup iframe inflate eder
 //
-// CALENDLY EMBED YAKLAŞIMI:
-// Widget.js script yüklenir → useEffect içinde manuel
-// Calendly.initInlineWidget() çağırarak div'i inflate ederiz.
-// Auto-scan (default davranış) Next.js hydration timing'ine
-// takılıp boş kalıyordu — manuel init bu sorunu çözer.
+// Önceki manuel init yaklaşımı double-init conflict yapıyordu —
+// bu sade auto-scan en güvenilir method.
 
-import Script from "next/script";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 const GOLD = "#fbbf24";
 const GOLD_BG = "rgba(251, 191, 36,";
 
 const CALENDLY_URL = "https://calendly.com/aiscale-info/new-meeting";
 
-// Window.Calendly type — widget.js script yüklendikten sonra global
-declare global {
-  interface Window {
-    Calendly?: {
-      initInlineWidget: (config: {
-        url: string;
-        parentElement: HTMLElement;
-        prefill?: Record<string, unknown>;
-        utm?: Record<string, unknown>;
-      }) => void;
-    };
-  }
-}
-
 export default function CalendlyContent() {
-  const calendlyMountRef = useRef<HTMLDivElement>(null);
-
-  // Manuel init — widget.js script yüklendiğinde Calendly global
-  // hazır olur, sonra initInlineWidget çağırarak div'i inflate ederiz.
-  // Polling pattern: script async yüklendiği için window.Calendly'nin
-  // ne zaman hazır olacağı bilinmiyor — 250ms aralıkla kontrol et.
+  // Script'i dinamik inject — div mount edildikten SONRA yüklenir,
+  // auto-scan'in div'i bulması garanti olur. StrictMode'da double-mount
+  // olsa bile script tag id'siyle dedup edilir.
   useEffect(() => {
-    let attempts = 0;
-    const maxAttempts = 40; // 10 saniye toplam
-    let intervalId: ReturnType<typeof setInterval> | null = null;
-
-    const tryInit = () => {
-      attempts++;
-      if (
-        typeof window !== "undefined" &&
-        window.Calendly &&
-        calendlyMountRef.current
-      ) {
-        // Önceki içeriği temizle (StrictMode double-mount koruması)
-        calendlyMountRef.current.innerHTML = "";
-        window.Calendly.initInlineWidget({
-          url: CALENDLY_URL,
-          parentElement: calendlyMountRef.current,
-        });
-        if (intervalId) clearInterval(intervalId);
-        return;
-      }
-      if (attempts >= maxAttempts && intervalId) {
-        clearInterval(intervalId);
-        console.warn(
-          "[calendly] widget.js 10 saniyede yüklenmedi — fallback link kullanılabilir"
-        );
-      }
-    };
-
-    // İlk deneme hemen, sonra 250ms aralıkla
-    tryInit();
-    intervalId = setInterval(tryInit, 250);
-
-    return () => {
-      if (intervalId) clearInterval(intervalId);
-    };
+    const scriptId = "calendly-widget-loader";
+    if (document.getElementById(scriptId)) return; // zaten yüklü
+    const script = document.createElement("script");
+    script.id = scriptId;
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    document.body.appendChild(script);
+    // Cleanup yok — script body'de kalsın, sayfa içinde tekrar tekrar
+    // mount/unmount olursa (StrictMode) tek script yeter.
   }, []);
 
   return (
@@ -140,7 +93,8 @@ export default function CalendlyContent() {
         </p>
       </div>
 
-      {/* 2. CALENDLY EMBED — kullanıcının istediği resmi widget.js yaklaşımı */}
+      {/* 2. CALENDLY EMBED — Calendly'nin verdiği snippet birebir.
+          Sade dış sarmal (border + bg), iç div'e dokunmuyoruz. */}
       <div
         id="calendly-section"
         style={{
@@ -148,42 +102,38 @@ export default function CalendlyContent() {
           maxWidth: "720px",
           borderRadius: "16px",
           border: `2px solid ${GOLD_BG} 0.4)`,
-          background: "rgba(20, 20, 20, 0.8)",
-          padding: "12px",
+          background: "#ffffff",
+          padding: 0,
           marginBottom: "32px",
           boxShadow: `0 8px 40px ${GOLD_BG} 0.15)`,
+          overflow: "hidden",
         }}
       >
-        {/* Calendly inline widget — ref + useEffect ile manuel init.
-            data-url + className auto-scan için kalır (fallback davranış);
-            useEffect explicit initInlineWidget çağırır. */}
+        {/* Birebir Calendly snippet — sadece tarz ekledim (border-radius,
+            overflow). class + data-url + style aynı. Script document.body'ye
+            dynamic inject (yukarıda useEffect). */}
         <div
-          ref={calendlyMountRef}
           className="calendly-inline-widget"
           data-url={CALENDLY_URL}
-          style={{
-            minWidth: "320px",
-            height: "700px",
-            borderRadius: "12px",
-            overflow: "hidden",
-          }}
+          style={{ minWidth: "320px", height: "700px" }}
         />
-
-        <p style={{ textAlign: "center", marginTop: "12px", paddingBottom: "4px" }}>
-          <a
-            href={CALENDLY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              color: GOLD,
-              fontSize: "12px",
-              textDecoration: "underline",
-            }}
-          >
-            Takvim yüklenmiyor mu? Yeni sekmede aç →
-          </a>
-        </p>
       </div>
+
+      {/* Fallback link — script yüklenmezse kullanıcı yeni sekmede açsın */}
+      <p style={{ textAlign: "center", marginTop: "-20px", marginBottom: "32px" }}>
+        <a
+          href={CALENDLY_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            color: GOLD,
+            fontSize: "12px",
+            textDecoration: "underline",
+          }}
+        >
+          Takvim yüklenmiyor mu? Yeni sekmede aç →
+        </a>
+      </p>
 
       {/* 3. ONBOARDING'DE NELER OLACAK — 4 değer maddesi */}
       <div
@@ -319,14 +269,6 @@ export default function CalendlyContent() {
       >
         Bu sayfa sadece topluluk üyeleri için erişilebilir
       </p>
-
-      {/* Calendly loader script — kullanıcının verdiği resmi snippet.
-          Next.js Script component'iyle afterInteractive yüklenir,
-          .calendly-inline-widget class'lı div'i tarayıp iframe inflate eder. */}
-      <Script
-        src="https://assets.calendly.com/assets/external/widget.js"
-        strategy="afterInteractive"
-      />
     </main>
   );
 }
