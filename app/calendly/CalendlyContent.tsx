@@ -1,29 +1,25 @@
 "use client";
 
-// /calendly — Riva Framework upsell sayfası
+// /calendly — Onboarding görüşmesi rezerve sayfası
 //
-// Akış: Webinar → DIRECT BUY ($29.900) → /calendly → BOOK A CALL → Sales call → Backend upsell
+// Bağlam: Müşteri 29.900 paketi satın aldı → bu sayfaya gelir →
+// Calendly üzerinden onboarding görüşmesi (30 dk) rezerve eder.
+// Sales/upsell sayfası DEĞİL — paid customer için onboarding flow.
+// O yüzden "kıtlık baskısı / loss aversion" gibi sales psikolojisi
+// elementleri kullanılmıyor. Sadece net, profesyonel onboarding davet.
 //
-// Sayfa düzeni (üstten alta):
-//   1. SCARCITY banner (kıtlık baskısı)
-//   2. CALENDLY EMBED (en başta — kullanıcı doğrudan görsün, scroll'a gerek yok)
-//   3. Tebrikler kartı (kayıt onayı)
-//   4. Görüşmede ne olacak (4 değer maddesi)
-//   5. Görüşmeli vs Görüşmesiz karşılaştırma (loss aversion)
-//   6. Trust kartları + WhatsApp fallback
-//
-// Calendly embed: direkt iframe kullanıyoruz (widget.js script yerine).
-// Daha güvenilir — Next.js hydration timing'ine takılmıyor, iframe
-// hemen yükleniyor.
+// Sayfa düzeni:
+//   1. Başlık + alt bilgi
+//   2. Calendly inline widget (widget.js — kullanıcının istediği embed)
+//   3. Onboarding'de neler olacak (4 madde)
+//   4. WhatsApp fallback (sorular için)
+
+import Script from "next/script";
 
 const GOLD = "#fbbf24";
 const GOLD_BG = "rgba(251, 191, 36,";
 
-// Calendly event link — AI Scale 30 dk strateji görüşmesi.
 const CALENDLY_URL = "https://calendly.com/aiscale-info/new-meeting";
-
-// Inline iframe için query parametreleri — embed mode + branding
-const CALENDLY_EMBED_URL = `${CALENDLY_URL}?embed_type=Inline&embed_domain=www.aiscaleapp.com&hide_event_type_details=0&hide_gdpr_banner=1`;
 
 export default function CalendlyContent() {
   return (
@@ -34,68 +30,42 @@ export default function CalendlyContent() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        padding: "32px 16px",
+        padding: "48px 16px",
       }}
     >
-      {/* 1. SCARCITY BANNER — en üst, kırmızı kıtlık baskısı */}
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "720px",
-          borderRadius: "12px",
-          background: "linear-gradient(90deg, #7f1d1d, #b91c1c, #7f1d1d)",
-          padding: "12px 16px",
-          marginBottom: "16px",
-          textAlign: "center",
-          border: "1px solid rgba(255,255,255,0.1)",
-        }}
-      >
-        <p
-          style={{
-            color: "#ffffff",
-            fontSize: "13px",
-            fontWeight: 700,
-            letterSpacing: "0.5px",
-          }}
-        >
-          ⚠️ DİKKAT: Strateji görüşmesi kontenjanı{" "}
-          <span style={{ color: "#fde047" }}>günde 5 kişiyle</span> sınırlı.
-          Boş slotlar saatler içinde doluyor.
-        </p>
-      </div>
-
-      {/* 2. ANA BAŞLIK — Calendly'nin hemen üstü, dikkat çekici */}
+      {/* 1. ANA BAŞLIK */}
       <div
         style={{
           width: "100%",
           maxWidth: "720px",
           textAlign: "center",
-          marginBottom: "12px",
+          marginBottom: "20px",
           padding: "0 12px",
         }}
       >
         <h1
           style={{
             color: "#ffffff",
-            fontSize: "28px",
+            fontSize: "32px",
             fontWeight: 800,
-            marginBottom: "8px",
+            marginBottom: "10px",
             lineHeight: 1.2,
           }}
         >
           📅{" "}
-          <span style={{ color: GOLD }}>Görüşme Saatini Şimdi Seç</span>
+          <span style={{ color: GOLD }}>Onboarding Saatini Seç</span>
         </h1>
         <p
           style={{
-            color: "rgba(255,255,255,0.7)",
-            fontSize: "14px",
+            color: "rgba(255,255,255,0.8)",
+            fontSize: "15px",
             marginBottom: "6px",
+            lineHeight: 1.6,
           }}
         >
-          30 dakikalık ücretsiz strateji görüşmesinde sana özel{" "}
-          <strong style={{ color: "#fff" }}>90 günlük AI yol haritası</strong>{" "}
-          çıkartıyoruz.
+          <strong style={{ color: "#fff" }}>120 günlük planlaman hazır.</strong>{" "}
+          30 dakikalık onboarding görüşmesinde ekibim seni tanır, planını
+          birlikte yürürlüğe sokarız.
         </p>
         <p
           style={{
@@ -103,11 +73,11 @@ export default function CalendlyContent() {
             fontSize: "12px",
           }}
         >
-          Tek tıklamayla onaylanır · 30 dakika sürer · %100 ücretsiz
+          Tek tıklamayla onaylanır · 30 dakika sürer
         </p>
       </div>
 
-      {/* 3. CALENDLY EMBED — direkt iframe (script-tabanlı widget yerine) */}
+      {/* 2. CALENDLY EMBED — kullanıcının istediği resmi widget.js yaklaşımı */}
       <div
         id="calendly-section"
         style={{
@@ -121,20 +91,20 @@ export default function CalendlyContent() {
           boxShadow: `0 8px 40px ${GOLD_BG} 0.15)`,
         }}
       >
-        <iframe
-          src={CALENDLY_EMBED_URL}
-          title="AI Scale Strateji Görüşmesi — Calendly"
+        {/* Calendly inline widget — kullanıcının verdiği snippet:
+            <div class="calendly-inline-widget" data-url="..." style="min-width:320px;height:700px;"></div>
+            <script src="https://assets.calendly.com/assets/external/widget.js" async></script> */}
+        <div
+          className="calendly-inline-widget"
+          data-url={CALENDLY_URL}
           style={{
-            width: "100%",
-            height: "750px",
-            border: "none",
+            minWidth: "320px",
+            height: "700px",
             borderRadius: "12px",
-            background: "#ffffff",
-            display: "block",
+            overflow: "hidden",
           }}
-          loading="eager"
-          allow="payment; camera; microphone; geolocation"
         />
+
         <p style={{ textAlign: "center", marginTop: "12px", paddingBottom: "4px" }}>
           <a
             href={CALENDLY_URL}
@@ -151,73 +121,7 @@ export default function CalendlyContent() {
         </p>
       </div>
 
-      {/* 4. TEBRİKLER kartı — Calendly altında, kayıt onayı bilgisi */}
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "720px",
-          borderRadius: "16px",
-          border: `1px solid ${GOLD_BG} 0.25)`,
-          background: "rgba(20, 20, 20, 0.8)",
-          padding: "32px 24px",
-          marginBottom: "24px",
-          textAlign: "center",
-        }}
-      >
-        <div style={{ marginBottom: "16px" }}>
-          <div
-            style={{
-              width: "56px",
-              height: "56px",
-              borderRadius: "50%",
-              background: `${GOLD_BG} 0.15)`,
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke={GOLD}
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-        </div>
-
-        <h2
-          style={{
-            fontSize: "22px",
-            fontWeight: 700,
-            color: "#ffffff",
-            marginBottom: "6px",
-          }}
-        >
-          🎉 Topluluk Üyeliğin Aktif!
-        </h2>
-
-        <p
-          style={{
-            color: "rgba(255,255,255,0.7)",
-            fontSize: "14px",
-            lineHeight: 1.6,
-            maxWidth: "560px",
-            margin: "0 auto",
-          }}
-        >
-          Eğitim platformuna erişimin açıldı. Şimdi sıra bire bir strateji
-          görüşmesinde — yukarıdan boş bir slot seç, ekibim seni tanıyıp
-          sana özel rotanı çıkartsın.
-        </p>
-      </div>
-
-      {/* 5. GÖRÜŞMEDE NE OLACAK — 4 değer maddesi */}
+      {/* 3. ONBOARDING'DE NELER OLACAK — 4 değer maddesi */}
       <div
         style={{
           width: "100%",
@@ -238,7 +142,7 @@ export default function CalendlyContent() {
             textAlign: "center",
           }}
         >
-          📞 Görüşmede Neler Olacak?
+          📞 Onboarding&apos;de Neler Olacak?
         </h2>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
@@ -250,8 +154,8 @@ export default function CalendlyContent() {
             },
             {
               icon: "📊",
-              title: "Spesifik 90 günlük plan",
-              desc: "Genel teori değil — senin durumuna özel 12 haftalık uygulama planı çıkartırız.",
+              title: "120 günlük uygulama planı",
+              desc: "Genel teori değil — senin durumuna özel 4 aylık adım adım yol haritası.",
             },
             {
               icon: "🛠️",
@@ -314,212 +218,9 @@ export default function CalendlyContent() {
         </div>
       </div>
 
-      {/* 6. KARŞILAŞTIRMA — Görüşmeli vs Görüşmesiz */}
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "720px",
-          borderRadius: "16px",
-          background: "rgba(20, 20, 20, 0.6)",
-          border: "1px solid rgba(255,255,255,0.08)",
-          padding: "24px 20px",
-          marginBottom: "24px",
-        }}
-      >
-        <h2
-          style={{
-            fontSize: "18px",
-            fontWeight: 700,
-            color: "#ffffff",
-            textAlign: "center",
-            marginBottom: "18px",
-          }}
-        >
-          Görüşmeli vs Görüşmesiz:{" "}
-          <span style={{ color: GOLD }}>Aradaki Fark</span>
-        </h2>
-
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "12px",
-          }}
-        >
-          {/* Görüşmesiz — kırmızı kötü senaryo */}
-          <div
-            style={{
-              borderRadius: "10px",
-              border: "1px solid rgba(239, 68, 68, 0.3)",
-              background: "rgba(127, 29, 29, 0.15)",
-              padding: "16px",
-            }}
-          >
-            <div
-              style={{
-                color: "#ef4444",
-                fontSize: "12px",
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "1px",
-                marginBottom: "10px",
-              }}
-            >
-              ✗ Görüşme Almazsan
-            </div>
-            <ul
-              style={{
-                listStyle: "none",
-                padding: 0,
-                margin: 0,
-                color: "rgba(255,255,255,0.7)",
-                fontSize: "13px",
-                lineHeight: 1.7,
-              }}
-            >
-              <li>• Eğitimleri tek başına izlersin</li>
-              <li>• Nereden başlayacağını bilemezsin</li>
-              <li>• İlk 90 günde momentum yakalayamazsın</li>
-              <li>• Çoğu üyenin yaptığı hataları tekrar edersin</li>
-              <li>• %80 ihtimalle eğitimi yarıda bırakırsın</li>
-            </ul>
-          </div>
-
-          {/* Görüşmeli — altın iyi senaryo */}
-          <div
-            style={{
-              borderRadius: "10px",
-              border: `1px solid ${GOLD_BG} 0.4)`,
-              background: `${GOLD_BG} 0.08)`,
-              padding: "16px",
-            }}
-          >
-            <div
-              style={{
-                color: GOLD,
-                fontSize: "12px",
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "1px",
-                marginBottom: "10px",
-              }}
-            >
-              ✓ Görüşme Alırsan
-            </div>
-            <ul
-              style={{
-                listStyle: "none",
-                padding: 0,
-                margin: 0,
-                color: "rgba(255,255,255,0.85)",
-                fontSize: "13px",
-                lineHeight: 1.7,
-              }}
-            >
-              <li>
-                <strong style={{ color: "#fff" }}>Senin için</strong> doğru
-                rotayı net görürsün
-              </li>
-              <li>
-                İlk haftada{" "}
-                <strong style={{ color: "#fff" }}>uygulanabilir</strong>{" "}
-                bir plana sahipsin
-              </li>
-              <li>
-                Hangi araçları{" "}
-                <strong style={{ color: "#fff" }}>hangi sırayla</strong>{" "}
-                kullanacağını öğrenirsin
-              </li>
-              <li>
-                Ekibin <strong style={{ color: "#fff" }}>seni
-                tanır</strong>, soru sorduğunda hızlı destek
-              </li>
-              <li>
-                %80 üye{" "}
-                <strong style={{ color: "#fff" }}>30 günde</strong> ilk
-                gelirini görür
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <p
-          style={{
-            color: "rgba(255,255,255,0.5)",
-            fontSize: "12px",
-            textAlign: "center",
-            marginTop: "16px",
-            fontStyle: "italic",
-          }}
-        >
-          Sadece 30 dakika — sonrası tamamen senin elinde.
-        </p>
-      </div>
-
-      {/* 7. Trust + WhatsApp footer */}
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "720px",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "14px",
-          marginBottom: "20px",
-        }}
-      >
-        <div
-          style={{
-            borderRadius: "12px",
-            border: "1px solid rgba(255,255,255,0.1)",
-            background: "rgba(10,10,10,0.4)",
-            padding: "16px",
-            textAlign: "center",
-          }}
-        >
-          <div style={{ fontSize: "20px", marginBottom: "6px" }}>⚡</div>
-          <p
-            style={{
-              color: "#fff",
-              fontSize: "13px",
-              fontWeight: 600,
-              marginBottom: "2px",
-            }}
-          >
-            Anında onay
-          </p>
-          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "12px" }}>
-            Takvim seçer seçmez randevun kesinleşir
-          </p>
-        </div>
-        <div
-          style={{
-            borderRadius: "12px",
-            border: "1px solid rgba(255,255,255,0.1)",
-            background: "rgba(10,10,10,0.4)",
-            padding: "16px",
-            textAlign: "center",
-          }}
-        >
-          <div style={{ fontSize: "20px", marginBottom: "6px" }}>🆓</div>
-          <p
-            style={{
-              color: "#fff",
-              fontSize: "13px",
-              fontWeight: 600,
-              marginBottom: "2px",
-            }}
-          >
-            %100 ücretsiz
-          </p>
-          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "12px" }}>
-            Görüşme için ek ücret yok
-          </p>
-        </div>
-      </div>
-
-      {/* WhatsApp fallback */}
+      {/* 4. WhatsApp fallback — paid customer'ın sorusu için */}
       <a
-        href="https://wa.me/12084509523?text=Merhaba%2C%20%C3%B6deme%20yapt%C4%B1m%20ve%20strateji%20g%C3%B6r%C3%BC%C5%9Fmesi%20ayarlamak%20istiyorum."
+        href="https://wa.me/12084509523?text=Merhaba%2C%20%C3%B6deme%20yapt%C4%B1m%20ve%20onboarding%20g%C3%B6r%C3%BC%C5%9Fmesi%20ayarlamak%20istiyorum."
         target="_blank"
         rel="noopener noreferrer"
         style={{
@@ -554,6 +255,14 @@ export default function CalendlyContent() {
       >
         Bu sayfa sadece topluluk üyeleri için erişilebilir
       </p>
+
+      {/* Calendly loader script — kullanıcının verdiği resmi snippet.
+          Next.js Script component'iyle afterInteractive yüklenir,
+          .calendly-inline-widget class'lı div'i tarayıp iframe inflate eder. */}
+      <Script
+        src="https://assets.calendly.com/assets/external/widget.js"
+        strategy="afterInteractive"
+      />
     </main>
   );
 }

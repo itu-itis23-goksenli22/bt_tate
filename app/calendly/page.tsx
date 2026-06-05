@@ -3,9 +3,9 @@ import { Suspense } from "react";
 import CalendlyContent from "./CalendlyContent";
 
 export const metadata: Metadata = {
-  title: "Strateji Görüşmesi | AI Scale App",
+  title: "Onboarding Görüşmesi | AI Scale App",
   description:
-    "Topluluk üyeliğin aktif. Şimdi sıra bire bir strateji görüşmesinde — 90 günlük AI yol haritanı ekibimle birlikte çıkar.",
+    "120 günlük planın hazır. 30 dakikalık onboarding görüşmesinde ekibimle birlikte planını yürürlüğe sok.",
   robots: { index: false, follow: false },
 };
 
