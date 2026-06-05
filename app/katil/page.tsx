@@ -77,39 +77,18 @@ export default function KatilPage() {
       <div className="bg-gradient-to-b from-black via-[#0a0a0a] to-black">
         <HeroSection headline={KATIL_HEADLINE} subheadline={KATIL_SUBHEADLINE} />
 
-        {/* Dikkat çekici tarih badge — kırmızı italic bold tipografi +
-            kırmızı oval SVG çerçeve. Normal font (Inter), büyük ve
-            net. "Sunday, June 7, 8PM EST" pattern'inden esinlenildi. */}
-        <div className="relative flex justify-center pt-2 pb-4 px-4">
-          <div className="relative inline-block py-1">
-            <p className="text-[#ef4444] italic font-extrabold text-2xl md:text-4xl leading-tight px-8 md:px-12 py-2 md:py-3 whitespace-nowrap tracking-tight">
-              6 Haziran Cumartesi · 20:00 (TR)
-            </p>
-            {/* Kırmızı oval — daha temiz, eğri yok, sadece hafif rotate */}
-            <svg
-              className="absolute inset-0 w-full h-full pointer-events-none"
-              viewBox="0 0 400 80"
-              preserveAspectRatio="none"
-              aria-hidden
-            >
-              <ellipse
-                cx="200"
-                cy="40"
-                rx="192"
-                ry="34"
-                fill="none"
-                stroke="#ef4444"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                transform="rotate(-1.2 200 40)"
-              />
-            </svg>
-          </div>
+        {/* Dikkat çekici tarih başlığı — sarı italic bold, oval YOK.
+            Aşağıdaki CountdownTimer'ın duplicate headline'ı boş string
+            ile gizlendi → sadece bu satır kalır. */}
+        <div className="text-center pt-2 pb-4 px-4">
+          <p className="text-gold italic font-extrabold text-2xl md:text-4xl leading-tight whitespace-nowrap tracking-tight">
+            6 Haziran Cumartesi · 20:00 (TR)
+          </p>
         </div>
 
         <CountdownTimer
           targetDate={{ year: 2026, month: 6, day: 6 }}
-          headlineText="6 Haziran Cumartesi 20:00'da Canlı Seminer Başlıyor..."
+          headlineText=""
         />
 
         {/* Register CTA text */}

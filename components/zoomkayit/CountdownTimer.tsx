@@ -123,15 +123,22 @@ export default function CountdownTimer({
 
   const labels = ["Gün", "Saat", "Dakika", "Saniye"];
 
+  // headlineText="" (boş string) verilirse başlığı gizle — variant'lar
+  // başka yerde tarih gösteriyorsa duplicate olmasın diye.
+  const showHeadline = headlineText !== "";
+  const finalHeadline = headlineText
+    ? headlineText
+    : mounted && dayName
+      ? `${dayName} 20:00'da Canlı Webinar Başlıyor...`
+      : "20:00'da Canlı Webinar Başlıyor...";
+
   return (
     <div className="text-center mb-6">
-      <p className="text-gold font-bold text-xl md:text-3xl leading-tight mb-4 px-4">
-        {headlineText
-          ? headlineText
-          : mounted && dayName
-            ? `${dayName} 20:00'da Canlı Webinar Başlıyor...`
-            : "20:00'da Canlı Webinar Başlıyor..."}
-      </p>
+      {showHeadline && (
+        <p className="text-gold font-bold text-xl md:text-3xl leading-tight mb-4 px-4">
+          {finalHeadline}
+        </p>
+      )}
       <div className="flex items-center justify-center gap-2 md:gap-3">
         {(mounted ? units : labels.map((l) => ({ value: "--", label: l }))).map(
           (unit, i) => (
