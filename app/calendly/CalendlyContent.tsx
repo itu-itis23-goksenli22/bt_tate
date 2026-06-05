@@ -18,9 +18,8 @@ import Script from "next/script";
 const GOLD = "#fbbf24";
 const GOLD_BG = "rgba(251, 191, 36,";
 
-// TODO(calendly): Gerçek Calendly link'i hazır olunca buraya yapıştır.
-// Format örnek: "https://calendly.com/baturalp-aiscale/strategy-call"
-const CALENDLY_URL = "https://calendly.com/PLACEHOLDER/strategy-call";
+// Calendly event link — AI Scale 30 dk strateji görüşmesi.
+const CALENDLY_URL = "https://calendly.com/aiscale-info/new-meeting";
 
 export default function CalendlyContent() {
   return (
