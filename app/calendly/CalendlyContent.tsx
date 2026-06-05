@@ -5,39 +5,23 @@
 // Bağlam: Müşteri 29.900 paketi satın aldı → bu sayfaya gelir →
 // Calendly üzerinden onboarding görüşmesi (30 dk) rezerve eder.
 //
-// CALENDLY EMBED YAKLAŞIMI (tested working):
-// 1. JSX'te <div class="calendly-inline-widget" data-url="..." style="...">
-//    boş bir div (Calendly snippet'inin birebir aynısı)
-// 2. useEffect içinde script'i dynamic olarak document.body'ye ekle
-//    → div mount edildikten SONRA script yüklenir
-//    → widget.js auto-scan div'i bulup iframe inflate eder
+// CALENDLY EMBED YAKLAŞIMI: DOĞRUDAN iframe (script YOK)
 //
-// Önceki manuel init yaklaşımı double-init conflict yapıyordu —
-// bu sade auto-scan en güvenilir method.
-
-import { useEffect } from "react";
+// Calendly widget.js script-tabanlı embed Next.js'te tutarsız çalışıyor
+// (StrictMode double-init, hydration timing, auto-scan race condition).
+// Bunun yerine düz <iframe> kullanıyoruz — browser native, hiçbir
+// JavaScript bağımlılığı yok, AdBlocker'lar bile blokmuyor.
+//
+// embed_type=Inline ve embed_domain parametreleri Calendly'ye iframe
+// modunu ve domain whitelist bilgisini iletir.
 
 const GOLD = "#fbbf24";
 const GOLD_BG = "rgba(251, 191, 36,";
 
 const CALENDLY_URL = "https://calendly.com/aiscale-info/new-meeting";
+const CALENDLY_IFRAME_URL = `${CALENDLY_URL}?embed_domain=www.aiscaleapp.com&embed_type=Inline&hide_gdpr_banner=1`;
 
 export default function CalendlyContent() {
-  // Script'i dinamik inject — div mount edildikten SONRA yüklenir,
-  // auto-scan'in div'i bulması garanti olur. StrictMode'da double-mount
-  // olsa bile script tag id'siyle dedup edilir.
-  useEffect(() => {
-    const scriptId = "calendly-widget-loader";
-    if (document.getElementById(scriptId)) return; // zaten yüklü
-    const script = document.createElement("script");
-    script.id = scriptId;
-    script.src = "https://assets.calendly.com/assets/external/widget.js";
-    script.async = true;
-    document.body.appendChild(script);
-    // Cleanup yok — script body'de kalsın, sayfa içinde tekrar tekrar
-    // mount/unmount olursa (StrictMode) tek script yeter.
-  }, []);
-
   return (
     <main
       style={{
@@ -93,8 +77,7 @@ export default function CalendlyContent() {
         </p>
       </div>
 
-      {/* 2. CALENDLY EMBED — Calendly'nin verdiği snippet birebir.
-          Sade dış sarmal (border + bg), iç div'e dokunmuyoruz. */}
+      {/* 2. CALENDLY EMBED — düz iframe, hiç script yok */}
       <div
         id="calendly-section"
         style={{
@@ -109,13 +92,19 @@ export default function CalendlyContent() {
           overflow: "hidden",
         }}
       >
-        {/* Birebir Calendly snippet — sadece tarz ekledim (border-radius,
-            overflow). class + data-url + style aynı. Script document.body'ye
-            dynamic inject (yukarıda useEffect). */}
-        <div
-          className="calendly-inline-widget"
-          data-url={CALENDLY_URL}
-          style={{ minWidth: "320px", height: "700px" }}
+        <iframe
+          src={CALENDLY_IFRAME_URL}
+          title="AI Scale Onboarding Görüşmesi"
+          width="100%"
+          height="700"
+          frameBorder="0"
+          loading="eager"
+          style={{
+            display: "block",
+            minWidth: "320px",
+            border: "none",
+            background: "#ffffff",
+          }}
         />
       </div>
 
