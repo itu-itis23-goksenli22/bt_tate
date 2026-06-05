@@ -5,21 +5,21 @@
 // Bağlam: Müşteri 29.900 paketi satın aldı → bu sayfaya gelir →
 // Calendly üzerinden onboarding görüşmesi (30 dk) rezerve eder.
 //
-// CALENDLY EMBED YAKLAŞIMI: DOĞRUDAN iframe (script YOK)
+// CALENDLY EMBED — react-calendly paketi (Next.js'te battle-tested)
 //
-// Calendly widget.js script-tabanlı embed Next.js'te tutarsız çalışıyor
-// (StrictMode double-init, hydration timing, auto-scan race condition).
-// Bunun yerine düz <iframe> kullanıyoruz — browser native, hiçbir
-// JavaScript bağımlılığı yok, AdBlocker'lar bile blokmuyor.
-//
-// embed_type=Inline ve embed_domain parametreleri Calendly'ye iframe
-// modunu ve domain whitelist bilgisini iletir.
+// Önceki yaklaşımlar (vanilla iframe, manuel script injection,
+// initInlineWidget) hep bir noktada takıldı: hydration timing,
+// X-Frame-Options, AdBlocker conflict. react-calendly paketi
+// (resmi olmayan ama production'da yaygın kullanılan React wrapper)
+// tüm bunları handle ediyor — embed script'i doğru sırada yükler,
+// React lifecycle'a uyumlu, App Router 'use client' ile sorunsuz.
+
+import { InlineWidget } from "react-calendly";
 
 const GOLD = "#fbbf24";
 const GOLD_BG = "rgba(251, 191, 36,";
 
 const CALENDLY_URL = "https://calendly.com/aiscale-info/new-meeting";
-const CALENDLY_IFRAME_URL = `${CALENDLY_URL}?embed_domain=www.aiscaleapp.com&embed_type=Inline&hide_gdpr_banner=1`;
 
 export default function CalendlyContent() {
   return (
@@ -77,7 +77,10 @@ export default function CalendlyContent() {
         </p>
       </div>
 
-      {/* 2. CALENDLY EMBED — düz iframe, hiç script yok */}
+      {/* 2. CALENDLY EMBED — react-calendly InlineWidget
+          (resmi olmayan ama production'da yaygın kullanılan paket;
+          script loading + iframe inflation'ı React lifecycle ile
+          doğru senkronize eder, Next.js App Router'da sorunsuz). */}
       <div
         id="calendly-section"
         style={{
@@ -92,18 +95,16 @@ export default function CalendlyContent() {
           overflow: "hidden",
         }}
       >
-        <iframe
-          src={CALENDLY_IFRAME_URL}
-          title="AI Scale Onboarding Görüşmesi"
-          width="100%"
-          height="700"
-          frameBorder="0"
-          loading="eager"
-          style={{
-            display: "block",
+        <InlineWidget
+          url={CALENDLY_URL}
+          styles={{
+            height: "700px",
+            width: "100%",
             minWidth: "320px",
-            border: "none",
-            background: "#ffffff",
+          }}
+          pageSettings={{
+            hideGdprBanner: true,
+            hideEventTypeDetails: false,
           }}
         />
       </div>
