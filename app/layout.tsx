@@ -86,12 +86,6 @@ export default function RootLayout({
           href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap"
           rel="stylesheet"
         />
-        {/* Caveat — el yazısı tarzı dikkat çekici tarih başlıkları için.
-            /katil hero'sundaki "6 Haziran" date badge bunu kullanıyor. */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap"
-          rel="stylesheet"
-        />
         <meta name="facebook-domain-verification" content="cay5i2fp2p3cmrbhybm9d385v9xxj0" />
       </head>
       <body className={inter.className}>

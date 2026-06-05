@@ -77,18 +77,15 @@ export default function KatilPage() {
       <div className="bg-gradient-to-b from-black via-[#0a0a0a] to-black">
         <HeroSection headline={KATIL_HEADLINE} subheadline={KATIL_SUBHEADLINE} />
 
-        {/* El yazısı tarzı dikkat çekici tarih badge —
-            kırmızı italic Caveat font + kırmızı oval SVG çerçeve.
-            "Sunday, June 7, 8PM EST" görsel referansından esinlenildi. */}
+        {/* Dikkat çekici tarih badge — kırmızı italic bold tipografi +
+            kırmızı oval SVG çerçeve. Normal font (Inter), büyük ve
+            net. "Sunday, June 7, 8PM EST" pattern'inden esinlenildi. */}
         <div className="relative flex justify-center pt-2 pb-4 px-4">
-          <div className="relative inline-block">
-            <p
-              className="text-[#ef4444] italic text-3xl md:text-5xl leading-none px-6 md:px-10 py-2 md:py-3 whitespace-nowrap"
-              style={{ fontFamily: "'Caveat', cursive", fontWeight: 700 }}
-            >
+          <div className="relative inline-block py-1">
+            <p className="text-[#ef4444] italic font-extrabold text-2xl md:text-4xl leading-tight px-8 md:px-12 py-2 md:py-3 whitespace-nowrap tracking-tight">
               6 Haziran Cumartesi · 20:00 (TR)
             </p>
-            {/* El çizimi oval — SVG, transform rotate ile hafif eğri */}
+            {/* Kırmızı oval — daha temiz, eğri yok, sadece hafif rotate */}
             <svg
               className="absolute inset-0 w-full h-full pointer-events-none"
               viewBox="0 0 400 80"
@@ -98,22 +95,14 @@ export default function KatilPage() {
               <ellipse
                 cx="200"
                 cy="40"
-                rx="190"
+                rx="192"
                 ry="34"
                 fill="none"
                 stroke="#ef4444"
-                strokeWidth="3"
+                strokeWidth="2.5"
                 strokeLinecap="round"
-                strokeDasharray="0"
-                transform="rotate(-1.5 200 40)"
-                style={{ filter: "url(#wiggle)" }}
+                transform="rotate(-1.2 200 40)"
               />
-              <defs>
-                <filter id="wiggle">
-                  <feTurbulence baseFrequency="0.02" numOctaves="2" />
-                  <feDisplacementMap in="SourceGraphic" scale="2" />
-                </filter>
-              </defs>
             </svg>
           </div>
         </div>
