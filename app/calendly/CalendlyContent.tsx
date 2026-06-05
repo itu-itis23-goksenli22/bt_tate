@@ -4,22 +4,26 @@
 //
 // Akış: Webinar → DIRECT BUY ($29.900) → /calendly → BOOK A CALL → Sales call → Backend upsell
 //
-// Kullanıcı 29.900 satın aldıktan sonra Stripe webhook return_url
-// (şu an /odemeonay) yerine ileride buraya yönlendirilecek. /odemeonay
-// genel teşekkür sayfası olarak duruyor, /calendly ise upsell için
-// özel — birebir strateji görüşmesi randevulamasını öne çıkarıyor.
+// Sayfa düzeni (üstten alta):
+//   1. SCARCITY banner (kıtlık baskısı)
+//   2. CALENDLY EMBED (en başta — kullanıcı doğrudan görsün, scroll'a gerek yok)
+//   3. Tebrikler kartı (kayıt onayı)
+//   4. Görüşmede ne olacak (4 değer maddesi)
+//   5. Görüşmeli vs Görüşmesiz karşılaştırma (loss aversion)
+//   6. Trust kartları + WhatsApp fallback
 //
-// TODO: Calendly oluşturulduğunda CALENDLY_URL constant güncellenecek.
-// İdeal: 30 dk slot, 5+ kişi/gün limit. Calendly Dashboard → New Event
-// Type → 30-min meeting → URL'i kopyala.
-
-import Script from "next/script";
+// Calendly embed: direkt iframe kullanıyoruz (widget.js script yerine).
+// Daha güvenilir — Next.js hydration timing'ine takılmıyor, iframe
+// hemen yükleniyor.
 
 const GOLD = "#fbbf24";
 const GOLD_BG = "rgba(251, 191, 36,";
 
 // Calendly event link — AI Scale 30 dk strateji görüşmesi.
 const CALENDLY_URL = "https://calendly.com/aiscale-info/new-meeting";
+
+// Inline iframe için query parametreleri — embed mode + branding
+const CALENDLY_EMBED_URL = `${CALENDLY_URL}?embed_type=Inline&embed_domain=www.aiscaleapp.com&hide_event_type_details=0&hide_gdpr_banner=1`;
 
 export default function CalendlyContent() {
   return (
@@ -30,10 +34,10 @@ export default function CalendlyContent() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        padding: "48px 16px",
+        padding: "32px 16px",
       }}
     >
-      {/* Üst SCARCITY banner — kıtlık baskısı, sayfanın en üstünde */}
+      {/* 1. SCARCITY BANNER — en üst, kırmızı kıtlık baskısı */}
       <div
         style={{
           width: "100%",
@@ -60,7 +64,94 @@ export default function CalendlyContent() {
         </p>
       </div>
 
-      {/* Üst Tebrikler kartı */}
+      {/* 2. ANA BAŞLIK — Calendly'nin hemen üstü, dikkat çekici */}
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "720px",
+          textAlign: "center",
+          marginBottom: "12px",
+          padding: "0 12px",
+        }}
+      >
+        <h1
+          style={{
+            color: "#ffffff",
+            fontSize: "28px",
+            fontWeight: 800,
+            marginBottom: "8px",
+            lineHeight: 1.2,
+          }}
+        >
+          📅{" "}
+          <span style={{ color: GOLD }}>Görüşme Saatini Şimdi Seç</span>
+        </h1>
+        <p
+          style={{
+            color: "rgba(255,255,255,0.7)",
+            fontSize: "14px",
+            marginBottom: "6px",
+          }}
+        >
+          30 dakikalık ücretsiz strateji görüşmesinde sana özel{" "}
+          <strong style={{ color: "#fff" }}>90 günlük AI yol haritası</strong>{" "}
+          çıkartıyoruz.
+        </p>
+        <p
+          style={{
+            color: "rgba(255,255,255,0.5)",
+            fontSize: "12px",
+          }}
+        >
+          Tek tıklamayla onaylanır · 30 dakika sürer · %100 ücretsiz
+        </p>
+      </div>
+
+      {/* 3. CALENDLY EMBED — direkt iframe (script-tabanlı widget yerine) */}
+      <div
+        id="calendly-section"
+        style={{
+          width: "100%",
+          maxWidth: "720px",
+          borderRadius: "16px",
+          border: `2px solid ${GOLD_BG} 0.4)`,
+          background: "rgba(20, 20, 20, 0.8)",
+          padding: "12px",
+          marginBottom: "32px",
+          boxShadow: `0 8px 40px ${GOLD_BG} 0.15)`,
+        }}
+      >
+        <iframe
+          src={CALENDLY_EMBED_URL}
+          title="AI Scale Strateji Görüşmesi — Calendly"
+          style={{
+            width: "100%",
+            height: "750px",
+            border: "none",
+            borderRadius: "12px",
+            background: "#ffffff",
+            display: "block",
+          }}
+          loading="eager"
+          allow="payment; camera; microphone; geolocation"
+        />
+        <p style={{ textAlign: "center", marginTop: "12px", paddingBottom: "4px" }}>
+          <a
+            href={CALENDLY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              color: GOLD,
+              fontSize: "12px",
+              textDecoration: "underline",
+            }}
+          >
+            Takvim yüklenmiyor mu? Yeni sekmede aç →
+          </a>
+        </p>
+      </div>
+
+      {/* 4. TEBRİKLER kartı — Calendly altında, kayıt onayı bilgisi */}
       <div
         style={{
           width: "100%",
@@ -68,16 +159,16 @@ export default function CalendlyContent() {
           borderRadius: "16px",
           border: `1px solid ${GOLD_BG} 0.25)`,
           background: "rgba(20, 20, 20, 0.8)",
-          padding: "40px 28px",
+          padding: "32px 24px",
           marginBottom: "24px",
+          textAlign: "center",
         }}
       >
-        {/* Success Check */}
-        <div style={{ textAlign: "center", marginBottom: "24px" }}>
+        <div style={{ marginBottom: "16px" }}>
           <div
             style={{
-              width: "72px",
-              height: "72px",
+              width: "56px",
+              height: "56px",
               borderRadius: "50%",
               background: `${GOLD_BG} 0.15)`,
               display: "inline-flex",
@@ -86,8 +177,8 @@ export default function CalendlyContent() {
             }}
           >
             <svg
-              width="36"
-              height="36"
+              width="28"
+              height="28"
               viewBox="0 0 24 24"
               fill="none"
               stroke={GOLD}
@@ -100,52 +191,33 @@ export default function CalendlyContent() {
           </div>
         </div>
 
-        <h1
+        <h2
           style={{
-            fontSize: "30px",
+            fontSize: "22px",
             fontWeight: 700,
             color: "#ffffff",
-            textAlign: "center",
-            marginBottom: "10px",
-            lineHeight: 1.2,
+            marginBottom: "6px",
           }}
         >
           🎉 Topluluk Üyeliğin Aktif!
-        </h1>
+        </h2>
 
         <p
           style={{
-            fontSize: "16px",
-            color: GOLD,
-            textAlign: "center",
-            fontWeight: 600,
-            marginBottom: "24px",
-          }}
-        >
-          Şimdi sıra <u>bire bir strateji görüşmesinde</u>
-        </p>
-
-        <p
-          style={{
-            color: "rgba(255,255,255,0.75)",
-            fontSize: "15px",
-            textAlign: "center",
-            lineHeight: 1.65,
+            color: "rgba(255,255,255,0.7)",
+            fontSize: "14px",
+            lineHeight: 1.6,
             maxWidth: "560px",
             margin: "0 auto",
           }}
         >
-          Topluluk eğitimleri kendi hızında ilerleyebilmen için orada — ama
-          tek başına gitmek zorunda değilsin. Ekibimle{" "}
-          <strong style={{ color: "#fff" }}>30 dakikalık ücretsiz</strong>{" "}
-          bir görüşme ayarla, sana özel <strong style={{ color: "#fff" }}>
-          90 günlük AI yol haritası
-          </strong>{" "}
-          çıkartalım.
+          Eğitim platformuna erişimin açıldı. Şimdi sıra bire bir strateji
+          görüşmesinde — yukarıdan boş bir slot seç, ekibim seni tanıyıp
+          sana özel rotanı çıkartsın.
         </p>
       </div>
 
-      {/* Görüşmede Ne Olacak — değer kartı */}
+      {/* 5. GÖRÜŞMEDE NE OLACAK — 4 değer maddesi */}
       <div
         style={{
           width: "100%",
@@ -153,7 +225,7 @@ export default function CalendlyContent() {
           borderRadius: "16px",
           border: `1px solid ${GOLD_BG} 0.2)`,
           background: "rgba(20, 20, 20, 0.6)",
-          padding: "28px 28px",
+          padding: "24px",
           marginBottom: "24px",
         }}
       >
@@ -242,7 +314,7 @@ export default function CalendlyContent() {
         </div>
       </div>
 
-      {/* Karşılaştırma kartı — "görüşme almazsan ne olur" loss aversion */}
+      {/* 6. KARŞILAŞTIRMA — Görüşmeli vs Görüşmesiz */}
       <div
         style={{
           width: "100%",
@@ -313,7 +385,7 @@ export default function CalendlyContent() {
             </ul>
           </div>
 
-          {/* Görüşmeli — yeşil iyi senaryo */}
+          {/* Görüşmeli — altın iyi senaryo */}
           <div
             style={{
               borderRadius: "10px",
@@ -384,107 +456,7 @@ export default function CalendlyContent() {
         </p>
       </div>
 
-      {/* Güçlü CTA üst metni — Calendly'den hemen önce */}
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "720px",
-          textAlign: "center",
-          marginBottom: "12px",
-          padding: "0 12px",
-        }}
-      >
-        <p
-          style={{
-            color: "#ffffff",
-            fontSize: "20px",
-            fontWeight: 700,
-            marginBottom: "4px",
-          }}
-        >
-          ↓ Aşağıdan{" "}
-          <span style={{ color: GOLD }}>Görüşme Saatini Şimdi Seç</span> ↓
-        </p>
-        <p
-          style={{
-            color: "rgba(255,255,255,0.55)",
-            fontSize: "13px",
-          }}
-        >
-          Tek tıklamayla onaylanır · 30 dakika sürer · %100 ücretsiz
-        </p>
-      </div>
-
-      {/* Calendly Embed — inline widget */}
-      <div
-        id="calendly-section"
-        style={{
-          width: "100%",
-          maxWidth: "720px",
-          borderRadius: "16px",
-          border: `2px solid ${GOLD_BG} 0.4)`,
-          background: "rgba(20, 20, 20, 0.8)",
-          padding: "24px 20px",
-          marginBottom: "24px",
-          boxShadow: `0 8px 40px ${GOLD_BG} 0.15)`,
-        }}
-      >
-        <h2
-          style={{
-            fontSize: "20px",
-            fontWeight: 700,
-            color: "#ffffff",
-            textAlign: "center",
-            marginBottom: "6px",
-          }}
-        >
-          📅 Görüşme Saatini Seç
-        </h2>
-        <p
-          style={{
-            fontSize: "13px",
-            color: "rgba(255,255,255,0.55)",
-            textAlign: "center",
-            marginBottom: "20px",
-          }}
-        >
-          Kontenjan günlük 5 kişiyle sınırlı. Boş slotlar hızla doluyor.
-        </p>
-
-        {/* Calendly inline widget — beyaz arka plan üzerinde
-            yükselir, kullanıcı tarih+saat seçer.
-            TODO: CALENDLY_URL constant'ını gerçek link ile değiştir. */}
-        <div
-          className="calendly-inline-widget"
-          data-url={CALENDLY_URL}
-          style={{
-            minWidth: "320px",
-            height: "700px",
-            borderRadius: "12px",
-            overflow: "hidden",
-            background: "#ffffff",
-          }}
-        />
-
-        {/* Fallback CTA — eğer iframe yüklenemezse veya kullanıcı
-            başka sekmede açmak isterse */}
-        <p style={{ textAlign: "center", marginTop: "16px" }}>
-          <a
-            href={CALENDLY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              color: GOLD,
-              fontSize: "13px",
-              textDecoration: "underline",
-            }}
-          >
-            Takvim yüklenmiyor mu? Yeni sekmede aç →
-          </a>
-        </p>
-      </div>
-
-      {/* Trust + WhatsApp footer */}
+      {/* 7. Trust + WhatsApp footer */}
       <div
         style={{
           width: "100%",
@@ -582,13 +554,6 @@ export default function CalendlyContent() {
       >
         Bu sayfa sadece topluluk üyeleri için erişilebilir
       </p>
-
-      {/* Calendly loader script — sayfa açılır açılmaz iframe'i
-          mount eder. .calendly-inline-widget class'lı div'leri tarar. */}
-      <Script
-        src="https://assets.calendly.com/assets/external/widget.js"
-        strategy="afterInteractive"
-      />
     </main>
   );
 }
