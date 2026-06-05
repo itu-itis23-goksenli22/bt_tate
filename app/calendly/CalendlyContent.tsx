@@ -77,10 +77,55 @@ export default function CalendlyContent() {
         </p>
       </div>
 
-      {/* 2. CALENDLY EMBED — react-calendly InlineWidget
-          (resmi olmayan ama production'da yaygın kullanılan paket;
-          script loading + iframe inflation'ı React lifecycle ile
-          doğru senkronize eder, Next.js App Router'da sorunsuz). */}
+      {/* Calendly widget.css — resmi dokümanda belirtilen stylesheet.
+          Eksikse iframe görünmez (beyaz kutu). React App Router'da
+          <link> hoist edilir. */}
+      {/* eslint-disable-next-line @next/next/no-css-tags */}
+      <link
+        rel="stylesheet"
+        href="https://assets.calendly.com/assets/external/widget.css"
+      />
+
+      {/* 2. PRİMER CTA BUTONU — Safari/Brave third-party cookie engeli
+          inline embed'i bozabildiği için BELİRGİN buton birincil yol.
+          Calendly'yi yeni sekmede (first-party = cookie sorunu yok) açar. */}
+      <a
+        href={CALENDLY_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          display: "block",
+          width: "100%",
+          maxWidth: "720px",
+          textAlign: "center",
+          padding: "18px 24px",
+          borderRadius: "14px",
+          background: `linear-gradient(135deg, ${GOLD}, #f59e0b)`,
+          color: "#0a0a0a",
+          fontWeight: 800,
+          fontSize: "18px",
+          textDecoration: "none",
+          marginBottom: "16px",
+          boxShadow: `0 8px 30px ${GOLD_BG} 0.35)`,
+        }}
+      >
+        📅 Onboarding Saatini Seç →
+      </a>
+      <p
+        style={{
+          color: "rgba(255,255,255,0.45)",
+          fontSize: "12px",
+          textAlign: "center",
+          marginBottom: "32px",
+        }}
+      >
+        Buton güvenli Calendly sayfasını açar · Tarih + saat seçersin
+      </p>
+
+      {/* 3. CALENDLY EMBED — react-calendly InlineWidget.
+          Chrome/Firefox'ta inline gösterilir. Safari/Brave third-party
+          cookie blokladığında boş kalabilir — o yüzden ÜSTteki buton
+          birincil yol. Bu inline ikincil/bonus. */}
       <div
         id="calendly-section"
         style={{
@@ -108,22 +153,6 @@ export default function CalendlyContent() {
           }}
         />
       </div>
-
-      {/* Fallback link — script yüklenmezse kullanıcı yeni sekmede açsın */}
-      <p style={{ textAlign: "center", marginTop: "-20px", marginBottom: "32px" }}>
-        <a
-          href={CALENDLY_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            color: GOLD,
-            fontSize: "12px",
-            textDecoration: "underline",
-          }}
-        >
-          Takvim yüklenmiyor mu? Yeni sekmede aç →
-        </a>
-      </p>
 
       {/* 3. ONBOARDING'DE NELER OLACAK — 4 değer maddesi */}
       <div
