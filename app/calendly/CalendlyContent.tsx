@@ -5,23 +5,86 @@
 // Bağlam: Müşteri 29.900 paketi satın aldı → bu sayfaya gelir →
 // Calendly üzerinden onboarding görüşmesi (30 dk) rezerve eder.
 // Sales/upsell sayfası DEĞİL — paid customer için onboarding flow.
-// O yüzden "kıtlık baskısı / loss aversion" gibi sales psikolojisi
-// elementleri kullanılmıyor. Sadece net, profesyonel onboarding davet.
 //
 // Sayfa düzeni:
 //   1. Başlık + alt bilgi
-//   2. Calendly inline widget (widget.js — kullanıcının istediği embed)
+//   2. Calendly inline widget (widget.js + manuel init useEffect)
 //   3. Onboarding'de neler olacak (4 madde)
 //   4. WhatsApp fallback (sorular için)
+//
+// CALENDLY EMBED YAKLAŞIMI:
+// Widget.js script yüklenir → useEffect içinde manuel
+// Calendly.initInlineWidget() çağırarak div'i inflate ederiz.
+// Auto-scan (default davranış) Next.js hydration timing'ine
+// takılıp boş kalıyordu — manuel init bu sorunu çözer.
 
 import Script from "next/script";
+import { useEffect, useRef } from "react";
 
 const GOLD = "#fbbf24";
 const GOLD_BG = "rgba(251, 191, 36,";
 
 const CALENDLY_URL = "https://calendly.com/aiscale-info/new-meeting";
 
+// Window.Calendly type — widget.js script yüklendikten sonra global
+declare global {
+  interface Window {
+    Calendly?: {
+      initInlineWidget: (config: {
+        url: string;
+        parentElement: HTMLElement;
+        prefill?: Record<string, unknown>;
+        utm?: Record<string, unknown>;
+      }) => void;
+    };
+  }
+}
+
 export default function CalendlyContent() {
+  const calendlyMountRef = useRef<HTMLDivElement>(null);
+
+  // Manuel init — widget.js script yüklendiğinde Calendly global
+  // hazır olur, sonra initInlineWidget çağırarak div'i inflate ederiz.
+  // Polling pattern: script async yüklendiği için window.Calendly'nin
+  // ne zaman hazır olacağı bilinmiyor — 250ms aralıkla kontrol et.
+  useEffect(() => {
+    let attempts = 0;
+    const maxAttempts = 40; // 10 saniye toplam
+    let intervalId: ReturnType<typeof setInterval> | null = null;
+
+    const tryInit = () => {
+      attempts++;
+      if (
+        typeof window !== "undefined" &&
+        window.Calendly &&
+        calendlyMountRef.current
+      ) {
+        // Önceki içeriği temizle (StrictMode double-mount koruması)
+        calendlyMountRef.current.innerHTML = "";
+        window.Calendly.initInlineWidget({
+          url: CALENDLY_URL,
+          parentElement: calendlyMountRef.current,
+        });
+        if (intervalId) clearInterval(intervalId);
+        return;
+      }
+      if (attempts >= maxAttempts && intervalId) {
+        clearInterval(intervalId);
+        console.warn(
+          "[calendly] widget.js 10 saniyede yüklenmedi — fallback link kullanılabilir"
+        );
+      }
+    };
+
+    // İlk deneme hemen, sonra 250ms aralıkla
+    tryInit();
+    intervalId = setInterval(tryInit, 250);
+
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, []);
+
   return (
     <main
       style={{
@@ -91,10 +154,11 @@ export default function CalendlyContent() {
           boxShadow: `0 8px 40px ${GOLD_BG} 0.15)`,
         }}
       >
-        {/* Calendly inline widget — kullanıcının verdiği snippet:
-            <div class="calendly-inline-widget" data-url="..." style="min-width:320px;height:700px;"></div>
-            <script src="https://assets.calendly.com/assets/external/widget.js" async></script> */}
+        {/* Calendly inline widget — ref + useEffect ile manuel init.
+            data-url + className auto-scan için kalır (fallback davranış);
+            useEffect explicit initInlineWidget çağırır. */}
         <div
+          ref={calendlyMountRef}
           className="calendly-inline-widget"
           data-url={CALENDLY_URL}
           style={{
