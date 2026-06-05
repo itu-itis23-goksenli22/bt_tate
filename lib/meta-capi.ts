@@ -23,6 +23,17 @@ function hashData(value: string): string {
     .digest("hex");
 }
 
+// Format validators — Meta "Invalid format / Invalid length" hatasını
+// önlemek için geçersiz değerler hiç hash'lenip gönderilmesin.
+// Browser pixel tarafıyla (lib/meta-pixel.ts) aynı kural — tutarlı
+// EMQ score için iki tarafta da aynı validation lazım.
+function isValidEmail(s: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s.toLowerCase().trim());
+}
+function isValidPhone(s: string): boolean {
+  return /^\d{10,15}$/.test(s.replace(/\D/g, ""));
+}
+
 interface CAPIEventParams {
   eventName: string;
   eventId?: string;
@@ -45,11 +56,18 @@ export async function sendCAPIEvent(params: CAPIEventParams) {
   const { eventName, eventId, eventTime, sourceUrl, userData, customData } = params;
 
   // Build user_data with hashed values
+  // GEÇERSİZ format'lı em/ph atlanır — Meta dashboard'da "Invalid format
+  // / Invalid length" hatası çıkarmasın diye. Browser pixel tarafıyla
+  // (lib/meta-pixel.ts setAdvancedMatching) tutarlı kural.
   const user_data: Record<string, any> = {};
-  if (userData.email) user_data.em = [hashData(userData.email)];
+  if (userData.email && isValidEmail(userData.email)) {
+    user_data.em = [hashData(userData.email)];
+  }
   if (userData.firstName) user_data.fn = [hashData(userData.firstName)];
   if (userData.lastName) user_data.ln = [hashData(userData.lastName)];
-  if (userData.phone) user_data.ph = [hashData(userData.phone.replace(/\D/g, ""))];
+  if (userData.phone && isValidPhone(userData.phone)) {
+    user_data.ph = [hashData(userData.phone.replace(/\D/g, ""))];
+  }
   if (userData.clientIpAddress) user_data.client_ip_address = userData.clientIpAddress;
   if (userData.clientUserAgent) user_data.client_user_agent = userData.clientUserAgent;
   if (userData.fbc) user_data.fbc = userData.fbc;

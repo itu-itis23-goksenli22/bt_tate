@@ -14,26 +14,65 @@ declare global {
   }
 }
 
+// Format validators — Meta Advanced Matching "Invalid format / Invalid
+// length" hatasını önlemek için geçersiz değerleri TAMAMEN atlıyoruz.
+// Geçersiz email/phone geçmek aggregate score'u bozuyor ve Meta
+// dashboard'da "%34 invalid format" uyarısı çıkarıyor.
+//
+// Email: RFC-uyumlu basit regex (local@domain.tld). Yüzde 90+ pratik
+// vakayı yakalar, edge case'leri (IP host, +tag) zaten geçirir.
+function isValidEmail(s: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s);
+}
+
+// Phone: Meta E.164 ister, ülke kodu DAHİL en az 10 en fazla 15 hane.
+// react-phone-number-input "+905451993112" döner → digit'e indirilince
+// "905451993112" (12 hane) → valid. Çok kısa olanlar (örn. ülke kodu
+// olmadan "551993112" = 9 hane) Meta için "Invalid length".
+function isValidPhone(digitsOnly: string): boolean {
+  return /^\d{10,15}$/.test(digitsOnly);
+}
+
 // Send user data for Advanced Matching via fbq('init')
 // Calling init again with user data does NOT create duplicate events
-// — it only updates the user data for subsequent events
+// — it only updates the user data for subsequent events.
+// GEÇERSİZ FORMAT'lı değerler atılır (Meta uyarısı: Invalid format /
+// Invalid length). Bunu yapmak EMQ score'u korur.
 export const setAdvancedMatching = (userData: {
   em?: string; // email
   fn?: string; // first name (lowercase)
   ln?: string; // last name (lowercase)
   ph?: string; // phone (digits only, with country code)
 }) => {
-  if (typeof window !== "undefined" && window.fbq) {
-    // Clean the data
-    const cleanData: Record<string, string> = {};
-    if (userData.em) cleanData.em = userData.em.toLowerCase().trim();
-    if (userData.fn) cleanData.fn = userData.fn.toLowerCase().trim();
-    if (userData.ln) cleanData.ln = userData.ln.toLowerCase().trim();
-    if (userData.ph) cleanData.ph = userData.ph.replace(/\D/g, "");
+  if (typeof window === "undefined" || !window.fbq) return;
 
-    // Re-init pixel with user data (official Meta approach for Advanced Matching)
-    window.fbq("init", getPixelId(), cleanData);
+  const cleanData: Record<string, string> = {};
+
+  if (userData.em) {
+    const em = userData.em.toLowerCase().trim();
+    if (isValidEmail(em)) {
+      cleanData.em = em;
+    } else if (process.env.NODE_ENV !== "production") {
+      console.warn("[advanced-matching] invalid email format, skipped:", em);
+    }
   }
+
+  if (userData.fn) cleanData.fn = userData.fn.toLowerCase().trim();
+  if (userData.ln) cleanData.ln = userData.ln.toLowerCase().trim();
+
+  if (userData.ph) {
+    const ph = userData.ph.replace(/\D/g, "");
+    if (isValidPhone(ph)) {
+      cleanData.ph = ph;
+    } else if (process.env.NODE_ENV !== "production") {
+      console.warn("[advanced-matching] invalid phone length, skipped:", ph);
+    }
+  }
+
+  // Re-init pixel with user data (official Meta approach for Advanced Matching)
+  // Eğer hiç geçerli alan yoksa init'i yine de çağırıyoruz — boş object
+  // backward-compatible, mevcut user_data clear etmez.
+  window.fbq("init", getPixelId(), cleanData);
 };
 
 export const trackEvent = (eventName: string, data?: Record<string, any>, eventId?: string) => {
