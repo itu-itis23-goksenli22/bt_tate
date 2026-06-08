@@ -198,12 +198,13 @@ export default function TesekkurlerContent() {
               rel="noopener noreferrer"
             >
               <button
-                className="text-white font-extrabold text-[16px] md:text-[18px] px-10 py-4 rounded-lg hover:brightness-110 transition-all w-full cursor-pointer inline-flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/30"
+                className="relative overflow-hidden text-white font-extrabold text-[16px] md:text-[18px] px-10 py-4 rounded-lg hover:brightness-110 hover:scale-[1.02] transition-all w-full cursor-pointer inline-flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/30 animate-cta-attention"
                 style={{
                   background:
                     "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)",
                 }}
               >
+                <span className="pointer-events-none absolute top-0 bottom-0 left-0 w-1/3 z-10 animate-cta-shine" style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent)" }} />
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
                   <path d="M8 5v14l11-7z" />
                 </svg>
@@ -248,7 +249,8 @@ export default function TesekkurlerContent() {
           {/* Google Calendar Button */}
           <div className="mb-8">
             <a href={calendarUrl || "#"} target="_blank" rel="noopener noreferrer" onClick={(e) => { if (!calendarUrl) e.preventDefault(); }}>
-              <button className="bg-white text-gray-800 font-bold text-[15px] px-6 py-3.5 rounded-xl hover:bg-gray-100 transition-all w-full flex items-center justify-center gap-3 cursor-pointer shadow-md">
+              <button className="relative overflow-hidden bg-white text-gray-800 font-bold text-[15px] px-6 py-3.5 rounded-xl hover:bg-gray-100 hover:scale-[1.02] transition-all w-full flex items-center justify-center gap-3 cursor-pointer shadow-md animate-cta-attention">
+                <span className="pointer-events-none absolute top-0 bottom-0 left-0 w-1/3 z-10 animate-cta-shine" style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)" }} />
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
                   <rect x="3" y="4" width="18" height="18" rx="2" stroke="#4285F4" strokeWidth="2" />
                   <path d="M3 10h18" stroke="#4285F4" strokeWidth="2" />
@@ -276,7 +278,8 @@ export default function TesekkurlerContent() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className="bg-[#C19D44] text-black font-bold text-[16px] px-10 py-4 rounded-lg hover:brightness-110 transition-all w-full cursor-pointer">
+              <button className="relative overflow-hidden bg-[#C19D44] text-black font-bold text-[16px] px-10 py-4 rounded-lg hover:brightness-110 hover:scale-[1.02] transition-all w-full cursor-pointer animate-cta-attention">
+                <span className="pointer-events-none absolute top-0 bottom-0 left-0 w-1/3 z-10 animate-cta-shine" style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent)" }} />
                 Bonus Paketi İndir →
               </button>
             </a>

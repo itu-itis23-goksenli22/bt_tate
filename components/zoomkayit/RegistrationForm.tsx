@@ -33,8 +33,9 @@ export default function RegistrationForm({
       <div className="max-w-md mx-auto px-4">
         <button
           onClick={() => setIsModalOpen(true)}
-          className="zk-btn-cta w-full py-5 md:py-6 bg-gradient-to-r from-gold-dark via-gold to-gold-light text-black font-extrabold text-xl md:text-2xl lg:text-3xl rounded-xl hover:brightness-110 transition-all cursor-pointer flex items-center justify-center gap-3 tracking-wide"
+          className="zk-btn-cta relative overflow-hidden w-full py-5 md:py-6 bg-gradient-to-r from-gold-dark via-gold to-gold-light text-black font-extrabold text-xl md:text-2xl lg:text-3xl rounded-xl hover:brightness-110 hover:scale-[1.02] transition-all cursor-pointer flex items-center justify-center gap-3 tracking-wide animate-cta-attention"
         >
+          <span className="pointer-events-none absolute top-0 bottom-0 left-0 w-1/3 z-10 animate-cta-shine" style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent)" }} />
           {ctaText}
           <svg className="w-6 h-6 md:w-7 md:h-7 animate-bounce-x" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
