@@ -99,7 +99,7 @@ export default function KayitBasariliContent({
             <h1
               className="font-black tracking-tight leading-none mb-6"
               style={{
-                fontSize: "clamp(72px, 16vw, 128px)",
+                fontSize: "clamp(58px, 12.8vw, 102px)",
                 color: "#C19D44",
                 textShadow: "0 4px 24px rgba(193,157,68,0.25)",
               }}
