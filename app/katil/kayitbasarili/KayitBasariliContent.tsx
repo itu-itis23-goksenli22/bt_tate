@@ -295,17 +295,6 @@ export default function KayitBasariliContent({
 
           {/* 3. Hazırlıklı vs Hazırlıksız karşılaştırması — Ecom Degree pattern */}
           <div className="my-10">
-            <h2 className="text-center text-white font-extrabold text-[24px] md:text-[32px] leading-tight mb-2">
-              Şu an şunu düşünüyor olabilirsin...
-            </h2>
-            <h3 className="text-center text-white font-extrabold text-[22px] md:text-[30px] leading-tight mb-8">
-              &ldquo;Tamam Baturalp... ama{" "}
-              <span className="underline decoration-[#C19D44] decoration-[3px] underline-offset-4">
-                bu neden bu kadar önemli???
-              </span>
-              &rdquo;
-            </h3>
-
             {/* RED BOX — Hazırlıksız */}
             <div
               className="rounded-[12px] border-2 border-dashed border-[#e85d5d]/70 p-5 md:p-7"
@@ -410,31 +399,6 @@ export default function KayitBasariliContent({
           {/* (Eski 8. Second CTA Block kaldırıldı — bir önceki CTABlock'a
               çok yakındı, duplikasyon hissi veriyordu.) */}
 
-          {/* 9. VIP Member Benefits */}
-          <div className="my-10 rounded-[9px] border border-dashed border-[#AA813C]/40 p-6 md:p-10"
-            style={{ background: GOLD_BG_SUBTLE }}>
-            <h2 className="text-[26px] md:text-[34px] font-extrabold text-center leading-tight mb-1">
-              VIP Üye Olarak Neler
-            </h2>
-            <h2 className="text-[26px] md:text-[34px] font-extrabold text-center mb-8">
-              <span className="text-[#D5B356]">Elde Edeceksiniz</span>
-            </h2>
-            <div className="space-y-7">
-              <BenefitItem
-                title="Manychat Kurulum Rehberi ($497 Değerinde)"
-                description="Instagram ve Messenger otomasyonlarınızı profesyonelce kurmanız için adım adım rehber. Müşterilerinize otomatik yanıt verin, satışlarınızı artırın."
-              />
-              <BenefitItem
-                title="Milyon Dolarlık AI Automation Kiti ($997 Değerinde)"
-                description="Yılların deneme yanılmasını atlayın. Halihazırda milyonlarca dolar kazandıran işletmeleri inceleyerek aynı stratejileri kendi işinize uygulayın."
-              />
-              <BenefitItem
-                title="Lifetime Replay Access ($97 Değerinde)"
-                description="Etkinliğin bir dakikasını bile kaçırsanız... ya da tekrar izlemek isterseniz, kayıtlara SONSUZA KADAR erişim hakkınız var."
-              />
-            </div>
-          </div>
-
           {/* (10. Pricing Card buradan kaldırıldı — aynı tasarım BEKLE
               hero'sunun içine, "veriyoruz" altına taşındı; iki kez aynı
               fiyat kartını göstermeye gerek yok.) */}
@@ -536,32 +500,6 @@ export default function KayitBasariliContent({
             </a>
           </div>
 
-          {/* 12. Testimonials */}
-          <div className="my-10 text-center">
-            <h2 className="text-[26px] md:text-[34px] font-extrabold mb-1">
-              Diğer VIP Üyeler Ne
-            </h2>
-            <h2 className="text-[26px] md:text-[34px] font-extrabold mb-8">
-              <span className="text-[#D5B356]">Diyor...</span>
-            </h2>
-            <div className="space-y-4 max-w-lg mx-auto">
-              <TestimonialCard
-                name="Elif K."
-                role="AI Scale Topluluk Üyesi"
-                text="Katıldığım en iyi eğitimlerden biriydi! Herkese tavsiye ederim."
-                initial="E"
-              />
-              <TestimonialCard
-                name="Burak D."
-                role="AI Scale Topluluk Üyesi"
-                text="VIP üyeliği almayı neredeyse pas geçiyordum ama çok iyi ki geçmedim. Birebir soru-cevap oturumu tam da ihtiyacım olan şeydi. Aldığım tek bir taktik bile ödediğimin 10 katını hak ediyordu."
-                initial="B"
-              />
-            </div>
-            <div className="mt-8">
-              <TrustpilotBadge />
-            </div>
-          </div>
 
           {/* Başarı Hikayeleri — Gerçek Sonuçlar */}
           <div className="my-10">
@@ -702,23 +640,6 @@ function ChecklistItem({ title, value }: { title: string; value: string }) {
   );
 }
 
-function BenefitItem({ title, description }: { title: string; description: string }) {
-  return (
-    <div className="flex gap-3 items-start border-b border-white/5 pb-6 last:border-0 last:pb-0">
-      {/* Gold checkmark circle - emoji style */}
-      <div className="flex-shrink-0 w-7 h-7 rounded-full bg-[#C19D44]/25 border border-[#C19D44]/50 flex items-center justify-center mt-0.5">
-        <svg className="w-4 h-4 text-[#C19D44]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-        </svg>
-      </div>
-      <div>
-        <h3 className="text-[14px] md:text-[16px] font-bold text-white mb-1">{title}</h3>
-        <p className="text-white/45 text-[13px] leading-relaxed">{description}</p>
-      </div>
-    </div>
-  );
-}
-
 function PricingRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex justify-between items-center gap-2">
@@ -732,30 +653,6 @@ function PricingRow({ label, value }: { label: string; value: string }) {
         (Değer:{" "}
         <span className="line-through decoration-[1.5px]">{value}</span>)
       </span>
-    </div>
-  );
-}
-
-function TestimonialCard({ name, role, text, initial }: { name: string; role: string; text: string; initial: string }) {
-  return (
-    <div className="rounded-[10px] bg-[#222] border border-white/5 p-6 text-left">
-      <div className="flex items-center gap-0.5 mb-3">
-        {[1, 2, 3, 4, 5].map((s) => (
-          <svg key={s} className="w-5 h-5 text-[#f5c518]" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-          </svg>
-        ))}
-      </div>
-      <p className="text-white/70 text-[14px] mb-4 leading-relaxed">&quot;{text}&quot;</p>
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 font-bold text-[14px]">
-          {initial}
-        </div>
-        <div>
-          <p className="text-white/80 font-semibold text-[14px]">{name}</p>
-          <p className="text-white/40 text-[12px]">{role}</p>
-        </div>
-      </div>
     </div>
   );
 }
