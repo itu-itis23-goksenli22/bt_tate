@@ -535,10 +535,10 @@ export default function KayitBasariliContent({
                 veya 4 col (lg:grid-cols-4). */}
             <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 md:grid md:grid-cols-2 md:overflow-visible md:snap-none md:pb-0 lg:grid-cols-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               {[
-                { id: "nWvImM9U2NQ", title: "Başarı Hikayesi — Yapay Zeka" },
+                { id: "NPNH0P4ZRT4", title: "Başarı Hikayesi 4" },
                 { id: "sVSMnqWUvec", title: "Başarı Hikayesi 2" },
                 { id: "A_wuadae_3o", title: "Başarı Hikayesi 3" },
-                { id: "NPNH0P4ZRT4", title: "Başarı Hikayesi 4" },
+                { id: "nWvImM9U2NQ", title: "Başarı Hikayesi — Yapay Zeka" },
               ].map((video) => (
                 <div key={video.id} className="snap-center shrink-0 w-[70vw] sm:w-[55vw] md:w-auto md:shrink">
                   <div className="relative w-full overflow-hidden rounded-xl border border-white/10 bg-black" style={{ paddingBottom: "177.78%" }}>
