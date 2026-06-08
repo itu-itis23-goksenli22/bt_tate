@@ -1,46 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 // "For Once In Your Life You Are Early..." section (aifreelancer.ai uyarlaması).
 // Beyaz arka planlı 2.500 nokta chart'ı — global AI kullanım oranını görsel-
 // leştirir, koyu sayfanın ortasında dikkat çeker. Facebook 1M users (2004)
 // analogisi ile super-early kavramını rasyonelleştirir.
-//
-// Gün adı dinamik: CountdownTimer ile aynı mantık — her gün 20:00 hedef,
-// past 20:00 ise yarına geçer. "Pazar gecesi" gibi hard-code yerine,
-// sayaç hangi günü gösteriyorsa o gün burada da kullanılır.
-
-const TURKEY_DAYS = [
-  "Pazar",
-  "Pazartesi",
-  "Salı",
-  "Çarşamba",
-  "Perşembe",
-  "Cuma",
-  "Cumartesi",
-];
-
-function getNextWebinarDay(): string {
-  const now = new Date();
-  const turkeyOffset = 3 * 60;
-  const localOffset = now.getTimezoneOffset();
-  const turkeyNow = new Date(now.getTime() + (turkeyOffset + localOffset) * 60000);
-  const target = new Date(turkeyNow);
-  target.setHours(20, 0, 0, 0);
-  if (turkeyNow.getHours() >= 20) {
-    target.setDate(target.getDate() + 1);
-  }
-  return TURKEY_DAYS[target.getDay()];
-}
 
 export default function EarlyOpportunitySection() {
   const chartRef = useRef<HTMLDivElement>(null);
-  const [dayName, setDayName] = useState("");
-
-  useEffect(() => {
-    setDayName(getNextWebinarDay());
-  }, []);
 
   useEffect(() => {
     if (!chartRef.current) return;
@@ -154,11 +122,6 @@ export default function EarlyOpportunitySection() {
               dünyanın en zenginleri arasına girdi
             </strong>
             .
-          </p>
-          <p className="text-gold font-semibold text-center text-[16px] md:text-[18px] pt-4">
-            {dayName ? `${dayName} gecesi` : "Bu gece"} canlı yayında, bu erken
-            avantajı nasıl kullanacağını ve bir hafta içinde yapay zeka ile
-            gelir üretmeye nasıl başlayacağını göstereceğiz.
           </p>
         </div>
       </div>
