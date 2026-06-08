@@ -217,12 +217,6 @@ export default function KayitBasariliContent({
                         Baturalp Tunalı
                       </span>
                     </div>
-                    <div className="flex gap-3">
-                      <span className="text-[#888] font-medium min-w-[55px]">Zaman</span>
-                      <span className="text-[#1a1a1a] font-semibold">
-                        6 Haziran 2026 Cumartesi · 20:00 (TR)
-                      </span>
-                    </div>
                   </div>
 
                   <p className="text-[#1a1a1a] text-[13px] md:text-[14px] mb-4">
