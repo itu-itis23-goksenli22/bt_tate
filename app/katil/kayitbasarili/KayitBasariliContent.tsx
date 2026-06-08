@@ -497,26 +497,6 @@ export default function KayitBasariliContent({
             </div>
           </div>
 
-          {/* Decline button — embed checkout sonrası, testimonials ÖNCESİ.
-              Kullanıcı kararı ile testimonials'ın üstüne taşındı —
-              "VIP almadan devam etmek isteyenler" testimonial'a maruz
-              kalmadan önce çıkış kapısını görsün. */}
-          <div className="mt-2 mb-10 px-2">
-            <a
-              href={thankYouUrl}
-              className="block max-w-2xl mx-auto rounded-[10px] bg-[#1a1a1a] border border-white/15 hover:bg-[#222] hover:border-white/25 transition-all px-5 py-4 text-center cursor-pointer"
-            >
-              <div className="text-white/80 text-[14px] md:text-[15px] font-semibold">
-                Hayır teşekkürler, VIP paketini almadan seminere katılacağım
-              </div>
-              <div className="text-white/40 text-[11px] md:text-[12px] mt-1 leading-snug">
-                Bu teklifin sayfadan ayrıldığım anda sonsuza dek kaybolacağını
-                ve bir daha asla göremeyeceğimi anlıyorum
-              </div>
-            </a>
-          </div>
-
-
           {/* Başarı Hikayeleri — Gerçek Sonuçlar */}
           <div className="my-10">
             <h2 className="text-[26px] md:text-[34px] font-extrabold text-center mb-1">
