@@ -161,7 +161,7 @@ export default function TesekkurlerContent() {
             <div className="relative aspect-video bg-black rounded-md overflow-hidden">
               <iframe
                 className="absolute inset-0 w-full h-full"
-                src="https://www.youtube.com/embed/cIbDH0lWMc0"
+                src="https://www.youtube.com/embed/qQbl1YPaI7k"
                 title="Seminer Video"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

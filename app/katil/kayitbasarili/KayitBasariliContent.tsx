@@ -201,7 +201,7 @@ export default function KayitBasariliContent({
               >
                 <iframe
                   className="absolute top-0 left-0 w-full h-full"
-                  src="https://www.youtube.com/embed/qQbl1YPaI7k"
+                  src="https://www.youtube.com/embed/cIbDH0lWMc0"
                   title="AI Scale Seminer"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
