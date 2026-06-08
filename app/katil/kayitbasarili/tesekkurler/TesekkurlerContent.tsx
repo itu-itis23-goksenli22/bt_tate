@@ -84,7 +84,7 @@ export default function TesekkurlerContent() {
           <div className="inline-flex whitespace-nowrap py-2" style={{ animation: "tesekkur-marquee 22s linear infinite" }}>
             {Array.from({ length: 6 }).map((_, i) => (
               <span key={i} className="text-black font-bold text-[15px] md:text-[19px] tracking-tight inline-flex items-center justify-center min-w-[100vw] px-4">
-                📅 Webinara şu saatte ZOOM üzerinden katılmayı unutmayın: Akşam 20:00
+                📅 Webinara Akşam 20:00&apos;de ZOOM üzerinden katılmayı unutmayın
               </span>
             ))}
           </div>
