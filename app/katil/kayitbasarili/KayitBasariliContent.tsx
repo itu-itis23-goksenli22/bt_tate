@@ -97,8 +97,8 @@ export default function KayitBasariliContent({
         <div className="sticky top-0 z-50 overflow-hidden border-b border-black/10 shadow-[0_2px_12px_rgba(0,0,0,0.4)]" style={{ background: CTA_GRADIENT }}>
           <div className="inline-flex whitespace-nowrap py-2" style={{ animation: "katil-marquee 22s linear infinite" }}>
             {Array.from({ length: 6 }).map((_, i) => (
-              <span key={i} className="text-black font-bold text-[12px] md:text-[14px] px-8 tracking-tight">
-                Bekle… Bu tek seferlik <span className="font-extrabold">$27</span> özel teklif, bu sayfadan ayrıldığın anda sona erecek.
+              <span key={i} className="text-black font-bold text-[15px] md:text-[19px] tracking-tight inline-flex items-center justify-center min-w-[100vw] px-4">
+                Bekle… Bu tek seferlik <span className="font-extrabold">&nbsp;$27&nbsp;</span> özel teklif, bu sayfadan ayrıldığın anda sona erecek.
               </span>
             ))}
           </div>
