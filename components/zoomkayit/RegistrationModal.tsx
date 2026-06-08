@@ -281,7 +281,19 @@ export default function RegistrationModal({
                 zorunlu olur. Default unchecked → daha az sürtünme,
                 conversion artar. SMS dili yok, "VIP hediye + özel
                 teklifler" angle'ı. */}
-            <label className="flex items-start gap-3 cursor-pointer select-none">
+            <label
+              className={`group relative flex items-start gap-3 cursor-pointer select-none rounded-xl border-2 p-4 transition-all duration-300 hover:-translate-y-0.5 ${
+                wantsBonus
+                  ? "border-gold bg-gold/10 shadow-gold-glow"
+                  : "border-gold/50 bg-gradient-to-r from-gold/10 to-transparent animate-pulse-gold hover:border-gold hover:from-gold/20 hover:shadow-gold-glow-hover"
+              }`}
+            >
+              {/* "ÜCRETSİZ" rozeti — yalnızca işaretsizken zıplayarak dikkat çeker */}
+              {!wantsBonus && (
+                <span className="absolute -top-2.5 right-3 rounded-full bg-gold px-2 py-0.5 text-[10px] font-extrabold tracking-wide text-black shadow animate-bounce">
+                  ÜCRETSİZ 🎁
+                </span>
+              )}
               <input
                 type="checkbox"
                 checked={wantsBonus}
@@ -293,11 +305,25 @@ export default function RegistrationModal({
                     setFormData((prev) => ({ ...prev, phone: "" }));
                   }
                 }}
-                className="mt-0.5 w-5 h-5 rounded border-2 border-gold/60 bg-white/5 text-gold focus:ring-2 focus:ring-gold/40 cursor-pointer accent-gold flex-shrink-0"
+                className="mt-0.5 w-5 h-5 rounded border-2 border-gold/60 bg-white/5 text-gold focus:ring-2 focus:ring-gold/40 cursor-pointer accent-gold flex-shrink-0 transition-transform group-hover:scale-110"
               />
-              <span className="text-white text-sm leading-snug">
-                🎁 Sadece üyelere <strong>özel tekliflerden</strong> haberdar
-                olmak istiyorum
+              <span className="flex flex-col">
+                <span className="text-white text-sm leading-snug font-medium">
+                  🎁 Sadece üyelere{" "}
+                  <strong className="text-gold">özel tekliflerden</strong>{" "}
+                  haberdar olmak istiyorum
+                </span>
+                <span
+                  className={`text-xs mt-1 font-semibold transition-colors duration-300 ${
+                    wantsBonus
+                      ? "text-green-400"
+                      : "text-gold/80 group-hover:text-gold"
+                  }`}
+                >
+                  {wantsBonus
+                    ? "✓ Harika! VIP hediyen için telefonunu bırak 👇"
+                    : "👆 Tıkla & üyelere özel sürpriz hediyeni kap"}
+                </span>
               </span>
             </label>
 
