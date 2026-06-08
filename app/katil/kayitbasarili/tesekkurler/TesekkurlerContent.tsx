@@ -10,9 +10,6 @@ export default function TesekkurlerContent() {
   const searchParams = useSearchParams();
   const name = searchParams.get("name") || "Değerli Katılımcı";
   const email = searchParams.get("email") || "";
-  const [webinarDate, setWebinarDate] = useState("");
-  const [webinarDay, setWebinarDay] = useState("");
-  const [webinarFull, setWebinarFull] = useState("");
   const [calendarUrl, setCalendarUrl] = useState("");
   const [registrationDate, setRegistrationDate] = useState("");
   const [countdown, setCountdown] = useState({ hours: "00", minutes: "00", seconds: "00" });
@@ -20,7 +17,6 @@ export default function TesekkurlerContent() {
   useEffect(() => {
     // /katil variant — webinar SABIT: 6 Haziran 2026 Cumartesi 20:00.
     // Ana funnel'ın "next 20:00 today/tomorrow" hesabı yerine fixed tarih.
-    const dayNames = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
     const KATIL_EVENT_YEAR = 2026;
     const KATIL_EVENT_MONTH = 6; // Haziran
     const KATIL_EVENT_DAY = 6;
@@ -31,10 +27,6 @@ export default function TesekkurlerContent() {
     const day = String(eventDate.getDate()).padStart(2, "0");
     const month = String(eventDate.getMonth() + 1).padStart(2, "0");
     const year = eventDate.getFullYear();
-
-    setWebinarDate(`${day}.${month}.${year}`);
-    setWebinarDay(dayNames[eventDate.getDay()]);
-    setWebinarFull(`${day}.${month} ${dayNames[eventDate.getDay()]} 20:00`);
 
     const regDay = String(turkey.getDate()).padStart(2, "0");
     const regMonth = String(turkey.getMonth() + 1).padStart(2, "0");
@@ -88,7 +80,7 @@ export default function TesekkurlerContent() {
         {/* 1. Gold Banner */}
         <div className="bg-[#C19D44] text-center py-3 px-4">
           <p className="text-black font-semibold text-[14px] md:text-[16px]">
-            📅 Webinara şu saatte katılmayı unutmayın: {webinarFull || "..."}
+            📅 Webinara şu saatte katılmayı unutmayın: Akşam 20:00
           </p>
         </div>
 
@@ -131,7 +123,7 @@ export default function TesekkurlerContent() {
             </div>
             <p className="text-white/70 text-[14px] md:text-[15px] leading-relaxed">
               E-posta adresine bir <strong className="text-white">Zoom katılım linki</strong> gönderdik.{" "}
-              <strong className="text-white">{webinarDate} {webinarDay} saat 20:00{"'"}da</strong>{" "}
+              <strong className="text-white">Akşam saat 20:00{"'"}da</strong>{" "}
               e-postandaki linke tıkla, Zoom açılacak ve canlı seminere katılacaksın.
               E-postayı bulamazsan <strong className="text-white">spam/gereksiz</strong> klasörünü de kontrol et.
             </p>
@@ -237,7 +229,7 @@ export default function TesekkurlerContent() {
           <div className="rounded-[9px] p-6 md:p-8 text-center mb-8 border border-dashed border-[#AA813C]/50"
             style={{ background: GOLD_BG_SUBTLE }}>
             <p className="text-[#C19D44] font-extrabold text-[22px] md:text-[26px] mb-1">
-              {webinarDate} {webinarDay && `(${webinarDay})`}
+              Akşam
             </p>
             <p className="text-white font-bold text-[16px] md:text-[18px] mb-5">
               Saat 20:00 (Türkiye Saati)
