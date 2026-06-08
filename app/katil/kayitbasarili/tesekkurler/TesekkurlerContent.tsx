@@ -81,7 +81,7 @@ export default function TesekkurlerContent() {
         {/* 1. Sticky duyuru çubuğu — sayfa boyunca üstte sabit, sağdan sola akar */}
         <style>{`@keyframes tesekkur-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }`}</style>
         <div className="sticky top-0 z-50 overflow-hidden border-b border-black/10 shadow-[0_2px_12px_rgba(0,0,0,0.4)]" style={{ background: CTA_GRADIENT }}>
-          <div className="inline-flex whitespace-nowrap py-2" style={{ animation: "tesekkur-marquee 22s linear infinite" }}>
+          <div className="inline-flex whitespace-nowrap py-2" style={{ animation: "tesekkur-marquee 27.5s linear infinite" }}>
             {Array.from({ length: 6 }).map((_, i) => (
               <span key={i} className="text-black font-bold text-[15px] md:text-[19px] tracking-tight inline-flex items-center justify-center min-w-[100vw] px-4">
                 📅 Webinara Akşam 20:00&apos;de ZOOM üzerinden katılmayı unutmayın

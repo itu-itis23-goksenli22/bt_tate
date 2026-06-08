@@ -95,7 +95,7 @@ export default function KayitBasariliContent({
         {/* Sticky duyuru çubuğu — sayfa boyunca üstte sabit, sağdan sola akar */}
         <style>{`@keyframes katil-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }`}</style>
         <div className="sticky top-0 z-50 overflow-hidden border-b border-black/10 shadow-[0_2px_12px_rgba(0,0,0,0.4)]" style={{ background: CTA_GRADIENT }}>
-          <div className="inline-flex whitespace-nowrap py-2" style={{ animation: "katil-marquee 22s linear infinite" }}>
+          <div className="inline-flex whitespace-nowrap py-2" style={{ animation: "katil-marquee 27.5s linear infinite" }}>
             {Array.from({ length: 6 }).map((_, i) => (
               <span key={i} className="text-black font-bold text-[15px] md:text-[19px] tracking-tight inline-flex items-center justify-center min-w-[100vw] px-4">
                 Bu tek seferlik <span className="font-extrabold">&nbsp;$27&nbsp;</span> özel teklif, bu sayfadan ayrıldığın anda sona erecek.
@@ -530,8 +530,8 @@ export default function KayitBasariliContent({
                 veya 4 col (lg:grid-cols-4). */}
             <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 md:grid md:grid-cols-2 md:overflow-visible md:snap-none md:pb-0 lg:grid-cols-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               {[
-                { id: "NPNH0P4ZRT4", title: "Başarı Hikayesi 4" },
                 { id: "sVSMnqWUvec", title: "Başarı Hikayesi 2" },
+                { id: "NPNH0P4ZRT4", title: "Başarı Hikayesi 4" },
                 { id: "A_wuadae_3o", title: "Başarı Hikayesi 3" },
                 { id: "nWvImM9U2NQ", title: "Başarı Hikayesi — Yapay Zeka" },
               ].map((video) => (
