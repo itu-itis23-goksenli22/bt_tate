@@ -92,12 +92,23 @@ export default function KayitBasariliContent({
       <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
       <main className="min-h-screen bg-[#0c0c0c] text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-        <div className="max-w-[680px] mx-auto px-4 py-8">
+        {/* Sticky duyuru çubuğu — sayfa boyunca üstte sabit, sağdan sola akar */}
+        <style>{`@keyframes katil-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }`}</style>
+        <div className="sticky top-0 z-50 overflow-hidden border-b border-black/10 shadow-[0_2px_12px_rgba(0,0,0,0.4)]" style={{ background: CTA_GRADIENT }}>
+          <div className="inline-flex whitespace-nowrap py-2" style={{ animation: "katil-marquee 22s linear infinite" }}>
+            {Array.from({ length: 6 }).map((_, i) => (
+              <span key={i} className="text-black font-bold text-[12px] md:text-[14px] px-8 tracking-tight">
+                Bekle… Bu tek seferlik <span className="font-extrabold">$27</span> özel teklif, bu sayfadan ayrıldığın anda sona erecek.
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className="max-w-[680px] mx-auto px-4 pt-5 pb-8">
           {/* 1. BEKLE! Hero — VIP paketi tarif eden urgency bloğu */}
-          <div className="text-center mb-8 mt-2">
+          <div className="text-center mb-8 mt-1">
             {/* BEKLE! */}
             <h1
-              className="font-black tracking-tight leading-none mb-6"
+              className="font-black tracking-tight leading-none mb-[14px]"
               style={{
                 fontSize: "clamp(58px, 12.8vw, 102px)",
                 color: "#C19D44",
