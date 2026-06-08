@@ -479,6 +479,16 @@ export default function KayitBasariliContent({
                 className="rounded-xl px-3 md:px-5 py-5 md:py-6 -mx-2 md:-mx-3"
                 style={{ background: "#0a1429" }}
               >
+                {/* Stripe güvenlik notu — ödeme formunun hemen üstünde, belirgin */}
+                <div className="flex items-center justify-center gap-2 mb-4 rounded-lg bg-emerald-500/10 border border-emerald-400/30 px-3 py-2.5">
+                  <svg className="w-4 h-4 md:w-5 md:h-5 text-emerald-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
+                  <span className="text-emerald-100 font-semibold text-[12px] md:text-[13.5px] leading-snug text-center">
+                    Ödeme bilgileriniz Stripe üzerinden şifrelenerek işlenir. Kart bilgileriniz sunucularımıza ulaşmaz.
+                  </span>
+                </div>
                 <VipEmbeddedCheckout
                   email={email || undefined}
                   name={name !== "Değerli Katılımcı" ? name : undefined}
@@ -564,11 +574,10 @@ export default function KayitBasariliContent({
                   EVET, $27 VIP&apos;e Katılmak İstiyorum →
                 </div>
                 <div className="text-black/65 text-[13px] mt-2 font-semibold">
-                  Sadece $27 · Tek seferlik ödeme
+                  Sadece $27 · Tek seferlik ödeme · <span className="text-black font-extrabold">✓ %100 Para İade Garantisi</span>
                 </div>
               </div>
             </a>
-            <p className="text-white/40 text-[12px] mt-4">%100 Para İade Garantisi</p>
           </div>
 
           {/* Sayfa sonu decline kutusu — en altta ikinci çıkış kapısı */}
@@ -612,7 +621,7 @@ function MainCheckoutCTA() {
             EVET, $27 VIP&apos;e Katılmak İstiyorum →
           </div>
           <div className="text-white/85 text-[13px] mt-2 font-semibold">
-            Sadece $27 · Tek seferlik ödeme
+            Sadece $27 · Tek seferlik ödeme · <span className="text-white font-extrabold">✓ %100 Para İade Garantisi</span>
           </div>
         </div>
       </a>
@@ -630,7 +639,7 @@ function CTABlock({ thankYouUrl: _thankYouUrl }: { thankYouUrl: string }) {
             EVET, $27 VIP&apos;e Katılmak İstiyorum →
           </div>
           <div className="text-black/65 text-[13px] mt-2 font-semibold">
-            Sadece $27 · Tek seferlik ödeme
+            Sadece $27 · Tek seferlik ödeme · <span className="text-black font-extrabold">✓ %100 Para İade Garantisi</span>
           </div>
         </div>
       </a>
