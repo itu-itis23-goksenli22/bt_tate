@@ -568,7 +568,7 @@ export default function KayitBasariliContent({
               Bu sayfa kapanacak ve bu teklifi bir daha göremeyeceksiniz.
             </p>
             {/* Final CTA — yukarıdaki embed checkout'a scroll eder */}
-            <a href="#final-vip-cta" onClick={scrollToFinalCTA} className="block rounded-[10px] overflow-hidden hover:brightness-105 transition-all cursor-pointer">
+            <a href="#final-vip-cta" onClick={scrollToFinalCTA} className="relative block rounded-[10px] overflow-hidden hover:brightness-105 hover:scale-[1.02] transition-all cursor-pointer animate-cta-attention"><span className="pointer-events-none absolute top-0 bottom-0 left-0 w-1/3 z-10 animate-cta-shine" style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent)" }} />
               <div className="py-5 px-6 text-center" style={{ background: CTA_GRADIENT }}>
                 <div className="text-black font-extrabold text-[18px] md:text-[24px] leading-tight">
                   EVET, $27 VIP&apos;e Katılmak İstiyorum →
@@ -633,7 +633,7 @@ function CTABlock({ thankYouUrl: _thankYouUrl }: { thankYouUrl: string }) {
   return (
     <div className="my-6">
       {/* Üst CTA butonları: aşağıdaki embed checkout'a (#final-vip-cta) scroll eder */}
-      <a href="#final-vip-cta" onClick={scrollToFinalCTA} className="block rounded-[10px] overflow-hidden hover:brightness-105 transition-all cursor-pointer">
+      <a href="#final-vip-cta" onClick={scrollToFinalCTA} className="relative block rounded-[10px] overflow-hidden hover:brightness-105 hover:scale-[1.02] transition-all cursor-pointer animate-cta-attention"><span className="pointer-events-none absolute top-0 bottom-0 left-0 w-1/3 z-10 animate-cta-shine" style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent)" }} />
         <div className="py-5 px-6 text-center" style={{ background: CTA_GRADIENT }}>
           <div className="text-black font-extrabold text-[18px] md:text-[24px] leading-tight">
             EVET, $27 VIP&apos;e Katılmak İstiyorum →

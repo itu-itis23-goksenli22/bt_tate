@@ -96,11 +96,21 @@ const config: Config = {
           '0%, 100%': { boxShadow: '0 0 15px rgba(251,191,36,0.3)' },
           '50%': { boxShadow: '0 0 30px rgba(251,191,36,0.6)' },
         },
+        'cta-attention': {
+          '0%, 100%': { transform: 'scale(1)', boxShadow: '0 0 0 0 rgba(251,191,36,0.55)' },
+          '50%': { transform: 'scale(1.035)', boxShadow: '0 0 28px 6px rgba(251,191,36,0.55)' },
+        },
+        'cta-shine': {
+          '0%': { transform: 'translateX(-130%) skewX(-20deg)' },
+          '100%': { transform: 'translateX(330%) skewX(-20deg)' },
+        },
       },
       animation: {
         slideInLeft: 'slideInLeft 0.5s ease-out forwards',
         fadeIn: 'fadeIn 0.3s ease-out forwards',
         'pulse-gold': 'pulse-gold 2s ease-in-out infinite',
+        'cta-attention': 'cta-attention 1.5s ease-in-out infinite',
+        'cta-shine': 'cta-shine 2.6s ease-in-out infinite',
       },
     },
   },
