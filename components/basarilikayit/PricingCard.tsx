@@ -67,7 +67,8 @@ export default function PricingCard({
             })}
             className="block"
           >
-            <div className="btn-gold-solid w-full text-center py-5 px-4">
+            <div className="btn-gold-solid relative overflow-hidden w-full text-center py-5 px-4 animate-cta-attention hover:scale-[1.02]">
+              <span className="pointer-events-none absolute top-0 bottom-0 left-0 w-1/3 z-10 animate-cta-shine" style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent)" }} />
               <span className="block text-xs font-medium opacity-80 mb-1">🔥 Bu Linke Özel Fiyat</span>
               <span className="block text-2xl md:text-3xl font-extrabold">HEMEN KATIL — ₺{priceFormatted}</span>
             </div>
