@@ -416,9 +416,9 @@ export default function KayitBasariliContent({
 
               Sayfanın diğer CTABlock'ları (scrollToFinalCTA) buraya scroll
               eder — VipEmbeddedCheckout default ctaId="final-vip-cta". */}
-          <div className="my-14">
+          <div className="my-14 -mx-2 sm:mx-0">
             <div
-              className="max-w-2xl mx-auto bg-white px-4 md:px-6 py-6 md:py-8 shadow-2xl"
+              className="max-w-2xl mx-auto bg-white px-2 md:px-6 py-6 md:py-8 shadow-2xl"
               style={{
                 border: "5px dashed #0a1429",
                 borderRadius: "6px",
@@ -471,7 +471,7 @@ export default function KayitBasariliContent({
 
               {/* Lacivert mini-section — Stripe iframe ve trust signals */}
               <div
-                className="rounded-xl px-3 md:px-5 py-5 md:py-6 -mx-2 md:-mx-3"
+                className="rounded-xl px-1.5 md:px-5 py-5 md:py-6 -mx-1 md:-mx-3"
                 style={{ background: "#0a1429" }}
               >
                 {/* Stripe güvenlik notu — ödeme formunun hemen üstünde, belirgin */}
