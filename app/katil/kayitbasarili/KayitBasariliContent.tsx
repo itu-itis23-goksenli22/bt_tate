@@ -142,19 +142,19 @@ export default function KayitBasariliContent({
               olarak açtık.
             </p>
 
-            {/* Highlight: $9.90 */}
+            {/* Highlight: $27 */}
             <p className="text-white text-[24px] md:text-[34px] font-extrabold leading-tight mb-8 max-w-2xl mx-auto">
               Ve seminere başlamadan, sana bunu{" "}
               <span
                 className="inline-block px-3 py-1 rounded-[6px] text-black mx-1 align-middle"
                 style={{ background: CTA_GRADIENT }}
               >
-                SADECE $9.90
+                SADECE $27
               </span>{" "}
               karşılığında veriyoruz.
             </p>
 
-            {/* PRIMARY CTA — "veriyoruz" altında, $9.90 vurgusunun hemen ardından.
+            {/* PRIMARY CTA — "veriyoruz" altında, $27 vurgusunun hemen ardından.
                 #final-vip-cta'ya scroll eder (yeşil MainCheckoutCTA). */}
             <CTABlock thankYouUrl={thankYouUrl} />
 
@@ -238,7 +238,7 @@ export default function KayitBasariliContent({
             </div>
 
             {/* Paket içeriği — dashed altın kart, üstü çizgili fiyatlar,
-                "$2,000+ Değer · Sadece $9.90" başlık, "Sizin Tek Seferlik
+                "$2,000+ Değer · Sadece $27" başlık, "Sizin Tek Seferlik
                 Yatırımınız" alt satırı. (Eski yeşil ✅ ChecklistItem listesi
                 kaldırıldı, daha şık alt section'daki tasarım buraya taşındı.) */}
             <div className="max-w-xl mx-auto mb-6 text-left">
@@ -249,7 +249,7 @@ export default function KayitBasariliContent({
                 <h3 className="text-[18px] md:text-[24px] font-extrabold text-center mb-5">
                   $1,500+ Değer{" "}
                   <span className="text-[#D5B356] italic underline">
-                    Sadece $9.90
+                    Sadece $27
                   </span>
                 </h3>
                 <div className="border-t border-[#AA813C]/30 mb-4" />
@@ -272,7 +272,7 @@ export default function KayitBasariliContent({
                       Sizin Tek Seferlik Yatırımınız:
                     </span>
                     <span className="text-[#D5B356] font-extrabold text-[18px] md:text-[20px]">
-                      Sadece $9.90
+                      Sadece $27
                     </span>
                   </div>
                 </div>
@@ -288,7 +288,7 @@ export default function KayitBasariliContent({
             </p>
           </div>
 
-          {/* (Eski PRIMARY CTA'yı $9.90 vurgusunun altına taşıdık — yukarıda.
+          {/* (Eski PRIMARY CTA'yı $27 vurgusunun altına taşıdık — yukarıda.
               Bu konumda eskiden "Hayır teşekkürler" decline butonu vardı,
               user kararı ile kaldırıldı — tek decline butonu artık testimonials
               bitiminde "Gerçek Başarı Hikayeleri" üstünde duruyor.) */}
@@ -447,7 +447,7 @@ export default function KayitBasariliContent({
                 Bu teklif <strong>kalıcı olarak kaybolur.</strong>
               </p>
 
-              {/* Sarı $9.90 fiyat vurgusu */}
+              {/* Sarı $27 fiyat vurgusu */}
               <div className="text-center mb-6">
                 <span
                   className="inline-block px-5 md:px-6 py-2 md:py-2.5 rounded-md font-extrabold"
@@ -459,7 +459,7 @@ export default function KayitBasariliContent({
                       "0 0 0 3px #FFD200, 0 6px 24px -8px rgba(255,210,0,0.65)",
                   }}
                 >
-                  Bugün SADECE $9.90
+                  Bugün SADECE $27
                 </span>
               </div>
 
@@ -550,10 +550,10 @@ export default function KayitBasariliContent({
             <a href="#final-vip-cta" onClick={scrollToFinalCTA} className="block rounded-[10px] overflow-hidden hover:brightness-105 transition-all cursor-pointer">
               <div className="py-5 px-6 text-center" style={{ background: CTA_GRADIENT }}>
                 <div className="text-black font-extrabold text-[18px] md:text-[24px] leading-tight">
-                  EVET, $9.90&apos;a VIP&apos;e Katılmak İstiyorum →
+                  EVET, $27&apos;ye VIP&apos;e Katılmak İstiyorum →
                 </div>
                 <div className="text-black/65 text-[13px] mt-2 font-semibold">
-                  Sadece $9.90 · Tek seferlik ödeme
+                  Sadece $27 · Tek seferlik ödeme
                 </div>
               </div>
             </a>
@@ -582,10 +582,10 @@ function MainCheckoutCTA() {
       >
         <div className="py-5 px-6 text-center" style={{ background: GREEN_GRADIENT }}>
           <div className="text-white font-extrabold text-[18px] md:text-[24px] leading-tight">
-            EVET, $9.90&apos;a VIP&apos;e Katılmak İstiyorum →
+            EVET, $27&apos;ye VIP&apos;e Katılmak İstiyorum →
           </div>
           <div className="text-white/85 text-[13px] mt-2 font-semibold">
-            Sadece $9.90 · Tek seferlik ödeme
+            Sadece $27 · Tek seferlik ödeme
           </div>
         </div>
       </a>
@@ -600,10 +600,10 @@ function CTABlock({ thankYouUrl: _thankYouUrl }: { thankYouUrl: string }) {
       <a href="#final-vip-cta" onClick={scrollToFinalCTA} className="block rounded-[10px] overflow-hidden hover:brightness-105 transition-all cursor-pointer">
         <div className="py-5 px-6 text-center" style={{ background: CTA_GRADIENT }}>
           <div className="text-black font-extrabold text-[18px] md:text-[24px] leading-tight">
-            EVET, $9.90&apos;a VIP&apos;e Katılmak İstiyorum →
+            EVET, $27&apos;ye VIP&apos;e Katılmak İstiyorum →
           </div>
           <div className="text-black/65 text-[13px] mt-2 font-semibold">
-            Sadece $9.90 · Tek seferlik ödeme
+            Sadece $27 · Tek seferlik ödeme
           </div>
         </div>
       </a>
