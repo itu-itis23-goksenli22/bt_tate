@@ -118,11 +118,6 @@ export default function KayitBasariliContent({
               BEKLE!
             </h1>
 
-            {/* Alt başlık */}
-            <p className="text-white font-bold text-[22px] md:text-[34px] leading-tight mb-6">
-              Kaydını Onaylamadan Önce:
-            </p>
-
             {/* Seminer teaser video — her iki variant'ta (default + vip)
                 göründüğü pozisyon. vip-mastermind/kayitbasarili ile aynı
                 yer ve görsel. */}
