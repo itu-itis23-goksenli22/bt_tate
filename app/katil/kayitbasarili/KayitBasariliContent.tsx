@@ -139,7 +139,7 @@ export default function KayitBasariliContent({
             {/* Ana mesaj */}
             <p className="text-white text-[22px] md:text-[30px] font-bold leading-snug mb-6 max-w-2xl mx-auto">
               <span style={{ color: "#D5B356" }} className="whitespace-nowrap">
-                $1.500+ değerindeki VIP paketi
+                $2.000+ değerindeki VIP paketi
               </span>
               ,{" "}
               <span className="underline decoration-[#C19D44] decoration-2 underline-offset-4">
@@ -247,7 +247,7 @@ export default function KayitBasariliContent({
                 style={{ background: GOLD_BG_SUBTLE }}
               >
                 <h3 className="text-[18px] md:text-[24px] font-extrabold text-center mb-5">
-                  $1,500+ Değer{" "}
+                  $2,000+ Değer{" "}
                   <span className="text-[#D5B356] italic underline">
                     Sadece $27
                   </span>
@@ -255,7 +255,8 @@ export default function KayitBasariliContent({
                 <div className="border-t border-[#AA813C]/30 mb-4" />
                 <div className="space-y-3">
                   <PricingRow label="Manychat Kurulum Rehberi" value="$497" />
-                  <PricingRow label="Milyon Dolarlık AI Automation Kiti" value="$997" />
+                  <PricingRow label="AI Automation Kiti" value="$997" />
+                  <PricingRow label="AI Destekli İş Ölçekleme" value="$500" />
                   <PricingRow label="Lifetime Replay Access" value="$97" />
                 </div>
                 <div className="border-t border-[#AA813C]/30 mt-5 pt-4">
@@ -264,7 +265,7 @@ export default function KayitBasariliContent({
                       Toplam Değer:
                     </span>
                     <span className="text-white/50 text-[13px] md:text-[14px] font-bold line-through">
-                      $1,500+
+                      $2,000+
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
