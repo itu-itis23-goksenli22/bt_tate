@@ -51,7 +51,7 @@ export default function PricingCard({
         {/* Crossed out price */}
         <div className="mb-4">
           <span className="text-white/40 text-xs block mb-0.5">Normal Fiyat</span>
-          <span className="text-white/50 font-bold text-2xl line-through decoration-red-500 decoration-2">₺{strikethroughPrice}</span>
+          <span className="text-white/50 font-bold text-2xl line-through decoration-red-500 decoration-2">{/^[$₺]/.test(strikethroughPrice) ? strikethroughPrice : `₺${strikethroughPrice}`}</span>
         </div>
 
         {/* CTA Button with price inside */}

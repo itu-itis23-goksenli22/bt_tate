@@ -25,7 +25,7 @@ import VipEmbeddedCheckout from "@/components/VipEmbeddedCheckout";
 
 // /sonfirsat config — tek yerden değiştirilebilir
 const SONFIRSAT_PRICE_FORMATTED = "29,900";
-const SONFIRSAT_STRIKETHROUGH = "59,800";
+const SONFIRSAT_STRIKETHROUGH = "$3,750";
 const SONFIRSAT_VIEWCONTENT_VALUE = 29900;
 const SONFIRSAT_CONTENT_NAME = "Sonfirsat Sayfası";
 const SONFIRSAT_FUNNEL_TAG = "Sonfirsat Checkout";
@@ -46,12 +46,12 @@ const SONFIRSAT_PACKAGE_ITEMS = [
 
 // ValueStack için /sonfirsat-özel feature listesi — "Eğitim Programı" yok
 const SONFIRSAT_MAIN_FEATURES = [
-  { name: "Claude Code Masterclass (9 Modül)", value: "₺8,000" },
-  { name: "N8N & API Entegrasyon Toolkit", value: "₺5,000" },
-  { name: "AI Otomasyon Sistemleri", value: "₺4,000" },
-  { name: "B2B Satış Stratejileri", value: "₺3,500" },
-  { name: "Canlı Topluluk & Mentörlük", value: "₺6,000" },
-  { name: "Ads Stratejisi & Setter Sistemi", value: "₺3,500" },
+  { name: "Claude Code Masterclass (9 Modül)", value: "$1,000" },
+  { name: "N8N & API Entegrasyon Toolkit", value: "$1,000" },
+  { name: "AI Otomasyon Sistemleri", value: "$500" },
+  { name: "B2B Satış Stratejileri", value: "$500" },
+  { name: "Canlı Topluluk & Mentörlük", value: "$250" },
+  { name: "Ads Stratejisi & Setter Sistemi", value: "$500" },
 ];
 
 // 3 üst kart — sol "Claude Code Masterclass" (eski "AI Otomasyon Eğitim
