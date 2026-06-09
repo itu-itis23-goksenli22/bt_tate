@@ -161,7 +161,7 @@ export async function sendSonfirsatWelcomeEmail(to: string) {
 }
 
 /* ─────────────────────────────────────────────────────────────────────
- * 2) VIP Upsell — $9.90 alıcıları (yeni versiyon — /vipodemeonay
+ * 2) VIP Upsell — $27 alıcıları (yeni versiyon — /vipodemeonay
  *    sayfasındaki paket/seminer akışıyla birebir uyumlu).
  *    İçerik 3 kart: (1) Yapay Zeka Başlangıç Paketi'ne eriş,
  *    (2) Bonus Eğitim Video Serisi, (3) Seminere mutlaka katıl.

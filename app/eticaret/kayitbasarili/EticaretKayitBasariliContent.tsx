@@ -223,7 +223,7 @@ export default function EticaretKayitBasariliContent() {
               <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer">
                 <button className="text-black font-bold text-[14px] px-6 py-2.5 rounded-md hover:brightness-110 transition-all cursor-pointer"
                   style={{ background: CTA_GRADIENT }}>
-                  Tüm bunlar sadece $9.90 — Hemen Hazırlanmaya Başla →
+                  Tüm bunlar sadece $27 — Hemen Hazırlanmaya Başla →
                 </button>
               </a>
             </div>
@@ -306,7 +306,7 @@ export default function EticaretKayitBasariliContent() {
               style={{ background: GOLD_BG_SUBTLE }}>
               <h3 className="text-[22px] md:text-[28px] font-extrabold text-center mb-6">
                 $2,000+ Değer{" "}
-                <span className="text-[#D5B356] italic underline">Sadece $9.90</span>
+                <span className="text-[#D5B356] italic underline">Sadece $27</span>
               </h3>
               <div className="border-t border-[#AA813C]/30 mb-5" />
               <div className="space-y-3">
@@ -322,7 +322,7 @@ export default function EticaretKayitBasariliContent() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-[#D5B356] font-bold text-[15px]">Sizin Tek Seferlik Yatırımınız:</span>
-                  <span className="text-[#D5B356] font-extrabold text-[20px]">Sadece $9.90</span>
+                  <span className="text-[#D5B356] font-extrabold text-[20px]">Sadece $27</span>
                 </div>
               </div>
             </div>

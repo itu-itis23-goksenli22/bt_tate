@@ -87,7 +87,8 @@ export async function POST(request: NextRequest) {
         ?.variant || "";
       const isVipUpsell =
         metadataVariant === "vip" ||
-        (ccyLower === "usd" && amountForCheck === 990);
+        // $27 = 2700 cent (Payment Link fallback — metadata.variant set etmez)
+        (ccyLower === "usd" && amountForCheck === 2700);
       const isSonfirsat =
         metadataVariant === "sonfirsat" ||
         // 29.900 TL = 2.990.000 kuruş (legacy Payment Link fallback)

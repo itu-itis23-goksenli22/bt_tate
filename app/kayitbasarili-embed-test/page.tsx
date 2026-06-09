@@ -5,7 +5,7 @@
 //   - İç beyaz kart: kalın dashed kenarlık (kupon perforasyonu efekti)
 //   - Üstte uyarı/urgency başlığı (gold highlight'lar)
 //   - Ortada ürün adı (görsel yerine şimdilik büyük altın metin)
-//   - Fiyat vurgusu: "Gerçek Değer" üstü çizili + "Bugün SADECE $9.90" sarı vurgu
+//   - Fiyat vurgusu: "Gerçek Değer" üstü çizili + "Bugün SADECE $27" sarı vurgu
 //   - Altta Stripe Embedded Checkout iframe (koyu mini-section içinde,
 //     trust signals + altın gradient kenarlıkla)
 
@@ -14,7 +14,7 @@ import VipEmbeddedCheckout from "@/components/VipEmbeddedCheckout";
 
 export const metadata: Metadata = {
   title: "Özel Teklif | AI Scale",
-  description: "Sadece bu sayfaya özel: VIP Paketi — $9.90",
+  description: "Sadece bu sayfaya özel: VIP Paketi — $27",
   robots: { index: false, follow: false },
 };
 
@@ -157,7 +157,7 @@ export default function KayitBasariliEmbedTestPage() {
                 boxShadow: `0 0 0 4px ${YELLOW}, 0 8px 30px -10px rgba(255,210,0,0.7)`,
               }}
             >
-              Bugün SADECE $9.90
+              Bugün SADECE $27
             </span>
           </div>
         </div>

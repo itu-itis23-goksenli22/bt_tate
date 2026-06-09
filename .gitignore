@@ -23,9 +23,17 @@ yarn-debug.log*
 yarn-error.log*
 
 # Local env files
+.env*
 .env*.local
 .env
 PROJECT_INFO.md
+
+# Claude worktrees & local junk
+.claude/worktrees/
+.claude/launch.json
+**/.next/
+Ekran Resmi*.png
+*.tmp
 
 # Vercel
 .vercel
