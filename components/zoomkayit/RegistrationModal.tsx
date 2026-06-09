@@ -396,12 +396,14 @@ export default function RegistrationModal({
             </button>
           </form>
 
-          <p className="text-white/30 text-[10px] leading-relaxed text-center mt-6">
-            Bilgilerinizi göndererek, AI Scale&apos;in size e-posta yoluyla
-            etkinlik hatırlatmaları ve bilgilendirme mesajları göndermesine
-            onay vermiş olursunuz. Gizlilik Politikamız ve Kullanım
-            Koşullarımız geçerlidir. İstediğiniz zaman abonelikten
-            çıkabilirsiniz.
+          <p className="text-white/40 text-[11px] leading-relaxed text-center mt-6">
+            Bu formu göndererek, AI Scale&apos;in size{" "}
+            <strong className="text-white/60">e-posta, SMS ve WhatsApp</strong>{" "}
+            yoluyla etkinlik hatırlatmaları, bilgilendirme ve{" "}
+            <strong className="text-white/60">pazarlama/tanıtım mesajları</strong>{" "}
+            göndermesine açıkça onay veriyorsunuz. İstediğiniz zaman
+            &quot;STOP&quot; yazarak veya abonelikten çıkarak ayrılabilirsiniz.
+            Gizlilik Politikamız ve Kullanım Koşullarımız geçerlidir.
           </p>
         </div>
       </div>
