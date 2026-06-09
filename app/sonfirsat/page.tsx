@@ -246,7 +246,7 @@ export default function SonfirsatPage() {
       </section>
 
       <FAQSection />
-      <BottomCTA />
+      <BottomCTA hideCta />
 
       <IbanSection priceFormatted={SONFIRSAT_PRICE_FORMATTED} />
 

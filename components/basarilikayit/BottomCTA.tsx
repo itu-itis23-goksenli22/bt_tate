@@ -3,7 +3,13 @@
 import { BASARILIKAYIT_CHECKOUT_MASTERCLASS } from "@/lib/constants";
 import PaymentLogos from "./PaymentLogos";
 
-export default function BottomCTA() {
+interface BottomCTAProps {
+  // /sonfirsat gibi embedded checkout kullanan sayfalarda gold "YERİNİZİ
+  // ŞİMDİ AYIRIN" butonunu gizlemek için (eski Payment Link'e gitmesin).
+  hideCta?: boolean;
+}
+
+export default function BottomCTA({ hideCta = false }: BottomCTAProps = {}) {
   return (
     <section className="py-16 md:py-20 bg-primary relative overflow-hidden">
       {/* Sparkle background */}
@@ -38,17 +44,19 @@ export default function BottomCTA() {
         </p>
 
         {/* CTA Button */}
-        <a
-          href={BASARILIKAYIT_CHECKOUT_MASTERCLASS}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block mb-8"
-        >
-          <div className="btn-gold-solid relative overflow-hidden text-lg md:text-xl px-10 md:px-16 py-4 md:py-5 animate-cta-attention hover:scale-[1.02]">
-            <span className="pointer-events-none absolute top-0 bottom-0 left-0 w-1/3 z-10 animate-cta-shine" style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent)" }} />
-            YERİNİZİ ŞİMDİ AYIRIN
-          </div>
-        </a>
+        {!hideCta && (
+          <a
+            href={BASARILIKAYIT_CHECKOUT_MASTERCLASS}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mb-8"
+          >
+            <div className="btn-gold-solid relative overflow-hidden text-lg md:text-xl px-10 md:px-16 py-4 md:py-5 animate-cta-attention hover:scale-[1.02]">
+              <span className="pointer-events-none absolute top-0 bottom-0 left-0 w-1/3 z-10 animate-cta-shine" style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent)" }} />
+              YERİNİZİ ŞİMDİ AYIRIN
+            </div>
+          </a>
+        )}
 
         {/* Payment logos */}
         <div className="mb-4">
