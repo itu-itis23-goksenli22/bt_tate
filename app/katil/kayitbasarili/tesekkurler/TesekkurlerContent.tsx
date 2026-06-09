@@ -262,28 +262,9 @@ export default function TesekkurlerContent() {
             </a>
           </div>
 
-          {/* Bonus Package CTA - dark bg with gold border like screenshot */}
-          <div className="rounded-[9px] border border-[#AA813C]/40 p-6 md:p-8 text-center mb-8 bg-[#141414]">
-            <svg className="w-12 h-12 mx-auto mb-3 text-[#C19D44]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
-            </svg>
-            <h2 className="text-[22px] md:text-[26px] font-extrabold text-white mb-2">
-              500$ Değerinde Bonus Paket
-            </h2>
-            <p className="text-white/40 text-[14px] mb-5">
-              Yapay Zeka Başlangıç Paketinize hemen erişin
-            </p>
-            <a
-              href="https://www.notion.so/Yapay-Zeka-H-zl-Ba-lang-Paketi-2aea3d46179c81f28341ea38e05b15f8?source=copy_link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <button className="relative overflow-hidden bg-[#C19D44] text-black font-bold text-[16px] px-10 py-4 rounded-lg hover:brightness-110 hover:scale-[1.02] transition-all w-full cursor-pointer animate-cta-attention">
-                <span className="pointer-events-none absolute top-0 bottom-0 left-0 w-1/3 z-10 animate-cta-shine" style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent)" }} />
-                Bonus Paketi İndir →
-              </button>
-            </a>
-          </div>
+          {/* Bonus Package CTA kaldırıldı — bu sayfa artık kayıt maili ile
+              herkese (VIP alsın almasın) gönderilen sade seminer hatırlatma
+              sayfası. Bonus paket / upsell yok. */}
 
           {/* Social Media */}
           <div className="text-center mb-10">

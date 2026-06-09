@@ -265,8 +265,23 @@ export async function sendVipUpsellEmail(to: string) {
  * ───────────────────────────────────────────────────────────────────── */
 const YOUTUBE_CHANNEL = "https://www.youtube.com/@baturalp.tunali";
 
-function webinarWelcomeBody(firstName: string, eventDateString?: string): string {
+function webinarWelcomeBody(
+  firstName: string,
+  eventDateString?: string,
+  tesekkurUrl?: string
+): string {
   const safeName = firstName ? firstName.replace(/[<>]/g, "") : "";
+  // Seminer detay/geri sayım sayfası butonu — /katil kayıtları için
+  // tesekkurUrl geçilir (kişiye özel name+email param'lı link).
+  const detailButton = tesekkurUrl
+    ? `
+    <p style="margin:24px 0;text-align:center;">
+      <a href="${tesekkurUrl}"
+         style="display:inline-block;background:#C19D44;color:#1a1a1a;padding:15px 30px;border-radius:8px;text-decoration:none;font-weight:700;font-size:16px;">
+        📅 Seminer Detayların & Geri Sayım →
+      </a>
+    </p>`
+    : "";
   // Tarih sabit etkinlik için (örn. /katil — 6 Haziran 2026); ana funnel
   // (her gün 20:00 auto-webinar) için eventDateString geçilmez ve bu blok
   // gizlenir.
@@ -292,6 +307,7 @@ function webinarWelcomeBody(firstName: string, eventDateString?: string): string
       Aramızda görüşene kadar sana faydalı olabilecek bir şey paylaşmak istedik.
     </p>
     ${dateBlock}
+    ${detailButton}
     <div style="background:#f0f9ff;border-left:4px solid #2563eb;padding:14px 16px;margin:20px 0;border-radius:4px;">
       <p style="margin:0 0 6px 0;"><strong>🎬 Seminere Kadar Bunu İzle</strong></p>
       <p style="margin:0;">
@@ -337,11 +353,19 @@ export async function sendWebinarYoutubeEmail(
     ? `🎬 Seminerine Hazırlık — ${eventDateString}`
     : "🎬 Seminere Kadar — Sana Özel Yapay Zeka Videoları";
 
+  // /katil kayıtları (eventDateString'li) için seminer detay/geri sayım
+  // sayfasına kişiye özel link. VIP alsın almasın herkese gider.
+  const tesekkurUrl = eventDateString
+    ? `https://www.aiscaleapp.com/katil/kayitbasarili/tesekkurler?name=${encodeURIComponent(
+        firstName || ""
+      )}&email=${encodeURIComponent(to)}`
+    : undefined;
+
   const { data, error } = await resend.emails.send({
     from: FROM,
     to: [to],
     subject,
-    html: shell(webinarWelcomeBody(firstName || "", eventDateString)),
+    html: shell(webinarWelcomeBody(firstName || "", eventDateString, tesekkurUrl)),
   });
   if (error) throw error;
   return data;
