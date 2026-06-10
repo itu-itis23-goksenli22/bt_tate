@@ -2,7 +2,7 @@ export default function Footer() {
   return (
     <footer className="py-8 px-4 border-t border-white/5">
       <div className="max-w-4xl mx-auto text-center">
-        <p className="text-gold font-bold text-xl mb-4">AI SCALE</p>
+        <p className="text-gold font-bold text-xl mb-4">AHMET SCALE</p>
 
         <div className="flex items-center justify-center gap-6 mb-6">
           {/* Instagram */}
