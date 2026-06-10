@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
     // GHL Workflow tarafında bu JSON alanları Create/Update Contact'a maplenir.
     const ghlWebhookUrl =
       process.env.GHL_INBOUND_WEBHOOK_URL ||
-      "https://services.leadconnectorhq.com/hooks/HKKWM8kTRSbS4g6gWDwT/webhook-trigger/a5e1fb98-2c7d-4309-82aa-974f7c596061";
+      "https://services.leadconnectorhq.com/hooks/HKKWM8kTRSbS4g6gWDwT/webhook-trigger/065f186b-a04a-47ab-9f9d-ba69b45b83c9";
     try {
       await fetch(ghlWebhookUrl, {
         method: "POST",
