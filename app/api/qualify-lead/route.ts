@@ -115,6 +115,32 @@ export async function POST(request: NextRequest) {
       console.warn("⚠️ Supabase save (non-critical):", dbError);
     }
 
+    // 1.5. GoHighLevel Inbound Webhook — kişiyi GHL Contacts'a it.
+    // Best-effort: GHL hatası kaydı bozmaz. URL env'den, yoksa default.
+    // GHL Workflow tarafında bu JSON alanları Create/Update Contact'a maplenir.
+    const ghlWebhookUrl =
+      process.env.GHL_INBOUND_WEBHOOK_URL ||
+      "https://services.leadconnectorhq.com/hooks/HKKWM8kTRSbS4g6gWDwT/webhook-trigger/a5e1fb98-2c7d-4309-82aa-974f7c596061";
+    try {
+      await fetch(ghlWebhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          first_name: firstName || "",
+          last_name: lastName || "",
+          name: fullName,
+          email,
+          phone: phone || "",
+          source: "aiscaleapp_site",
+          webinar_id: webinarId || "",
+          page_url: sourceUrl || "",
+        }),
+      });
+      console.log(`✅ GHL: contact pushed for ${email}`);
+    } catch (ghlError) {
+      console.warn("⚠️ GHL webhook (non-critical):", ghlError);
+    }
+
     const eventValue = randomEventValue();
 
     // 2. Zoom registration — herkes için
