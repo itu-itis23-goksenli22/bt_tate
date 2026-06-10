@@ -25,7 +25,7 @@ import VipEmbeddedCheckout from "@/components/VipEmbeddedCheckout";
 
 // /sonfirsat config — tek yerden değiştirilebilir
 const SONFIRSAT_PRICE_FORMATTED = "29,900";
-const SONFIRSAT_STRIKETHROUGH = "$3,750";
+const SONFIRSAT_STRIKETHROUGH = "₺120,000";
 const SONFIRSAT_VIEWCONTENT_VALUE = 29900;
 const SONFIRSAT_CONTENT_NAME = "Sonfirsat Sayfası";
 const SONFIRSAT_FUNNEL_TAG = "Sonfirsat Checkout";
