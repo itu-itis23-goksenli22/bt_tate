@@ -82,6 +82,7 @@ export default function KatilPage() {
         <CountdownTimer
           eventNoun="Seminer"
           showDate
+          hideDays
           startDate={{ year: 2026, month: 6, day: 13 }}
         />
 
@@ -147,6 +148,7 @@ export default function KatilPage() {
           <CountdownTimer
             eventNoun="Seminer"
             showDate
+            hideDays
             startDate={{ year: 2026, month: 6, day: 13 }}
           />
           <RegistrationForm

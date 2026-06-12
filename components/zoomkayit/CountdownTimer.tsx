@@ -104,6 +104,8 @@ interface CountdownTimerProps {
   showDate?: boolean;
   // Başlıktaki etkinlik kelimesi ("Webinar" | "Seminer"). Default "Webinar".
   eventNoun?: string;
+  // "Gün" kutusunu gizle ve günleri saate kat (günlük rolling sayaç için).
+  hideDays?: boolean;
 }
 
 export default function CountdownTimer({
@@ -112,6 +114,7 @@ export default function CountdownTimer({
   headlineText,
   showDate = false,
   eventNoun = "Webinar",
+  hideDays = false,
 }: CountdownTimerProps = {}) {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -154,14 +157,20 @@ export default function CountdownTimer({
     return () => clearInterval(timer);
   }, []);
 
+  // hideDays: "Gün" kutusunu gizle, günleri saate kat (günlük sayaç).
+  const displayHours = hideDays
+    ? timeLeft.days * 24 + timeLeft.hours
+    : timeLeft.hours;
   const units = [
-    { value: timeLeft.days, label: "Gün" },
-    { value: timeLeft.hours, label: "Saat" },
+    ...(hideDays ? [] : [{ value: timeLeft.days, label: "Gün" }]),
+    { value: displayHours, label: "Saat" },
     { value: timeLeft.minutes, label: "Dakika" },
     { value: timeLeft.seconds, label: "Saniye" },
   ];
 
-  const labels = ["Gün", "Saat", "Dakika", "Saniye"];
+  const labels = hideDays
+    ? ["Saat", "Dakika", "Saniye"]
+    : ["Gün", "Saat", "Dakika", "Saniye"];
 
   // headlineText="" (boş string) verilirse başlığı gizle — variant'lar
   // başka yerde tarih gösteriyorsa duplicate olmasın diye.
@@ -184,7 +193,7 @@ export default function CountdownTimer({
       )}
       <div className="flex items-center justify-center gap-2 md:gap-3">
         {(mounted ? units : labels.map((l) => ({ value: "--", label: l }))).map(
-          (unit, i) => (
+          (unit, i, arr) => (
             <div key={unit.label} className="flex items-center gap-2 md:gap-3">
               <div className="zk-countdown-box px-3 py-3 md:px-5 md:py-4 text-center">
                 <div className="text-2xl md:text-4xl font-bold text-white">
@@ -196,7 +205,7 @@ export default function CountdownTimer({
                   {unit.label}
                 </div>
               </div>
-              {i < 3 && (
+              {i < arr.length - 1 && (
                 <span className="text-gold text-2xl md:text-4xl font-bold">
                   :
                 </span>
