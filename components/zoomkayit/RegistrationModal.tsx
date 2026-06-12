@@ -401,8 +401,7 @@ export default function RegistrationModal({
             <strong className="text-white/60">e-posta, SMS ve WhatsApp</strong>{" "}
             yoluyla etkinlik hatırlatmaları, bilgilendirme ve{" "}
             <strong className="text-white/60">pazarlama/tanıtım mesajları</strong>{" "}
-            göndermesine açıkça onay veriyorsunuz. İstediğiniz zaman
-            &quot;STOP&quot; yazarak veya abonelikten çıkarak ayrılabilirsiniz.
+            göndermesine açıkça onay veriyorsunuz.
             Gizlilik Politikamız ve Kullanım Koşullarımız geçerlidir.
           </p>
         </div>
