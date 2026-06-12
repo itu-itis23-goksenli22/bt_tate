@@ -98,11 +98,27 @@ export default function PricingCard({
             rel="noopener noreferrer"
             className="block"
           >
-            <div className="btn-gold-solid relative overflow-hidden w-full text-center py-5 px-4 hover:scale-[1.02]">
+            <div className="btn-gold-solid relative overflow-hidden w-full text-center py-5 px-4 animate-cta-attention hover:scale-[1.02]">
+              <span className="pointer-events-none absolute top-0 bottom-0 left-0 w-1/3 z-10 animate-cta-shine" style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent)" }} />
               <span className="block text-xs font-medium opacity-80 mb-1">💳 Taksit İmkanı</span>
-              <span className="block text-2xl md:text-3xl font-extrabold">12 TAKSİT İLE SATIN AL</span>
+              <span className="block text-2xl md:text-3xl font-extrabold">12 TAKSİT İLE HEMEN KATIL</span>
             </div>
           </a>
+          {/* Animated click hint below button */}
+          <div
+            className="flex items-center justify-center gap-2 mt-2 pointer-events-none"
+            style={{ animation: "click-hint 1.8s ease-in-out infinite" }}
+          >
+            <svg className="w-5 h-5 text-gold" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7.5 1.5c.83 0 1.5.67 1.5 1.5v7.085l4.947-2.18a1.5 1.5 0 0 1 2.006.85l.052.148a1.5 1.5 0 0 1-.85 1.813L9.64 13.5H9v1.032l5.3 5.3a1.5 1.5 0 0 1 0 2.121l-.354.354a1.5 1.5 0 0 1-2.121 0L6 16.5V3c0-.83.67-1.5 1.5-1.5z"/>
+            </svg>
+            <span className="text-gold font-bold text-sm tracking-wide">
+              TIKLA VE KAYIT OL
+            </span>
+            <svg className="w-5 h-5 text-gold" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7.5 1.5c.83 0 1.5.67 1.5 1.5v7.085l4.947-2.18a1.5 1.5 0 0 1 2.006.85l.052.148a1.5 1.5 0 0 1-.85 1.813L9.64 13.5H9v1.032l5.3 5.3a1.5 1.5 0 0 1 0 2.121l-.354.354a1.5 1.5 0 0 1-2.121 0L6 16.5V3c0-.83.67-1.5 1.5-1.5z"/>
+            </svg>
+          </div>
         </div>
 
         <style jsx>{`
