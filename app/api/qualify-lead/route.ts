@@ -30,6 +30,25 @@ function randomEventValue(): number {
   return parseFloat((Math.random() * 0.98 + 0.01).toFixed(2));
 }
 
+// /katil her gün yenilenen seminer — bir sonraki 20:00 (TR) tarihini
+// "13 Haziran Cumartesi · 20:00 (TR)" formatında döndürür. 20:00'ı geçtiyse
+// yarına sarkar (sayfalardaki rolling countdown ile birebir aynı mantık).
+function getRollingWebinarDateTR(): string {
+  const turkey = new Date(
+    new Date().toLocaleString("en-US", { timeZone: "Europe/Istanbul" })
+  );
+  const target = new Date(turkey);
+  if (turkey.getHours() >= 20) target.setDate(target.getDate() + 1);
+  const months = [
+    "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+    "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık",
+  ];
+  const days = [
+    "Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi",
+  ];
+  return `${target.getDate()} ${months[target.getMonth()]} ${days[target.getDay()]} · 20:00 (TR)`;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -164,16 +183,16 @@ export async function POST(request: NextRequest) {
 
     // 3. YouTube engagement email — sadece aiscale (eticaret webinar ID değilse)
     const isEticaret = webinarId === "86257770515";
-    // /katil variant — sabit 6 Haziran 2026 etkinliği. Mailde tarih
-    // bloğu gözüksün diye eventDateString geçilir. Diğer durumlarda
-    // (ana funnel auto-webinar) tarih bloğu mailde gizli kalır.
+    // /katil her gün yenilenen seminer. Mailde tarih bloğu + tesekkurler
+    // butonu gözüksün diye rolling (sonraki 20:00 TR) tarih string'i geçilir.
+    // Ana funnel (auto-webinar) için undefined → tarih bloğu gizli kalır.
     const isKatil = webinarId === "81497341331";
-    const katilEventDate = "6 Haziran 2026 Cumartesi · 20:00 (TR)";
+    const katilEventDate = isKatil ? getRollingWebinarDateTR() : undefined;
     if (!isEticaret) {
       sendWebinarYoutubeEmail(
         email,
         firstName || "",
-        isKatil ? katilEventDate : undefined
+        katilEventDate
       ).catch((err) =>
         console.warn("⚠️ YouTube email failed:", err?.message || err)
       );

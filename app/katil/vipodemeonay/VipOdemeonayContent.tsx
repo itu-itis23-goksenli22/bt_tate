@@ -41,7 +41,7 @@ export default function VipOdemeonayContent() {
   });
 
   useEffect(() => {
-    // /katil variant — webinar SABIT: 6 Haziran 2026 Cumartesi 20:00.
+    // /katil her gün yenilenen seminer — bir sonraki 20:00 (TR) hedefi
     const dayNames = [
       "Pazar",
       "Pazartesi",
@@ -51,14 +51,12 @@ export default function VipOdemeonayContent() {
       "Cuma",
       "Cumartesi",
     ];
-    const KATIL_EVENT_YEAR = 2026;
-    const KATIL_EVENT_MONTH = 6; // Haziran
-    const KATIL_EVENT_DAY = 6;
-    const eventDate = new Date(KATIL_EVENT_YEAR, KATIL_EVENT_MONTH - 1, KATIL_EVENT_DAY, 20, 0, 0, 0);
-
     const turkey = new Date(
       new Date().toLocaleString("en-US", { timeZone: "Europe/Istanbul" })
     );
+    const eventDate = new Date(turkey);
+    if (turkey.getHours() >= 20) eventDate.setDate(eventDate.getDate() + 1);
+    eventDate.setHours(20, 0, 0, 0);
 
     const day = String(eventDate.getDate()).padStart(2, "0");
     const month = String(eventDate.getMonth() + 1).padStart(2, "0");
@@ -87,7 +85,7 @@ export default function VipOdemeonayContent() {
       });
     }
 
-    // Countdown timer — 6 Haziran 2026 20:00 (TR) sabit hedef
+    // Countdown timer — /katil her gün yenilenen seminer (sonraki 20:00 TR)
     const updateCountdown = () => {
       const nowMs = Date.now();
       const turkeyNow = new Date(
@@ -95,7 +93,9 @@ export default function VipOdemeonayContent() {
           timeZone: "Europe/Istanbul",
         })
       );
-      const target = new Date(KATIL_EVENT_YEAR, KATIL_EVENT_MONTH - 1, KATIL_EVENT_DAY, 20, 0, 0, 0);
+      const target = new Date(turkeyNow);
+      if (turkeyNow.getHours() >= 20) target.setDate(target.getDate() + 1);
+      target.setHours(20, 0, 0, 0);
 
       const diff = target.getTime() - turkeyNow.getTime();
       if (diff <= 0) return;

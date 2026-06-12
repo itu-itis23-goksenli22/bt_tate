@@ -61,11 +61,13 @@ export default function KayitBasariliContent({
     // Note: CompleteRegistration is already fired in RegistrationModal with
     // proper eventId for dedup. Do NOT fire again here to avoid duplicates.
 
-    // Countdown timer — /katil için 6 Haziran 2026 20:00 (TR) sabit hedef
+    // Countdown timer — /katil her gün yenilenen seminer (sonraki 20:00 TR)
     const updateCountdown = () => {
       const nowMs = Date.now();
       const turkeyNow = new Date(new Date(nowMs).toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
-      const target = new Date(2026, 6 - 1, 6, 20, 0, 0, 0);
+      const target = new Date(turkeyNow);
+      if (turkeyNow.getHours() >= 20) target.setDate(target.getDate() + 1);
+      target.setHours(20, 0, 0, 0);
 
       const diff = target.getTime() - turkeyNow.getTime();
       if (diff <= 0) return;
@@ -167,7 +169,7 @@ export default function KayitBasariliContent({
             {/* Zoom bildirim önizlemesi — kayıt başarılı olduğunda kullanıcıya
                 "şimdi e-postana şu mail gelecek" diyerek beklenti netleştirir.
                 herlastcall.com/natural-born-yapper-c referans alındı,
-                Türkçeleştirildi. /katil için 6 Haziran webinarına uyarlandı. */}
+                Türkçeleştirildi. /katil her gün yenilenen webinara uyarlandı. */}
             <div className="text-center mb-8 mt-8">
               <h2 className="font-extrabold text-white text-[22px] md:text-[30px] leading-tight mb-1">
                 Şimdi Sana{" "}

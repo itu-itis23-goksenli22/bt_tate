@@ -1,6 +1,6 @@
 // /katil — Paralel funnel variant'ı.
 // Ana funnel ile aynı sayfa yapısı, ama:
-//   - Farklı webinar (6 Haziran 2026, 20:00 — Zoom ID 81497341331)
+//   - Farklı webinar (her gün yenilenen 20:00 — Zoom ID 81497341331)
 //   - Form redirect → /katil/kayitbasarili
 //   - Meta CAPI content_name → "Katil Funnel Webinar" (analytics ayrımı)
 //   - Aynı pixel, aynı Stripe ürünü, aynı CompleteRegistration / Purchase
@@ -17,7 +17,6 @@ import RegistrationForm from "@/components/zoomkayit/RegistrationForm";
 const KATIL_WEBINAR_ID = "81497341331";
 const KATIL_SUCCESS_PATH = "/katil/kayitbasarili";
 const KATIL_CONTENT_NAME = "Katil Funnel Webinar";
-const KATIL_FIXED_DATE = "Cumartesi, 6 Haziran - Saat 20:00 (GMT+3)";
 const KATIL_CTA_TEXT = "ÜCRETSİZ YERİMİ AYIRT";
 
 // /katil headline blok'u — 3 farklı audience'a aynı anda hitap eden
@@ -45,7 +44,7 @@ export const metadata: Metadata = {
   title:
     "AI Scale | Yapay Zeka ile Startup Kur, Sistem Sat veya İşini 10X Büyüt",
   description:
-    "Kod bilmeden, teknik ekip ve büyük sermaye olmadan fikrini 30 günde yayında çalışan bir yazılıma çevir. Startup kur, işletmelere sistem sat, ya da kendi işini 10X büyüt. 6 Haziran Cumartesi 20:00.",
+    "Kod bilmeden, teknik ekip ve büyük sermaye olmadan fikrini 30 günde yayında çalışan bir yazılıma çevir. Startup kur, işletmelere sistem sat, ya da kendi işini 10X büyüt. Her gün canlı, saat 20:00.",
   openGraph: {
     title: "AI Scale | Yapay Zeka ile Startup Kur veya İşini 10X Büyüt",
     description:
@@ -77,19 +76,10 @@ export default function KatilPage() {
       <div className="bg-gradient-to-b from-black via-[#0a0a0a] to-black">
         <HeroSection headline={KATIL_HEADLINE} subheadline={KATIL_SUBHEADLINE} />
 
-        {/* Dikkat çekici tarih başlığı — sarı italic bold, oval YOK.
-            Aşağıdaki CountdownTimer'ın duplicate headline'ı boş string
-            ile gizlendi → sadece bu satır kalır. */}
-        <div className="text-center pt-2 pb-4 px-4">
-          <p className="text-gold italic font-extrabold text-2xl md:text-4xl leading-tight whitespace-nowrap tracking-tight">
-            6 Haziran Cumartesi · 20:00 (TR)
-          </p>
-        </div>
-
-        <CountdownTimer
-          targetDate={{ year: 2026, month: 6, day: 6 }}
-          headlineText=""
-        />
+        {/* Her gün yenilenen seminer — CountdownTimer prop'suz çağrılınca
+            "sonraki 20:00 (bugün/yarın)" rolling mantığını ve dinamik
+            "{gün} 20:00'da Canlı Webinar Başlıyor..." başlığını gösterir. */}
+        <CountdownTimer />
 
         {/* Register CTA text */}
         <p className="text-center text-gold font-semibold text-sm md:text-base mb-4 px-4">
@@ -101,7 +91,6 @@ export default function KatilPage() {
           webinarId={KATIL_WEBINAR_ID}
           successPath={KATIL_SUCCESS_PATH}
           contentName={KATIL_CONTENT_NAME}
-          fixedDateString={KATIL_FIXED_DATE}
           ctaText={KATIL_CTA_TEXT}
         />
 
@@ -150,16 +139,12 @@ export default function KatilPage() {
               Siz de Yerinizi Alın.
             </span>
           </h2>
-          <CountdownTimer
-            targetDate={{ year: 2026, month: 6, day: 6 }}
-            headlineText="6 Haziran Cumartesi 20:00'da Canlı Seminer Başlıyor..."
-          />
+          <CountdownTimer />
           <RegistrationForm
             eventType="Lead"
             webinarId={KATIL_WEBINAR_ID}
             successPath={KATIL_SUCCESS_PATH}
             contentName={KATIL_CONTENT_NAME}
-            fixedDateString={KATIL_FIXED_DATE}
             ctaText={KATIL_CTA_TEXT}
           />
         </div>
