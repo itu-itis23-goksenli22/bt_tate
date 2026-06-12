@@ -76,10 +76,14 @@ export default function KatilPage() {
       <div className="bg-gradient-to-b from-black via-[#0a0a0a] to-black">
         <HeroSection headline={KATIL_HEADLINE} subheadline={KATIL_SUBHEADLINE} />
 
-        {/* Her gün yenilenen seminer — CountdownTimer prop'suz çağrılınca
-            "sonraki 20:00 (bugün/yarın)" rolling mantığını ve dinamik
-            "{gün} 20:00'da Canlı Webinar Başlıyor..." başlığını gösterir. */}
-        <CountdownTimer />
+        {/* Her gün yenilenen seminer. startDate=13 Haziran → o tarihe kadar
+            "13 Haziran Cumartesi" gösterir, sonra her gün dinamik döner
+            ("{tarih} {gün} 20:00'da Canlı Seminer Başlıyor..."). */}
+        <CountdownTimer
+          eventNoun="Seminer"
+          showDate
+          startDate={{ year: 2026, month: 6, day: 13 }}
+        />
 
         {/* Register CTA text */}
         <p className="text-center text-gold font-semibold text-sm md:text-base mb-4 px-4">
@@ -91,6 +95,7 @@ export default function KatilPage() {
           webinarId={KATIL_WEBINAR_ID}
           successPath={KATIL_SUCCESS_PATH}
           contentName={KATIL_CONTENT_NAME}
+          startDate={{ year: 2026, month: 6, day: 13 }}
           ctaText={KATIL_CTA_TEXT}
         />
 
@@ -139,12 +144,17 @@ export default function KatilPage() {
               Siz de Yerinizi Alın.
             </span>
           </h2>
-          <CountdownTimer />
+          <CountdownTimer
+            eventNoun="Seminer"
+            showDate
+            startDate={{ year: 2026, month: 6, day: 13 }}
+          />
           <RegistrationForm
             eventType="Lead"
             webinarId={KATIL_WEBINAR_ID}
             successPath={KATIL_SUCCESS_PATH}
             contentName={KATIL_CONTENT_NAME}
+            startDate={{ year: 2026, month: 6, day: 13 }}
             ctaText={KATIL_CTA_TEXT}
           />
         </div>

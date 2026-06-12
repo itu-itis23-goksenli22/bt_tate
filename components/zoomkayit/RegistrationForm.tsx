@@ -14,6 +14,8 @@ interface RegistrationFormProps {
   successPath?: string;
   contentName?: string;
   fixedDateString?: string;
+  // Rolling başlangıç tabanı (örn. /katil 13 Haziran).
+  startDate?: { year: number; month: number; day: number };
   // CTA buton metni (variant'lar için, default: "EVET! YERİMİ AYIRT")
   ctaText?: string;
 }
@@ -24,6 +26,7 @@ export default function RegistrationForm({
   successPath,
   contentName,
   fixedDateString,
+  startDate,
   ctaText = "EVET! YERİMİ AYIRT",
 }: RegistrationFormProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -64,6 +67,7 @@ export default function RegistrationForm({
         successPath={successPath}
         contentName={contentName}
         fixedDateString={fixedDateString}
+        startDate={startDate}
       />
     </>
   );

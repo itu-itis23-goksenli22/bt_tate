@@ -12,6 +12,11 @@ const TURKEY_DAYS = [
   "Cumartesi",
 ];
 
+const TURKEY_MONTHS = [
+  "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+  "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık",
+];
+
 function getTurkeyNow(): Date {
   const now = new Date();
   const turkeyOffset = 3 * 60;
@@ -19,7 +24,12 @@ function getTurkeyNow(): Date {
   return new Date(now.getTime() + (turkeyOffset + localOffset) * 60000);
 }
 
-function getNextWebinar(): { targetLocal: Date; dayName: string } {
+function getNextWebinar(startFloor?: {
+  year: number;
+  month: number; // 1-12
+  day: number;
+  hour?: number;
+}): { targetLocal: Date; dayName: string; dateLabel: string } {
   const now = new Date();
   const turkeyOffset = 3 * 60;
   const localOffset = now.getTimezoneOffset();
@@ -33,12 +43,30 @@ function getNextWebinar(): { targetLocal: Date; dayName: string } {
     target.setDate(target.getDate() + 1);
   }
 
+  // Start floor — etkinlik başlangıcından önce o tarihi göster (örn. /katil
+  // 13 Haziran başlangıç). Başlangıç geçince saf rolling devam eder.
+  if (startFloor) {
+    const floor = new Date(
+      startFloor.year,
+      startFloor.month - 1,
+      startFloor.day,
+      startFloor.hour ?? 20,
+      0,
+      0,
+      0
+    );
+    if (target.getTime() < floor.getTime()) {
+      target.setTime(floor.getTime());
+    }
+  }
+
   const dayName = TURKEY_DAYS[target.getDay()];
+  const dateLabel = `${target.getDate()} ${TURKEY_MONTHS[target.getMonth()]}`;
 
   const targetLocal = new Date(
     target.getTime() - (turkeyOffset + localOffset) * 60000
   );
-  return { targetLocal, dayName };
+  return { targetLocal, dayName, dateLabel };
 }
 
 // Variant'lar için sabit hedef tarih hesabı (TR saatinde 20:00'a göre).
@@ -48,32 +76,42 @@ function getFixedWebinar(
   month: number, // 1-12
   day: number,
   hour: number = 20
-): { targetLocal: Date; dayName: string } {
+): { targetLocal: Date; dayName: string; dateLabel: string } {
   const now = new Date();
   const turkeyOffset = 3 * 60;
   const localOffset = now.getTimezoneOffset();
 
   const targetTurkey = new Date(year, month - 1, day, hour, 0, 0, 0);
   const dayName = TURKEY_DAYS[targetTurkey.getDay()];
+  const dateLabel = `${targetTurkey.getDate()} ${TURKEY_MONTHS[targetTurkey.getMonth()]}`;
   const targetLocal = new Date(
     targetTurkey.getTime() - (turkeyOffset + localOffset) * 60000
   );
-  return { targetLocal, dayName };
+  return { targetLocal, dayName, dateLabel };
 }
 
 interface CountdownTimerProps {
   // Variant'lar için sabit hedef tarih. Belirtilmezse "next 20:00" hesabı
   // çalışır (main funnel). Format: { year, month (1-12), day }.
-  // Örn: /katil için { year: 2026, month: 6, day: 6 }.
   targetDate?: { year: number; month: number; day: number };
+  // Rolling mantığa başlangıç tabanı — bu tarihten önce hep bu tarihi gösterir,
+  // sonra her gün dinamik döner. Örn: /katil için { year: 2026, month: 6, day: 13 }.
+  startDate?: { year: number; month: number; day: number };
   // Sabit tarihte gösterilecek üst metin. Belirtilmezse "{dayName} 20:00'da
-  // Canlı Webinar Başlıyor..." kullanılır.
+  // Canlı {eventNoun} Başlıyor..." kullanılır.
   headlineText?: string;
+  // Başlıkta tarih de gösterilsin mi (örn. "13 Haziran Cumartesi 20:00'da...").
+  showDate?: boolean;
+  // Başlıktaki etkinlik kelimesi ("Webinar" | "Seminer"). Default "Webinar".
+  eventNoun?: string;
 }
 
 export default function CountdownTimer({
   targetDate,
+  startDate,
   headlineText,
+  showDate = false,
+  eventNoun = "Webinar",
 }: CountdownTimerProps = {}) {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -82,6 +120,7 @@ export default function CountdownTimer({
     seconds: 0,
   });
   const [dayName, setDayName] = useState("");
+  const [dateLabel, setDateLabel] = useState("");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -90,12 +129,13 @@ export default function CountdownTimer({
     function updateTimer() {
       const now = new Date().getTime();
       // targetDate verilmişse sabit tarihe say, yoksa "next 20:00"
-      const { targetLocal, dayName: day } = targetDate
+      const { targetLocal, dayName: day, dateLabel: label } = targetDate
         ? getFixedWebinar(targetDate.year, targetDate.month, targetDate.day)
-        : getNextWebinar();
+        : getNextWebinar(startDate);
       const distance = targetLocal.getTime() - now;
 
       setDayName(day);
+      setDateLabel(label);
 
       if (distance > 0) {
         setTimeLeft({
@@ -126,11 +166,14 @@ export default function CountdownTimer({
   // headlineText="" (boş string) verilirse başlığı gizle — variant'lar
   // başka yerde tarih gösteriyorsa duplicate olmasın diye.
   const showHeadline = headlineText !== "";
+  // Opsiyonel tarih ön eki: "13 Haziran Cumartesi" → aksi halde sadece "Cumartesi"
+  const dayPart =
+    showDate && dateLabel ? `${dateLabel} ${dayName}` : dayName;
   const finalHeadline = headlineText
     ? headlineText
     : mounted && dayName
-      ? `${dayName} 20:00'da Canlı Webinar Başlıyor...`
-      : "20:00'da Canlı Webinar Başlıyor...";
+      ? `${dayPart} 20:00'da Canlı ${eventNoun} Başlıyor...`
+      : `20:00'da Canlı ${eventNoun} Başlıyor...`;
 
   return (
     <div className="text-center mb-6">

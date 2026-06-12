@@ -39,6 +39,9 @@ function getRollingWebinarDateTR(): string {
   );
   const target = new Date(turkey);
   if (turkey.getHours() >= 20) target.setDate(target.getDate() + 1);
+  // Başlangıç tabanı: 13 Haziran 2026'dan önce hep o tarihi göster.
+  const floor = new Date(2026, 5, 13, 20, 0, 0, 0);
+  if (target.getTime() < floor.getTime()) target.setTime(floor.getTime());
   const months = [
     "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
     "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık",

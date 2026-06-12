@@ -25,12 +25,19 @@ interface RegistrationModalProps {
   webinarId?: string;
   successPath?: string;
   contentName?: string;
-  // Sabit webinar tarihi (variant'lar için, örn. "6 Haziran 2026 20:00").
-  // Belirtilmezse "next 20:00 today/tomorrow" hesabı kullanılır.
+  // Sabit webinar tarihi (variant'lar için). Belirtilmezse "next 20:00
+  // today/tomorrow" hesabı kullanılır.
   fixedDateString?: string;
+  // Rolling mantığa başlangıç tabanı (örn. /katil 13 Haziran). Bu tarihten
+  // önce hep o tarihi gösterir, sonra her gün dinamik döner.
+  startDate?: { year: number; month: number; day: number };
 }
 
-function getEventDateString(): string {
+function getEventDateString(startFloor?: {
+  year: number;
+  month: number;
+  day: number;
+}): string {
   const now = new Date();
   const turkeyOffset = 3 * 60;
   const localOffset = now.getTimezoneOffset();
@@ -44,6 +51,14 @@ function getEventDateString(): string {
   // If past 20:00 Turkey time, show tomorrow's date
   if (turkeyNow.getHours() >= 20) {
     target.setDate(target.getDate() + 1);
+  }
+
+  // Başlangıç tabanı — etkinlik başlamadan önce o tarihi göster.
+  if (startFloor) {
+    const floor = new Date(
+      startFloor.year, startFloor.month - 1, startFloor.day, 20, 0, 0, 0
+    );
+    if (target.getTime() < floor.getTime()) target.setTime(floor.getTime());
   }
 
   const months = [
@@ -65,6 +80,7 @@ export default function RegistrationModal({
   successPath,
   contentName,
   fixedDateString,
+  startDate,
 }: RegistrationModalProps) {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
   // Telefon artık ZORUNLU DEĞİL — bonus hediye checkbox'ına tıklayan
@@ -80,8 +96,8 @@ export default function RegistrationModal({
 
   useEffect(() => {
     // fixedDateString verilmişse onu kullan, yoksa default "next 20:00" hesabı
-    setDateString(fixedDateString || getEventDateString());
-  }, [fixedDateString]);
+    setDateString(fixedDateString || getEventDateString(startDate));
+  }, [fixedDateString, startDate]);
 
   useEffect(() => {
     if (isOpen) {
