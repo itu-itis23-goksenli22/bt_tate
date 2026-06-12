@@ -67,7 +67,7 @@ export default function BasarilikayitPage() {
     <main className="min-h-screen bg-primary">
       <ViewContentTracker />
       <CountdownTimer />
-      <HeaderBar />
+      <HeaderBar title="BRITTANY NOOB" emoji="🇨🇦" />
 
       {/* Hero: Pricing + Value Stack */}
       <section className="py-10 md:py-16 bg-primary relative overflow-hidden">

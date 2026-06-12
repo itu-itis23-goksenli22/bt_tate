@@ -1,6 +1,12 @@
 "use client";
 
-export default function HeaderBar() {
+export default function HeaderBar({
+  title = "AI SCALE APP COMMUNITY",
+  emoji = "🚀",
+}: {
+  title?: string;
+  emoji?: string;
+}) {
   return (
     <header className="relative bg-black py-6 md:py-8 overflow-hidden">
       {/* Sparkle background effect */}
@@ -22,8 +28,8 @@ export default function HeaderBar() {
 
       <div className="relative z-10 text-center px-4">
         <h1 className="text-2xl md:text-4xl font-bold text-white tracking-wide flex items-center justify-center gap-2 md:gap-3 mb-3">
-          <span className="text-3xl md:text-4xl">🚀</span>
-          AI SCALE APP COMMUNITY
+          <span className="text-3xl md:text-4xl">{emoji}</span>
+          {title}
         </h1>
         <p className="text-white/70 text-sm md:text-base">
           Sorularınız mı var? <span className="font-bold text-white">AI Otomasyon ile İşletmeleri Dönüştürün</span>
