@@ -90,6 +90,21 @@ export default function PricingCard({
           </div>
         </div>
 
+        {/* İkinci CTA — 12 taksit alternatif satış linki (Shopier) */}
+        <div className="relative mb-6">
+          <a
+            href="https://www.shopier.com/aiscaleapp/47594464"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block"
+          >
+            <div className="btn-gold-solid relative overflow-hidden w-full text-center py-5 px-4 hover:scale-[1.02]">
+              <span className="block text-xs font-medium opacity-80 mb-1">💳 Taksit İmkanı</span>
+              <span className="block text-2xl md:text-3xl font-extrabold">12 TAKSİT İLE SATIN AL</span>
+            </div>
+          </a>
+        </div>
+
         <style jsx>{`
           @keyframes click-hint {
             0%, 100% { transform: scale(1); opacity: 1; }
