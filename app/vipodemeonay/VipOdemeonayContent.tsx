@@ -330,7 +330,7 @@ export default function VipOdemeonayContent() {
               <strong className="text-white">Zoom katılım linki</strong>{" "}
               gönderdik.{" "}
               <strong className="text-white">
-                Bu Akşam saat 20:00&apos;da
+                Bu Akşam saat 20:00&apos;de
               </strong>{" "}
               e-postandaki linke tıkla, Zoom açılacak ve canlı seminere
               katılacaksın. E-postayı bulamazsan{" "}
