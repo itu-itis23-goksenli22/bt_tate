@@ -289,7 +289,7 @@ function webinarWelcomeBody(
     ? `
     <div style="background:#fffbeb;border:2px solid #C19D44;padding:18px 20px;margin:20px 0;border-radius:8px;text-align:center;">
       <p style="margin:0 0 6px 0;color:#AA813C;font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;">
-        📅 Seminer Tarihi
+        ⏰ Seminer Zamanı
       </p>
       <p style="margin:0;color:#1a1a1a;font-size:20px;font-weight:800;">
         ${eventDateString}

@@ -30,27 +30,9 @@ function randomEventValue(): number {
   return parseFloat((Math.random() * 0.98 + 0.01).toFixed(2));
 }
 
-// /katil her gün yenilenen seminer — bir sonraki 20:00 (TR) tarihini
-// "13 Haziran Cumartesi · 20:00 (TR)" formatında döndürür. 20:00'ı geçtiyse
-// yarına sarkar (sayfalardaki rolling countdown ile birebir aynı mantık).
-function getRollingWebinarDateTR(): string {
-  const turkey = new Date(
-    new Date().toLocaleString("en-US", { timeZone: "Europe/Istanbul" })
-  );
-  const target = new Date(turkey);
-  if (turkey.getHours() >= 20) target.setDate(target.getDate() + 1);
-  // Başlangıç tabanı: 13 Haziran 2026'dan önce hep o tarihi göster.
-  const floor = new Date(2026, 5, 13, 20, 0, 0, 0);
-  if (target.getTime() < floor.getTime()) target.setTime(floor.getTime());
-  const months = [
-    "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
-    "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık",
-  ];
-  const days = [
-    "Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi",
-  ];
-  return `${target.getDate()} ${months[target.getMonth()]} ${days[target.getDay()]} · 20:00 (TR)`;
-}
+// /katil her gün yenilenen seminer — sabit, tarihsiz zaman metni.
+// Mailde "Bugün/Yarın" kullanılmaz (statik mail, okuma zamanı sorunu).
+const KATIL_EVENT_TIME = "Akşam saat 20:00'de";
 
 export async function POST(request: NextRequest) {
   try {
@@ -190,7 +172,7 @@ export async function POST(request: NextRequest) {
     // butonu gözüksün diye rolling (sonraki 20:00 TR) tarih string'i geçilir.
     // Ana funnel (auto-webinar) için undefined → tarih bloğu gizli kalır.
     const isKatil = webinarId === "81497341331";
-    const katilEventDate = isKatil ? getRollingWebinarDateTR() : undefined;
+    const katilEventDate = isKatil ? KATIL_EVENT_TIME : undefined;
     if (!isEticaret) {
       sendWebinarYoutubeEmail(
         email,
