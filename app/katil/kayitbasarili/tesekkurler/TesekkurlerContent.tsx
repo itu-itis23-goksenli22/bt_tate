@@ -22,9 +22,6 @@ export default function TesekkurlerContent() {
     const eventDate = new Date(turkey);
     if (turkey.getHours() >= 20) eventDate.setDate(eventDate.getDate() + 1);
     eventDate.setHours(20, 0, 0, 0);
-    // Başlangıç tabanı: 13 Haziran 2026'dan önce o tarihi göster.
-    const KATIL_FLOOR = new Date(2026, 5, 13, 20, 0, 0, 0);
-    if (eventDate.getTime() < KATIL_FLOOR.getTime()) eventDate.setTime(KATIL_FLOOR.getTime());
 
     const day = String(eventDate.getDate()).padStart(2, "0");
     const month = String(eventDate.getMonth() + 1).padStart(2, "0");
@@ -55,7 +52,6 @@ export default function TesekkurlerContent() {
       const target = new Date(turkeyNow);
       if (turkeyNow.getHours() >= 20) target.setDate(target.getDate() + 1);
       target.setHours(20, 0, 0, 0);
-      if (target.getTime() < KATIL_FLOOR.getTime()) target.setTime(KATIL_FLOOR.getTime());
 
       const diff = target.getTime() - turkeyNow.getTime();
       if (diff <= 0) return;

@@ -30,7 +30,6 @@ export default function VipOdemeonayContent() {
   const name = searchParams.get("name") || "VIP Üye";
   const email = searchParams.get("email") || "";
   const [webinarDate, setWebinarDate] = useState("");
-  const [webinarDay, setWebinarDay] = useState("");
   const [webinarFull, setWebinarFull] = useState("");
   const [registrationDate, setRegistrationDate] = useState("");
   const [calendarUrl, setCalendarUrl] = useState("");
@@ -41,33 +40,22 @@ export default function VipOdemeonayContent() {
   });
 
   useEffect(() => {
-    // /katil her gün yenilenen seminer — bir sonraki 20:00 (TR) hedefi
-    const dayNames = [
-      "Pazar",
-      "Pazartesi",
-      "Salı",
-      "Çarşamba",
-      "Perşembe",
-      "Cuma",
-      "Cumartesi",
-    ];
+    // /katil her gün yenilenen seminer — bir sonraki 20:00 (TR) hedefi.
+    // Tarih göstermek yerine "Bugün"/"Yarın" (20:00'ı geçtiyse yarın).
     const turkey = new Date(
       new Date().toLocaleString("en-US", { timeZone: "Europe/Istanbul" })
     );
     const eventDate = new Date(turkey);
     if (turkey.getHours() >= 20) eventDate.setDate(eventDate.getDate() + 1);
     eventDate.setHours(20, 0, 0, 0);
-    // Başlangıç tabanı: 13 Haziran 2026'dan önce o tarihi göster.
-    const KATIL_FLOOR = new Date(2026, 5, 13, 20, 0, 0, 0);
-    if (eventDate.getTime() < KATIL_FLOOR.getTime()) eventDate.setTime(KATIL_FLOOR.getTime());
 
     const day = String(eventDate.getDate()).padStart(2, "0");
     const month = String(eventDate.getMonth() + 1).padStart(2, "0");
     const year = eventDate.getFullYear();
 
-    setWebinarDate(`${day}.${month}.${year}`);
-    setWebinarDay(dayNames[eventDate.getDay()]);
-    setWebinarFull(`${day}.${month} ${dayNames[eventDate.getDay()]} 20:00`);
+    const rel = turkey.getHours() >= 20 ? "Yarın" : "Bugün";
+    setWebinarDate(rel);
+    setWebinarFull(`${rel} saat 20:00`);
 
     // Kayıt tarihi (bugünün tarihi)
     const tDay = String(turkey.getDate()).padStart(2, "0");
@@ -99,7 +87,6 @@ export default function VipOdemeonayContent() {
       const target = new Date(turkeyNow);
       if (turkeyNow.getHours() >= 20) target.setDate(target.getDate() + 1);
       target.setHours(20, 0, 0, 0);
-      if (target.getTime() < KATIL_FLOOR.getTime()) target.setTime(KATIL_FLOOR.getTime());
 
       const diff = target.getTime() - turkeyNow.getTime();
       if (diff <= 0) return;
@@ -329,7 +316,7 @@ export default function VipOdemeonayContent() {
               <strong className="text-white">Zoom katılım linki</strong>{" "}
               gönderdik.{" "}
               <strong className="text-white">
-                {webinarDate} {webinarDay} saat 20:00&apos;da
+                {webinarDate} saat 20:00&apos;da
               </strong>{" "}
               e-postandaki linke tıkla, Zoom açılacak ve canlı seminere
               katılacaksın. E-postayı bulamazsan{" "}
@@ -363,7 +350,7 @@ export default function VipOdemeonayContent() {
             style={{ background: GOLD_BG_SUBTLE }}
           >
             <p className="text-[#C19D44] font-extrabold text-[22px] md:text-[26px] mb-1">
-              {webinarDate} {webinarDay && `(${webinarDay})`}
+              {webinarDate}
             </p>
             <p className="text-white font-bold text-[16px] md:text-[18px] mb-5">
               Saat 20:00 (Türkiye Saati)

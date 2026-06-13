@@ -68,9 +68,6 @@ export default function KayitBasariliContent({
       const target = new Date(turkeyNow);
       if (turkeyNow.getHours() >= 20) target.setDate(target.getDate() + 1);
       target.setHours(20, 0, 0, 0);
-      // Başlangıç tabanı: 13 Haziran 2026'dan önce o tarihe say.
-      const floor = new Date(2026, 5, 13, 20, 0, 0, 0);
-      if (target.getTime() < floor.getTime()) target.setTime(floor.getTime());
 
       const diff = target.getTime() - turkeyNow.getTime();
       if (diff <= 0) return;
