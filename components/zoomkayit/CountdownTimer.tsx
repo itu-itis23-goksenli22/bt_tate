@@ -175,7 +175,7 @@ export default function CountdownTimer({
   // headlineText="" (boş string) verilirse başlığı gizle — variant'lar
   // başka yerde tarih gösteriyorsa duplicate olmasın diye.
   const showHeadline = headlineText !== "";
-  // Opsiyonel tarih ön eki: "13 Haziran Cumartesi" → aksi halde sadece "Cumartesi"
+  // showDate: "13 Haziran Cumartesi ..." | aksi halde sadece "{gün} ..."
   const dayPart =
     showDate && dateLabel ? `${dateLabel} ${dayName}` : dayName;
   const finalHeadline = headlineText

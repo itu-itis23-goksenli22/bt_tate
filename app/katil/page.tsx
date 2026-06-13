@@ -76,14 +76,11 @@ export default function KatilPage() {
       <div className="bg-gradient-to-b from-black via-[#0a0a0a] to-black">
         <HeroSection headline={KATIL_HEADLINE} subheadline={KATIL_SUBHEADLINE} />
 
-        {/* Her gün yenilenen seminer. startDate=13 Haziran → o tarihe kadar
-            "13 Haziran Cumartesi" gösterir, sonra her gün dinamik döner
-            ("{tarih} {gün} 20:00'da Canlı Seminer Başlıyor..."). */}
+        {/* Her gün yenilenen seminer. Başlık sabit "Akşam saat 20:00'de...",
+            sayaç bir sonraki 20:00'a (bugün/yarın) rolling sayar. */}
         <CountdownTimer
-          eventNoun="Seminer"
-          showDate
+          headlineText="Akşam saat 20:00'de Canlı Seminer Başlıyor..."
           hideDays
-          startDate={{ year: 2026, month: 6, day: 13 }}
         />
 
         {/* Register CTA text */}
@@ -146,10 +143,8 @@ export default function KatilPage() {
             </span>
           </h2>
           <CountdownTimer
-            eventNoun="Seminer"
-            showDate
+            headlineText="Akşam saat 20:00'de Canlı Seminer Başlıyor..."
             hideDays
-            startDate={{ year: 2026, month: 6, day: 13 }}
           />
           <RegistrationForm
             eventType="Lead"
