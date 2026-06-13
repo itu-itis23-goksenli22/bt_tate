@@ -136,7 +136,7 @@ export default function VipOdemeonayContent() {
         {/* 1. Gold Banner */}
         <div className="bg-[#C19D44] text-center py-3 px-4">
           <p className="text-black font-semibold text-[14px] md:text-[16px]">
-            🎉 VIP Üyeliğin Aktif — Seminer: {webinarFull || "..."}
+            🎉 VIP Üyeliğin Aktif — Seminer: Bu Akşam 20:00
           </p>
         </div>
 
@@ -330,7 +330,7 @@ export default function VipOdemeonayContent() {
               <strong className="text-white">Zoom katılım linki</strong>{" "}
               gönderdik.{" "}
               <strong className="text-white">
-                {webinarDate} {webinarDay} saat 20:00&apos;da
+                Bu Akşam saat 20:00&apos;da
               </strong>{" "}
               e-postandaki linke tıkla, Zoom açılacak ve canlı seminere
               katılacaksın. E-postayı bulamazsan{" "}
@@ -364,7 +364,7 @@ export default function VipOdemeonayContent() {
             style={{ background: GOLD_BG_SUBTLE }}
           >
             <p className="text-[#C19D44] font-extrabold text-[22px] md:text-[26px] mb-1">
-              {webinarDate} {webinarDay && `(${webinarDay})`}
+              Bu Akşam
             </p>
             <p className="text-white font-bold text-[16px] md:text-[18px] mb-5">
               Saat 20:00 (Türkiye Saati)
