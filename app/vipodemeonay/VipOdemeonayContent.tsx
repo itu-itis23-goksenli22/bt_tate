@@ -221,7 +221,7 @@ export default function VipOdemeonayContent() {
             >
               <iframe
                 className="absolute top-0 left-0 w-full h-full"
-                src="https://www.youtube.com/embed/cIbDH0lWMc0"
+                src="https://www.youtube.com/embed/qQbl1YPaI7k"
                 title="Seminerde Görüşürüz — Baturalp"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
