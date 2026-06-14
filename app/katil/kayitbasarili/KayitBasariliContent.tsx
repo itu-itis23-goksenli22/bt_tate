@@ -546,7 +546,7 @@ export default function KayitBasariliContent({
                   EVET, $27 VIP&apos;e Katılmak İstiyorum →
                 </div>
                 <div className="text-black/65 text-[13px] mt-2 font-semibold">
-                  Sadece $27 · Tek seferlik ödeme · <span className="text-black font-extrabold">✓ %100 Para İade Garantisi</span>
+                  Sadece $27 · Tek seferlik ödeme
                 </div>
               </div>
             </a>
@@ -593,7 +593,7 @@ function MainCheckoutCTA() {
             EVET, $27 VIP&apos;e Katılmak İstiyorum →
           </div>
           <div className="text-white/85 text-[13px] mt-2 font-semibold">
-            Sadece $27 · Tek seferlik ödeme · <span className="text-white font-extrabold">✓ %100 Para İade Garantisi</span>
+            Sadece $27 · Tek seferlik ödeme
           </div>
         </div>
       </a>
@@ -611,7 +611,7 @@ function CTABlock({ thankYouUrl: _thankYouUrl }: { thankYouUrl: string }) {
             EVET, $27 VIP&apos;e Katılmak İstiyorum →
           </div>
           <div className="text-black/65 text-[13px] mt-2 font-semibold">
-            Sadece $27 · Tek seferlik ödeme · <span className="text-black font-extrabold">✓ %100 Para İade Garantisi</span>
+            Sadece $27 · Tek seferlik ödeme
           </div>
         </div>
       </a>
