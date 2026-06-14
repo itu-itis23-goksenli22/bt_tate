@@ -160,6 +160,43 @@ export async function POST(request: NextRequest) {
         }
       }
 
+      // GoHighLevel — ödeme yapan kişiyi GHL'e it (best-effort, non-blocking).
+      // GHL native olarak harici Stripe Payment Link satışını görmez; bu push
+      // ile alıcı GHL Contacts'a düşer. Ürüne göre tag gönderilir:
+      //   $27 → vip_aldi | 29.900 → sonfirsat_aldi | 15.000 → kurs_aldi
+      // GHL workflow'unda "Add Tag" → {{inboundWebhookRequest.tag}} ile uygulanır.
+      // GHL_PURCHASE_WEBHOOK_URL ayrı workflow için; yoksa kayıt webhook'una düşer.
+      if (email) {
+        const ghlPurchaseUrl =
+          process.env.GHL_PURCHASE_WEBHOOK_URL ||
+          process.env.GHL_INBOUND_WEBHOOK_URL ||
+          "https://services.leadconnectorhq.com/hooks/HKKWM8kTRSbS4g6gWDwT/webhook-trigger/065f186b-a04a-47ab-9f9d-ba69b45b83c9";
+        const ghlTag = isSonfirsat
+          ? "sonfirsat_aldi"
+          : isVipUpsell
+            ? "vip_aldi"
+            : "kurs_aldi";
+        fetch(ghlPurchaseUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            first_name: nameParts[0] || "",
+            last_name: nameParts.slice(1).join(" ") || "",
+            name: customerName,
+            email,
+            phone: session.customer_details?.phone || "",
+            tag: ghlTag,
+            product: purchaseContentName,
+            value,
+            currency,
+            source: "stripe_purchase",
+          }),
+          signal: AbortSignal.timeout(5000),
+        })
+          .then((r) => console.log(`📡 GHL purchase push ${email} (${ghlTag}) → ${r.status}`))
+          .catch((err) => console.warn("⚠️ GHL purchase push failed:", err?.message || err));
+      }
+
       // Notify Hetzner purchase-tracker (fire-and-forget, non-blocking)
       // Hetzner downse veya yavaşsa Stripe webhook bloklanmaz — 5sn timeout
       if (email && process.env.HETZNER_API_URL && process.env.HETZNER_WEBHOOK_SECRET) {
