@@ -126,6 +126,10 @@ export default function KatilPage() {
         </div>
       </div>
 
+      {/* For Once In Your Life You Are Early — chart + Facebook analogy
+          (webinar badge'lerinin hemen altına taşındı) */}
+      <EarlyOpportunitySection />
+
       {/* Discover Section */}
       <DiscoverSection />
 
@@ -159,10 +163,6 @@ export default function KatilPage() {
 
       {/* FAQ Section */}
       <FAQSection />
-
-      {/* For Once In Your Life You Are Early — chart + Facebook analogy
-          (sayfanın en altında, footer'dan hemen önce — final FOMO push) */}
-      <EarlyOpportunitySection />
 
       {/* Footer */}
       <Footer />
