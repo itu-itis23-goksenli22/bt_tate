@@ -83,13 +83,8 @@ export default function RegistrationModal({
   startDate,
 }: RegistrationModalProps) {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
-  // Telefon artık ZORUNLU DEĞİL — bonus hediye checkbox'ına tıklayan
-  // kullanıcılar için açılır ve required olur. Aksi takdirde gizli kalır
-  // ve boş string olarak Zoom'a/CAPI'ye gider (Zoom phone field optional,
-  // Meta CAPI advanced matching da phone'u optional kabul eder).
-  // Karar: people don't want to give phone — checkbox = opt-in, daha
-  // yüksek conversion + telefon veren kullanıcılar daha kaliteli lead.
-  const [wantsBonus, setWantsBonus] = useState(false);
+  // Telefon artık DOĞRUDAN alınıyor — checkbox kaldırıldı, alan her zaman
+  // görünür ve zorunlu. Numara Zoom'a + Meta CAPI advanced matching'e gider.
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [dateString, setDateString] = useState("");
@@ -113,10 +108,9 @@ export default function RegistrationModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.email.trim()) return;
-    // Telefon sadece "VIP hediye + özel teklifler" checkbox'ı işaretliyse
-    // zorunlu. Aksi takdirde boş geçebilir.
-    if (wantsBonus && !formData.phone.trim()) {
-      setErrorMsg("Özel teklifler için lütfen telefon numaranızı girin.");
+    // Telefon artık doğrudan ve zorunlu alınıyor.
+    if (!formData.phone.trim()) {
+      setErrorMsg("Lütfen telefon numaranızı girin.");
       return;
     }
 
@@ -292,87 +286,29 @@ export default function RegistrationModal({
               />
             </div>
 
-            {/* Bonus hediye checkbox — kullanıcı işaretlemediği sürece
-                telefon istemiyoruz. İşaretlerse telefon alanı açılır ve
-                zorunlu olur. Default unchecked → daha az sürtünme,
-                conversion artar. SMS dili yok, "VIP hediye + özel
-                teklifler" angle'ı. */}
-            <label
-              className={`group relative flex items-start gap-3 cursor-pointer select-none rounded-xl border-2 p-4 transition-all duration-300 hover:-translate-y-0.5 ${
-                wantsBonus
-                  ? "border-gold bg-gold/10 shadow-gold-glow"
-                  : "border-gold/50 bg-gradient-to-r from-gold/10 to-transparent animate-pulse-gold hover:border-gold hover:from-gold/20 hover:shadow-gold-glow-hover"
-              }`}
-            >
-              {/* "ÜCRETSİZ" rozeti — yalnızca işaretsizken zıplayarak dikkat çeker */}
-              {!wantsBonus && (
-                <span className="absolute -top-2.5 right-3 rounded-full bg-gold px-2 py-0.5 text-[10px] font-extrabold tracking-wide text-black shadow animate-bounce">
-                  ÜCRETSİZ 🎁
-                </span>
-              )}
-              <input
-                type="checkbox"
-                checked={wantsBonus}
-                onChange={(e) => {
-                  setWantsBonus(e.target.checked);
-                  // Checkbox kapatılırsa telefon alanını da temizle ki
-                  // kullanıcı yanlışlıkla göndermesin
-                  if (!e.target.checked) {
-                    setFormData((prev) => ({ ...prev, phone: "" }));
-                  }
-                }}
-                className="mt-0.5 w-5 h-5 rounded border-2 border-gold/60 bg-white/5 text-gold focus:ring-2 focus:ring-gold/40 cursor-pointer accent-gold flex-shrink-0 transition-transform group-hover:scale-110"
+            {/* Telefon — doğrudan ve zorunlu alınır (checkbox kaldırıldı).
+                react-phone-number-input — ülke dropdown'ında bayrak + E.164
+                formatı. Default ülke TR. Çıktı: "+905XX..." E.164 formatında.
+                Numara Zoom kaydına + Meta CAPI advanced matching'e gider. */}
+            <div>
+              <label className="block text-white text-sm font-medium mb-2">
+                Telefon
+              </label>
+              <PhoneInput
+                international
+                defaultCountry="TR"
+                countryCallingCodeEditable={false}
+                placeholder="5XX XXX XX XX"
+                value={formData.phone}
+                onChange={(value) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    phone: value || "",
+                  }))
+                }
+                className="zk-phone-input flex items-center w-full px-4 py-3.5 bg-white/5 border border-white/20 rounded-xl text-white focus-within:border-gold focus-within:ring-1 focus-within:ring-gold transition-colors text-base [&_.PhoneInputInput]:bg-transparent [&_.PhoneInputInput]:border-none [&_.PhoneInputInput]:outline-none [&_.PhoneInputInput]:text-white [&_.PhoneInputInput]:placeholder-white/40 [&_.PhoneInputInput]:ml-2 [&_.PhoneInputCountryIcon]:shadow-none"
               />
-              <span className="flex flex-col">
-                <span className="text-white text-sm leading-snug font-medium">
-                  🎁 Sadece üyelere{" "}
-                  <strong className="text-gold">özel tekliflerden</strong>{" "}
-                  haberdar olmak istiyorum
-                </span>
-                <span
-                  className={`text-xs mt-1 font-semibold transition-colors duration-300 ${
-                    wantsBonus
-                      ? "text-green-400"
-                      : "text-gold/80 group-hover:text-gold"
-                  }`}
-                >
-                  {wantsBonus
-                    ? "✓ Harika! VIP hediyen için telefonunu bırak 👇"
-                    : "👆 Tıkla & üyelere özel sürpriz hediyeni kap"}
-                </span>
-              </span>
-            </label>
-
-            {/* Telefon alanı — yalnızca checkbox işaretliyse görünür */}
-            {wantsBonus && (
-              <div>
-                <label className="block text-white text-sm font-medium mb-2">
-                  Telefon
-                </label>
-                {/* react-phone-number-input — ülke dropdown'ında bayrak + E.164 formatı.
-                    Default ülke TR, kullanıcı dropdown'dan başka ülke seçince otomatik
-                    ülke kodu + maskeleme uygular. Çıktı: "+905XX..." E.164 formatında. */}
-                <PhoneInput
-                  international
-                  defaultCountry="TR"
-                  countryCallingCodeEditable={false}
-                  placeholder="5XX XXX XX XX"
-                  value={formData.phone}
-                  onChange={(value) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      phone: value || "",
-                    }))
-                  }
-                  className="zk-phone-input flex items-center w-full px-4 py-3.5 bg-white/5 border border-white/20 rounded-xl text-white focus-within:border-gold focus-within:ring-1 focus-within:ring-gold transition-colors text-base [&_.PhoneInputInput]:bg-transparent [&_.PhoneInputInput]:border-none [&_.PhoneInputInput]:outline-none [&_.PhoneInputInput]:text-white [&_.PhoneInputInput]:placeholder-white/40 [&_.PhoneInputInput]:ml-2 [&_.PhoneInputCountryIcon]:shadow-none"
-                />
-                <p className="text-white/40 text-[11px] mt-2 leading-relaxed">
-                  Numaranı yalnızca üyelere özel sınırlı teklifleri
-                  göndermek için kullanacağız. İstediğin zaman
-                  ayrılabilirsin.
-                </p>
-              </div>
-            )}
+            </div>
 
             {errorMsg && (
               <p className="text-danger text-sm text-center">{errorMsg}</p>
@@ -413,12 +349,9 @@ export default function RegistrationModal({
           </form>
 
           <p className="text-white/40 text-[11px] leading-relaxed text-center mt-6">
-            Bu formu göndererek, AI Scale&apos;in size{" "}
-            <strong className="text-white/60">e-posta, SMS ve WhatsApp</strong>{" "}
-            yoluyla etkinlik hatırlatmaları, bilgilendirme ve{" "}
-            <strong className="text-white/60">pazarlama/tanıtım mesajları</strong>{" "}
-            göndermesine açıkça onay veriyorsunuz.
-            Gizlilik Politikamız ve Kullanım Koşullarımız geçerlidir.
+            🎁 Sadece üyelere{" "}
+            <strong className="text-white/60">özel tekliflerden</strong>{" "}
+            haberdar olmak istiyorum.
           </p>
         </div>
       </div>
