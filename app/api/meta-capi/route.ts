@@ -20,7 +20,7 @@ function generateFbp(): string {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { eventName, sourceUrl, customData, eventId, eventTime, email, firstName, lastName, fbc: bodyFbc, fbp: bodyFbp } = body;
+    const { eventName, sourceUrl, customData, eventId, eventTime, email, firstName, lastName, phone, fbc: bodyFbc, fbp: bodyFbp } = body;
 
     if (!eventName) {
       return NextResponse.json({ error: 'eventName required' }, { status: 400 });
@@ -56,6 +56,7 @@ export async function POST(request: NextRequest) {
         email: email || undefined,
         firstName: firstName || undefined,
         lastName: lastName || undefined,
+        phone: phone || undefined,
         clientIpAddress: clientIp,
         clientUserAgent: userAgent,
         fbc: fbc || undefined,
