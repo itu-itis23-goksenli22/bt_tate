@@ -197,6 +197,9 @@ export default function VipEmbeddedCheckout({
             name,
             source,
             variant: priceVariant,
+            // fbc/fbp → Stripe metadata → webhook → Purchase CAPI (EMQ için)
+            fbc: getCookie("_fbc"),
+            fbp: getCookie("_fbp"),
           }),
         });
 

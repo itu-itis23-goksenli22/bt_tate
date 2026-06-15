@@ -120,6 +120,10 @@ export async function POST(request: NextRequest) {
           email: email || undefined,
           firstName: nameParts[0] || "",
           lastName: nameParts.slice(1).join(" ") || "",
+          // fbc/fbp checkout sırasında metadata'ya yazıldı → Purchase event'i
+          // bunları taşır, Event Match Quality artar (Click ID coverage).
+          fbc: (session.metadata as Record<string, string>)?.fbc || undefined,
+          fbp: (session.metadata as Record<string, string>)?.fbp || undefined,
         },
         customData: {
           value,

@@ -63,6 +63,8 @@ export async function POST(request: NextRequest) {
     name?: string;
     source?: string;
     variant?: string;
+    fbc?: string;
+    fbp?: string;
   } = {};
   try {
     body = await request.json();
@@ -109,6 +111,10 @@ export async function POST(request: NextRequest) {
         variant,
         upsell: cfg.upsellTag,
         ...(body.name ? { customer_name: body.name } : {}),
+        // Meta CAPI Purchase event'inin fbc/fbp taşıması için (EMQ artışı).
+        // Webhook bunları okuyup sendCAPIEvent userData'ya koyar.
+        ...(body.fbc ? { fbc: body.fbc } : {}),
+        ...(body.fbp ? { fbp: body.fbp } : {}),
       },
     });
 
