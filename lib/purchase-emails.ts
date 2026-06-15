@@ -227,8 +227,9 @@ function vipUpsellBody(): string {
         📅 Seminere Mutlaka Katıl
       </p>
       <p style="margin:0 0 6px 0;color:#444;">
-        Seminer linkin sana ayrı bir mailde gönderildi. Zoom üzerinden canlı
-        yayın — saat geldiğinde tek tıkla katılacaksın.
+        Seminere katılmak için sana gelen <strong>Zoom kayıt onay mailini</strong>
+        kontrol et — katılım linkin orada. Seminer saatinde o maildeki linke
+        tıklayarak canlı yayına gir.
       </p>
       <div style="background:#fff8e1;border-left:4px solid #f5b400;padding:12px 14px;margin:14px 0 0 0;border-radius:4px;">
         <p style="margin:0;color:#5a4a00;font-size:13px;">
@@ -295,7 +296,7 @@ function webinarWelcomeBody(
         ${eventDateString}
       </p>
       <p style="margin:8px 0 0 0;color:#666;font-size:13px;">
-        Zoom katılım linkin ayrı bir mailde gönderildi.
+        Katılmak için sana gelen Zoom kayıt onay mailini kontrol et — katılım linkin orada.
       </p>
     </div>`
     : "";
@@ -332,7 +333,8 @@ function webinarWelcomeBody(
       derin ele alacağız.
     </p>
     <p>
-      Seminer linkin sana ayrı bir mailde gönderildi. Aklına takılan bir şey
+      Seminere katılmak için sana gelen Zoom kayıt onay mailini kontrol et —
+      katılım linkin orada. Aklına takılan bir şey
       olursa <a href="mailto:info@aiscale.app" style="color:#2563eb;">info@aiscale.app</a>
       adresinden bize ulaşabilirsin.
     </p>
