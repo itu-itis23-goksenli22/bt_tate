@@ -79,7 +79,7 @@ export default function KatilPage() {
         {/* Her gün yenilenen seminer. Başlık sabit "Akşam saat 20:00'de...",
             sayaç bir sonraki 20:00'a (bugün/yarın) rolling sayar. */}
         <CountdownTimer
-          headlineText="Akşam saat 20:00'de Canlı Seminer Başlıyor..."
+          headlineText="Akşam saat 20:00'de (Türkiye Saati / GMT+3) Canlı Seminer Başlıyor..."
           hideDays
         />
 
