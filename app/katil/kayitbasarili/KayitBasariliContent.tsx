@@ -94,17 +94,6 @@ export default function KayitBasariliContent({
       <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
       <main className="min-h-screen bg-[#0c0c0c] text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-        {/* Sticky duyuru çubuğu — sayfa boyunca üstte sabit, sağdan sola akar */}
-        <style>{`@keyframes katil-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }`}</style>
-        <div className="sticky top-0 z-50 overflow-hidden border-b border-black/10 shadow-[0_2px_12px_rgba(0,0,0,0.4)]" style={{ background: CTA_GRADIENT }}>
-          <div className="inline-flex whitespace-nowrap py-2" style={{ animation: "katil-marquee 27.5s linear infinite" }}>
-            {Array.from({ length: 6 }).map((_, i) => (
-              <span key={i} className="text-black font-bold text-[15px] md:text-[19px] tracking-tight inline-flex items-center justify-center min-w-[100vw] px-4">
-                Bu tek seferlik <span className="font-extrabold">&nbsp;$27&nbsp;</span> özel teklif, bu sayfadan ayrıldığın anda sona erecek.
-              </span>
-            ))}
-          </div>
-        </div>
         <div className="max-w-[680px] mx-auto px-4 pt-5 pb-8">
           {/* 1. BEKLE! Hero — VIP paketi tarif eden urgency bloğu */}
           <div className="text-center mb-8 mt-1">
