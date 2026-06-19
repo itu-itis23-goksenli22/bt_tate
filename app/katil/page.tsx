@@ -147,7 +147,7 @@ export default function KatilPage() {
             </span>
           </h2>
           <CountdownTimer
-            headlineText="Akşam saat 20:00'de Canlı Seminer Başlıyor..."
+            headlineText="Akşam saat 20:00'de (Türkiye Saati / GMT+3) Canlı Seminer Başlıyor..."
             hideDays
           />
           <RegistrationForm
