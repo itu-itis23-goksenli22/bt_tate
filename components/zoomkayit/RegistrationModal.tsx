@@ -69,7 +69,7 @@ function getEventDateString(startFloor?: {
     "Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi",
   ];
 
-  return `${days[target.getDay()]}, ${target.getDate()} ${months[target.getMonth()]} - Saat 20:00 (GMT+3)`;
+  return `${days[target.getDay()]}, ${target.getDate()} ${months[target.getMonth()]} - Saat 20:00 (Türkiye Saati)`;
 }
 
 export default function RegistrationModal({
@@ -246,7 +246,7 @@ export default function RegistrationModal({
           {/* Date box */}
           <div className="border-2 border-dashed border-gold/50 bg-gold/10 rounded-xl p-4 text-center mb-6">
             <p className="text-gold font-semibold text-base md:text-lg">
-              {dateString || "Pazar - Saat 20:00 (GMT+3)"}
+              {dateString || "Pazar - Saat 20:00 (Türkiye Saati)"}
             </p>
           </div>
 

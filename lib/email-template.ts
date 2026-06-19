@@ -47,7 +47,7 @@ export const generateWebinarEmailHTML = (name?: string) => {
                 <tr>
                   <td style="text-align: center; padding: 20px; background: rgba(59, 130, 246, 0.15); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.3);">
                     <p style="margin: 0; color: #ffffff; font-size: 16px; font-weight: bold;">
-                      📅 Her Pazar - Saat 20:00 (GMT+3)
+                      📅 Her Pazar - Saat 20:00 (Türkiye Saati)
                     </p>
                   </td>
                 </tr>
