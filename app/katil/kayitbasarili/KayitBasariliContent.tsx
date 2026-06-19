@@ -101,7 +101,7 @@ export default function KayitBasariliContent({
             <h1
               className="font-black tracking-tight leading-none mb-[14px]"
               style={{
-                fontSize: "clamp(58px, 12.8vw, 102px)",
+                fontSize: "clamp(49px, 10.9vw, 87px)",
                 color: "#C19D44",
                 textShadow: "0 4px 24px rgba(193,157,68,0.25)",
               }}
@@ -128,7 +128,7 @@ export default function KayitBasariliContent({
             </div>
 
             {/* Ana mesaj */}
-            <p className="text-white text-[22px] md:text-[30px] font-bold leading-snug mb-6 max-w-2xl mx-auto">
+            <p className="text-white text-[19px] md:text-[26px] font-bold leading-snug mb-6 max-w-2xl mx-auto">
               <span style={{ color: "#D5B356" }} className="whitespace-nowrap">
                 $2.000+ değerindeki VIP paketi
               </span>
@@ -140,7 +140,7 @@ export default function KayitBasariliContent({
             </p>
 
             {/* Highlight: $27 */}
-            <p className="text-white text-[24px] md:text-[34px] font-extrabold leading-tight mb-8 max-w-2xl mx-auto">
+            <p className="text-white text-[20px] md:text-[29px] font-extrabold leading-tight mb-8 max-w-2xl mx-auto">
               Ve seminere başlamadan, sana bunu{" "}
               <span
                 className="inline-block px-3 py-1 rounded-[6px] text-black mx-1 align-middle"
