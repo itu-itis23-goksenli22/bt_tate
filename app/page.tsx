@@ -28,9 +28,6 @@ const BonusSection = dynamic(
 const FAQSection = dynamic(
   () => import("@/components/zoomkayit/FAQSection")
 );
-const SatisfactionSection = dynamic(
-  () => import("@/components/zoomkayit/SatisfactionSection")
-);
 const Footer = dynamic(
   () => import("@/components/zoomkayit/Footer")
 );
@@ -107,9 +104,6 @@ export default function HomePage() {
       {/* For Once In Your Life You Are Early — chart + Facebook analogy
           (sayfanın en altında, footer'dan hemen önce — final FOMO push) */}
       <EarlyOpportunitySection />
-
-      {/* Müşteri memnuniyeti / 5 yıldız sosyal kanıt */}
-      <SatisfactionSection />
 
       {/* Footer */}
       <Footer />
