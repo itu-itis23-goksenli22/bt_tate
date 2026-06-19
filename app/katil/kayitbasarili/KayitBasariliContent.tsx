@@ -439,22 +439,6 @@ export default function KayitBasariliContent({
                 Bu teklif <strong>kalıcı olarak kaybolur.</strong>
               </p>
 
-              {/* Sarı $27 fiyat vurgusu */}
-              <div className="text-center mb-6">
-                <span
-                  className="inline-block px-5 md:px-6 py-2 md:py-2.5 rounded-md font-extrabold"
-                  style={{
-                    background: "#FFD200",
-                    color: "#0a1429",
-                    fontSize: "clamp(22px, 4.5vw, 32px)",
-                    boxShadow:
-                      "0 0 0 3px #FFD200, 0 6px 24px -8px rgba(255,210,0,0.65)",
-                  }}
-                >
-                  Bugün SADECE $27
-                </span>
-              </div>
-
               {/* Lacivert mini-section — Stripe iframe ve trust signals */}
               <div
                 className="rounded-xl px-1.5 md:px-5 py-5 md:py-6 -mx-1 md:-mx-3"
