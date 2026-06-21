@@ -9,7 +9,15 @@ import {
 
 const stripe = new Stripe("sk_placeholder");
 
-const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "";
+// Birden fazla Stripe hesabı destekleniyor (TL hesabı + yeni USD hesabı).
+// Her hesabın kendi webhook signing secret'ı var; gelen imzayı her ikisine
+// karşı deneriz, hangisi doğrularsa o hesabın event'i kabul edilir.
+//   STRIPE_WEBHOOK_SECRET      → ana (TL) hesap
+//   STRIPE_WEBHOOK_SECRET_USD  → yeni USD hesabı (Payment Link'ler)
+const WEBHOOK_SECRETS = [
+  process.env.STRIPE_WEBHOOK_SECRET,
+  process.env.STRIPE_WEBHOOK_SECRET_USD,
+].filter((s): s is string => Boolean(s));
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,27 +28,33 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing signature" }, { status: 400 });
     }
 
-    if (!WEBHOOK_SECRET) {
-      console.error("STRIPE_WEBHOOK_SECRET env var is not set!");
+    if (WEBHOOK_SECRETS.length === 0) {
+      console.error("No Stripe webhook secret env var is set!");
       return NextResponse.json(
         { error: "Webhook secret not configured" },
         { status: 500 }
       );
     }
 
-    // Verify webhook using Stripe SDK
-    let event: Stripe.Event;
-    try {
-      event = stripe.webhooks.constructEvent(body, signature, WEBHOOK_SECRET);
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Unknown error";
+    // Verify webhook using Stripe SDK — gelen imzayı tüm hesap secret'larına
+    // karşı dene; ilk doğrulayan kazanır. Hiçbiri tutmazsa 400 döner.
+    let event: Stripe.Event | null = null;
+    let lastError = "Unknown error";
+    for (const secret of WEBHOOK_SECRETS) {
+      try {
+        event = stripe.webhooks.constructEvent(body, signature, secret);
+        break;
+      } catch (err: unknown) {
+        lastError = err instanceof Error ? err.message : "Unknown error";
+      }
+    }
+    if (!event) {
       console.error(
-        `Stripe signature verification failed: ${message}`,
-        `Secret starts with: ${WEBHOOK_SECRET.substring(0, 10)}...`,
+        `Stripe signature verification failed against all secrets: ${lastError}`,
         `Signature header: ${signature.substring(0, 30)}...`
       );
       return NextResponse.json(
-        { error: "Invalid signature", detail: message },
+        { error: "Invalid signature", detail: lastError },
         { status: 400 }
       );
     }
