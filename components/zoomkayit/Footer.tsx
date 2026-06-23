@@ -32,6 +32,10 @@ export default function Footer() {
         <p className="text-white/30 text-sm">
           &copy; {new Date().getFullYear()} AI Scale. Tüm hakları saklıdır.
         </p>
+
+        <p className="text-white/25 text-xs mt-3">
+          Dijital ürün olduğu için iade yoktur.
+        </p>
       </div>
     </footer>
   );
