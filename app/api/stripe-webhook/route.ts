@@ -101,8 +101,8 @@ export async function POST(request: NextRequest) {
         ?.variant || "";
       const isVipUpsell =
         metadataVariant === "vip" ||
-        // $27 = 2700 cent (Payment Link fallback — metadata.variant set etmez)
-        (ccyLower === "usd" && amountForCheck === 2700);
+        // $9.90 = 990 cent (Payment Link fallback — metadata.variant set etmez)
+        (ccyLower === "usd" && amountForCheck === 990);
       const isSonfirsat =
         metadataVariant === "sonfirsat" ||
         // 29.900 TL = 2.990.000 kuruş (legacy Payment Link fallback)
@@ -181,7 +181,7 @@ export async function POST(request: NextRequest) {
       // GoHighLevel — ödeme yapan kişiyi GHL'e it (best-effort, non-blocking).
       // GHL native olarak harici Stripe Payment Link satışını görmez; bu push
       // ile alıcı GHL Contacts'a düşer. Ürüne göre tag gönderilir:
-      //   $27 → vip_aldi | 29.900 → sonfirsat_aldi | 15.000 → kurs_aldi
+      //   $9.90 → vip_aldi | 29.900 → sonfirsat_aldi | 15.000 → kurs_aldi
       // GHL workflow'unda "Add Tag" → {{inboundWebhookRequest.tag}} ile uygulanır.
       // GHL_PURCHASE_WEBHOOK_URL ayrı workflow için; yoksa kayıt webhook'una düşer.
       if (email) {

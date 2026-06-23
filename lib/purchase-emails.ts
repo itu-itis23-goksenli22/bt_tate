@@ -6,11 +6,6 @@ const FROM = "AI Scale <info@aiscale.app>";
 const NOTION_LINK =
   "https://www.notion.so/Yapay-Zeka-Ba-lang-Paketi-2aea3d46179c81f28341ea38e05b15f8?source=copy_link";
 
-// /sonfirsat 29.900 TL paketi için Skool/community giriş linki.
-// Şimdilik NOTION_LINK'in aynısı; gerçek topluluk linki gelince
-// güncellenecek (kullanıcı sonra söyleyecek).
-const SONFIRSAT_COMMUNITY_LINK = NOTION_LINK;
-
 /**
  * Wraps body HTML in a clean responsive email shell.
  */
@@ -64,11 +59,12 @@ function courseWelcomeBody(): string {
       şablonu kendi Notion alanına kopyalayabilirsin.)
     </p>
     <div style="background:#fff8e1;border-left:4px solid #f5b400;padding:14px 16px;margin:24px 0;border-radius:4px;">
-      <p style="margin:0 0 6px 0;"><strong>⚠️ Çok Önemli Bir Not:</strong></p>
+      <p style="margin:0 0 6px 0;"><strong>⚠️ Eğitim Platformuna Nasıl Katılırsın?</strong></p>
       <p style="margin:0;">
-        Tüm bu eğitim içeriklerine ve videolara ulaşabilmek için önce <strong>Skoola</strong>'ya giriş yapmalısın.
-        Skoola giriş linkin sana gönderdiğimiz diğer mailde yer alıyor. Lütfen önce o link üzerinden
-        kaydını tamamla ve platforma giriş yap.
+        Tüm eğitim içeriklerine ve videolara erişim <strong>Skool</strong> üzerinden.
+        Skool'dan sana gelen <strong>davet/giriş mailini</strong> kontrol et — platforma
+        o mail üzerinden katılabilirsin. (Yukarıdaki <strong>Yapay Zeka Başlangıç Paketi</strong>
+        hediyene ise hemen erişebilirsin.)
       </p>
     </div>
     <p>
@@ -123,20 +119,14 @@ function sonfirsatWelcomeBody(): string {
         şablonlar, scriptler, mesajlaşma çerçeveleri.</li>
     </ul>
 
-    <p style="margin:24px 0;">
-      <a href="${SONFIRSAT_COMMUNITY_LINK}"
-         style="display:inline-block;background:#1a1a1a;color:#ffffff;padding:14px 22px;border-radius:8px;text-decoration:none;font-weight:600;">
-        👉 Topluluğa ve Eğitim İçeriklerine Eriş
-      </a>
-    </p>
-
     <div style="background:#fff8e1;border-left:4px solid #f5b400;padding:14px 16px;margin:24px 0;border-radius:4px;">
-      <p style="margin:0 0 6px 0;"><strong>⚠️ Önemli Not:</strong></p>
+      <p style="margin:0 0 6px 0;"><strong>⚠️ Platforma Nasıl Katılırsın?</strong></p>
       <p style="margin:0;">
-        Tüm eğitim içeriklerine ve canlı topluluk oturumlarına
-        erişebilmek için yukarıdaki butona tıkla. Aklında soru olursa
-        topluluk içindeki kanallardan direkt ekiple iletişime
-        geçebilirsin.
+        Topluluğa ve eğitim içeriklerine erişimin <strong>Skool</strong> üzerinden.
+        Skool'dan sana gelen <strong>davet/giriş mailini</strong> kontrol et — platforma
+        o mail üzerinden katılabilirsin. Aklında soru olursa
+        <a href="mailto:info@aiscale.app" style="color:#AA813C;">info@aiscale.app</a>
+        adresinden ulaşabilirsin.
       </p>
     </div>
 
@@ -161,7 +151,7 @@ export async function sendSonfirsatWelcomeEmail(to: string) {
 }
 
 /* ─────────────────────────────────────────────────────────────────────
- * 2) VIP Upsell — $27 alıcıları (yeni versiyon — /vipodemeonay
+ * 2) VIP Upsell — $9.90 alıcıları (yeni versiyon — /vipodemeonay
  *    sayfasındaki paket/seminer akışıyla birebir uyumlu).
  *    İçerik 3 kart: (1) Yapay Zeka Başlangıç Paketi'ne eriş,
  *    (2) Bonus Eğitim Video Serisi, (3) Seminere mutlaka katıl.
@@ -265,6 +255,9 @@ export async function sendVipUpsellEmail(to: string) {
  *    Sadece aiscale tarafına atılıyor (eticaret webinar'a değil).
  * ───────────────────────────────────────────────────────────────────── */
 const YOUTUBE_CHANNEL = "https://www.youtube.com/@baturalp.tunali";
+// Seminere kadar izlenmesi istenen özel video (tıklanınca YouTube'da açılır).
+const FEATURED_VIDEO = "https://www.youtube.com/watch?v=ctwwfr1ifSg&t=86s";
+const FEATURED_VIDEO_THUMB = "https://img.youtube.com/vi/ctwwfr1ifSg/hqdefault.jpg";
 
 function webinarWelcomeBody(
   firstName: string,
@@ -310,27 +303,24 @@ function webinarWelcomeBody(
     ${dateBlock}
     ${detailButton}
     <div style="background:#f0f9ff;border-left:4px solid #2563eb;padding:14px 16px;margin:20px 0;border-radius:4px;">
-      <p style="margin:0 0 6px 0;"><strong>🎬 Seminere Kadar Bunu İzle</strong></p>
+      <p style="margin:0 0 6px 0;"><strong>🎬 Seminere Kadar Bu Videoyu İzle</strong></p>
       <p style="margin:0;">
-        Baturalp Tunalı'nın YouTube kanalında <strong>yapay zeka, otomasyon ve
-        ölçeklenme</strong> üzerine onlarca pratik video var. Seminerden önce 1-2
-        video izleyenler içeriği çok daha iyi yakalıyor — temel kavramları
-        zaten oturmuş halde geliyorlar.
+        Seminerden en yüksek faydayı almak için, seminere kadar aşağıdaki videoyu
+        izlemeni öneririz — temel kavramlar zaten oturmuş halde gelirsin.
       </p>
     </div>
-    <p style="margin:24px 0;text-align:center;">
-      <a href="${YOUTUBE_CHANNEL}"
-         style="display:inline-block;background:#FF0000;color:#ffffff;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;">
-        ▶ YouTube Kanalını Ziyaret Et
+    <p style="margin:20px 0;text-align:center;">
+      <a href="${FEATURED_VIDEO}" style="text-decoration:none;">
+        <img src="${FEATURED_VIDEO_THUMB}" alt="Videoyu izle" width="480"
+             style="max-width:100%;border-radius:10px;display:block;margin:0 auto 12px;border:1px solid #d6e4f5;" />
+        <span style="display:inline-block;background:#FF0000;color:#ffffff;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:700;">
+          ▶ Videoyu İzle
+        </span>
       </a>
     </p>
     <p style="color:#555;font-size:13px;text-align:center;">
+      Daha fazla içerik için kanalımız:
       <a href="${YOUTUBE_CHANNEL}" style="color:#555;">${YOUTUBE_CHANNEL}</a>
-    </p>
-    <p>
-      <strong>Önerimiz:</strong> Yapay zeka ile ilgili son 2-3 videoyu izle,
-      hangi konuların seni yakaladığını gör — seminerde bu konuları çok daha
-      derin ele alacağız.
     </p>
     <p>
       Seminere katılmak için sana gelen Zoom kayıt onay mailini kontrol et —

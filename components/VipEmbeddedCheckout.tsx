@@ -92,7 +92,7 @@ async function fireFunnelEvent(
 }
 
 const FALLBACK_CHECKOUT_URL =
-  "https://buy.stripe.com/00w28s6ukedT9MZ4Tm3wQ0D";
+  "https://buy.stripe.com/cNi8wQ4mcb1HcZb71u3wQ0s";
 
 let stripePromise: Promise<StripeJs | null> | null = null;
 function getStripePromise() {
@@ -151,7 +151,7 @@ interface Props {
 
 // Variant başına funnel event value'su (browser pixel + CAPI customData)
 const VARIANT_VALUES: Record<"vip" | "sonfirsat", { value: number; currency: string }> = {
-  vip: { value: 27, currency: "USD" },
+  vip: { value: 9.90, currency: "USD" },
   sonfirsat: { value: 29900, currency: "TRY" },
 };
 
