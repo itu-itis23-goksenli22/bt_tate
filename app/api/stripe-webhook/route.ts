@@ -14,9 +14,11 @@ const stripe = new Stripe("sk_placeholder");
 // karşı deneriz, hangisi doğrularsa o hesabın event'i kabul edilir.
 //   STRIPE_WEBHOOK_SECRET      → ana (TL) hesap
 //   STRIPE_WEBHOOK_SECRET_USD  → yeni USD hesabı (Payment Link'ler)
+//   STRIPE_WEBHOOK_SECRET_2    → USD hesabının env'deki gerçek adı (alias)
 const WEBHOOK_SECRETS = [
   process.env.STRIPE_WEBHOOK_SECRET,
   process.env.STRIPE_WEBHOOK_SECRET_USD,
+  process.env.STRIPE_WEBHOOK_SECRET_2,
 ].filter((s): s is string => Boolean(s));
 
 export async function POST(request: NextRequest) {
