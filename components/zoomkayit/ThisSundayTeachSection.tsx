@@ -27,7 +27,7 @@ export default function ThisSundayTeachSection() {
             kuracağını öğrenmelisin.
           </p>
           <p className="text-gold font-semibold text-[16px] md:text-[18px]">
-            Bu Pazar 20:00'da sana tam olarak nasıl yapılacağını göstereceğiz:
+            Bu Pazar 19:00'da sana tam olarak nasıl yapılacağını göstereceğiz:
           </p>
         </div>
 

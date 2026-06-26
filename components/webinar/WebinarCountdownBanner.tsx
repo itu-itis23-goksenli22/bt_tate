@@ -38,7 +38,7 @@ export default function WebinarCountdownBanner() {
 
     const nextWebinar = new Date(turkey);
     nextWebinar.setDate(turkey.getDate() + daysUntilNext);
-    nextWebinar.setHours(20, 0, 0, 0);
+    nextWebinar.setHours(19, 0, 0, 0);
 
     return nextWebinar;
   };
@@ -105,7 +105,7 @@ export default function WebinarCountdownBanner() {
 
           {/* Next session info - Date and Time */}
           <div className="hidden md:block bg-black text-white px-4 py-1 rounded-full font-bold text-sm uppercase">
-            {formatDate(nextWebinarDate)} - AKŞAM 20:00
+            {formatDate(nextWebinarDate)} - AKŞAM 19:00
           </div>
         </div>
       </div>

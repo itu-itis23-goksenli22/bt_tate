@@ -36,10 +36,10 @@ function getNextWebinar(startFloor?: {
   const turkeyNow = getTurkeyNow();
 
   const target = new Date(turkeyNow);
-  target.setHours(20, 0, 0, 0);
+  target.setHours(19, 0, 0, 0);
 
-  // If it's already past 20:00 today in Turkey, target tomorrow
-  if (turkeyNow.getHours() >= 20) {
+  // If it's already past 19:00 today in Turkey, target tomorrow
+  if (turkeyNow.getHours() >= 19) {
     target.setDate(target.getDate() + 1);
   }
 
@@ -50,7 +50,7 @@ function getNextWebinar(startFloor?: {
       startFloor.year,
       startFloor.month - 1,
       startFloor.day,
-      startFloor.hour ?? 20,
+      startFloor.hour ?? 19,
       0,
       0,
       0
@@ -69,13 +69,13 @@ function getNextWebinar(startFloor?: {
   return { targetLocal, dayName, dateLabel };
 }
 
-// Variant'lar için sabit hedef tarih hesabı (TR saatinde 20:00'a göre).
+// Variant'lar için sabit hedef tarih hesabı (TR saatinde 19:00'a göre).
 // /katil gibi tek seferlik etkinlikler için tarih + saat sabitlenir.
 function getFixedWebinar(
   year: number,
   month: number, // 1-12
   day: number,
-  hour: number = 20
+  hour: number = 19
 ): { targetLocal: Date; dayName: string; dateLabel: string } {
   const now = new Date();
   const turkeyOffset = 3 * 60;
@@ -91,16 +91,16 @@ function getFixedWebinar(
 }
 
 interface CountdownTimerProps {
-  // Variant'lar için sabit hedef tarih. Belirtilmezse "next 20:00" hesabı
+  // Variant'lar için sabit hedef tarih. Belirtilmezse "next 19:00" hesabı
   // çalışır (main funnel). Format: { year, month (1-12), day }.
   targetDate?: { year: number; month: number; day: number };
   // Rolling mantığa başlangıç tabanı — bu tarihten önce hep bu tarihi gösterir,
   // sonra her gün dinamik döner. Örn: /katil için { year: 2026, month: 6, day: 13 }.
   startDate?: { year: number; month: number; day: number };
-  // Sabit tarihte gösterilecek üst metin. Belirtilmezse "{dayName} 20:00'da
+  // Sabit tarihte gösterilecek üst metin. Belirtilmezse "{dayName} 19:00'da
   // Canlı {eventNoun} Başlıyor..." kullanılır.
   headlineText?: string;
-  // Başlıkta tarih de gösterilsin mi (örn. "13 Haziran Cumartesi 20:00'da...").
+  // Başlıkta tarih de gösterilsin mi (örn. "13 Haziran Cumartesi 19:00'da...").
   showDate?: boolean;
   // Başlıktaki etkinlik kelimesi ("Webinar" | "Seminer"). Default "Webinar".
   eventNoun?: string;
@@ -131,7 +131,7 @@ export default function CountdownTimer({
 
     function updateTimer() {
       const now = new Date().getTime();
-      // targetDate verilmişse sabit tarihe say, yoksa "next 20:00"
+      // targetDate verilmişse sabit tarihe say, yoksa "next 19:00"
       const { targetLocal, dayName: day, dateLabel: label } = targetDate
         ? getFixedWebinar(targetDate.year, targetDate.month, targetDate.day)
         : getNextWebinar(startDate);
@@ -181,8 +181,8 @@ export default function CountdownTimer({
   const finalHeadline = headlineText
     ? headlineText
     : mounted && dayName
-      ? `${dayPart} 20:00'da Canlı ${eventNoun} Başlıyor...`
-      : `20:00'da Canlı ${eventNoun} Başlıyor...`;
+      ? `${dayPart} 19:00'da Canlı ${eventNoun} Başlıyor...`
+      : `19:00'da Canlı ${eventNoun} Başlıyor...`;
 
   return (
     <div className="text-center mb-6">

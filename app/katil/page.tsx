@@ -1,6 +1,6 @@
 // /katil — Paralel funnel variant'ı.
 // Ana funnel ile aynı sayfa yapısı, ama:
-//   - Farklı webinar (her gün yenilenen 20:00 — Zoom ID 81497341331)
+//   - Farklı webinar (her gün yenilenen 19:00 — Zoom ID 81497341331)
 //   - Form redirect → /katil/kayitbasarili
 //   - Meta CAPI content_name → "Katil Funnel Webinar" (analytics ayrımı)
 //   - Aynı pixel, aynı Stripe ürünü, aynı CompleteRegistration / Purchase
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   title:
     "AI Scale | Yapay Zeka ile Startup Kur, Sistem Sat veya İşini 10X Büyüt",
   description:
-    "Kod bilmeden, teknik ekip ve büyük sermaye olmadan fikrini 30 günde yayında çalışan bir yazılıma çevir. Startup kur, işletmelere sistem sat, ya da kendi işini 10X büyüt. Her gün canlı, saat 20:00.",
+    "Kod bilmeden, teknik ekip ve büyük sermaye olmadan fikrini 30 günde yayında çalışan bir yazılıma çevir. Startup kur, işletmelere sistem sat, ya da kendi işini 10X büyüt. Her gün canlı, saat 19:00.",
   openGraph: {
     title: "AI Scale | Yapay Zeka ile Startup Kur veya İşini 10X Büyüt",
     description:
@@ -76,10 +76,10 @@ export default function KatilPage() {
       <div className="bg-gradient-to-b from-black via-[#0a0a0a] to-black">
         <HeroSection headline={KATIL_HEADLINE} subheadline={KATIL_SUBHEADLINE} />
 
-        {/* Her gün yenilenen seminer. Başlık sabit "Akşam saat 20:00'de...",
-            sayaç bir sonraki 20:00'a (bugün/yarın) rolling sayar. */}
+        {/* Her gün yenilenen seminer. Başlık sabit "Akşam saat 19:00'de...",
+            sayaç bir sonraki 19:00'a (bugün/yarın) rolling sayar. */}
         <CountdownTimer
-          headlineText="Akşam saat 20:00'de (Türkiye Saati) Canlı Seminer Başlıyor..."
+          headlineText="Akşam saat 19:00'de (Türkiye Saati) Canlı Seminer Başlıyor..."
           hideDays
         />
 
@@ -147,7 +147,7 @@ export default function KatilPage() {
             </span>
           </h2>
           <CountdownTimer
-            headlineText="Akşam saat 20:00'de (Türkiye Saati) Canlı Seminer Başlıyor..."
+            headlineText="Akşam saat 19:00'de (Türkiye Saati) Canlı Seminer Başlıyor..."
             hideDays
           />
           <RegistrationForm

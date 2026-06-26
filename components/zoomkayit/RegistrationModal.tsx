@@ -25,7 +25,7 @@ interface RegistrationModalProps {
   webinarId?: string;
   successPath?: string;
   contentName?: string;
-  // Sabit webinar tarihi (variant'lar için). Belirtilmezse "next 20:00
+  // Sabit webinar tarihi (variant'lar için). Belirtilmezse "next 19:00
   // today/tomorrow" hesabı kullanılır.
   fixedDateString?: string;
   // Rolling mantığa başlangıç tabanı (örn. /katil 13 Haziran). Bu tarihten
@@ -46,10 +46,10 @@ function getEventDateString(startFloor?: {
   );
 
   const target = new Date(turkeyNow);
-  target.setHours(20, 0, 0, 0);
+  target.setHours(19, 0, 0, 0);
 
-  // If past 20:00 Turkey time, show tomorrow's date
-  if (turkeyNow.getHours() >= 20) {
+  // If past 19:00 Turkey time, show tomorrow's date
+  if (turkeyNow.getHours() >= 19) {
     target.setDate(target.getDate() + 1);
   }
 
@@ -69,7 +69,7 @@ function getEventDateString(startFloor?: {
     "Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi",
   ];
 
-  return `${days[target.getDay()]}, ${target.getDate()} ${months[target.getMonth()]} - Saat 20:00 (Türkiye Saati)`;
+  return `${days[target.getDay()]}, ${target.getDate()} ${months[target.getMonth()]} - Saat 19:00 (Türkiye Saati)`;
 }
 
 export default function RegistrationModal({
@@ -90,7 +90,7 @@ export default function RegistrationModal({
   const [dateString, setDateString] = useState("");
 
   useEffect(() => {
-    // fixedDateString verilmişse onu kullan, yoksa default "next 20:00" hesabı
+    // fixedDateString verilmişse onu kullan, yoksa default "next 19:00" hesabı
     setDateString(fixedDateString || getEventDateString(startDate));
   }, [fixedDateString, startDate]);
 
@@ -246,7 +246,7 @@ export default function RegistrationModal({
           {/* Date box */}
           <div className="border-2 border-dashed border-gold/50 bg-gold/10 rounded-xl p-4 text-center mb-6">
             <p className="text-gold font-semibold text-base md:text-lg">
-              {dateString || "Pazar - Saat 20:00 (Türkiye Saati)"}
+              {dateString || "Pazar - Saat 19:00 (Türkiye Saati)"}
             </p>
           </div>
 

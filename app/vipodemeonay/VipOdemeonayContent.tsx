@@ -59,7 +59,7 @@ export default function VipOdemeonayContent() {
     if (currentHour >= 20) {
       eventDate.setDate(eventDate.getDate() + 1);
     }
-    eventDate.setHours(20, 0, 0, 0);
+    eventDate.setHours(19, 0, 0, 0);
 
     const day = String(eventDate.getDate()).padStart(2, "0");
     const month = String(eventDate.getMonth() + 1).padStart(2, "0");
@@ -67,7 +67,7 @@ export default function VipOdemeonayContent() {
 
     setWebinarDate(`${day}.${month}.${year}`);
     setWebinarDay(dayNames[eventDate.getDay()]);
-    setWebinarFull(`${day}.${month} ${dayNames[eventDate.getDay()]} 20:00`);
+    setWebinarFull(`${day}.${month} ${dayNames[eventDate.getDay()]} 19:00`);
 
     // Kayıt tarihi (bugünün tarihi)
     const tDay = String(turkey.getDate()).padStart(2, "0");
@@ -97,10 +97,10 @@ export default function VipOdemeonayContent() {
         })
       );
       const target = new Date(turkeyNow);
-      if (turkeyNow.getHours() >= 20) {
+      if (turkeyNow.getHours() >= 19) {
         target.setDate(target.getDate() + 1);
       }
-      target.setHours(20, 0, 0, 0);
+      target.setHours(19, 0, 0, 0);
 
       const diff = target.getTime() - turkeyNow.getTime();
       if (diff <= 0) return;
@@ -136,7 +136,7 @@ export default function VipOdemeonayContent() {
         {/* 1. Gold Banner */}
         <div className="bg-[#C19D44] text-center py-3 px-4">
           <p className="text-black font-semibold text-[14px] md:text-[16px]">
-            🎉 VIP Üyeliğin Aktif — Seminer: Bu Akşam 20:00
+            🎉 VIP Üyeliğin Aktif — Seminer: Bu Akşam 19:00
           </p>
         </div>
 
@@ -330,7 +330,7 @@ export default function VipOdemeonayContent() {
               <strong className="text-white">Zoom katılım linki</strong>{" "}
               gönderdik.{" "}
               <strong className="text-white">
-                Bu Akşam saat 20:00&apos;de
+                Bu Akşam saat 19:00&apos;de
               </strong>{" "}
               e-postandaki linke tıkla, Zoom açılacak ve canlı seminere
               katılacaksın. E-postayı bulamazsan{" "}
@@ -367,7 +367,7 @@ export default function VipOdemeonayContent() {
               Bu Akşam
             </p>
             <p className="text-white font-bold text-[16px] md:text-[18px] mb-5">
-              Saat 20:00 (Türkiye Saati)
+              Saat 19:00 (Türkiye Saati)
             </p>
             <p className="text-white/80 text-[14px] md:text-[15px] leading-relaxed">
               💻 Zoom linki{" "}

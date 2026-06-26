@@ -40,22 +40,22 @@ export default function VipOdemeonayContent() {
   });
 
   useEffect(() => {
-    // /katil her gün yenilenen seminer — bir sonraki 20:00 (TR) hedefi.
-    // Tarih göstermek yerine "Bugün"/"Yarın" (20:00'ı geçtiyse yarın).
+    // /katil her gün yenilenen seminer — bir sonraki 19:00 (TR) hedefi.
+    // Tarih göstermek yerine "Bugün"/"Yarın" (19:00'ı geçtiyse yarın).
     const turkey = new Date(
       new Date().toLocaleString("en-US", { timeZone: "Europe/Istanbul" })
     );
     const eventDate = new Date(turkey);
-    if (turkey.getHours() >= 20) eventDate.setDate(eventDate.getDate() + 1);
-    eventDate.setHours(20, 0, 0, 0);
+    if (turkey.getHours() >= 19) eventDate.setDate(eventDate.getDate() + 1);
+    eventDate.setHours(19, 0, 0, 0);
 
     const day = String(eventDate.getDate()).padStart(2, "0");
     const month = String(eventDate.getMonth() + 1).padStart(2, "0");
     const year = eventDate.getFullYear();
 
-    const rel = turkey.getHours() >= 20 ? "Yarın" : "Bugün";
+    const rel = turkey.getHours() >= 19 ? "Yarın" : "Bugün";
     setWebinarDate(rel);
-    setWebinarFull(`${rel} saat 20:00`);
+    setWebinarFull(`${rel} saat 19:00`);
 
     // Kayıt tarihi (bugünün tarihi)
     const tDay = String(turkey.getDate()).padStart(2, "0");
@@ -76,7 +76,7 @@ export default function VipOdemeonayContent() {
       });
     }
 
-    // Countdown timer — /katil her gün yenilenen seminer (sonraki 20:00 TR)
+    // Countdown timer — /katil her gün yenilenen seminer (sonraki 19:00 TR)
     const updateCountdown = () => {
       const nowMs = Date.now();
       const turkeyNow = new Date(
@@ -85,8 +85,8 @@ export default function VipOdemeonayContent() {
         })
       );
       const target = new Date(turkeyNow);
-      if (turkeyNow.getHours() >= 20) target.setDate(target.getDate() + 1);
-      target.setHours(20, 0, 0, 0);
+      if (turkeyNow.getHours() >= 19) target.setDate(target.getDate() + 1);
+      target.setHours(19, 0, 0, 0);
 
       const diff = target.getTime() - turkeyNow.getTime();
       if (diff <= 0) return;
@@ -316,7 +316,7 @@ export default function VipOdemeonayContent() {
               <strong className="text-white">Zoom katılım linki</strong>{" "}
               gönderdik.{" "}
               <strong className="text-white">
-                {webinarDate} saat 20:00&apos;da
+                {webinarDate} saat 19:00&apos;da
               </strong>{" "}
               e-postandaki linke tıkla, Zoom açılacak ve canlı seminere
               katılacaksın. E-postayı bulamazsan{" "}
@@ -353,7 +353,7 @@ export default function VipOdemeonayContent() {
               {webinarDate}
             </p>
             <p className="text-white font-bold text-[16px] md:text-[18px] mb-5">
-              Saat 20:00 (Türkiye Saati)
+              Saat 19:00 (Türkiye Saati)
             </p>
             <p className="text-white/80 text-[14px] md:text-[15px] leading-relaxed">
               💻 Zoom linki{" "}

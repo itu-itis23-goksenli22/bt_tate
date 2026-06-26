@@ -16,7 +16,7 @@ const faqs = [
   {
     question: "Seminere nasıl katılırım?",
     answer:
-      "Kayıt olduktan sonra Zoom seminer davetiyesi e-posta adresinize otomatik olarak gönderilecek. Etkinlik günü 20:00'da linke tıklayarak katılabilirsiniz.",
+      "Kayıt olduktan sonra Zoom seminer davetiyesi e-posta adresinize otomatik olarak gönderilecek. Etkinlik günü 19:00'da linke tıklayarak katılabilirsiniz.",
   },
   {
     question: "Kayıt olduktan sonra ne olacak?",

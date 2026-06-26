@@ -65,10 +65,10 @@ export default function KayitBasariliContent({
       const nowMs = Date.now();
       const turkeyNow = new Date(new Date(nowMs).toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
       const target = new Date(turkeyNow);
-      if (turkeyNow.getHours() >= 20) {
+      if (turkeyNow.getHours() >= 19) {
         target.setDate(target.getDate() + 1);
       }
-      target.setHours(20, 0, 0, 0);
+      target.setHours(19, 0, 0, 0);
 
       const diff = target.getTime() - turkeyNow.getTime();
       if (diff <= 0) return;

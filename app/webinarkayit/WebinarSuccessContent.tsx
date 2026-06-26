@@ -16,12 +16,12 @@ export default function WebinarSuccessContent() {
     const turkey = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
     const currentHour = turkey.getHours();
 
-    // Seminer her gün 20:00'da. Saat 20:00 geçtiyse yarını göster.
+    // Seminer her gün 19:00'da. Saat 19:00 geçtiyse yarını göster.
     const eventDate = new Date(turkey);
     if (currentHour >= 20) {
       eventDate.setDate(eventDate.getDate() + 1);
     }
-    eventDate.setHours(20, 0, 0, 0);
+    eventDate.setHours(19, 0, 0, 0);
 
     const day = String(eventDate.getDate()).padStart(2, "0");
     const month = String(eventDate.getMonth() + 1).padStart(2, "0");
@@ -102,7 +102,7 @@ export default function WebinarSuccessContent() {
                   </div>
                   <div>
                     <p className="text-white/60 text-sm">Saat</p>
-                    <p className="text-white font-semibold text-lg">20:00 (Türkiye Saati)</p>
+                    <p className="text-white font-semibold text-lg">19:00 (Türkiye Saati)</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-4">

@@ -32,7 +32,7 @@ function randomEventValue(): number {
 
 // /katil her gün yenilenen seminer — sabit, tarihsiz zaman metni.
 // Mailde "Bugün/Yarın" kullanılmaz (statik mail, okuma zamanı sorunu).
-const KATIL_EVENT_TIME = "Akşam saat 20:00'de";
+const KATIL_EVENT_TIME = "Akşam saat 19:00'de";
 
 export async function POST(request: NextRequest) {
   try {
@@ -169,7 +169,7 @@ export async function POST(request: NextRequest) {
     // 3. YouTube engagement email — sadece aiscale (eticaret webinar ID değilse)
     const isEticaret = webinarId === "86257770515";
     // /katil her gün yenilenen seminer. Mailde tarih bloğu + tesekkurler
-    // butonu gözüksün diye rolling (sonraki 20:00 TR) tarih string'i geçilir.
+    // butonu gözüksün diye rolling (sonraki 19:00 TR) tarih string'i geçilir.
     // Ana funnel (auto-webinar) için undefined → tarih bloğu gizli kalır.
     const isKatil = webinarId === "81497341331";
     const katilEventDate = isKatil ? KATIL_EVENT_TIME : undefined;

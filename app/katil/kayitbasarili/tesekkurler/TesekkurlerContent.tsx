@@ -16,12 +16,12 @@ export default function TesekkurlerContent() {
   const [countdown, setCountdown] = useState({ hours: "00", minutes: "00", seconds: "00" });
 
   useEffect(() => {
-    // /katil her gün yenilenen seminer — bir sonraki 20:00 (TR) hedefi
-    // (ana funnel ile aynı "today/tomorrow 20:00" rolling mantığı).
+    // /katil her gün yenilenen seminer — bir sonraki 19:00 (TR) hedefi
+    // (ana funnel ile aynı "today/tomorrow 19:00" rolling mantığı).
     const turkey = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
     const eventDate = new Date(turkey);
-    if (turkey.getHours() >= 20) eventDate.setDate(eventDate.getDate() + 1);
-    eventDate.setHours(20, 0, 0, 0);
+    if (turkey.getHours() >= 19) eventDate.setDate(eventDate.getDate() + 1);
+    eventDate.setHours(19, 0, 0, 0);
 
     const day = String(eventDate.getDate()).padStart(2, "0");
     const month = String(eventDate.getMonth() + 1).padStart(2, "0");
@@ -45,13 +45,13 @@ export default function TesekkurlerContent() {
       });
     }
 
-    // Countdown timer — /katil her gün yenilenen seminer (sonraki 20:00 TR)
+    // Countdown timer — /katil her gün yenilenen seminer (sonraki 19:00 TR)
     const updateCountdown = () => {
       const nowMs = Date.now();
       const turkeyNow = new Date(new Date(nowMs).toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
       const target = new Date(turkeyNow);
-      if (turkeyNow.getHours() >= 20) target.setDate(target.getDate() + 1);
-      target.setHours(20, 0, 0, 0);
+      if (turkeyNow.getHours() >= 19) target.setDate(target.getDate() + 1);
+      target.setHours(19, 0, 0, 0);
 
       const diff = target.getTime() - turkeyNow.getTime();
       if (diff <= 0) return;
@@ -84,7 +84,7 @@ export default function TesekkurlerContent() {
           <div className="inline-flex whitespace-nowrap py-2" style={{ animation: "tesekkur-marquee 27.5s linear infinite" }}>
             {Array.from({ length: 6 }).map((_, i) => (
               <span key={i} className="text-black font-bold text-[15px] md:text-[19px] tracking-tight inline-flex items-center justify-center min-w-[100vw] px-4">
-                📅 Webinara Akşam 20:00&apos;de ZOOM üzerinden katılmayı unutmayın
+                📅 Webinara Akşam 19:00&apos;de ZOOM üzerinden katılmayı unutmayın
               </span>
             ))}
           </div>
@@ -129,7 +129,7 @@ export default function TesekkurlerContent() {
             </div>
             <p className="text-white/70 text-[14px] md:text-[15px] leading-relaxed">
               E-posta adresine bir <strong className="text-white">Zoom katılım linki</strong> gönderdik.{" "}
-              <strong className="text-white">Akşam saat 20:00{"'"}da</strong>{" "}
+              <strong className="text-white">Akşam saat 19:00{"'"}da</strong>{" "}
               e-postandaki linke tıkla, Zoom açılacak ve canlı seminere katılacaksın.
               E-postayı bulamazsan <strong className="text-white">spam/gereksiz</strong> klasörünü de kontrol et.
             </p>
@@ -239,7 +239,7 @@ export default function TesekkurlerContent() {
               Akşam
             </p>
             <p className="text-white font-bold text-[16px] md:text-[18px] mb-5">
-              Saat 20:00 (Türkiye Saati)
+              Saat 19:00 (Türkiye Saati)
             </p>
             <p className="text-white/80 text-[14px] md:text-[15px] leading-relaxed">
               💻 Zoom linki <strong className="text-white">e-postanızda</strong> — seminer saati geldiğinde tek tıkla katılın.

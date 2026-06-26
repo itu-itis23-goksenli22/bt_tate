@@ -61,13 +61,13 @@ export default function KayitBasariliContent({
     // Note: CompleteRegistration is already fired in RegistrationModal with
     // proper eventId for dedup. Do NOT fire again here to avoid duplicates.
 
-    // Countdown timer — /katil her gün yenilenen seminer (sonraki 20:00 TR)
+    // Countdown timer — /katil her gün yenilenen seminer (sonraki 19:00 TR)
     const updateCountdown = () => {
       const nowMs = Date.now();
       const turkeyNow = new Date(new Date(nowMs).toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
       const target = new Date(turkeyNow);
-      if (turkeyNow.getHours() >= 20) target.setDate(target.getDate() + 1);
-      target.setHours(20, 0, 0, 0);
+      if (turkeyNow.getHours() >= 19) target.setDate(target.getDate() + 1);
+      target.setHours(19, 0, 0, 0);
 
       const diff = target.getTime() - turkeyNow.getTime();
       if (diff <= 0) return;

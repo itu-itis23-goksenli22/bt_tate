@@ -276,7 +276,7 @@ function webinarWelcomeBody(
       </a>
     </p>`
     : "";
-  // eventDateString verilen funnel'lar (örn. /katil — rolling sonraki 20:00)
+  // eventDateString verilen funnel'lar (örn. /katil — rolling sonraki 19:00)
   // için tarih bloğu gösterilir; ana funnel (auto-webinar) için geçilmez ve
   // bu blok gizlenir.
   const dateBlock = eventDateString
@@ -336,7 +336,7 @@ export async function sendWebinarYoutubeEmail(
   to: string,
   firstName?: string,
   // Tarihli etkinlik (örn. /katil rolling) için "13 Haziran Cumartesi
-  // 20:00 (TR)" gibi string. Belirtilmezse mailde tarih bloğu gizlenir
+  // 19:00 (TR)" gibi string. Belirtilmezse mailde tarih bloğu gizlenir
   // (ana funnel her gün auto-webinar yaptığı için tarih sabit değil).
   eventDateString?: string
 ) {

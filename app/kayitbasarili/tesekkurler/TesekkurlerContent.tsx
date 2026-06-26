@@ -26,7 +26,7 @@ export default function TesekkurlerContent() {
     if (currentHour >= 20) {
       eventDate.setDate(eventDate.getDate() + 1);
     }
-    eventDate.setHours(20, 0, 0, 0);
+    eventDate.setHours(19, 0, 0, 0);
 
     const day = String(eventDate.getDate()).padStart(2, "0");
     const month = String(eventDate.getMonth() + 1).padStart(2, "0");
@@ -34,7 +34,7 @@ export default function TesekkurlerContent() {
 
     setWebinarDate(`${day}.${month}.${year}`);
     setWebinarDay(dayNames[eventDate.getDay()]);
-    setWebinarFull(`${day}.${month} ${dayNames[eventDate.getDay()]} 20:00`);
+    setWebinarFull(`${day}.${month} ${dayNames[eventDate.getDay()]} 19:00`);
 
     const regDay = String(turkey.getDate()).padStart(2, "0");
     const regMonth = String(turkey.getMonth() + 1).padStart(2, "0");
@@ -59,10 +59,10 @@ export default function TesekkurlerContent() {
       const nowMs = Date.now();
       const turkeyNow = new Date(new Date(nowMs).toLocaleString("en-US", { timeZone: "Europe/Istanbul" }));
       const target = new Date(turkeyNow);
-      if (turkeyNow.getHours() >= 20) {
+      if (turkeyNow.getHours() >= 19) {
         target.setDate(target.getDate() + 1);
       }
-      target.setHours(20, 0, 0, 0);
+      target.setHours(19, 0, 0, 0);
 
       const diff = target.getTime() - turkeyNow.getTime();
       if (diff <= 0) return;
@@ -135,7 +135,7 @@ export default function TesekkurlerContent() {
             </div>
             <p className="text-white/70 text-[14px] md:text-[15px] leading-relaxed">
               E-posta adresine bir <strong className="text-white">Zoom katılım linki</strong> gönderdik.{" "}
-              <strong className="text-white">{webinarDate} {webinarDay} saat 20:00{"'"}da</strong>{" "}
+              <strong className="text-white">{webinarDate} {webinarDay} saat 19:00{"'"}da</strong>{" "}
               e-postandaki linke tıkla, Zoom açılacak ve canlı seminere katılacaksın.
               E-postayı bulamazsan <strong className="text-white">spam/gereksiz</strong> klasörünü de kontrol et.
             </p>
@@ -244,7 +244,7 @@ export default function TesekkurlerContent() {
               {webinarDate} {webinarDay && `(${webinarDay})`}
             </p>
             <p className="text-white font-bold text-[16px] md:text-[18px] mb-5">
-              Saat 20:00 (Türkiye Saati)
+              Saat 19:00 (Türkiye Saati)
             </p>
             <p className="text-white/80 text-[14px] md:text-[15px] leading-relaxed">
               💻 Zoom linki <strong className="text-white">e-postanızda</strong> — seminer saati geldiğinde tek tıkla katılın.

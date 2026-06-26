@@ -21,7 +21,7 @@ import RegistrationForm from "@/components/zoomkayit/RegistrationForm";
 export const metadata: Metadata = {
   title: "AI Scale | Ücretsiz Yapay Zeka Semineri — Aylık 10.000$ Sistem",
   description:
-    "Her gün 20:00'da canlı %100 ücretsiz yapay zeka seminerine katılın. Yapay zeka ile aylık 10.000$+ kazandıran kanıtlanmış sistem. Sınırlı kontenjan.",
+    "Her gün 19:00'da canlı %100 ücretsiz yapay zeka seminerine katılın. Yapay zeka ile aylık 10.000$+ kazandıran kanıtlanmış sistem. Sınırlı kontenjan.",
   openGraph: {
     title: "AI Scale | Ücretsiz Yapay Zeka Semineri",
     description:
