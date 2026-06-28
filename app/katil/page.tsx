@@ -26,9 +26,10 @@ const KATIL_CTA_TEXT = "ÜCRETSİZ YERİMİ AYIRT";
 const KATIL_HEADLINE = (
   <>
     Kod Bilmeden{" "}
-    <span className="zk-text-gold-gradient">Yapay Zeka</span> ile Gelir
-    Getiren Bir Startup Kur, İşletmelere Sistem Sat ya da{" "}
-    <em className="not-italic zk-text-gold-gradient">İşini 10X Büyüt</em>
+    <span className="zk-text-gold-gradient">Yapay Zeka Ajanları</span> ile
+    Startup Kur,{" "}
+    <em className="not-italic zk-text-gold-gradient">İŞİNİ 10X BÜYÜT</em> ya da
+    İşletmelere Sistem Sat
   </>
 );
 const KATIL_SUBHEADLINE = (
