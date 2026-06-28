@@ -33,6 +33,11 @@ function isValidEmail(s: string): boolean {
 function isValidPhone(s: string): boolean {
   return /^\d{10,15}$/.test(s.replace(/\D/g, ""));
 }
+// İsim alanı en az bir harf içermeli — "-" / rakam / noktalama-only
+// değerler Meta "Invalid format" sayar. Browser pixel ile tutarlı.
+function isValidName(s: string): boolean {
+  return /\p{L}/u.test(s);
+}
 
 interface CAPIEventParams {
   eventName: string;
@@ -63,8 +68,12 @@ export async function sendCAPIEvent(params: CAPIEventParams) {
   if (userData.email && isValidEmail(userData.email)) {
     user_data.em = [hashData(userData.email)];
   }
-  if (userData.firstName) user_data.fn = [hashData(userData.firstName)];
-  if (userData.lastName) user_data.ln = [hashData(userData.lastName)];
+  if (userData.firstName && isValidName(userData.firstName)) {
+    user_data.fn = [hashData(userData.firstName)];
+  }
+  if (userData.lastName && isValidName(userData.lastName)) {
+    user_data.ln = [hashData(userData.lastName)];
+  }
   if (userData.phone && isValidPhone(userData.phone)) {
     user_data.ph = [hashData(userData.phone.replace(/\D/g, ""))];
   }

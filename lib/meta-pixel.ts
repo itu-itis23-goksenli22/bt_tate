@@ -33,6 +33,15 @@ function isValidPhone(digitsOnly: string): boolean {
   return /^\d{10,15}$/.test(digitsOnly);
 }
 
+// Name (fn/ln): en az bir harf içermeli. Tek-kelimelik isimlerde bazı
+// çağrı noktaları soyad için "-" fallback'i gönderiyordu; Meta "-" /
+// rakam / noktalama-only değerleri "Invalid format" sayıp Advanced
+// Matching diagnostics uyarısı çıkarıyor. Harf içermeyen isim alanı
+// tamamen atlanır (em/ph ile aynı mantık).
+function isValidName(s: string): boolean {
+  return /\p{L}/u.test(s);
+}
+
 // Send user data for Advanced Matching via fbq('init')
 // Calling init again with user data does NOT create duplicate events
 // — it only updates the user data for subsequent events.
@@ -57,8 +66,23 @@ export const setAdvancedMatching = (userData: {
     }
   }
 
-  if (userData.fn) cleanData.fn = userData.fn.toLowerCase().trim();
-  if (userData.ln) cleanData.ln = userData.ln.toLowerCase().trim();
+  if (userData.fn) {
+    const fn = userData.fn.toLowerCase().trim();
+    if (isValidName(fn)) {
+      cleanData.fn = fn;
+    } else if (process.env.NODE_ENV !== "production") {
+      console.warn("[advanced-matching] invalid first name, skipped:", fn);
+    }
+  }
+
+  if (userData.ln) {
+    const ln = userData.ln.toLowerCase().trim();
+    if (isValidName(ln)) {
+      cleanData.ln = ln;
+    } else if (process.env.NODE_ENV !== "production") {
+      console.warn("[advanced-matching] invalid last name, skipped:", ln);
+    }
+  }
 
   if (userData.ph) {
     const ph = userData.ph.replace(/\D/g, "");
