@@ -29,6 +29,17 @@ function getCookie(name: string): string | undefined {
   return match ? decodeURIComponent(match[2]) : undefined;
 }
 
+// fbc (Click ID) — _fbc cookie varsa onu kullan; yoksa URL'deki fbclid'den
+// `fb.1.{timestamp}.{fbclid}` formatında kur (Meta "parameter builder"
+// mantığı). Cookie set olmadan event fire olunca CAPI'ye boş fbc gitmesin.
+function getFbc(): string | undefined {
+  const cookie = getCookie("_fbc");
+  if (cookie) return cookie;
+  if (typeof window === "undefined") return undefined;
+  const fbclid = new URLSearchParams(window.location.search).get("fbclid");
+  return fbclid ? `fb.1.${Date.now()}.${fbclid}` : undefined;
+}
+
 // Browser pixel + CAPI server-side dedup edilmiş event fire helper.
 // Stripe iframe sandboxed olduğu için iframe ETRAFINDAKİ etkileşimleri
 // yakalıyoruz: iframe focus (window.blur) + pointerdown. Browser pixel
@@ -37,7 +48,8 @@ async function fireFunnelEvent(
   eventName: "InitiateCheckout",
   contentName: string,
   value: number,
-  currency: string
+  currency: string,
+  email?: string
 ) {
   const eventId =
     typeof crypto !== "undefined" && crypto.randomUUID
@@ -74,7 +86,8 @@ async function fireFunnelEvent(
         sourceUrl:
           typeof window !== "undefined" ? window.location.href : "",
         customData,
-        fbc: getCookie("_fbc"),
+        email,
+        fbc: getFbc(),
         fbp: getCookie("_fbp"),
       }),
       keepalive: true,
@@ -240,6 +253,7 @@ export default function VipEmbeddedCheckout({
         funnelTag={funnelTag}
         eventValue={VARIANT_VALUES[priceVariant].value}
         eventCurrency={VARIANT_VALUES[priceVariant].currency}
+        email={email}
       >
         {/* Trust signals — iframe'in üstünde */}
         <div className="flex items-center justify-center gap-2 md:gap-3 mb-3 text-white/60 text-[11px] md:text-[12px]">
@@ -360,12 +374,14 @@ function ReadyWrapper({
   funnelTag,
   eventValue,
   eventCurrency,
+  email,
   children,
 }: {
   ctaId: string;
   funnelTag?: string;
   eventValue: number;
   eventCurrency: string;
+  email?: string;
   children: React.ReactNode;
 }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -380,7 +396,7 @@ function ReadyWrapper({
       if (fired.current) return;
       fired.current = true;
       console.log("[funnel] InitiateCheckout fired:", funnelTag, "via", trigger);
-      fireFunnelEvent("InitiateCheckout", funnelTag, eventValue, eventCurrency);
+      fireFunnelEvent("InitiateCheckout", funnelTag, eventValue, eventCurrency, email);
     };
 
     const onPointerDown = () => fireOnce("pointerdown");
