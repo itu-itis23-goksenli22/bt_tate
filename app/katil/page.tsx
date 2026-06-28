@@ -34,8 +34,8 @@ const KATIL_HEADLINE = (
 );
 const KATIL_SUBHEADLINE = (
   <>
-    Teknik ekip ve büyük sermaye olmadan, fikrini 30 günde yayında çalışan
-    bir yazılıma çevir — ister kendi startup&apos;ın olarak büyüt, ister
+    Teknik ekip olmadan, fikrini 1-2 hafta içinde yayında çalışan bir
+    yazılıma çevir — ister kendi startup&apos;ın olarak büyüt, ister
     işletmelere sistem satıp gelir elde et, ister kendi işine entegre edip
     rakiplerini geç.
   </>
