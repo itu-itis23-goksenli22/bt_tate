@@ -128,6 +128,35 @@ export async function POST(request: NextRequest) {
           ? "VIP Purchase"
           : "Course Purchase";
 
+      // fbc/fbp: önce Stripe metadata (site içi embedded checkout), yoksa
+      // Supabase'den email ile çek. Satışçı DİREKT Payment Link attığında
+      // metadata fbc taşımaz; kayıttaki (reklam tıklaması) fbc'yi kullanırsak
+      // satış orijinal reklama atfedilir (Ads Manager attribution).
+      let fbc = (session.metadata as Record<string, string>)?.fbc || undefined;
+      let fbp = (session.metadata as Record<string, string>)?.fbp || undefined;
+      if (!fbc && email) {
+        try {
+          const sUrl = (process.env.NEXT_PUBLIC_SUPABASE_URL || "")
+            .replace(/\\n|\s/g, "")
+            .replace(/\/$/, "");
+          const sKey = (process.env.SUPABASE_SERVICE_ROLE_KEY || "").replace(/\\n|\s/g, "");
+          if (sUrl && sKey) {
+            const r = await fetch(
+              `${sUrl}/rest/v1/email_subscribers?select=fbc,fbp&email=eq.${encodeURIComponent(email)}&limit=1`,
+              { headers: { apikey: sKey, Authorization: `Bearer ${sKey}` } }
+            );
+            const rows = await r.json();
+            if (Array.isArray(rows) && rows[0]) {
+              fbc = fbc || rows[0].fbc || undefined;
+              fbp = fbp || rows[0].fbp || undefined;
+              if (fbc) console.log(`🔗 fbc Supabase'den çekildi (${email})`);
+            }
+          }
+        } catch (e) {
+          console.warn("⚠️ fbc lookup failed (non-critical):", (e as Error).message);
+        }
+      }
+
       await sendCAPIEvent({
         eventName,
         eventId: `${eventIdPrefix}_${session.id}`,
@@ -136,10 +165,9 @@ export async function POST(request: NextRequest) {
           email: email || undefined,
           firstName: nameParts[0] || "",
           lastName: nameParts.slice(1).join(" ") || "",
-          // fbc/fbp checkout sırasında metadata'ya yazıldı → Purchase event'i
-          // bunları taşır, Event Match Quality artar (Click ID coverage).
-          fbc: (session.metadata as Record<string, string>)?.fbc || undefined,
-          fbp: (session.metadata as Record<string, string>)?.fbp || undefined,
+          // fbc/fbp: metadata (site checkout) veya Supabase lookup (direkt link)
+          fbc,
+          fbp,
         },
         customData: {
           value,

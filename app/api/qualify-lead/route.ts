@@ -99,6 +99,9 @@ export async function POST(request: NextRequest) {
             phone: phone || null,
             webinar_link_sent: true,
             webinar_link_sent_at: new Date().toISOString(),
+            // fbc/fbp sadece geldiğinde güncelle — boşsa eski (reklam) fbc'yi koru
+            ...(fbc ? { fbc } : {}),
+            ...(fbp ? { fbp } : {}),
           })
           .eq("email", email);
         console.log(`✅ Supabase: subscriber UPDATED for ${email}`);
@@ -112,6 +115,8 @@ export async function POST(request: NextRequest) {
             source: "yerimi_ayirt",
             webinar_link_sent: true,
             webinar_link_sent_at: new Date().toISOString(),
+            fbc: fbc || null,
+            fbp: fbp || null,
           });
         console.log(`✅ Supabase: subscriber INSERTED for ${email}`);
       }
