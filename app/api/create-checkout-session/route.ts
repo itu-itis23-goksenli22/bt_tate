@@ -65,6 +65,10 @@ export async function POST(request: NextRequest) {
     variant?: string;
     fbc?: string;
     fbp?: string;
+    // /canli funnel: ödeme sonrası kullanıcıyı KENDİ thank-you sayfasına
+    // (kişiye özel ?t=...&r=... ile) geri döndürmek için. Güvenlik: sadece
+    // "/canli/" ile başlayan relative path kabul edilir (open-redirect yok).
+    returnTo?: string;
   } = {};
   try {
     body = await request.json();
@@ -97,15 +101,25 @@ export async function POST(request: NextRequest) {
   const source =
     body.source === "dijitalakademi" ? "dijitalakademi" : "aiscaleapp";
 
+  // return_url: /canli funnel kendi sayfasına (kişiye özel params korunarak)
+  // dönsün; aksi halde varsayılan returnPath (/odemeonay) — /katil aynen çalışır.
+  const safeReturnTo =
+    typeof body.returnTo === "string" && /^\/canli\//.test(body.returnTo)
+      ? body.returnTo
+      : null;
+  const returnUrl = safeReturnTo
+    ? `${origin}${safeReturnTo}${safeReturnTo.includes("?") ? "&" : "?"}paid=1&session_id={CHECKOUT_SESSION_ID}`
+    : `${origin}${cfg.returnPath}?session_id={CHECKOUT_SESSION_ID}${
+        body.name ? `&name=${encodeURIComponent(body.name)}` : ""
+      }${body.email ? `&email=${encodeURIComponent(body.email)}` : ""}`;
+
   try {
     const session = await stripe.checkout.sessions.create({
       ui_mode: "embedded",
       mode: "payment",
       line_items: [{ price: priceId, quantity: 1 }],
       customer_email: body.email || undefined,
-      return_url: `${origin}${cfg.returnPath}?session_id={CHECKOUT_SESSION_ID}${
-        body.name ? `&name=${encodeURIComponent(body.name)}` : ""
-      }${body.email ? `&email=${encodeURIComponent(body.email)}` : ""}`,
+      return_url: returnUrl,
       metadata: {
         source,
         variant,

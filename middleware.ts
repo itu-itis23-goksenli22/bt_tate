@@ -11,6 +11,13 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(new URL("/eticaret", request.url));
   }
 
+  // aiscaleapp.com root → /canli funnel'a yönlendir.
+  // GEÇİCİ redirect (307) — kolay geri alınır. Sadece aiscaleapp host'unda
+  // ve tam "/" path'inde. Diğer sayfalar (/katil, /vip-mastermind vb.) etkilenmez.
+  if (!isDijitalAkademi && pathname === "/") {
+    return NextResponse.redirect(new URL("/canli", request.url));
+  }
+
   // dijitalakademi.live/kayitbasarili → /eticaret/kayitbasarili
   if (isDijitalAkademi && pathname === "/kayitbasarili") {
     return NextResponse.rewrite(new URL("/eticaret/kayitbasarili", request.url));

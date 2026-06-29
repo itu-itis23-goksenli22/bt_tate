@@ -6,6 +6,9 @@ interface HeroSectionProps {
   eyebrow?: ReactNode;
   headline?: ReactNode;
   subheadline?: ReactNode;
+  // compact: mobilde başlık/metin küçülür + boşluklar daralır → form ilk
+  // ekranda görünür. Default false (/katil vb. aynen kalır).
+  compact?: boolean;
 }
 
 const DEFAULT_EYEBROW = "%100 Ücretsiz Canlı Etkinlik";
@@ -26,16 +29,17 @@ export default function HeroSection({
   eyebrow,
   headline,
   subheadline,
+  compact = false,
 }: HeroSectionProps = {}) {
   return (
-    <section className="relative pt-6 pb-2 px-4">
+    <section className={`relative px-4 ${compact ? "pt-4 pb-1" : "pt-6 pb-2"}`}>
       {/* Trustpilot-style badge */}
-      <div className="flex items-center justify-center gap-3 mb-8">
+      <div className={`flex items-center justify-center gap-3 ${compact ? "mb-3" : "mb-8"}`}>
         <div className="flex items-center gap-1 bg-[#00B67A] px-3 py-1 rounded">
           {[1, 2, 3, 4, 5].map((i) => (
             <svg
               key={i}
-              className="w-5 h-5 text-white"
+              className={`${compact ? "w-4 h-4 md:w-5 md:h-5" : "w-5 h-5"} text-white`}
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -43,24 +47,38 @@ export default function HeroSection({
             </svg>
           ))}
         </div>
-        <span className="text-white/80 text-sm font-medium">
+        <span className="text-white/80 text-xs md:text-sm font-medium">
           4.9/5 &bull; 500+ Olumlu Değerlendirme
         </span>
       </div>
 
       {/* Main headline */}
       <div className="max-w-4xl mx-auto text-center">
-        <div className="inline-block mb-4">
-          <span className="text-gold text-base md:text-xl font-semibold tracking-wide uppercase">
+        <div className={`inline-block ${compact ? "mb-2" : "mb-4"}`}>
+          <span
+            className={`text-gold font-semibold tracking-wide uppercase ${
+              compact ? "text-sm md:text-xl" : "text-base md:text-xl"
+            }`}
+          >
             {eyebrow ?? DEFAULT_EYEBROW}
           </span>
         </div>
 
-        <h1 className="text-[34px] md:text-5xl lg:text-6xl font-bold leading-[1.15] mb-6 text-white">
+        <h1
+          className={`font-bold text-white md:text-5xl lg:text-6xl ${
+            compact
+              ? "text-[24px] leading-[1.2] mb-3"
+              : "text-[34px] leading-[1.15] mb-6"
+          }`}
+        >
           {headline ?? DEFAULT_HEADLINE}
         </h1>
 
-        <p className="text-white/75 text-[17px] md:text-lg leading-relaxed max-w-2xl mx-auto mb-2">
+        <p
+          className={`text-white/75 leading-relaxed max-w-2xl mx-auto mb-2 ${
+            compact ? "text-[14px] md:text-lg" : "text-[17px] md:text-lg"
+          }`}
+        >
           {subheadline ?? DEFAULT_SUBHEADLINE}
         </p>
       </div>

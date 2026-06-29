@@ -160,6 +160,13 @@ interface Props {
    * TL Payment Link URL'i geçilmeli.
    */
   fallbackUrl?: string;
+  /**
+   * /canli funnel: ödeme sonrası kullanıcıyı kendi thank-you sayfasına
+   * (kişiye özel ?t=...&r=... ile) döndürmek için relative path.
+   * Örn: "/canli/kayitbasarili?t=...&r=...". Backend bunu return_url yapar.
+   * Belirtilmezse default /odemeonay'a döner (eski davranış korunur).
+   */
+  returnTo?: string;
 }
 
 // Variant başına funnel event value'su (browser pixel + CAPI customData)
@@ -176,6 +183,7 @@ export default function VipEmbeddedCheckout({
   funnelTag,
   priceVariant = "vip",
   fallbackUrl,
+  returnTo,
 }: Props) {
   // Durum makinesi:
   //   'loading'  → /api/create-checkout-session POST atılıyor (initial)
@@ -210,6 +218,8 @@ export default function VipEmbeddedCheckout({
             name,
             source,
             variant: priceVariant,
+            // /canli: ödeme sonrası kişiye özel seminer sayfasına dön
+            returnTo,
             // fbc/fbp → Stripe metadata → webhook → Purchase CAPI (EMQ için)
             fbc: getCookie("_fbc"),
             fbp: getCookie("_fbp"),
@@ -241,7 +251,7 @@ export default function VipEmbeddedCheckout({
     })();
 
     return () => clearTimeout(timeoutId);
-  }, [hasPublishableKey, email, name, source, priceVariant]);
+  }, [hasPublishableKey, email, name, source, priceVariant, returnTo]);
 
   // ready → Stripe iframe mount
   if (state === "ready" && clientSecret) {
